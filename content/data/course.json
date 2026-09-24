@@ -328,7 +328,7 @@
         "id": "sari",
         "label": "Sarı",
         "where": "Laboratuvar",
-        "rule": "Yapay zekaya soru sorulabilir, kavram açıklattırılabilir; ama kod kopyalanmaz. Asistan istediğinde ekranınızı görebilir.",
+        "rule": "Yapay zekaya soru sorulabilir, kavram açıklattırılabilir; ama kod kopyalanmaz. Lab sorumlu hocanız istediğinde ekranınızı görebilir.",
         "why": "Ustalaşma takılıp çözmekle olur. Hazır kodu yapıştıran, takıldığı yeri hiç görmemiş olur ve sınavda o yerde takılır."
       },
       {

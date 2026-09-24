@@ -10,7 +10,7 @@ icon: "☕"
 Playground derste yeter, Codespaces lab'da yeter. Ama kendi bilgisayarınızda Java'nın çalışması sizi internetten ve kotalardan bağımsız kılar; portfolyo üzerinde evde rahat çalışırsınız. Kurulum bir kez yapılır, 15-20 dakika sürer.
 
 > [!not] Takılırsanız
-> Hata mesajının ekran görüntüsünü alıp bir yapay zeka asistanına "bu adımda ne yapmalıyım?" diye sormak çoğu zaman yeterlidir. Olmazsa laboratuvarda asistana ya da ofis saatinde bana getirin. Kurulum bitene kadar Codespaces ile devam edin; kimse geride kalmaz.
+> Hata mesajının ekran görüntüsünü alıp bir yapay zeka asistanına "bu adımda ne yapmalıyım?" diye sormak çoğu zaman yeterlidir. Olmazsa laboratuvarda lab sorumlu hocanıza ya da ofis saatinde bana getirin. Kurulum bitene kadar Codespaces ile devam edin; kimse geride kalmaz.
 
 ## Adım 1 · JDK 21'i kur
 

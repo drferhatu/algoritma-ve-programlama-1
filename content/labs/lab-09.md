@@ -26,4 +26,4 @@ deliverable: "lab09/ klasörü: artımlı geliştirme programı ve yığın diya
 
 ## Teslim
 
-`lab09/` klasörünü portfolyo deponuza push edin ve asistana **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+`lab09/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

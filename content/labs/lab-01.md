@@ -27,14 +27,14 @@ deliverable: "Portfolyo deposunda lab01/ klasörü: Merhaba.java ve beş görev 
 Laboratuvar teoriden bir hafta sonra yapılır: bugün 1. haftanın (25 Eylül) konularını uyguluyoruz. Kendi bilgisayarınızı getirebilirsiniz; getirmeyenler lab bilgisayarı ya da tarayıcıda Codespaces kullanır.
 
 > [!uyari] Yapay zeka: Sarı bölge
-> Laboratuvarda yapay zekaya **soru sorabilirsiniz** ("javac komutu tanınmıyor ne demek?"), ama **kod kopyalayamazsınız**. Asistan istediğinde ekranınızı görebilir. Sebep basit: takıldığınız yeri kendiniz çözmezseniz sınavda aynı yerde takılırsınız.
+> Laboratuvarda yapay zekaya **soru sorabilirsiniz** ("javac komutu tanınmıyor ne demek?"), ama **kod kopyalayamazsınız**. Lab sorumlu hocanız istediğinde ekranınızı görebilir. Sebep basit: takıldığınız yeri kendiniz çözmezseniz sınavda aynı yerde takılırsınız.
 
 ## Adım 0 · GitHub hesabı ve ders organizasyonu (10 dk)
 
 1. [github.com](https://github.com) hesabınız yoksa şimdi açın; üniversite e-postanızı kullanın (öğrenci paketi için gerekecek).
 2. Ders organizasyonuna katılım bağlantısı lab sırasında verilecek (bağlantı sonra eklenecek). Bağlantıya tıklayıp daveti kabul edin.
 3. Portfolyo deponuzu oluşturun: **New repository**, ad `algo1-portfolyo`, **Public**, "Add a README" işaretli. Bu depo dönem boyunca tek deponuz olacak; KT1'den KT4'e her şey buraya girer.
-4. Kullanıcı adınızı asistana listeye yazdırın.
+4. Kullanıcı adınızı lab sorumlu hocanıza listeye yazdırın.
 
 Ayrıntılı anlatım: [GitHub ve Codespaces rehberi](/rehber/github-ve-codespaces).
 
@@ -147,8 +147,8 @@ git push
 
 Tarayıcıda deponuzu yenileyin; `lab01/` klasörü ve dosyalar görünmeli. Git komutlarını ilk kez görüyorsanız [rehberdeki](/rehber/github-ve-codespaces) üç satırlık özete bakın; Codespaces'te sol menüdeki kaynak kontrol simgesi aynı işi düğmeyle yapar.
 
-> [!not] Teslim ritüeli: asistana 30 saniye anlat
-> Push ettikten sonra asistanı çağırın ve görevlerden **birini** 30 saniyede anlatın: ne yapıyor, en çok nerede takıldınız, hata mesajı ne dedi. Anlatamadığınız kod sizin değildir; bu ritüel her lab'da tekrar edecek.
+> [!not] Teslim ritüeli: lab sorumlu hocanıza 30 saniye anlatın
+> Push ettikten sonra lab sorumlu hocanızı çağırın ve görevlerden **birini** 30 saniyede anlatın: ne yapıyor, en çok nerede takıldınız, hata mesajı ne dedi. Anlatamadığınız kod sizin değildir; bu ritüel her lab'da tekrar edecek.
 
 ## Bitiremediyseniz
 

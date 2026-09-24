@@ -25,4 +25,4 @@ deliverable: "lab06/ klasörü: dört döngü programı."
 
 ## Teslim
 
-`lab06/` klasörünü portfolyo deponuza push edin ve asistana **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+`lab06/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

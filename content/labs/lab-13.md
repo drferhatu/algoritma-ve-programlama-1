@@ -26,4 +26,4 @@ deliverable: "lab13/ klasörü: metin programları ve NehirBulmacasi.java."
 
 ## Teslim
 
-`lab13/` klasörünü portfolyo deponuza push edin ve asistana **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+`lab13/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

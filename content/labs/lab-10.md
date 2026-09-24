@@ -26,4 +26,4 @@ deliverable: "lab10/ klasörü: dizi istatistik ve histogram programları."
 
 ## Teslim
 
-`lab10/` klasörünü portfolyo deponuza push edin ve asistana **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+`lab10/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

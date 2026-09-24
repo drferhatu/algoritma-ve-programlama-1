@@ -33,7 +33,7 @@ const toc = [
   { slug: 'yz-politika', text: 'Yapay zeka politikası' },
   { slug: 'is-yuku', text: 'İş yükü ve AKTS' },
   { slug: 'kaynaklar', text: 'Kaynaklar' },
-  { slug: 'ogretim-uyesi', text: 'Öğretim üyesi ve asistan' },
+  { slug: 'ogretim-uyesi', text: 'Öğretim üyesi ve lab sorumlu hocası' },
   { slug: 'kanallar', text: 'İletişim kanalları' },
 ];
 const totalWeight = course.assessment.components.reduce((a, c) => a + c.weight, 0);
@@ -115,9 +115,9 @@ const totalWeight = course.assessment.components.reduce((a, c) => a + c.weight, 
       </ul>
       <p>Yazılım, araçlar ve ek bağlantılar için <a href={href('/kaynaklar')}>Kaynaklar</a> sayfasına bakın.</p>
 
-      <h2 id="ogretim-uyesi">Öğretim üyesi ve asistan</h2>
+      <h2 id="ogretim-uyesi">Öğretim üyesi ve lab sorumlu hocası</h2>
       <p><strong>{course.instructor.name}</strong> · Dersin sorumlusu<br /><a href={`mailto:${course.instructor.email}`}>{course.instructor.email}</a></p>
-      <p><strong>{assistant.name}</strong> · {assistant.role ? `${assistant.role} asistanı` : 'Asistan'}{assistant.email && <><br /><a href={`mailto:${assistant.email}`}>{assistant.email}</a></>}</p>
+      <p><strong>{assistant.name}</strong> · {assistant.role ? `${assistant.role} sorumlu hocası` : 'Lab sorumlu hocası'}{assistant.email && <><br /><a href={`mailto:${assistant.email}`}>{assistant.email}</a></>}</p>
       <div class="mt-8"><Channels /></div>
       <p><a href={href('/ders-akisi')} class="btn-primary !no-underline !text-paper">Ders akışına geç →</a></p>
     </article>

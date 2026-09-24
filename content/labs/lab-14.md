@@ -6,7 +6,7 @@ status: taslak
 objectives:
   - "Çekirdek algoritmayı Python ve C'ye çevirip aynı girdiyle aynı çıktıyı aldığını doğrular."
   - "README ve AI beyanını tamamlar; KT4'ü push eder."
-  - "Uygulamasının bir metodunu asistana 30 saniyede anlatır."
+  - "Uygulamasının bir metodunu lab sorumlu hocasına 30 saniyede anlatır."
 tools:
   - "JDK 21"
   - "Python"
@@ -31,4 +31,4 @@ milestone: "KT4"
 
 ## Teslim
 
-`lab14/` klasörünü portfolyo deponuza push edin ve asistana **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+`lab14/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

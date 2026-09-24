@@ -43,7 +43,7 @@ Hiç kullanmadıysanız da yazın: "Bu teslimde yapay zeka kullanmadım." Bu da 
 ## Sınırlar (hatırlatma)
 
 - **Kırmızı** (sınavlar): beyan yok çünkü yapay zeka yok.
-- **Sarı** (laboratuvar): soru serbest, kod kopyalama yasak; beyan istenmez ama asistan sorabilir.
+- **Sarı** (laboratuvar): soru serbest, kod kopyalama yasak; beyan istenmez ama lab sorumlu hocanız sorabilir.
 - **Yeşil** (portfolyo, ev çalışması): serbest + beyan.
 
 Beyansız teslim eksik teslimdir. Yanlış beyan (kullanıp "kullanmadım" demek) kopya kapsamında değerlendirilir. Tam metin ve gerekçeler: [Ders Hakkında](/ders-hakkinda).

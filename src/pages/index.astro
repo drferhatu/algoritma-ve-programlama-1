@@ -1,0 +1,216 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Roadmap from '@/components/Roadmap.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Stat from '@/components/Stat.astro';
+import AiPolicy from '@/components/AiPolicy.astro';
+import { course, modules, href, getWeeksSorted, weekHref, labHref, sections, sectionOf, getTheoryDate, formatDayDate, labLine, portfolio, TOTAL_WEEKS, JAVA_PLAYGROUND, assistant } from '@/lib/site';
+import { getCollection } from 'astro:content';
+
+const weeks = await getWeeksSorted();
+const firstWeeks = weeks.slice(0, 3);
+const announcements = (await getCollection('announcements'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const firstTheory = getTheoryDate(1);
+const timeOf = (id: 'A' | 'B') => sectionOf(id).theory.replace(/^\S+\s*/, '');
+const firstLine = firstTheory
+  ? `İlk ders ${formatDayDate(firstTheory, true)} ${timeOf('A')} (A) / ${timeOf('B')} (B)`
+  : `İlk ders ${sectionOf('A').theory} (A) / ${timeOf('B')} (B)`;
+const firstLab = labLine(1);
+
+const how = [
+  { t: 'Her ders bir bulmacayla başlar', d: 'Kod yazmadan önce düşünürüz: kâğıt üstünde bir bulmaca, bir tahmin ya da "insan bilgisayar" oyunu. Algoritma önce kafada, sonra Java\'da.', icon: 'M9.5 3.5a2 2 0 0 1 4 0V5h4a1 1 0 0 1 1 1v4h-1.5a2 2 0 0 0 0 4H18.5v4a1 1 0 0 1-1 1h-4v-1.5a2 2 0 0 0-4 0V19h-4a1 1 0 0 1-1-1v-4H6a2 2 0 0 0 0-4H4.5V6a1 1 0 0 1 1-1h4z' },
+  { t: 'İlk günden kod', d: 'İlk hafta ilk Java programınızı çalıştırırsınız. Sayfadaki her kod bloğu kopyalanıp Java Playground\'da denenebilir; kurulum beklemez.', icon: 'M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12' },
+  { t: 'Lab, teoriden bir hafta sonra', d: `Cuma işlenen konu ertesi hafta laboratuvarda uygulanır (A Çarşamba, B Perşembe). Labları ${assistant.name} yürütür.`, icon: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3' },
+  { t: 'Portfolyo', d: `Dönem boyunca büyüyen bir kod portfolyosu tutarsınız; ${portfolio.milestones.length || 'belirli'} kilometre taşında teslim edilir ve değerlendirmeye girer.`, icon: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4' },
+];
+---
+<BaseLayout title={`${course.title} — ${course.university} ${course.faculty}`} bare>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="grid-paper pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <div class="wrap relative grid gap-12 py-16 md:grid-cols-[1.15fr_0.85fr] md:items-center md:py-24">
+      <div>
+        <p class="eyebrow">{course.university} · {course.faculty} · {course.department ?? 'Yazılım Mühendisliği'}</p>
+        <p class="mt-2 text-sm font-medium text-ink-2">{course.code ?? 'YMT1101'} · {course.instructor.name}</p>
+        <h1 class="display mt-4 text-[2.6rem] leading-[1.02] text-ink sm:text-6xl md:text-7xl">
+          Algoritma <span class="text-accent">ve</span><br />Programlama I
+        </h1>
+        <p class="lede mt-6 max-w-xl">{course.tagline}</p>
+        <p class="mt-5 inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-ink shadow-soft">
+          <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+          {firstLine}
+        </p>
+        {firstLab && <p class="mt-2 text-sm text-ink-3">İlk laboratuvar: {firstLab}</p>}
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={weekHref(1)} class="btn-primary">1. Hafta</a>
+          <a href={href('/ders-akisi')} class="btn-ghost">Ders akışı</a>
+          <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="btn-accent">Java Playground ↗</a>
+        </div>
+        <dl class="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-8">
+          <Stat value={String(TOTAL_WEEKS)} label="hafta" />
+          <Stat value={String(modules.length)} label="modül" />
+          <Stat value={String(course.credits.ects)} label="AKTS" />
+        </dl>
+      </div>
+
+      <!-- Hero görseli: bir akış şemasının Java koduna dönüşmesi -->
+      <figure class="relative mx-auto w-full max-w-md md:max-w-none" aria-label="Akış şemasının Java koduna dönüşmesini gösteren şematik çizim">
+        <svg viewBox="0 0 520 420" class="w-full" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#e76f00" />
+              <stop offset="1" stop-color="#1f2a44" />
+            </linearGradient>
+          </defs>
+          <rect x="24" y="24" width="472" height="372" rx="22" fill="#fff" stroke="#e3ddd2" />
+          <g stroke="#eee9e0" stroke-width="1">
+            {Array.from({ length: 9 }, (_, i) => <line x1={60 + i * 50} y1="60" x2={60 + i * 50} y2="330" />)}
+            {Array.from({ length: 6 }, (_, i) => <line x1="60" y1={60 + i * 54} x2="460" y2={60 + i * 54} />)}
+          </g>
+          <!-- akış şeması -->
+          <g font-family="Manrope, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+            <rect x="70" y="70" width="110" height="34" rx="17" fill="#fdebd8" stroke="#e76f00" />
+            <text x="125" y="92" fill="#1f2a44">BAŞLA</text>
+            <rect x="70" y="134" width="110" height="34" rx="6" fill="#fff" stroke="#1f2a44" />
+            <text x="125" y="156" fill="#1f2a44">sayıyı oku</text>
+            <path d="M125 198 l48 30 -48 30 -48 -30 z" fill="#fff" stroke="#e76f00" />
+            <text x="125" y="232" fill="#1f2a44">n % 2 == 0 ?</text>
+            <rect x="30" y="290" width="80" height="30" rx="6" fill="#fff" stroke="#1f2a44" />
+            <text x="70" y="309" fill="#1f2a44">"tek"</text>
+            <rect x="140" y="290" width="80" height="30" rx="6" fill="#fff" stroke="#1f2a44" />
+            <text x="180" y="309" fill="#1f2a44">"çift"</text>
+          </g>
+          <g fill="none" stroke="#1f2a44" stroke-width="1.6" stroke-linecap="round">
+            <path d="M125 104v30M125 168v30M77 228 L70 228 V290M173 228 L180 228 V290" />
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#6b7590">
+            <text x="60" y="246">hayır</text><text x="182" y="246">evet</text>
+          </g>
+          <!-- ok -->
+          <path d="M235 200 C270 200 270 200 300 200" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round" />
+          <path d="M292 192l10 8-10 8" fill="none" stroke="#1f2a44" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- kod -->
+          <rect x="310" y="88" width="160" height="230" rx="12" fill="#16203a" />
+          <g font-family="JetBrains Mono, monospace" font-size="10.5">
+            <text x="324" y="116" fill="#f2c39b">int</text><text x="346" y="116" fill="#faf8f4"> n = in.nextInt();</text>
+            <text x="324" y="140" fill="#f2c39b">if</text><text x="338" y="140" fill="#faf8f4"> (n % 2 == 0) {'{'}</text>
+            <text x="336" y="164" fill="#faf8f4">out("çift");</text>
+            <text x="324" y="188" fill="#faf8f4">{'}'} </text><text x="336" y="188" fill="#f2c39b">else</text><text x="362" y="188" fill="#faf8f4"> {'{'}</text>
+            <text x="336" y="212" fill="#faf8f4">out("tek");</text>
+            <text x="324" y="236" fill="#faf8f4">{'}'}</text>
+            <text x="324" y="280" fill="#8ea0c8">// Java 21</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="12" font-weight="700">
+            <text x="60" y="52" fill="#e76f00">ALGORİTMA</text>
+            <text x="460" y="52" fill="#1f2a44" text-anchor="end">PROGRAM</text>
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="#6b7590">
+            <text x="60" y="352">düşün · çiz · sına</text>
+            <text x="310" y="352">yaz · çalıştır · düzelt</text>
+          </g>
+        </svg>
+        <figcaption class="sr-only">Bir sayının tek mi çift mi olduğunu belirleyen akış şemasının aynı işi yapan Java koduna dönüşmesi</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- BU DERS NASIL İŞLER -->
+  <section class="wrap py-20 md:py-28">
+    <SectionHeading eyebrow="Bu ders nasıl işler?" title="Önce düşün, sonra yaz; her hafta biraz daha büyük bir program."
+      lede="Programlama ezberle değil, alışkanlıkla öğrenilir. Bu yüzden ders dört basit alışkanlık üzerine kuruludur." />
+    <ul class="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+      {how.map((p) => (
+        <li class="flex gap-5">
+          <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={p.icon} /></svg>
+          </span>
+          <div>
+            <h3 class="font-display text-xl font-semibold text-ink">{p.t}</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-2">{p.d}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- YAPAY ZEKA POLİTİKASI -->
+  <section class="border-y border-line bg-paper-2/50 py-20 md:py-28">
+    <div class="wrap">
+      <AiPolicy />
+      <p class="mt-6 text-sm text-ink-3">Ayrıntılar ve gerekçe için <a href={href('/ders-hakkinda#yz-politika')} class="link">Ders Hakkında</a> sayfasına bakın.</p>
+    </div>
+  </section>
+
+  <!-- ŞUBELER + NEREDEN BAŞLA + DUYURU -->
+  <section class="wrap py-20 md:py-28">
+    <div class="grid gap-12 md:grid-cols-[1fr_1fr]">
+      <div>
+        <p class="eyebrow">Nereden başlamalıyım?</p>
+        <h2 class="display mt-2 text-3xl md:text-4xl">İlk üç hafta: düşünmekten Java'ya</h2>
+        <p class="mt-4 leading-relaxed text-ink-2">
+          Programlama deneyiminiz olmasa da sorun değil; ders sıfırdan başlar. 1. haftada ilk programınızı derleyip çalıştırırız,
+          bilgisayar kurulumu için <a href={href('/rehberler')} class="link">rehberler</a> hazırdır.
+        </p>
+        <ol class="mt-8 space-y-4">
+          {firstWeeks.length === 0 && <li class="text-ink-3">Hafta sayfaları yakında yayımlanacak.</li>}
+          {firstWeeks.map((w) => (
+            <li>
+              <a href={weekHref(w.data.week)} class="group flex items-start gap-4 rounded-xl border border-line bg-white p-4 transition-colors hover:border-accent">
+                <span class="font-display text-2xl text-accent">{String(w.data.week).padStart(2, '0')}</span>
+                <span>
+                  <span class="block font-semibold text-ink group-hover:text-brand">{w.data.title}</span>
+                  <span class="mt-1 block text-sm text-ink-2">{w.data.description}</span>
+                  <span class="mt-1 block text-xs text-ink-3">Teori {formatDayDate(getTheoryDate(w.data.week))}{labLine(w.data.week) ? ` · Lab ${labLine(w.data.week)}` : ''}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div>
+        <p class="eyebrow">Şubeler</p>
+        <table class="mt-3 w-full text-sm">
+          <thead><tr class="text-left text-xs uppercase tracking-wider text-ink-3"><th class="py-2 pr-3 font-semibold">Şube</th><th class="py-2 pr-3 font-semibold">Teori</th><th class="py-2 font-semibold">Laboratuvar</th></tr></thead>
+          <tbody>
+            {sections.map((sec) => (
+              <tr class="border-t border-line"><td class="py-2.5 pr-3 font-bold text-ink">{sec.id}</td><td class="py-2.5 pr-3 text-ink">{sec.theory}</td><td class="py-2.5 text-ink">{sec.lab}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="mt-2 text-xs text-ink-3">Lab, aynı haftanın teorisinden bir hafta sonra yapılır. Yürüten: {assistant.name}. İlk lab: <a href={labHref(1)} class="link">1. hafta labı</a>.</p>
+
+        <div class="mt-10 flex items-baseline justify-between">
+          <p class="eyebrow">Duyurular</p>
+          <a href={href('/duyurular')} class="text-sm text-ink-2 underline-offset-4 hover:underline">Tümü</a>
+        </div>
+        {announcements.length === 0 ? (
+          <p class="mt-4 text-ink-3">Henüz duyuru yok.</p>
+        ) : (
+          <ul class="mt-4 space-y-3">
+            {announcements.map((a) => (
+              <li class="rounded-xl border border-line bg-white p-4">
+                <p class="text-xs text-ink-3">{a.data.date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p class="mt-1 font-semibold text-ink">{a.data.title}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="border-t border-line bg-paper-2/50 py-20 md:py-28" id="yol-haritasi">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <SectionHeading eyebrow="Ders akışı" title="Haftadan haftaya yol haritası"
+          lede={`${TOTAL_WEEKS} hafta, ${modules.length} modül. Her haftada teori (Cuma) ve bir hafta sonraki lab tarihleri gösterilir; tatil ve erteleme durumları haftanın yanında belirtilir.`} />
+        <a href={href('/ders-akisi')} class="btn-ghost">Tam ders akışı</a>
+      </div>
+      <div class="mt-14"><Roadmap weeks={weeks} /></div>
+    </div>
+  </section>
+</BaseLayout>

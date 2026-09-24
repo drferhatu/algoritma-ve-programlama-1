@@ -1,0 +1,125 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Toc from '@/components/Toc.astro';
+import Channels from '@/components/Channels.astro';
+import AiPolicy from '@/components/AiPolicy.astro';
+import Portfolio from '@/components/Portfolio.astro';
+import { course, href, weekHref, sections, assistant, classTimeLabel, TOTAL_WEEKS, JAVA_PLAYGROUND } from '@/lib/site';
+
+const facts = [
+  ['Ders kodu', course.code ?? 'YMT1101'],
+  ['Üniversite', course.university],
+  ['Fakülte', course.faculty],
+  ['Bölüm', course.department ?? course.program ?? 'Yazılım Mühendisliği'],
+  ['Hedef kitle', course.audience ?? '1. sınıf'],
+  ['Düzey', course.level ?? 'Lisans'],
+  ['Dönem', `${course.academicYear} ${course.semesters.join(' / ')}`],
+  ['Öğretim dili', course.language],
+  ['Programlama dili', 'Java'],
+  ['Ders saati', classTimeLabel()],
+  ['Saatler (T/U/L)', `${course.credits.theory} / ${course.credits.practice} / ${course.credits.lab}`],
+  ['Yerel kredi', String(course.credits.local)],
+  ['AKTS', String(course.credits.ects)],
+  ['Ön koşul', course.prerequisites],
+];
+const toc = [
+  { slug: 'kunye', text: 'Künye ve şubeler' },
+  { slug: 'amac', text: 'Dersin amacı' },
+  { slug: 'ogrenim-ciktilari', text: 'Öğrenim çıktıları' },
+  { slug: 'yontem', text: 'Nasıl işlenir?' },
+  { slug: 'degerlendirme', text: 'Değerlendirme' },
+  { slug: 'portfolyo', text: 'Portfolyo' },
+  { slug: 'yz-politika', text: 'Yapay zeka politikası' },
+  { slug: 'is-yuku', text: 'İş yükü ve AKTS' },
+  { slug: 'kaynaklar', text: 'Kaynaklar' },
+  { slug: 'ogretim-uyesi', text: 'Öğretim üyesi ve asistan' },
+  { slug: 'kanallar', text: 'İletişim kanalları' },
+];
+const totalWeight = course.assessment.components.reduce((a, c) => a + c.weight, 0);
+---
+<BaseLayout title="Ders Hakkında" description={`${course.title} dersinin künyesi, şubeleri, amacı, öğrenim çıktıları, değerlendirme ve portfolyo kuralları.`}>
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Ders Hakkında" title="Algoritmik düşünen, Java ile yazan mühendis adayları" lede={course.justification} />
+  </div>
+
+  <div class="wrap grid gap-12 pb-24 lg:grid-cols-[220px_1fr]">
+    <aside class="hidden lg:block"><div class="sticky top-24"><Toc headings={[]} extra={toc} /></div></aside>
+
+    <article class="prose-lesson max-w-3xl">
+      <h2 id="kunye" class="!mt-0 !border-0 !pt-0">Künye ve şubeler</h2>
+      <table>
+        <thead><tr><th>Şube</th><th>Teori</th><th>Laboratuvar</th></tr></thead>
+        <tbody>
+          {sections.map((s) => <tr><td class="font-semibold text-ink">{s.id}</td><td>{s.theory}</td><td>{s.lab}</td></tr>)}
+        </tbody>
+      </table>
+      <p class="text-sm text-ink-3">Laboratuvar oturumları aynı haftanın teori dersinden <strong>bir hafta sonra</strong> yapılır; ilgili haftanın sayfasında her iki şubenin lab tarihi ayrıca yazılıdır. Labları {assistant.name} yürütür.</p>
+      <dl class="grid gap-x-8 gap-y-3 sm:grid-cols-2 text-[15px]">
+        {facts.map(([k, v]) => <div class="border-b border-line pb-2"><dt class="text-xs font-semibold uppercase tracking-wider text-ink-3">{k}</dt><dd class="mt-0.5 text-ink">{v}</dd></div>)}
+      </dl>
+
+      <h2 id="amac">Dersin amacı</h2>
+      <p>{course.purpose}</p>
+      <aside class="callout callout-why"><p class="callout-title">Kod yazmadan önce düşünmek</p><p>{course.codingPhilosophy}</p></aside>
+
+      <h2 id="ogrenim-ciktilari">Öğrenim çıktıları</h2>
+      <p>Dersi başarıyla tamamlayan öğrenci:</p>
+      <ol class="!space-y-4">
+        {course.outcomes.map((o) => (
+          <li>
+            <span class="text-ink">{o.text}</span>
+            <span class="mt-1 flex flex-wrap gap-1.5 text-xs">
+              {o.weeks.filter((w) => w <= TOTAL_WEEKS).map((w) => <a href={weekHref(w)} class="!no-underline rounded-md bg-paper-2 px-1.5 py-0.5 font-medium text-ink-2 hover:bg-accent-soft hover:text-accent">H{w}</a>)}
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      <h2 id="yontem">Nasıl işlenir?</h2>
+      <ul>{course.methods.map((m) => <li>{m}</li>)}</ul>
+      <p>Derste ve labda Java kullanılır. Sayfalardaki kod blokları kopyalanıp kurulum gerektirmeyen <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener">Java Playground</a>'da çalıştırılabilir; kendi bilgisayarınıza JDK ve bir editör kurmak için <a href={href('/rehberler')}>rehberlere</a> bakın.</p>
+
+      <h2 id="degerlendirme">Değerlendirme</h2>
+      <table>
+        <thead><tr><th>Bileşen</th><th>Ağırlık</th><th>Not</th></tr></thead>
+        <tbody>
+          {course.assessment.components.map((c) => <tr><td class="font-medium text-ink">{c.name}</td><td>%{c.weight}</td><td>{c.note ?? ''}</td></tr>)}
+          {totalWeight !== 100 && <tr><td colspan="3" class="text-xs text-ink-3">Ağırlıklar toplamı %{totalWeight}; kesin dağılım dönem başında duyurulur.</td></tr>}
+        </tbody>
+      </table>
+
+      <div class="not-prose mt-14 border-t border-line pt-8" id="portfolyo-bolumu"><Portfolio /></div>
+
+      <div class="not-prose mt-14 border-t border-line pt-8"><AiPolicy /></div>
+
+      <h2 id="is-yuku">İş yükü ve AKTS</h2>
+      <table>
+        <thead><tr><th>Etkinlik</th><th>Sayı</th><th>Süre (saat)</th><th>Toplam</th></tr></thead>
+        <tbody>
+          {course.assessment.activities.map((a) => <tr><td>{a.name}</td><td>{a.count}</td><td>{a.hours}</td><td>{a.total}</td></tr>)}
+          <tr><td class="font-semibold text-ink" colspan="3">Toplam iş yükü</td><td class="font-semibold text-ink">{course.assessment.totalWorkload} saat</td></tr>
+        </tbody>
+      </table>
+      <p class="text-sm text-ink-3">{course.assessment.ectsRule} {course.assessment.totalWorkload} / 30 ≈ {course.credits.ects} AKTS.</p>
+
+      <h2 id="kaynaklar">Kaynaklar ve ders kitapları</h2>
+      <ul>
+        {course.textbooks.map((b) => (
+          <li>
+            <strong>{b.title}</strong> — {b.author}{b.edition ? `, ${b.edition}` : ''}{b.publisher ? ` · ${b.publisher}` : ''}{b.year ? `, ${b.year}` : ''}
+            {b.url && <> · <a href={b.url} target="_blank" rel="noopener">çevrimiçi</a></>}
+            {b.note && <span class="text-ink-3"> ({b.note})</span>}
+          </li>
+        ))}
+      </ul>
+      <p>Yazılım, araçlar ve ek bağlantılar için <a href={href('/kaynaklar')}>Kaynaklar</a> sayfasına bakın.</p>
+
+      <h2 id="ogretim-uyesi">Öğretim üyesi ve asistan</h2>
+      <p><strong>{course.instructor.name}</strong> · Dersin sorumlusu<br /><a href={`mailto:${course.instructor.email}`}>{course.instructor.email}</a></p>
+      <p><strong>{assistant.name}</strong> · {assistant.role ? `${assistant.role} asistanı` : 'Asistan'}{assistant.email && <><br /><a href={`mailto:${assistant.email}`}>{assistant.email}</a></>}</p>
+      <div class="mt-8"><Channels /></div>
+      <p><a href={href('/ders-akisi')} class="btn-primary !no-underline !text-paper">Ders akışına geç →</a></p>
+    </article>
+  </div>
+</BaseLayout>

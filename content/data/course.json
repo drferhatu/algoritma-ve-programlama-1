@@ -1,0 +1,451 @@
+{
+  "title": "Algoritma ve Programlama I",
+  "titleEn": "Algorithms and Programming I",
+  "shortTitle": "Algo-I",
+  "code": "YMT1101",
+  "university": "Fırat Üniversitesi",
+  "faculty": "Teknoloji Fakültesi",
+  "program": "Yazılım Mühendisliği",
+  "audience": "Yazılım Mühendisliği 1. sınıf (A ve B şubeleri)",
+  "level": "Lisans",
+  "semesters": [
+    "Güz"
+  ],
+  "academicYear": "2026–2027",
+  "language": "Türkçe (programlama dili: Java)",
+  "credits": {
+    "theory": 3,
+    "practice": 2,
+    "lab": 2,
+    "local": 4,
+    "ects": 6
+  },
+  "prerequisites": "Yok. Bilgisayar bilimiyle ilk kez tanışan öğrenciler için tasarlanmıştır.",
+  "instructor": {
+    "name": "Doç. Dr. Ferhat Uçar",
+    "email": "fucar@firat.edu.tr"
+  },
+  "assistant": {
+    "name": "Arş. Gör. Ömer Miraç Kökçam",
+    "role": "Laboratuvar"
+  },
+  "sections": [
+    {
+      "id": "A",
+      "theory": "Cuma 09.15",
+      "lab": "Çarşamba 13.15"
+    },
+    {
+      "id": "B",
+      "theory": "Cuma 13.15",
+      "lab": "Perşembe 15.15"
+    }
+  ],
+  "classTime": "Cuma 09.15 (A) · Cuma 13.15 (B)",
+  "methods": [
+    "Yüz yüze ders (slayt yok; ders sitesi yansıda açık)",
+    "Kağıt üzerinde haftanın bulmacası",
+    "Canlı kodlama ve \"önce tahmin, sonra çalıştır\"",
+    "Hata avı (bilerek hatalı kodda hata sayma)",
+    "Bilgisayar laboratuvarı (haftalık görevler)",
+    "Portfolyo temelli dönem projesi (GitHub)"
+  ],
+  "purpose": "Bu dersin amacı, bilgisayar bilimiyle ilk kez tanışan öğrencilere algoritmik düşünmeyi ve Java ile programlamanın temellerini uygulamalı olarak kazandırmaktır. Öğrenciler ilk günden itibaren kod çalıştırır; bir problemi adımlara dökmeyi, akış diyagramı ve sözde kodla ifade etmeyi, seçim ve döngü yapılarıyla çözmeyi, metotlarla düzenlemeyi ve dizilerle veri işlemeyi öğrenir. Dönem boyunca GitHub'da büyüyen bir portfolyo uygulaması geliştirirler.",
+  "justification": "Programlama, yazılım mühendisliğinin bütün derslerinin üzerine kurulduğu temeldir. Bu ders, öğrencilerin problem çözme alışkanlığını, sözdizimi kesinliğine dayanan bir dille (Java) disiplinli kod yazma becerisini ve hata ayıklama refleksini kazandırır. Yapay zeka araçlarının kod ürettiği bir çağda, kodu okuyup anlayabilen, doğrulayabilen ve kendi algoritmasını savunabilen mühendisler yetiştirmek dersin varlık sebebidir.",
+  "outcomes": [
+    {
+      "id": "ÖÇ1",
+      "text": "Bir problemi algoritmik adımlara döker; akış diyagramı ve sözde kod ile ifade eder.",
+      "weeks": [
+        1,
+        2,
+        13
+      ]
+    },
+    {
+      "id": "ÖÇ2",
+      "text": "Java programı yazar, derler, çalıştırır; sözdizimi, çalışma zamanı ve mantık hatalarını ayırt edip düzeltir.",
+      "weeks": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "ÖÇ3",
+      "text": "Değişken, veri tipi, operatör ve Scanner ile girdi alma yapılarını doğru kullanır.",
+      "weeks": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "ÖÇ4",
+      "text": "Seçim (if/else, switch) ve tekrar (while, do-while, for) yapılarıyla problem çözer; gözcü değerli ve iç içe döngüler kurar.",
+      "weeks": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "ÖÇ5",
+      "text": "Metot tanımlar, parametre ve dönüş değerini kullanır; programı artımlı geliştirir ve çağrı yığınını izler.",
+      "weeks": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "ÖÇ6",
+      "text": "Tek ve çok boyutlu diziler ile String üzerinde arama, sıralama ve sayma algoritmaları yazar; küçük bir uygulama geliştirip GitHub'da sunar.",
+      "weeks": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ],
+  "assessment": {
+    "components": [
+      {
+        "name": "Ara sınav",
+        "weight": 40,
+        "note": "Kağıt üzerinde: kod izleme, boşluk doldurma ve portfolyodan 10 puanlık soru (\"ilk sürümündeki seçim yapısını yaz\"). Yapay zeka kullanılmaz. Tarih bölümce ilan edilecek (9. hafta civarı)."
+      },
+      {
+        "name": "Yarıyıl sonu sınavı",
+        "weight": 60,
+        "note": "Kağıt üzerinde. İçinde 15 puanlık portfolyo metot sorusu (\"uygulamandaki ... metodunu yaz ve şu girdiyle izle / şu ek koşulla değiştir\"). Portfolyosunu teslim etmeyen bu soruyu yapamaz."
+      }
+    ],
+    "activities": [
+      {
+        "name": "Teori dersi",
+        "count": 14,
+        "hours": 3,
+        "total": 42
+      },
+      {
+        "name": "Laboratuvar",
+        "count": 14,
+        "hours": 2,
+        "total": 28
+      },
+      {
+        "name": "Sınıf dışı çalışma",
+        "count": 14,
+        "hours": 3,
+        "total": 42
+      },
+      {
+        "name": "Laboratuvar görevi tamamlama",
+        "count": 13,
+        "hours": 2,
+        "total": 26
+      },
+      {
+        "name": "Portfolyo kilometre taşları",
+        "count": 4,
+        "hours": 5,
+        "total": 20
+      },
+      {
+        "name": "Ara sınav hazırlığı",
+        "count": 1,
+        "hours": 10,
+        "total": 10
+      },
+      {
+        "name": "Final hazırlığı",
+        "count": 1,
+        "hours": 12,
+        "total": 12
+      }
+    ],
+    "totalWorkload": 180,
+    "ectsRule": "30 saatlik çalışma 1 AKTS kredisi sayılır."
+  },
+  "textbooks": [
+    {
+      "author": "Allen B. Downey, Chris Mayfield",
+      "title": "Think Java: How to Think Like a Computer Scientist",
+      "edition": "2. baskı",
+      "publisher": "O'Reilly / Green Tea Press",
+      "year": 2019,
+      "url": "https://chrismayfield.github.io/ThinkJava2/",
+      "note": "Açık erişimli; dersin ana kitabı. Bölüm 1-7 bu dönemin konularıdır."
+    },
+    {
+      "author": "Y. Daniel Liang",
+      "title": "Introduction to Java Programming and Data Structures",
+      "edition": "12. baskı",
+      "publisher": "Pearson",
+      "year": 2019,
+      "note": "Bölüm 1-8 (giriş, temel tipler, seçim, döngü, metot, diziler). Bol alıştırmalı yardımcı kaynak."
+    }
+  ],
+  "software": [
+    {
+      "name": "JDK 21 (LTS)",
+      "url": "https://adoptium.net/",
+      "desc": "Java derleyicisi ve çalışma ortamı. Kurulum rehberi sitede."
+    },
+    {
+      "name": "Java Playground",
+      "url": "https://dev.java/playground/",
+      "desc": "Kurulum ve hesap gerektirmeyen, telefonda da çalışan tarayıcı ortamı. Derste kullanıyoruz."
+    },
+    {
+      "name": "VS Code + Extension Pack for Java",
+      "url": "https://code.visualstudio.com/docs/java/java-tutorial",
+      "desc": "Laboratuvarda kullanacağımız editör."
+    },
+    {
+      "name": "Git",
+      "url": "https://git-scm.com/",
+      "desc": "Sürüm kontrolü; portfolyoyu GitHub'a göndermek için."
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/",
+      "desc": "Portfolyo deposunun yaşadığı yer. Öğrenci paketi ücretsiz."
+    },
+    {
+      "name": "GitHub Codespaces",
+      "url": "https://github.com/features/codespaces",
+      "desc": "Tarayıcıda çalışan tam VS Code; kendi bilgisayarına kurulum yapamayanlar için."
+    }
+  ],
+  "resources": [
+    {
+      "group": "Öğrenme kaynakları",
+      "items": [
+        {
+          "name": "Think Java 2 (çevrimiçi)",
+          "url": "https://chrismayfield.github.io/ThinkJava2/",
+          "desc": "Ana ders kitabı, ücretsiz ve tam metin."
+        },
+        {
+          "name": "dev.java – Learn Java",
+          "url": "https://dev.java/learn/",
+          "desc": "Oracle'ın resmî, güncel Java öğretici serisi."
+        },
+        {
+          "name": "Java 21 API belgeleri",
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/",
+          "desc": "Math, String, Scanner, Arrays sınıflarının resmî başvurusu."
+        }
+      ]
+    },
+    {
+      "group": "Pratik siteleri",
+      "items": [
+        {
+          "name": "CodingBat Java",
+          "url": "https://codingbat.com/java",
+          "desc": "Kısa metot alıştırmaları; anında kontrol. Metot haftalarından itibaren."
+        },
+        {
+          "name": "Exercism Java yolu",
+          "url": "https://exercism.org/tracks/java",
+          "desc": "Mentörlü, kademeli alıştırmalar."
+        },
+        {
+          "name": "Project Euler",
+          "url": "https://projecteuler.net/",
+          "desc": "Döngü ve dizi becerisini zorlayan matematiksel problemler."
+        }
+      ]
+    },
+    {
+      "group": "Kod okuma ve hata ayıklama",
+      "items": [
+        {
+          "name": "Java Visualizer (Python Tutor)",
+          "url": "https://pythontutor.com/java.html",
+          "desc": "Kodu adım adım çalıştırıp değişkenleri ve yığını görselleştirir. Kod izleme sorularına hazırlık."
+        },
+        {
+          "name": "Java Playground",
+          "url": "https://dev.java/playground/",
+          "desc": "Küçük parçaları hızla deneyip hata mesajını okuma alanı."
+        },
+        {
+          "name": "Stack Overflow – Java etiketi",
+          "url": "https://stackoverflow.com/questions/tagged/java",
+          "desc": "Hata mesajını aratmanın klasik adresi; cevabı kopyalamadan önce anlayın."
+        }
+      ]
+    }
+  ],
+  "tagline": "Bulmacayla başlayan, kodla biten 14 hafta: bilgisayar bilimci gibi düşünmeye Java ile başlayın.",
+  "codingPhilosophy": "Bu derste kodu siz yazacaksınız. Yapay zeka size yardım edebilir ama anlatamadığınız kod sizin değildir. Her hafta bir kağıt bulmacasıyla başlıyoruz; çünkü algoritma önce kafada, sonra kağıtta, en son klavyede olur. Java'nın sözdizimi kesinliği bir engel değil, bir öğretmendir: noktalı virgül unutulunca derleyici sizi düzeltir. Hata almak öğrenmenin ta kendisidir.",
+  "channels": [
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp duyuru kanalı",
+      "desc": "Tüm derslerim için ortak duyuru kanalı. Hızlı duyurular ve hatırlatmalar; herkesin katılması beklenir.",
+      "url": "https://whatsapp.com/channel/0029Va7485X6WaKnrgJdep2i",
+      "cta": "Kanala katıl"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram · dr.ferhatucar",
+      "desc": "Yapay zeka, yazılım ve kariyer üzerine kısa paylaşımlar.",
+      "url": "https://www.instagram.com/dr.ferhatucar",
+      "cta": "Takip et"
+    },
+    {
+      "id": "calendar",
+      "name": "Herkese açık iş takvimi",
+      "desc": "Haftalık programım; ders, toplantı ve müsait saatlerim.",
+      "url": "https://calendar.google.com/calendar/u/0?cid=ZDVmMWU1ZWFiNWM0ZTE2ZGVjMjU2NGI2M2ViYjNmYjI1YjkwOGI4ZjJlNmIyNTRhNzhmZWMwNjNmM2U4NWRjNUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t",
+      "cta": "Takvimi aç"
+    },
+    {
+      "id": "office",
+      "name": "Ofis saati randevusu",
+      "desc": "Soru, proje veya danışma için uygun bir saat seçin.",
+      "url": "https://calendar.app.google/3woNnqLwS7RhtEBR7",
+      "cta": "Randevu al"
+    }
+  ],
+  "aiPolicy": {
+    "intro": "Yapay zeka bu derste yasak değil; ama her yerde aynı kural geçerli değil. Trafik ışığı gibi düşünün: hangi bölgede olduğunuzu bilin, kuralı ve gerekçesini anlayın. Öğretim üyesi de şeffaf: ders materyali hazırlığında yapay zeka kullanılıyor, notlandırmada kullanılmıyor.",
+    "levels": [
+      {
+        "id": "kirmizi",
+        "label": "Kırmızı",
+        "where": "Vize ve final",
+        "rule": "Yapay zeka yok. Sınav kağıt üzerinde; telefon ve bilgisayar kapalı.",
+        "why": "Ölçtüğümüz şey sizin zihniniz. Bir kodu okuyup izleyebiliyor musunuz, bir döngüyü kafanızda çalıştırabiliyor musunuz; bunu sizin yerinize kimse yapamaz."
+      },
+      {
+        "id": "sari",
+        "label": "Sarı",
+        "where": "Laboratuvar",
+        "rule": "Yapay zekaya soru sorulabilir, kavram açıklattırılabilir; ama kod kopyalanmaz. Asistan istediğinde ekranınızı görebilir.",
+        "why": "Ustalaşma takılıp çözmekle olur. Hazır kodu yapıştıran, takıldığı yeri hiç görmemiş olur ve sınavda o yerde takılır."
+      },
+      {
+        "id": "yesil",
+        "label": "Yeşil",
+        "where": "Portfolyo ve ev çalışması",
+        "rule": "Yapay zeka serbest. Ama her teslimde kısa bir AI beyanı: hangi araç, ne için, hangi kısmı kendiniz yazdınız, yapay zekanın hangi hatasını yakaladınız.",
+        "why": "Meslekte böyle çalışacaksınız. Ama anlatamadığınız kod sizin değildir; vizede ve finalde portfolyonuzdan soru gelir."
+      }
+    ]
+  },
+  "portfolio": {
+    "intro": "Her öğrencinin GitHub'da tek bir deposu olur ve dönem boyunca küçük bir uygulama bu depoda büyür. Konu serbesttir (not hesaplayıcı, sinema bileti, kütüphane, oyun, bütçe takibi...), ama her uygulama ortak sözleşmeye uyar. Dört kilometre taşında (KT) teslim alınır; vize ve final sorularının bir kısmı doğrudan sizin uygulamanızdan gelir. Proje konusu dağıtımı ilerleyen haftalarda duyurulacak.",
+    "milestones": [
+      {
+        "id": "KT1",
+        "week": 5,
+        "title": "Konu ve ilk sürüm: seçim yapıları",
+        "desc": "Depo açıldı, konu belirlendi. Uygulama kullanıcıdan girdi alır ve en az bir if/else veya switch ile karar verir. Vizedeki 10 puanlık soru bu sürümden gelir."
+      },
+      {
+        "id": "KT2",
+        "week": 8,
+        "title": "Döngülü sürüm: gözcü değerle biten menü",
+        "desc": "Uygulamanın ana akışı gözcü değerle (ör. 0 veya 'q') biten bir döngüde çalışır; girdi doğrulama döngüsü vardır."
+      },
+      {
+        "id": "KT3",
+        "week": 11,
+        "title": "Metotlu ve dizili sürüm",
+        "desc": "Kod metotlara bölünmüştür: girdi doğrulayan bir metot ve dizi alıp tek değer döndüren bir metot zorunludur. Veriler dizide tutulur."
+      },
+      {
+        "id": "KT4",
+        "week": 14,
+        "title": "Son teslim ve üç dil",
+        "desc": "README, AI beyanı, çalışan son sürüm. Ek: uygulamanın çekirdek algoritması yapay zeka yardımıyla Python ve C'ye çevrilmiş, farklar bir paragrafta anlatılmıştır. Finaldeki 15 puanlık soru bu sürümden gelir."
+      }
+    ],
+    "rules": [
+      "Tek depo, tek uygulama; her kilometre taşı aynı deponun yeni sürümüdür (etiket veya klasör).",
+      "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü zorunludur.",
+      "Her teslimde README.md ve kısa AI beyanı bulunur (şablon: /rehber/ai-beyani).",
+      "Kod yapay zeka ile yazılabilir (yeşil bölge) ama her satırını anlatabilmelisiniz; sınavda o kodu kağıda yazmanız istenir.",
+      "Teslim, kilometre taşı haftasındaki laboratuvar saatine kadar GitHub'a push ile yapılır; geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
+      "Kopya bulunan iki depo için de kilometre taşı geçersiz sayılır."
+    ]
+  },
+  "aiTools": {
+    "intro": "Tek bir “yapay zeka” yok; elinizin altında yedi güçlü seçenek var ve hepsinin ücretsiz katmanı var. Birinin günlük kotası bitince diğerine geçin; ücretli plana geçmeden önce ücretsizleri gerçekten tüketin.",
+    "tip": "Ücretsiz kalma taktiği: sabah Gemini, kota bitince Claude, kaynak ararken Perplexity, uzun PDF için Kimi. Dört ücretsiz hesap, sıfır lira.",
+    "student": "Google, üniversite öğrencilerine 1 yıl ücretsiz Gemini planı veriyor (başvuru 31 Aralık 2026'ya kadar). Koşullar değişebilir; gemini.google/students adresinden kontrol edin.",
+    "studentUrl": "https://gemini.google/students/",
+    "items": [
+      {
+        "id": "chatgpt",
+        "name": "ChatGPT",
+        "by": "OpenAI",
+        "url": "https://chatgpt.com",
+        "desc": "En yaygın olan. Bir derleyici hatasını yapıştırıp \"bu ne demek?\" diye sormak için iyi bir ilk durak; kod yazdırmadan önce kavramı açıklattırın.",
+        "free": "var, günlük kota",
+        "highlight": "Hata açıklama, ses modu, Codex ajanı"
+      },
+      {
+        "id": "claude",
+        "name": "Claude",
+        "by": "Anthropic",
+        "url": "https://claude.ai",
+        "desc": "Uzun metin, dikkatli yazım ve Türkçe kalitesi. Bir programı satır satır açıklattırmak, README yazdırmak; masaüstü uygulaması ve Claude Code ile bilgisayarınızda kod çalıştırma.",
+        "free": "var",
+        "highlight": "Masaüstü uygulaması, Claude Code"
+      },
+      {
+        "id": "gemini",
+        "name": "Gemini",
+        "by": "Google",
+        "url": "https://gemini.google.com",
+        "desc": "Ücretsiz katmanı en cömertlerden; Drive ve YouTube ile bütünleşik. Öğrenci kampanyasıyla bir yıl ücretsiz üst plan.",
+        "free": "geniş",
+        "highlight": "Öğrenci kampanyası, NotebookLM"
+      },
+      {
+        "id": "perplexity",
+        "name": "Perplexity",
+        "by": "Perplexity AI",
+        "url": "https://www.perplexity.ai",
+        "desc": "Arama motoru gibi çalışır, her cümlesine kaynak gösterir. Bir Java sınıfının belgesini veya güncel bir aracı ararken ilk durak; kaynağı yine de kendiniz açın.",
+        "free": "var",
+        "highlight": "Kaynaklı cevap"
+      },
+      {
+        "id": "mistral",
+        "name": "Le Chat",
+        "by": "Mistral (Fransa)",
+        "url": "https://chat.mistral.ai",
+        "desc": "Hızlı, sade, Avrupa veri kuralları altında. Günlük soru ve özet işleri için rahat bir alternatif.",
+        "free": "var",
+        "highlight": "Hız, Avrupa merkezli"
+      },
+      {
+        "id": "kimi",
+        "name": "Kimi",
+        "by": "Moonshot AI",
+        "url": "https://www.kimi.com",
+        "desc": "Çok uzun belgelerle ve çok adımlı ajan görevleriyle iyi. Ders kitabının bir bölümünü yükleyip soru sormak için.",
+        "free": "geniş",
+        "highlight": "Uzun belge, ajan modu"
+      },
+      {
+        "id": "qwen",
+        "name": "Qwen",
+        "by": "Alibaba",
+        "url": "https://chat.qwen.ai",
+        "desc": "Çok dilli, görsel anlama ve üretme; açık kaynak modelleri de var. Yedek olarak elinizin altında dursun.",
+        "free": "var",
+        "highlight": "Görsel, açık model"
+      }
+    ]
+  }
+}

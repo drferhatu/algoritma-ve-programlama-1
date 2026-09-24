@@ -1,0 +1,283 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Toc from '@/components/Toc.astro';
+import WeekPager from '@/components/WeekPager.astro';
+import ModuleChip from '@/components/ModuleChip.astro';
+import NotebookEmbed from '@/components/NotebookEmbed.astro';
+import CodeTry from '@/components/CodeTry.astro';
+import Puzzle from '@/components/Puzzle.astro';
+import { render } from 'astro:content';
+import {
+  getWeeksSorted, getLabsSorted, moduleOf, moduleColorVar, scheduleOf, theoryLine, labLine, getLabDates,
+  formatDayDate, sectionOf, assistant, milestoneOf, STATUS_LABEL, href, weekSlug, JAVA_PLAYGROUND, type Lab,
+} from '@/lib/site';
+
+export async function getStaticPaths() {
+  const weeks = await getWeeksSorted();
+  const labs = await getLabsSorted();
+  return weeks.map((w, i) => ({
+    params: { slug: weekSlug(w.data.week) },
+    props: { week: w, prev: weeks[i - 1], next: weeks[i + 1], lab: labs.find((l) => l.data.week === w.data.week) as Lab | undefined },
+  }));
+}
+const { week, prev, next, lab } = Astro.props;
+const { Content, headings } = await render(week);
+const labRender = lab ? await render(lab) : undefined;
+const LabContent = labRender?.Content;
+const m = moduleOf(week.data.module);
+const s = scheduleOf(week.data.week);
+const theory = theoryLine(week.data.week, true);
+const labs = labLine(week.data.week, true);
+const labDates = getLabDates(week.data.week);
+const statusLabel = s && s.status !== 'normal' ? STATUS_LABEL[s.status] : '';
+const ms = milestoneOf(week.data.milestone ?? lab?.data.milestone);
+const tocExtra = [
+  { slug: 'ogrenme-hedefleri', text: 'Öğrenme hedefleri' },
+  ...(week.data.notebook ? [{ slug: 'defter', text: 'Java defteri' }] : []),
+];
+const tocLab = [{ slug: 'lab', text: 'Laboratuvar' }, ...(labRender?.headings ?? []).filter((h) => h.depth === 2).map((h) => ({ slug: h.slug, text: h.text }))];
+const pageTitle = `Hafta ${week.data.week} — ${week.data.title}`;
+const components = { NotebookEmbed, CodeTry, Puzzle };
+---
+<BaseLayout title={pageTitle} description={week.data.description} ogType="article">
+  <!-- Hafta başlığı -->
+  <header class="border-b border-line" style={`--mod:${moduleColorVar(m)}`}>
+    <div class="wrap py-12 md:py-16">
+      <nav aria-label="Konum" class="flex flex-wrap items-center gap-2 text-sm text-ink-3">
+        <a href={href('/haftalar')} class="hover:text-ink">Haftalar</a><span aria-hidden="true">/</span>
+        <a href={href(`/ders-akisi#${m.slug}`)} class="hover:text-ink">{m.title}</a>
+      </nav>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <span class="grid h-12 min-w-12 place-items-center rounded-xl px-3 font-display text-2xl font-semibold text-white bg-[var(--mod)]">{week.data.week}</span>
+        <ModuleChip module={m} size="md" />
+        {week.data.exam && <span class="rounded-full bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent">Sınav</span>}
+        {statusLabel && <span class="rounded-full bg-paper-2 px-2.5 py-1 text-xs font-semibold text-ink-2">{statusLabel}</span>}
+        {ms && <span class="rounded-full bg-accent px-2.5 py-1 text-xs font-semibold text-white">Portfolyo {ms.id}</span>}
+      </div>
+      <h1 class="display mt-5 max-w-4xl text-3xl leading-[1.1] text-ink sm:text-4xl md:text-5xl">{week.data.title}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-2">{week.data.description}</p>
+
+      <!-- Künye: teori ve lab tarihleri -->
+      <dl class="mt-6 grid max-w-2xl gap-x-8 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">
+        <dt class="font-semibold text-ink-2">Teori</dt>
+        <dd class="text-ink">{theory || 'Tarih akademik takvime göre eklenecek'}</dd>
+        <dt class="font-semibold text-ink-2">Laboratuvar</dt>
+        <dd class="text-ink">
+          {labs ? <>{labs} <span class="text-ink-3">(teoriden bir hafta sonra)</span></> : 'Tarih akademik takvime göre eklenecek'}
+          {' '}<a href="#lab" class="font-semibold text-brand hover:underline">Lab içeriği ↓</a>
+        </dd>
+        <dt class="font-semibold text-ink-2">Ders planı</dt>
+        <dd class="text-ink-2">{week.data.topic}</dd>
+      </dl>
+    </div>
+  </header>
+
+  <div class="wrap grid gap-12 py-12 lg:grid-cols-[1fr_240px]">
+    <div class="min-w-0 max-w-3xl">
+      {(week.data.changeNote || (s?.note && s.status !== 'normal')) && (
+        <aside class="callout callout-warn mb-8"><p class="callout-title">Program değişikliği</p><p>{week.data.changeNote || s?.note}</p></aside>
+      )}
+
+      {ms && (
+        <aside class="mb-8 flex gap-4 rounded-2xl border-2 border-accent bg-accent-soft/60 p-5" role="note" aria-label={`Portfolyo kilometre taşı ${ms.id}`}>
+          <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-accent font-display text-lg font-bold text-white" aria-hidden="true">{ms.id}</span>
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Portfolyo kilometre taşı {ms.id}</p>
+            <p class="mt-1 font-display text-lg font-semibold leading-tight text-ink">{ms.title}</p>
+            <p class="mt-1.5 text-sm leading-relaxed text-ink-2">{ms.desc}</p>
+            <a href={href('/ders-hakkinda#portfolyo')} class="mt-2 inline-block text-xs font-semibold text-brand hover:underline">Portfolyo kuralları →</a>
+          </div>
+        </aside>
+      )}
+
+      <!-- Sekmeler -->
+      <div data-tabs>
+        <div class="tabs-nav mb-8 w-fit" role="tablist" aria-label="Hafta içeriği">
+          <button type="button" role="tab" id="tab-teori" class="tab-btn" aria-selected="true" aria-controls="panel-teori" data-tab="teori">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H4zM8 21h8M12 16v5"/></svg>
+            Teori
+          </button>
+          <button type="button" role="tab" id="tab-lab" class="tab-btn" aria-selected="false" aria-controls="panel-lab" data-tab="lab" tabindex="-1">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/></svg>
+            Laboratuvar
+            {lab?.data.status === 'hazir' && <span class="size-1.5 rounded-full bg-accent" aria-hidden="true"></span>}
+          </button>
+        </div>
+
+        <!-- TEORİ -->
+        <article id="panel-teori" role="tabpanel" aria-labelledby="tab-teori" class="tab-panel prose-lesson" data-reading-progress>
+          <h2 class="sr-only">Teori</h2>
+          {week.data.status === 'taslak' && (
+            <aside class="callout callout-note"><p class="callout-title">Hazırlık aşamasında</p><p>Bu haftanın ayrıntılı ders notları henüz yayımlanmadı. Hedefler ve ders planı hazırdır; notlar ders yaklaştıkça eklenecektir.</p></aside>
+          )}
+
+          <section aria-labelledby="ogrenme-hedefleri">
+            <h2 id="ogrenme-hedefleri" class="!mt-10 !border-0 !pt-0">Öğrenme hedefleri</h2>
+            <p>Bu haftanın sonunda:</p>
+            <ul class="!list-none !pl-0 !space-y-3">
+              {week.data.objectives.map((o, i) => (
+                <li class="flex gap-3 rounded-xl border border-line bg-white p-4">
+                  <span class="grid size-7 shrink-0 place-items-center rounded-full text-xs font-bold text-white bg-[var(--mod)]" style={`--mod:${moduleColorVar(m)}`}>{i + 1}</span>
+                  <span class="text-ink">{o}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <Content components={components} />
+
+          {week.data.notebook && week.data.notebook.placement === 'auto' && <NotebookEmbed {...week.data.notebook} />}
+
+          {week.data.tools.length > 0 && (
+            <section>
+              <h2 id="araclar">Bu haftanın araçları</h2>
+              <ul class="!list-none !pl-0 flex flex-wrap gap-2">
+                {week.data.tools.map((t) => <li class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm font-medium text-ink">{t}</li>)}
+              </ul>
+            </section>
+          )}
+          {week.data.resources.length > 0 && (
+            <section>
+              <h2 id="ek-kaynaklar">Ek kaynaklar</h2>
+              <ul>{week.data.resources.map((r) => <li><a href={r.url} rel="noopener" target="_blank">{r.title}</a>{r.note && <span class="text-ink-3"> — {r.note}</span>}</li>)}</ul>
+            </section>
+          )}
+          {week.data.tags.length > 0 && (
+            <p class="mt-10 flex flex-wrap gap-1.5 text-xs"><span class="text-ink-3 mr-1">Etiketler:</span>{week.data.tags.map((t) => <span class="rounded-md bg-paper-2 px-2 py-0.5 text-ink-2">{t}</span>)}</p>
+          )}
+        </article>
+
+        <!-- LABORATUVAR -->
+        <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" class="tab-panel prose-lesson mt-12 border-t border-line pt-10 [[data-tabs-ready]_&]:mt-0 [[data-tabs-ready]_&]:border-0 [[data-tabs-ready]_&]:pt-0">
+          <span id="lab" class="block -mt-28 pt-28" aria-hidden="true"></span>
+          <div class="not-prose rounded-2xl border border-line bg-white p-5 shadow-soft md:p-6">
+            <p class="eyebrow">Laboratuvar · Hafta {week.data.week}</p>
+            <h2 class="display mt-1 text-2xl md:text-3xl">{lab ? lab.data.title : `Hafta ${week.data.week} laboratuvarı`}</h2>
+            {lab && <p class="mt-2 text-[15px] leading-relaxed text-ink-2">{lab.data.description}</p>}
+            <dl class="mt-5 grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-ink-3">Yürüten</dt>
+                <dd class="mt-0.5 font-semibold text-ink">{assistant.name}</dd>
+                {assistant.role && <dd class="text-xs text-ink-3">{assistant.role} asistanı</dd>}
+              </div>
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wider text-ink-3">Tarihler (teoriden bir hafta sonra)</dt>
+                {(['A', 'B'] as const).map((id) => (
+                  <dd class="mt-0.5 text-ink">
+                    <span class="mr-1 inline-block rounded bg-paper-2 px-1.5 text-xs font-bold text-ink-2">{id}</span>
+                    {labDates[id] ? `${formatDayDate(labDates[id], true)} ${sectionOf(id).lab.replace(/^\S+\s*/, '')}` : sectionOf(id).lab}
+                  </dd>
+                ))}
+              </div>
+            </dl>
+          </div>
+
+          {lab ? (
+            <>
+              {lab.data.status === 'taslak' && (
+                <aside class="callout callout-note mt-8"><p class="callout-title">Hazırlık aşamasında</p><p>Bu laboratuvarın yönergesi henüz tamamlanmadı; hedefler ve teslim kuralı taslaktır.</p></aside>
+              )}
+              {lab.data.objectives.length > 0 && (
+                <section class="mt-8" aria-labelledby="lab-hedefler">
+                  <h2 id="lab-hedefler" class="!mt-0 !border-0 !pt-0">Lab hedefleri</h2>
+                  <ul class="!list-none !pl-0 !space-y-3">
+                    {lab.data.objectives.map((o, i) => (
+                      <li class="flex gap-3 rounded-xl border border-line bg-white p-4">
+                        <span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent text-xs font-bold text-white">{i + 1}</span>
+                        <span class="text-ink">{o}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+              {LabContent && <LabContent components={components} />}
+              {lab.data.deliverable && (
+                <aside class="callout callout-why"><p class="callout-title">Teslim{lab.data.milestone ? ` · Portfolyo ${lab.data.milestone}` : ''}</p><p>{lab.data.deliverable}</p></aside>
+              )}
+              {lab.data.tools.length > 0 && (
+                <section>
+                  <h2 id="lab-araclar">Lab araçları</h2>
+                  <ul class="!list-none !pl-0 flex flex-wrap gap-2">
+                    {lab.data.tools.map((t) => <li class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm font-medium text-ink">{t}</li>)}
+                  </ul>
+                </section>
+              )}
+            </>
+          ) : (
+            <aside class="callout callout-note mt-8">
+              <p class="callout-title">Hazırlanıyor</p>
+              <p>Bu haftanın laboratuvar içeriği hazırlanıyor. Lab, teori dersinden bir hafta sonra yapılır; yönerge lab gününden önce burada yayımlanır.</p>
+            </aside>
+          )}
+          <p class="mt-8 text-sm text-ink-3">Lab sırasında kodu kendi bilgisayarınızda ya da <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener">Java Playground</a>'da çalıştırabilirsiniz.</p>
+        </section>
+      </div>
+
+      <WeekPager prev={prev} next={next} />
+    </div>
+
+    <aside class="hidden lg:block">
+      <div class="sticky top-24 space-y-8">
+        <Toc headings={headings} extra={tocExtra} />
+        <nav aria-label="Laboratuvar" class="text-sm">
+          <p class="eyebrow mb-3">Laboratuvar</p>
+          <ol class="space-y-1.5 border-l border-line">
+            {tocLab.map((h) => <li><a href={`#${h.slug}`} class="-ml-px block border-l-2 border-transparent pl-3 py-0.5 leading-snug text-ink-3 transition-colors hover:text-ink">{h.text}</a></li>)}
+          </ol>
+        </nav>
+        <div class="rounded-xl border border-line bg-white p-4 text-sm">
+          <p class="eyebrow mb-2">Modül</p>
+          <p class="font-semibold text-ink">{m.title}</p>
+          <p class="mt-1 text-xs text-ink-3">Hafta {m.weeks[0]}–{m.weeks.at(-1)}</p>
+          <a href={href(`/ders-akisi#${m.slug}`)} class="mt-3 inline-block text-xs font-semibold text-brand hover:underline">Modüldeki tüm haftalar →</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  // Teori / Laboratuvar sekmeleri. JS yoksa her iki panel görünür kalır.
+  const root = document.querySelector<HTMLElement>('[data-tabs]');
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    root.setAttribute('data-tabs-ready', '');
+    const labIds = new Set(['lab', 'panel-lab', 'lab-hedefler', 'lab-araclar']);
+
+    const activate = (name: string, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === name;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => { p.hidden = p.id !== `panel-${name}`; });
+    };
+
+    const fromHash = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!id) return;
+      const inLab = labIds.has(id) || !!root.querySelector(`#panel-lab #${CSS.escape(id)}`);
+      activate(inLab ? 'lab' : 'teori');
+      requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
+    };
+
+    activate('teori');
+    fromHash();
+    addEventListener('hashchange', fromHash);
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => {
+        activate(t.dataset.tab!);
+        history.replaceState(null, '', t.dataset.tab === 'lab' ? '#lab' : location.pathname);
+      });
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        activate(n.dataset.tab!, true);
+      });
+    });
+  }
+</script>

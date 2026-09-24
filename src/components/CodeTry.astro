@@ -1,0 +1,54 @@
+---
+/**
+ * Kopyalanabilir Java kod bloğu.
+ * MDX'te kullanım:
+ *   import CodeTry from '@/components/CodeTry.astro';
+ *   <CodeTry title="Merhaba dünya" hint="Sınıf adı Main olmalı.">
+ *   ```java
+ *   public class Main { ... }
+ *   ```
+ *   </CodeTry>
+ * Slot içindeki kod bloğu Shiki ile normal biçimde render edilir; bileşen üstte
+ * başlık + "Kopyala" + "Java Playground'da dene ↗" şeridi, altta ipucu ekler.
+ */
+import { JAVA_PLAYGROUND } from '@/lib/site';
+interface Props { title?: string; hint?: string; }
+const { title = 'Kodu deneyin', hint } = Astro.props;
+---
+<figure class="codetry" data-codetry>
+  <figcaption class="codetry-head">
+    <span class="flex items-center gap-2 text-sm font-bold text-ink">
+      <span class="grid size-6 place-items-center rounded-md bg-accent-soft font-mono text-[11px] font-bold text-accent" aria-hidden="true">{'{ }'}</span>
+      {title}
+    </span>
+    <span class="flex flex-wrap items-center gap-2">
+      <button type="button" class="codetry-btn" data-copy aria-live="polite">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+        <span data-copy-label>Kopyala</span>
+      </button>
+      <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="codetry-btn">Java Playground'da dene ↗</a>
+    </span>
+  </figcaption>
+  <div class="codetry-body"><slot /></div>
+  {hint && <p class="border-t border-line bg-paper-2/40 px-4 py-2.5 text-xs leading-relaxed text-ink-2"><span class="font-semibold text-ink">İpucu:</span> {hint}</p>}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-codetry]').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('[data-copy]');
+    const label = box.querySelector<HTMLElement>('[data-copy-label]');
+    const code = box.querySelector<HTMLElement>('.codetry-body pre');
+    if (!btn || !code) return;
+    if (!navigator.clipboard) { btn.hidden = true; return; }
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.innerText.replace(/\n$/, ''));
+        btn.setAttribute('data-copied', '');
+        if (label) label.textContent = 'Kopyalandı';
+        setTimeout(() => { btn.removeAttribute('data-copied'); if (label) label.textContent = 'Kopyala'; }, 1800);
+      } catch {
+        if (label) label.textContent = 'Kopyalanamadı';
+      }
+    });
+  });
+</script>

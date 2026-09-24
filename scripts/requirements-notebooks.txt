@@ -1,0 +1,6 @@
+# GitHub Actions ve yerel derleme için defter çalıştırma bağımlılıkları (Java defterleri)
+# Java çekirdeği (IJava) ayrıca kurulur; bkz. scripts/build_notebooks.py başlığı.
+nbformat
+nbconvert
+nbclient
+ipykernel

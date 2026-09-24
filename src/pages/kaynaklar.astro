@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { course, href, JAVA_PLAYGROUND, REPO } from '@/lib/site';
+import { getCollection } from 'astro:content';
+import AiTools from '@/components/AiTools.astro';
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const hostOf = (u: string) => { try { return new URL(u).hostname; } catch { return ''; } };
+---
+<BaseLayout title="Kaynaklar" description="Ders kitapları, Java araçları, çevrimiçi alıştırma siteleri ve yapay zeka araçları.">
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Kaynaklar" title="Kitaplar, araçlar ve alıştırma siteleri" lede="Derste kullanılan tüm araçlar ücretsizdir. Kitapların açık erişimli sürümleri varsa bağlantısı verilmiştir." />
+  </div>
+  <div class="wrap space-y-20 pb-24">
+    <section aria-labelledby="hizli">
+      <h2 id="hizli" class="display mb-6 text-2xl md:text-3xl">Hızlı başlangıç</h2>
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <li><a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="block h-full rounded-2xl border border-line bg-white p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+          <p class="font-display text-xl font-semibold text-ink">Java Playground ↗</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">Kurulum gerektirmez; sayfadaki kod bloklarını yapıştırıp tarayıcıda çalıştırın.</p></a></li>
+        <li><a href={href('/rehberler')} class="block h-full rounded-2xl border border-line bg-white p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+          <p class="font-display text-xl font-semibold text-ink">Kurulum rehberleri</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">JDK ve editör kurulumu, ilk programı derleme, portfolyo teslimi.</p></a></li>
+        <li><a href={`https://github.com/${REPO}`} target="_blank" rel="noopener" class="block h-full rounded-2xl border border-line bg-white p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+          <p class="font-display text-xl font-semibold text-ink">Ders deposu (GitHub) ↗</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">Derste çalıştırılan Java defterleri ve tüm ders içeriği.</p></a></li>
+      </ul>
+    </section>
+
+    {guides.length > 0 && (
+      <section aria-labelledby="rehberler">
+        <h2 id="rehberler" class="display mb-2 text-2xl md:text-3xl">Rehberler</h2>
+        <p class="mb-6 text-ink-2">Kendi bilgisayarınızda Java ile çalışmak isteyenler için adım adım rehberler. <a href={href('/rehberler')} class="link">Tümü →</a></p>
+        <ul class="grid gap-4 md:grid-cols-2">
+          {guides.map((g) => (
+            <li><a href={href(`/rehber/${g.id}`)} class="group block h-full rounded-2xl border border-line bg-white p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+              <p class="font-display text-xl font-semibold text-ink group-hover:text-brand">{g.data.title}</p>
+              <p class="mt-2 text-sm leading-relaxed text-ink-2">{g.data.description}</p>
+              <span class="mt-4 inline-block text-sm font-semibold text-accent">Rehberi aç →</span></a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section aria-labelledby="kitaplar">
+      <h2 id="kitaplar" class="display mb-6 text-2xl md:text-3xl">Ders kitapları</h2>
+      <ul class="grid gap-4 md:grid-cols-2">
+        {course.textbooks.map((b) => (
+          <li class="flex gap-5 rounded-2xl border border-line bg-white p-6 shadow-soft">
+            <span class="grid h-24 w-16 shrink-0 place-items-center rounded-md bg-ink font-display text-2xl text-paper" aria-hidden="true">{b.title[0]}</span>
+            <div>
+              <p class="font-display text-xl font-semibold leading-snug text-ink">{b.title}</p>
+              <p class="mt-1 text-sm text-ink-2">{b.author}{b.edition ? `, ${b.edition}` : ''}{b.publisher ? ` · ${b.publisher}` : ''}{b.year ? `, ${b.year}` : ''}</p>
+              {b.note && <p class="mt-2 text-sm text-ink-3">{b.note}</p>}
+              {b.url && <a href={b.url} target="_blank" rel="noopener" class="mt-3 inline-block text-sm font-semibold text-accent hover:underline">Çevrimiçi aç →</a>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="yazilim">
+      <h2 id="yazilim" class="display mb-2 text-2xl md:text-3xl">Yazılım ve araçlar</h2>
+      <p class="mb-6 text-ink-2">Hepsi ücretsiz. Kurulum gerekmeyenler tarayıcıda çalışır.</p>
+      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {course.software.map((s) => (
+          <li><a href={s.url} target="_blank" rel="noopener" class="block h-full rounded-xl border border-line bg-white p-4 transition-colors hover:border-ink">
+            <p class="font-semibold text-ink">{s.name}</p><p class="mt-1 text-sm text-ink-2">{s.desc}</p></a></li>
+        ))}
+      </ul>
+    </section>
+
+    {course.resources.map((g) => (
+      <section aria-labelledby={g.group}>
+        <h2 id={g.group} class="display mb-6 text-2xl md:text-3xl">{g.group}</h2>
+        <ul class="divide-y divide-line rounded-2xl border border-line bg-white">
+          {g.items.map((r) => (
+            <li class="flex flex-col gap-1 p-5 sm:flex-row sm:items-baseline sm:justify-between">
+              <div><a href={r.url} target="_blank" rel="noopener" class="font-semibold text-ink hover:text-brand hover:underline">{r.name}</a><p class="text-sm text-ink-2">{r.desc}</p></div>
+              <span class="max-w-[220px] truncate text-xs text-ink-3">{hostOf(r.url)}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <AiTools />
+  </div>
+</BaseLayout>

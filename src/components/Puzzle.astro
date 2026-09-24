@@ -1,0 +1,31 @@
+---
+/**
+ * Haftanın bulmacası kutusu.
+ * MDX'te kullanım:
+ *   import Puzzle from '@/components/Puzzle.astro';
+ *   <Puzzle title="Kapıdaki üç anahtar" kind="bulmaca"> ... markdown ... </Puzzle>
+ * kind: bulmaca (varsayılan) | insan-bilgisayar (kağıt üstünde "bilgisayar gibi" çalıştırma) | tahmin (çıktıyı tahmin et)
+ */
+interface Props { title: string; kind?: 'bulmaca' | 'insan-bilgisayar' | 'tahmin'; }
+const { title, kind = 'bulmaca' } = Astro.props;
+const KIND = {
+  'bulmaca': { label: 'Haftanın bulmacası', color: 'var(--color-accent)', soft: 'var(--color-accent-soft)',
+    icon: 'M9.5 3.5a2 2 0 0 1 4 0V5h4a1 1 0 0 1 1 1v4h-1.5a2 2 0 0 0 0 4H18.5v4a1 1 0 0 1-1 1h-4v-1.5a2 2 0 0 0-4 0V19h-4a1 1 0 0 1-1-1v-4H6a2 2 0 0 0 0-4H4.5V6a1 1 0 0 1 1-1h4z' },
+  'insan-bilgisayar': { label: 'İnsan bilgisayar', color: 'var(--mod-navy)', soft: 'var(--color-brand-soft)',
+    icon: 'M12 3a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4zM5 21v-1a7 7 0 0 1 14 0v1M9 15h6' },
+  'tahmin': { label: 'Çıktıyı tahmin et', color: 'var(--mod-violet)', soft: '#ede8f7',
+    icon: 'M12 5c-5 0-9 7-9 7s4 7 9 7 9-7 9-7-4-7-9-7zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z' },
+}[kind];
+---
+<aside class="puzzle" style={`border-color:${KIND.color}; background:${KIND.soft};`} role="note" aria-label={`${KIND.label}: ${title}`}>
+  <div class="flex items-center gap-3">
+    <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-white" style={`color:${KIND.color}`} aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={KIND.icon} /></svg>
+    </span>
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-[0.14em]" style={`color:${KIND.color}`}>{KIND.label}</p>
+      <p class="font-display text-lg font-semibold leading-tight text-ink">{title}</p>
+    </div>
+  </div>
+  <div class="puzzle-body mt-4"><slot /></div>
+</aside>

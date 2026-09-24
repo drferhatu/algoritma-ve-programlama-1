@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { href, JAVA_PLAYGROUND } from '@/lib/site';
+import { getCollection } from 'astro:content';
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Rehberler" description="Java kurulumu, editör seçimi, ilk programı derleyip çalıştırma ve portfolyo teslimi için adım adım rehberler.">
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Rehberler" title="Kurulum ve çalışma rehberleri" lede="Kendi bilgisayarınızda Java ile çalışmak, editör kurmak ve portfolyonuzu teslim etmek için adım adım yönergeler. Acelesi olan, kurulum yapmadan tarayıcıda Java Playground'u kullanabilir." />
+  </div>
+  <div class="wrap pb-24">
+    {guides.length === 0 ? (
+      <div class="rounded-2xl border border-dashed border-line-2 p-8 text-center text-ink-3">
+        <p>Rehberler hazırlanıyor. Şimdilik kodu <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="link">Java Playground</a>'da çalıştırabilirsiniz.</p>
+      </div>
+    ) : (
+      <ul class="grid gap-4 md:grid-cols-2">
+        {guides.map((g) => (
+          <li><a href={href(`/rehber/${g.id}`)} class="group block h-full rounded-2xl border border-line bg-white p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift">
+            <p class="font-display text-xl font-semibold text-ink group-hover:text-brand">{g.data.title}</p>
+            <p class="mt-2 text-sm leading-relaxed text-ink-2">{g.data.description}</p>
+            <span class="mt-4 inline-block text-sm font-semibold text-accent">Rehberi aç →</span></a></li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>

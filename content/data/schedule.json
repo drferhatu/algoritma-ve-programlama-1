@@ -1,0 +1,187 @@
+{
+  "_aciklama": "Her haftanın teori (Cuma, A 09.15 / B 13.15) ve laboratuvar tarihleri. Laboratuvar bir hafta gecikmelidir: N. haftanın labı, N. hafta teorisinden sonraki Çarşamba (A, 13.15) ve Perşembe (B, 15.15) yapılır. 'status' değerleri: normal | tatil | ertelendi | sinav. 'note' haftanın yanında kısa uyarı olarak gösterilir. Tarih formatı: YYYY-AA-GG.",
+  "weeks": [
+    {
+      "week": 1,
+      "theory": {
+        "A": "2026-09-25",
+        "B": "2026-09-25"
+      },
+      "lab": {
+        "A": "2026-09-30",
+        "B": "2026-10-01"
+      },
+      "status": "normal",
+      "note": "İlk ders"
+    },
+    {
+      "week": 2,
+      "theory": {
+        "A": "2026-10-02",
+        "B": "2026-10-02"
+      },
+      "lab": {
+        "A": "2026-10-07",
+        "B": "2026-10-08"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 3,
+      "theory": {
+        "A": "2026-10-09",
+        "B": "2026-10-09"
+      },
+      "lab": {
+        "A": "2026-10-14",
+        "B": "2026-10-15"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 4,
+      "theory": {
+        "A": "2026-10-16",
+        "B": "2026-10-16"
+      },
+      "lab": {
+        "A": "2026-10-21",
+        "B": "2026-10-22"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 5,
+      "theory": {
+        "A": "2026-10-23",
+        "B": "2026-10-23"
+      },
+      "lab": {
+        "A": "2026-10-28",
+        "B": "2026-10-29"
+      },
+      "status": "normal",
+      "note": "KT1 teslimi. A şubesi labı 28 Ekim arife (öğleden sonra tatil), B şubesi labı 29 Ekim Cumhuriyet Bayramı; telafi duyurulacak"
+    },
+    {
+      "week": 6,
+      "theory": {
+        "A": "2026-10-30",
+        "B": "2026-10-30"
+      },
+      "lab": {
+        "A": "2026-11-04",
+        "B": "2026-11-05"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 7,
+      "theory": {
+        "A": "2026-11-06",
+        "B": "2026-11-06"
+      },
+      "lab": {
+        "A": "2026-11-11",
+        "B": "2026-11-12"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 8,
+      "theory": {
+        "A": "2026-11-13",
+        "B": "2026-11-13"
+      },
+      "lab": {
+        "A": "2026-11-18",
+        "B": "2026-11-19"
+      },
+      "status": "normal",
+      "note": "KT2 teslimi"
+    },
+    {
+      "week": 9,
+      "theory": {
+        "A": "2026-11-20",
+        "B": "2026-11-20"
+      },
+      "lab": {
+        "A": "2026-11-25",
+        "B": "2026-11-26"
+      },
+      "status": "normal",
+      "note": "Ara sınav haftası; tarih bölümce ilan edilecek"
+    },
+    {
+      "week": 10,
+      "theory": {
+        "A": "2026-11-27",
+        "B": "2026-11-27"
+      },
+      "lab": {
+        "A": "2026-12-02",
+        "B": "2026-12-03"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 11,
+      "theory": {
+        "A": "2026-12-04",
+        "B": "2026-12-04"
+      },
+      "lab": {
+        "A": "2026-12-09",
+        "B": "2026-12-10"
+      },
+      "status": "normal",
+      "note": "KT3 teslimi"
+    },
+    {
+      "week": 12,
+      "theory": {
+        "A": "2026-12-11",
+        "B": "2026-12-11"
+      },
+      "lab": {
+        "A": "2026-12-16",
+        "B": "2026-12-17"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 13,
+      "theory": {
+        "A": "2026-12-18",
+        "B": "2026-12-18"
+      },
+      "lab": {
+        "A": "2026-12-23",
+        "B": "2026-12-24"
+      },
+      "status": "normal",
+      "note": ""
+    },
+    {
+      "week": 14,
+      "theory": {
+        "A": "2026-12-25",
+        "B": "2026-12-25"
+      },
+      "lab": {
+        "A": "2026-12-30",
+        "B": "2026-12-31"
+      },
+      "status": "normal",
+      "note": "Son ders; KT4 son teslim. Lab B 31 Aralık yılbaşı arifesi, saat teyit edilecek"
+    }
+  ]
+}

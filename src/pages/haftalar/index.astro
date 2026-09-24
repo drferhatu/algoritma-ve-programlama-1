@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import WeekCard from '@/components/WeekCard.astro';
+import { getWeeksSorted, modules, TOTAL_WEEKS, href } from '@/lib/site';
+const weeks = await getWeeksSorted();
+---
+<BaseLayout title="Haftalar" description={`Algoritma ve Programlama I dersinin ${TOTAL_WEEKS} haftalık ders listesi; her hafta için hedefler, teori ve laboratuvar tarihleri.`}>
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Haftalar" title={`${TOTAL_WEEKS} hafta, ${TOTAL_WEEKS} ders, ${TOTAL_WEEKS} lab`} lede="Her kart bir haftanın sayfasına gider; sayfada Teori ve Laboratuvar sekmeleri bulunur. Modül rengi sol kenarda; teori ve lab tarihleri sağ üstte, sınav ve portfolyo notları kartın altında yer alır." />
+  </div>
+  <div class="wrap space-y-12 pb-24">
+    {weeks.length === 0 && (
+      <p class="rounded-2xl border border-dashed border-line-2 p-8 text-center text-ink-3">Hafta sayfaları hazırlanıyor. Genel akış için <a class="link" href={href('/ders-akisi')}>ders akışına</a> bakın.</p>
+    )}
+    {modules.map((m) => {
+      const list = weeks.filter((w) => w.data.module === m.id);
+      if (list.length === 0) return null;
+      return (
+        <section aria-labelledby={`mod-${m.id}`}>
+          <div class="mb-4 flex items-baseline gap-3">
+            <span class="size-2.5 rounded-full" style={`background:var(--mod-${m.color})`} aria-hidden="true"></span>
+            <h2 id={`mod-${m.id}`} class="font-semibold text-ink">{m.title}</h2>
+            <span class="text-xs text-ink-3">Hafta {m.weeks[0]}–{m.weeks.at(-1)}</span>
+          </div>
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((w) => <li><WeekCard week={w} /></li>)}
+          </ul>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>

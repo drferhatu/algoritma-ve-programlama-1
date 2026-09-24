@@ -1,0 +1,35 @@
+---
+/**
+ * /laboratuvar/lab-XX → ilgili haftanın sayfasındaki Laboratuvar sekmesine (#lab) yönlendirir.
+ * Lab içeriği hafta sayfasında yaşar; bu rota yalnızca kısa/kalıcı bağlantı içindir.
+ * Her hafta için üretilir; lab dosyası henüz yoksa hafta sayfasında "hazırlanıyor" kutusu görünür.
+ */
+import { getWeeksSorted, getLabsSorted, weekHref, labHref } from '@/lib/site';
+
+export async function getStaticPaths() {
+  const weeks = await getWeeksSorted();
+  const labs = await getLabsSorted();
+  return weeks.map((w) => {
+    const lab = labs.find((l) => l.data.week === w.data.week);
+    return {
+      params: { slug: `lab-${String(w.data.week).padStart(2, '0')}` },
+      props: { week: w.data.week, title: lab?.data.title ?? `Hafta ${w.data.week} laboratuvarı` },
+    };
+  });
+}
+const { week, title } = Astro.props;
+const target = labHref(week);
+---
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={new URL(weekHref(week), Astro.site)} />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <p>Yönlendiriliyor: <a href={target}>{title}</a></p>
+  </body>
+</html>

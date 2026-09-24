@@ -1,0 +1,12 @@
+[
+  { "id": "m1", "slug": "algoritma-ve-javaya-giris", "semester": 1, "title": "Algoritma ve Java'ya Giriş", "short": "Giriş", "weeks": [1,2,3], "color": "teal",
+    "summary": "Bir bulmacayı adımlara dökmekle başlar, ilk Java programınızı ilk gün Playground'da çalıştırırsınız; akış diyagramı, sözde kod, derleme, değişkenler ve Scanner ile girdi." },
+  { "id": "m2", "slug": "karar-ve-tekrar", "semester": 1, "title": "Karar ve Tekrar", "short": "Seçim ve Döngü", "weeks": [4,5,6,7], "color": "blue",
+    "summary": "if/else, switch ve mantıksal operatörlerle karar veren; while, do-while ve for ile tekrar eden programlar. Gözcü değer, iç içe döngü, EBOB ve Monte Carlo. KT1 bu modülde teslim edilir." },
+  { "id": "m3", "slug": "metotlar", "semester": 1, "title": "Metotlar", "short": "Metotlar", "weeks": [8,9], "color": "violet",
+    "summary": "Programı parçalara bölmek: metot tanımı, parametre, return, Math sınıfı, kapsam ve yığın diyagramı; artımlı geliştirme alışkanlığı. KT2 ve ara sınav haftası." },
+  { "id": "m4", "slug": "diziler-ve-metinler", "semester": 1, "title": "Diziler ve Metinler", "short": "Diziler", "weeks": [10,11,12,13], "color": "amber",
+    "summary": "Tek ve çok boyutlu diziler, arama ve sıralama, referans ve kopyalama, String işlemleri; 1. haftanın nehir bulmacası 13. haftada dizilerle kodlanır. KT3 bu modülde." },
+  { "id": "m5", "slug": "kapanis", "semester": 1, "title": "Kapanış", "short": "Kapanış", "weeks": [14], "color": "emerald",
+    "summary": "Aynı algoritma üç dilde (Java, Python, C): dil yüzeydir, algoritma değişmez. Portfolyo son teslimi (KT4) ve dönemin özeti." }
+]

@@ -1,0 +1,314 @@
+---
+week: 1
+title: "Algoritma Düşüncesi ve İlk Java Programı"
+topic: "Algoritma nedir, bir bulmacayı adımlara dökmek; Java Playground'da ilk dört program (println, değişken, if, for)"
+description: "Kağıt üzerinde bir nehir bulmacasıyla algoritma düşüncesine giriş; telefonunuzdan Java Playground'da ilk dört programınızı çalıştırıyor, yapay zekanın yazdığı kodu okumayı deniyorsunuz."
+module: m1
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+tags:
+  - "algoritma"
+  - "java"
+  - "playground"
+  - "println"
+  - "değişken"
+  - "if"
+  - "for"
+  - "bulmaca"
+objectives:
+  - "Bir bulmacayı durum, hamle, kısıt ve hedef kavramlarıyla adımlara döker; algoritma tanımını kendi cümleleriyle söyler."
+  - "Java Playground'u açar, verilen kodu çalıştırır, çıktıyı önceden tahmin edip gerçek çıktıyla karşılaştırır."
+  - "System.out.println, değişken tanımı, if ve for satırlarını gördüğünde ne yaptığını kabaca söyler."
+  - "Bir derleyici hata mesajının korkulacak değil okunacak bir şey olduğunu deneyimler."
+  - "Dersin işleyişini, portfolyo takvimini ve yapay zeka trafik ışığını bilir."
+tools:
+  - "Java Playground"
+  - "JShell"
+  - "Java"
+notebook:
+  file: notebooks/hafta-01.ipynb
+  title: "Hafta 1 · İlk Java"
+  embed: true
+  placement: inline
+resources:
+  - title: "Java Playground"
+    url: "https://dev.java/playground/"
+    note: "Derste kullandığımız ortam; kurulum ve hesap gerektirmez."
+  - title: "Think Java 2, Bölüm 1: Computer Programming"
+    url: "https://chrismayfield.github.io/ThinkJava2/chapter1.html"
+    note: "Bu haftanın kitap karşılığı: program nedir, Hello World, hata türleri."
+  - title: "Nehir geçme bulmacası (Wikipedia)"
+    url: "https://en.wikipedia.org/wiki/Wolf,_goat_and_cabbage_problem"
+    note: "Bulmacanın tarihi; 9. yüzyıla, Alcuin'e kadar gidiyor."
+  - title: "Margaret Hamilton ve Apollo 11 yazılımı"
+    url: "https://www.nasa.gov/history/margaret-hamilton-apollo-software-engineer/"
+    note: "Sahadan örneklerde anlattığımız 1201 alarmı hikayesinin kaynağı."
+---
+
+import NotebookEmbed from '@/components/NotebookEmbed.astro';
+import CodeTry from '@/components/CodeTry.astro';
+import Puzzle from '@/components/Puzzle.astro';
+import AiTools from '@/components/AiTools.astro';
+
+## Derse Başlamadan Önce
+
+- Telefon yeter; bilgisayar varsa daha rahat edersiniz. Hiçbir kurulum gerekmez.
+- Tarayıcıda [dev.java/playground](https://dev.java/playground/) adresini açın. Boş bir kod alanı ve **Run** düğmesi göreceksiniz; bu kadar.
+- Bir **GitHub hesabı** açın ([github.com](https://github.com), üniversite e-postanızla). Bugün gerekmez ama gelecek haftaki laboratuvarda lazım olacak; kuyrukta beklemeyin.
+- Bir kağıt ve kalem getirin. Her ders kağıtla başlıyor.
+
+> [!not] Dersin akışı
+> Bu derste slayt yok; bu sayfa yansıda açık olacak, siz de telefonunuzdan aynı sayfayı takip edeceksiniz. Her hafta aynı iskelet: önce bir bulmaca, sonra ders notları, sonra birlikte kod, sonra kısa bir yapay zeka anı. A şubesi Cuma 09.15, B şubesi Cuma 13.15.
+
+## Haftanın Bulmacası
+
+<Puzzle title="Nehri geçen çiftçi" kind="bulmaca">
+
+Bir çiftçi, yanında bir **tilki**, bir **tavuk** ve bir çuval **mısır** ile nehrin kıyısına gelir. Kayık küçüktür: çiftçi her seferde yanına **yalnızca birini** alabilir.
+
+Kurallar:
+
+- Tilki ve tavuk yalnız kalırsa tilki tavuğu yer.
+- Tavuk ve mısır yalnız kalırsa tavuk mısırı yer.
+- Çiftçi yanlarındayken kimse kimseyi yemez.
+
+**Görev:** Üçünü de sağ salim karşı kıyıya geçirin. Yanınızdaki kişiyle ikili çalışın; 8 dakikanız var. Çözümü adım adım, numaralı bir liste olarak kağıda yazın: "1. Çiftçi tavuğu alır, karşıya geçer. 2. ..."
+
+Bitirince şu dört soruya da cevap yazın:
+
+1. Her adımda neyi bilmemiz gerekiyor? (Kim hangi kıyıda?)
+2. Bir adımda yapabileceğimiz şeyler neler?
+3. Hangi adımlar yasak?
+4. Ne zaman durduk?
+
+</Puzzle>
+
+Bulmaca bittiğinde tahtada birlikte dört kelimeye indirgeyeceğiz:
+
+| Kavram | Bulmacada | Programda |
+|---|---|---|
+| **Durum** (state) | Kim hangi kıyıda | Değişkenlerin o anki değerleri |
+| **Hamle** (move) | Çiftçi bir şeyi karşıya taşır | Bir komut, bir satır kod |
+| **Kısıt** (constraint) | Tilki-tavuk yalnız kalamaz | `if` ile kontrol ettiğimiz koşul |
+| **Hedef** (goal) | Hepsi karşı kıyıda | Döngünün bitiş koşulu |
+
+Kağıda yazdığınız o numaralı liste bir **algoritma**dır. Bugün yalnızca elle çözdük; 13. haftada aynı bulmacayı dizilerle Java'da kodlayacağız. Kağıdı saklayın.
+
+## Ders Notları
+
+### Algoritma nedir?
+
+Algoritma, bir problemi çözmek için **sonlu sayıda, sırası belli, her biri açıkça tanımlı** adımlar kümesidir. Yemek tarifi, yol tarifi, sabah hazırlanma rutini; hepsi algoritmadır. Kelime, 9. yüzyıl matematikçisi El-Harizmi'nin adından gelir.
+
+Bulmacada fark ettiğiniz şey önemli: çözümü **bilmek** ile çözümü **adım adım yazabilmek** ayrı şeylerdir. İlki tanımlayıcı bilgidir (declarative): "hepsi karşıya geçmiş olmalı." İkincisi buyurgan bilgidir (imperative): "önce tavuğu al, geri dön, tilkiyi al, tavuğu geri getir..." Bilgisayar yalnızca ikinciyi anlar. Programlama, tanımlayıcı bilgiyi buyurgan bilgiye çevirme sanatıdır.
+
+> [!tanim] Algoritma
+> Sonlu, sıralı, kesin adımlarla bir problemi çözen tarif. "Kesin" demek: her adımı okuyan iki farklı kişi (ya da makine) aynı şeyi yapmalı.
+
+### Binlerce yıllık bir algoritma: Babil karekök yöntemi
+
+Bilgisayardan çok önce, Babilliler karekökü şöyle buluyordu. 25'in karekökünü arıyoruz:
+
+1. Bir tahminle başla: g = 3.
+2. g × g, 25'e yeterince yakınsa dur.
+3. Değilse yeni tahmin: g = (g + 25/g) / 2.
+4. 2. adıma dön.
+
+3 → 5,67 → 5,04 → 5,0002. Dört adımda cevap. Dikkat: burada bir **tekrar** var ("2. adıma dön") ve bir **karar** var ("yeterince yakınsa dur"). Bugün yazacağımız Java programlarında tam olarak bu ikisini göreceksiniz: `for` ve `if`.
+
+### İkinci bulmaca: insan bilgisayar
+
+<Puzzle title="İnsan bilgisayar" kind="insan-bilgisayar">
+
+Bir gönüllü tahtaya çıkar; o artık bilgisayardır ve **yalnızca yazılanı** yapar, yorum yapmaz. Sınıf ona "sınıftaki en uzun boylu kişiyi bul" görevini adım adım söyler.
+
+Kural: "en uzunu bul" demek yasak. Bilgisayar "en uzun" ne demek bilmez. Ancak şunları bilir: bir kişiye bak, iki sayıyı karşılaştır, bir sayıyı aklında tut, sıradaki kişiye geç, durdu mu diye kontrol et.
+
+Sınıfın bulması gereken tarif kabaca şu:
+
+1. İlk kişinin boyunu "en uzun" olarak aklında tut.
+2. Sıradaki kişiye geç.
+3. Bu kişinin boyu aklındakinden büyükse aklındakini değiştir.
+4. Kişi kalmadıysa dur, kaldıysa 2. adıma dön.
+
+</Puzzle>
+
+Bu tarifte üç şey var ve ikisi bugün Java'da karşımıza çıkacak: **aklında tutulan değer** bir değişkendir, **"büyükse"** bir `if`tir, **"kişi kalmadıysa dur"** bir döngünün bitiş koşuludur. 10. haftada dizideki en büyük elemanı bulurken bu tarifi kelimesi kelimesine koda çevireceğiz.
+
+### Neden Java?
+
+Dünyada yüzlerce programlama dili var. Bu derste Java seçtik, üç sebeple:
+
+- **Kesindir.** Java sizi her değişkenin tipini söylemeye, her cümleyi noktalı virgülle bitirmeye, her bloğu süslü parantezle kapatmaya zorlar. Başta yorucu gelir; ama bu kesinlik, "bilgisayar gibi düşünme"yi öğrenirken en iyi öğretmendir. Hata yaptığınızda derleyici size **satır numarasıyla** söyler.
+- **Derlenir.** Kodunuz çalışmadan önce baştan sona okunur ve kontrol edilir. Python gibi yorumlanan dillerde hata ancak o satıra gelince çıkar; Java'da daha yazarken çıkar.
+- **Her yerdedir.** Android uygulamaları, bankacılık sistemleri, Minecraft. Ve bölümün ilerideki dersleri (nesne yönelimli programlama, veri yapıları) Java ile devam eder.
+
+> [!neden] Neden ilk günden kod?
+> Yüzme, kitaptan öğrenilmez. İlk günden suya giriyoruz; ama sığ tarafından. Java Playground'da tek satırlık kod bile çalışır; `class`, `main`, `public static void` gibi tören cümleleri 2. haftaya bırakıyoruz.
+
+### Sözdizimi kesinliği ve hata korkusu
+
+Türkçede "Ahmet gitti okula" deseniz de anlaşılırsınız. Java'da `System.out.println("Merhaba")` sonuna noktalı virgül koymazsanız program **hiç çalışmaz**. Bu bir kusur değil, tasarımdır: belirsizlik yok, her cümlenin tek anlamı var.
+
+Bugün en az bir kez hata alacaksınız. Bu bir plan, kaza değil. Hata mesajı korkutucu görünür ama iki şey söyler: **hangi satırda** ve **ne beklediğini**. Örneğin:
+
+```
+error: ';' expected
+```
+
+"Noktalı virgül bekliyordum" diyor. Bu kadar. Dersin en önemli ritüellerinden biri **hata avı**: ilerleyen haftalarda size bilerek hatalı 15-20 satırlık kod vereceğiz, gruplar hata sayacak. Hatayı gören göz, kodu yazan elden daha değerlidir.
+
+> [!uyari] Üç hata türü (2. haftada ayrıntısı)
+> **Sözdizimi hatası** (syntax): derleyici yakalar, program hiç çalışmaz. **Çalışma zamanı hatası** (runtime): program çalışırken çöker, ör. sıfıra bölme. **Mantık hatası** (logic): program çalışır, yanlış sonuç verir; en tehlikelisi budur, çünkü kimse bağırmaz.
+
+### Çalışma ortamımız: Java Playground
+
+[dev.java/playground](https://dev.java/playground/), Oracle'ın tarayıcıda çalışan resmî Java ortamıdır. Kurulum yok, hesap yok, telefonda çalışır. Arkasında **JShell** vardır: Java'nın satır satır çalışan etkileşimli kabuğu. Bu yüzden Playground'da bir sınıf ya da `main` metodu yazmak **gerekmez**; doğrudan `System.out.println("Merhaba");` yazıp Run'a basarsınız.
+
+- Kod alanına yazın, **Run** düğmesine (ya da `Ctrl+Enter`) basın; çıktı altta belirir.
+- Klavyeden girdi alma (`Scanner`) Playground'da çalışmaz. Girdiyi 3. haftada, laboratuvarda kendi bilgisayarınızda göreceksiniz. Bugün değerleri koda yazacağız.
+- Sayfayı yenilerseniz kod gider. Beğendiğiniz bir şeyi notlarınıza kopyalayın.
+
+Ayrıntılı kullanım: [Java Playground rehberi](/rehber/java-playground).
+
+## Bugün Yazacağımız Dört Program
+
+Kural her programda aynı: kodu **çalıştırmadan önce** çıktının ne olacağını yanınızdakine söyleyin, sonra Run'a basın. Tahmininiz tutmadıysa sevinin; öğrenme tam o anda oluyor.
+
+<CodeTry title="1 · Merhaba ve isim">
+
+```java
+String isim = "Ayşe";
+System.out.println("Merhaba, " + isim + "!");
+System.out.println("Java'ya hoş geldin.");
+```
+
+</CodeTry>
+
+Okuyun: `String isim = "Ayşe";` bir **değişken** tanımlar; kutunun adı `isim`, tipi `String` (metin), içi `"Ayşe"`. `+` işareti metinleri yapıştırır. Şimdi `"Ayşe"` yerine kendi adınızı yazın. Sonra bir satırın sonundaki noktalı virgülü silip Run'a basın; hata mesajını **okuyun**, geri koyun.
+
+<CodeTry title="2 · Değişkenler ve toplama">
+
+```java
+int vize = 70;
+int fin = 85;
+double ortalama = vize * 0.4 + fin * 0.6;
+System.out.println("Ağırlıklı ortalama: " + ortalama);
+System.out.println(7 / 2);
+System.out.println(7 / 2.0);
+```
+
+</CodeTry>
+
+Tahmin sorusu: son iki satır ne yazdırır? Çoğu kişi ikisi için de 3,5 der. Java'da `7 / 2` **tam sayı bölmesidir** ve sonuç 3'tür; `7 / 2.0` ise 3,5. `int` tam sayı, `double` ondalıklı sayı. Bu ayrım 3. haftanın konusu ama tuzağı bugünden görün.
+
+<CodeTry title="3 · Çift mi tek mi? (if)">
+
+```java
+int sayi = 17;
+if (sayi % 2 == 0) {
+    System.out.println(sayi + " çift");
+} else {
+    System.out.println(sayi + " tek");
+}
+```
+
+</CodeTry>
+
+`%` kalan işlemidir: `17 % 2` = 1. `==` "eşit mi" diye sorar (tek `=` atamadır, karıştırmayın). `if` doğruysa ilk blok, değilse `else` bloğu çalışır. Bulmacadaki **kısıt** kavramının koddaki hali budur: "tilki ile tavuk yalnız mı?" sorusu bir `if` olacak.
+
+<CodeTry title="4 · 1'den 10'a say (for)">
+
+```java
+for (int i = 1; i <= 10; i++) {
+    System.out.println(i);
+}
+```
+
+</CodeTry>
+
+Tek satırda üç şey: `int i = 1` başlangıç, `i <= 10` devam koşulu, `i++` her turda bir artır. Babil algoritmasındaki "2. adıma dön" işte bu. Deneyin: `10`'u `100` yapın. `i++` yerine `i += 2` yazın; ne değişti? `i <= 10`'u `i >= 10` yaparsanız kaç satır çıkar? (Sıfır. Neden?)
+
+> [!ornek] Dördü birleştirin
+> Zaman kalırsa: 1'den 20'ye kadar sayıp yalnızca çift olanları yazdıran programı yazın. İpucu: 4. programın içine 3. programı koyun. Bu, dönem boyunca en çok yapacağınız şey: küçük parçaları iç içe geçirmek.
+
+<NotebookEmbed file="notebooks/hafta-01.ipynb" title="Hafta 1 · İlk Java" />
+
+## Yapay Zeka Anı
+
+Şimdi bir deney. ChatGPT'ye (veya Claude, Gemini) şunu yazıyoruz: *"Tilki, tavuk ve mısır nehir bulmacasını Java'da çözen bir program yaz."* Birkaç saniyede 40-60 satırlık bir program geliyor. Yansıya koyup birlikte **okuyacağız**, yazmayacağız:
+
+- `int[]` ya da `boolean[]` gördüğünüz yer: durumu tutan **dizi**. 10. haftanın konusu.
+- `if (...)` satırları: bulmacanın **kısıtları**. Kağıda yazdığınız "tilki-tavuk yalnız kalamaz" cümlesini bulun.
+- `while (...)` veya `for (...)`: **hamle** tekrarı. Bitiş koşulu bulmacanın **hedefi**.
+- Kodda sizin kağıda yazdığınız adım sırasını bulabiliyor musunuz? Bulamıyorsanız program başka bir yol izliyor olabilir; bu da bir sorudur.
+
+Dersin sonunda şunu bilmenizi istiyorum: **bu programı 13. haftada siz yazacaksınız.** Bugün okuyup anlamadığınız her satır, o güne kadar öğreneceğiniz bir konudur.
+
+> [!uyari] Yapay zeka trafik ışığı, üç satır
+> **Kırmızı** · Sınavlar: yapay zeka yok, çünkü ölçtüğümüz şey sizin zihniniz.
+> **Sarı** · Laboratuvar: soru sorabilirsiniz, kod kopyalamazsınız; asistan ekranı görebilir.
+> **Yeşil** · Portfolyo ve ev çalışması: serbest, ama her teslimde kısa bir AI beyanı.
+> Gerekçeleriyle tam metin: [Ders Hakkında](/ders-hakkinda). Ben de şeffafım: ders materyalini hazırlarken yapay zeka kullanıyorum, notlandırmada kullanmıyorum.
+
+Elinizin altındaki araçlar ve ücretsiz kalma taktikleri:
+
+<AiTools compact />
+
+## Temel Kavramlar
+
+- **Algoritma**: Bir problemi çözen sonlu, sıralı, kesin adımlar. Kağıda yazdığınız nehir çözümü.
+- **Program**: Bir algoritmanın, bilgisayarın anladığı bir dilde yazılmış hali.
+- **Durum (state)**: Bir anda değişkenlerin aldığı değerlerin tümü; "kim hangi kıyıda".
+- **Değişken (variable)**: Bir değeri isimle saklayan kutu; `int sayi = 17;`. Java'da kutunun tipi de söylenir.
+- **Tip (type)**: Kutunun içine ne konabileceği: `int` tam sayı, `double` ondalıklı, `String` metin, `boolean` doğru/yanlış.
+- **`System.out.println`**: Ekrana yazdır ve satır atla. `print` satır atlamaz.
+- **Koşul ve `if`**: Doğru ya da yanlış olan bir soru; `if` doğruysa bir şey yapar, `else` değilse.
+- **Döngü ve `for`**: Bir bloğu tekrar tekrar çalıştırma; sayaç, koşul, artış.
+- **Derleyici (compiler)**: Kodu çalıştırmadan önce baştan sona okuyup kontrol eden ve makine koduna çeviren program; `javac`.
+- **Sözdizimi (syntax)**: Dilin yazım kuralları; noktalı virgül, parantez, büyük-küçük harf. Java bunlarda tavizsizdir.
+- **JShell / Playground**: Java'yı satır satır çalıştıran etkileşimli ortam; sınıf ve `main` gerektirmez.
+
+## Sahadan Örnekler
+
+- **Apollo 11, 1969.** Ay'a inişe dakikalar kala bilgisayar "1201 alarm" verdi: aşırı yüklenmişti. Margaret Hamilton'ın ekibinin yazdığı yazılım, görevleri önceliklendiriyordu; radar verisini bırakıp iniş hesabına odaklandı ve Armstrong indi. İyi bir algoritma yalnızca doğru sonucu vermez, kriz anında neyin önemli olduğuna da karar verir.
+- **The Martian.** Mars'ta mahsur kalan astronot, kamerayı 16 yöne çevirerek onaltılık (hex) kod gönderir; her iki hane bir ASCII karakteri. `48 45 4C 4C 4F` = HELLO. Bir dönüşüm tablosu ve bir döngü; algoritma bu kadar basit olabilir ve hayat kurtarabilir.
+- **Mars Climate Orbiter, 1999.** Bir yazılım Newton, diğeri pound-kuvvet cinsinden hesap yapıyordu. Kimse hata mesajı görmedi; uydu atmosferde yandı. Mantık hatasının en pahalı örneklerinden biri: program çalıştı, sonuç yanlıştı.
+- **Her gün.** Telefonunuzdaki harita en kısa yolu bir algoritmayla bulur; Instagram akışınızı bir algoritma sıralar; bankanız kartınızı bir algoritma "şüpheli" diye bloke eder. Bugünden itibaren bunların hiçbiri sihir değil.
+
+## Portfolyo
+
+Bu dönem herkesin GitHub'da **tek bir deposu** olacak ve içinde küçük bir uygulama büyüyecek. Konu serbest: not hesaplayıcı, sinema bileti, bütçe takibi, bir oyun. Konu dağıtımı ve ortak sözleşme ilerleyen haftalarda duyurulacak; şimdilik takvimi bilin:
+
+| Kilometre taşı | Hafta | Ne teslim edilir |
+|---|---|---|
+| KT1 | 5 | Konu ve seçim yapılı ilk sürüm |
+| KT2 | 8 | Gözcü değerle biten döngülü sürüm |
+| KT3 | 11 | Metotlu ve dizili sürüm |
+| KT4 | 14 | Son teslim, README, AI beyanı, üç dil |
+
+Vizede 10, finalde 15 puanlık soru doğrudan **sizin** uygulamanızdan gelir. Teslim etmeyen o soruları yapamaz. Ayrıntılar: [Ders Hakkında · Portfolyo](/ders-hakkinda).
+
+## Laboratuvara Hazırlık
+
+Laboratuvar teoriden **bir hafta sonra** yapılır: bu haftanın labı A şubesi için **30 Eylül Çarşamba 13.15**, B şubesi için **1 Ekim Perşembe 15.15**. Yürütücü: Arş. Gör. Ömer Miraç Kökçam.
+
+Lab'a gelirken:
+
+- GitHub hesabınız açık olsun; kullanıcı adınızı bilin.
+- Kendi bilgisayarınızı getirecekseniz [JDK ve VS Code rehberini](/rehber/yerel-jdk-vscode) deneyin; olmazsa lab bilgisayarı ya da Codespaces var.
+- Lab'da ilk gerçek dosyanızı (`Merhaba.java`) derleyip çalıştıracak, beş küçük görev yapacak ve deponuza ilk push'u atacaksınız. Ayrıntı: [Lab 1](/laboratuvar/lab-01).
+
+## Tartışma Soruları
+
+1. Nehir bulmacasını çözerken kaç kez "geri dönmek" zorunda kaldınız? Geri adım atmak bir algoritmanın parçası olabilir mi?
+2. "İnsan bilgisayar" en uzun kişiyi bulurken neden "en uzunu bul" komutunu anlamadı da "büyükse değiştir" komutunu anladı? Bilgisayarın anladığı komutlar ne kadar küçük olmalı?
+3. `7 / 2`'nin 3 çıkması bir hata mı, bir kural mı? Bu kuralı bilmeyen birinin yazdığı not hesaplama programında ne olur?
+4. Yapay zekanın yazdığı nehir programını "doğru" olduğunu nasıl anlarsınız? Çalışması yeter mi?
+5. Yapay zeka programcılığı bitirecek mi? Bugün okuduğunuz kodu anlamadan kullanabilen biriyle anlayan biri arasında meslekte ne fark olur?
+
+## Haftanın Özeti
+
+Kağıt üzerinde bir nehir bulmacasıyla başladık ve çözümü dört kelimeye indirgedik: durum, hamle, kısıt, hedef. Bu dördü, dönem boyunca yazacağınız her programın iskeleti. Algoritmanın ne olduğunu Babil karekök yöntemi ve insan bilgisayarla gördük; sonra telefonunuzdan Java Playground'da dört program çalıştırdınız: yazdırma, değişken ve toplama, `if` ile karar, `for` ile tekrar. `7 / 2`'nin 3 olduğunu ve noktalı virgülün pazarlık kabul etmediğini öğrendiniz. Yapay zekaya nehir bulmacasını yazdırıp okuduk; o programı 13. haftada siz yazacaksınız. Gelecek hafta: akış diyagramı, sözde kod ve bir Java programının tören kısmı (`class`, `main`), derleme ve üç hata türü.

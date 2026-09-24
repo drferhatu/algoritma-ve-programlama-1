@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://drferhatu.github.io/algoritma-ve-programlama-1/sitemap-index.xml

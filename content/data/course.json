@@ -280,6 +280,16 @@
           "desc": "Hata mesajını aratmanın klasik adresi; cevabı kopyalamadan önce anlayın."
         }
       ]
+    },
+    {
+      "group": "Geçen yılın ders notları (arşiv)",
+      "items": [
+        {
+          "name": "Algoritma ve Programlama I, 2025-2026 Notion sitesi",
+          "url": "https://ferhatucar.notion.site/algoveproggiris1",
+          "desc": "Geçen dönemin konu konu slayt notları. Bu yıl slayt yerine site ve canlı kodlama var; bir konuyu derli toplu tekrar etmek istediğinizde buraya bakın."
+        }
+      ]
     }
   ],
   "tagline": "Bulmacayla başlayan, kodla biten 14 hafta: bilgisayar bilimci gibi düşünmeye Java ile başlayın.",

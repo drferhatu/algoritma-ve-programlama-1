@@ -167,6 +167,9 @@ Push'tan sonra:
 
 **Son teslim: 2 Ekim 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir.
 
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Kodu Playground'da ya da kendi bilgisayarınızda yazıp GitHub'a tarayıcıdan da ekleyebilirsiniz: deponuzda **Add file → Upload files**. Bu da bir push sayılır ve otomatik kontrolü başlatır. Tek ricamız: dosyaları teker teker değil, **hepsini birden** yükleyin. Her yükleme kontrolü baştan çalıştırır; yedi dosyayı yedi kez yüklemek yedi ayrı kontrol demektir.
+
 > [!not] İki puan, iki bakış
 > Otomatik kontrol (100 puan) yalnızca dosyaların derlenip derlenmediğine ve birkaç çıktı satırına bakar: `Merhaba` derleniyor mu (20), çıktısında "Merhaba" geçiyor mu (10), `UcMesaj` derleniyor mu (10), `17 % 5 = 2` (10), `38.48` (10), `IsimKarti` derleniyor mu (10), `5 x 10 = 50` (20), bonus `2 saat 3 dakika 4 saniye` (10). Kodun okunabilirliği, isimlendirme ve aşağıdaki "30 saniye anlat" ritüeli lab sorumlu hocanızın değerlendirmesidir; ikisi birlikte lab notunuzu oluşturur.
 

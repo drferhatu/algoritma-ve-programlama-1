@@ -11,7 +11,7 @@ tools:
   - "JDK 21"
   - "VS Code"
   - "Git"
-deliverable: "lab06/ klasörü: dört döngü programı."
+deliverable: "Lab 6 deposu: dört döngü programı."
 ---
 
 ## Bu lab neyi uyguluyor?
@@ -21,8 +21,8 @@ deliverable: "lab06/ klasörü: dört döngü programı."
 ## Görevler
 
 > [!not] Hazırlanıyor
-> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: deponuzda `lab06/` klasörü, lab bitmeden push.
+> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: Classroom 50 bağlantısıyla açılan Lab 6 deponuza push; son teslim lab haftasının Cuma 23.59'u.
 
 ## Teslim
 
-`lab06/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 6 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab06-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

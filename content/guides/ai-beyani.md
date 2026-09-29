@@ -1,7 +1,7 @@
 ---
 title: "AI Beyanı Şablonu"
 description: "Yeşil bölge teslimlerinde (portfolyo kilometre taşları ve ev çalışması) her teslime eklenecek kısa yapay zeka beyanının şablonu ve örnekleri."
-order: 4
+order: 5
 icon: "🟢"
 ---
 

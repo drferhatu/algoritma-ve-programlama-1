@@ -11,7 +11,7 @@ tools:
   - "JDK 21"
   - "VS Code"
   - "Git"
-deliverable: "lab07/ klasörü: desen, EBOB karşılaştırma ve Monte Carlo programları."
+deliverable: "Lab 7 deposu: desen, EBOB karşılaştırma ve Monte Carlo programları."
 ---
 
 ## Bu lab neyi uyguluyor?
@@ -21,8 +21,8 @@ deliverable: "lab07/ klasörü: desen, EBOB karşılaştırma ve Monte Carlo pro
 ## Görevler
 
 > [!not] Hazırlanıyor
-> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: deponuzda `lab07/` klasörü, lab bitmeden push.
+> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: Classroom 50 bağlantısıyla açılan Lab 7 deponuza push; son teslim lab haftasının Cuma 23.59'u.
 
 ## Teslim
 
-`lab07/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 7 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab07-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

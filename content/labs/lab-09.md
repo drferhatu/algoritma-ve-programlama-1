@@ -12,7 +12,7 @@ tools:
   - "VS Code"
   - "Java Visualizer"
   - "Git"
-deliverable: "lab09/ klasörü: artımlı geliştirme programı ve yığın diyagramı fotoğrafları."
+deliverable: "Lab 9 deposu: artımlı geliştirme programı ve yığın diyagramı fotoğrafları."
 ---
 
 ## Bu lab neyi uyguluyor?
@@ -22,8 +22,8 @@ deliverable: "lab09/ klasörü: artımlı geliştirme programı ve yığın diya
 ## Görevler
 
 > [!not] Hazırlanıyor
-> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: deponuzda `lab09/` klasörü, lab bitmeden push.
+> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: Classroom 50 bağlantısıyla açılan Lab 9 deponuza push; son teslim lab haftasının Cuma 23.59'u.
 
 ## Teslim
 
-`lab09/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 9 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab09-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

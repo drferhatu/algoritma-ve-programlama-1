@@ -12,7 +12,7 @@ tools:
   - "VS Code"
   - "GitHub Codespaces"
   - "Git"
-deliverable: "lab08/ klasörü ve portfolyo KT2 sürümü."
+deliverable: "Lab 8 deposu ve portfolyo KT2 sürümü."
 milestone: "KT2"
 ---
 
@@ -21,13 +21,13 @@ milestone: "KT2"
 [8. haftanın](/haftalar/hafta-08) teorisini. Laboratuvar teoriden bir hafta sonra yapılır: A şubesi Çarşamba 13.15, B şubesi Perşembe 15.15; tarihler [Ders Hakkında](/ders-hakkinda) takviminde.
 
 > [!uyari] KT2 teslimi
-> Bu lab, portfolyo kilometre taşı **KT2** için son teslim anıdır. Push edilmemiş sürüm teslim edilmemiş sayılır; kilometre taşına bağlı sınav sorusu için ek süre verilmez. Şablon ve kurallar: [Ders Hakkında · Portfolyo](/ders-hakkinda), [AI beyanı](/rehber/ai-beyani).
+> Bu lab, portfolyo kilometre taşı **KT2** için son teslim haftasıdır: kilometre taşı sürümü, lab deposundan **ayrı** olan portfolyo deponuza (Classroom 50 ile verilen bağlantı) en geç **bu haftanın Cuma 23.59**'una kadar push edilmiş olmalı. Push edilmemiş sürüm teslim edilmemiş sayılır; kilometre taşına bağlı sınav sorusu için ek süre verilmez. Şablon ve kurallar: [Ders Hakkında · Portfolyo](/ders-hakkinda), [AI beyanı](/rehber/ai-beyani).
 
 ## Görevler
 
 > [!not] Hazırlanıyor
-> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: deponuzda `lab08/` klasörü, lab bitmeden push.
+> Görev listesi lab gününden önce burada yayımlanacak. Görevler geçen yılın laboratuvar rehberinden uyarlanıyor; teslim biçimi her lab'da aynı: Classroom 50 bağlantısıyla açılan Lab 8 deponuza push; son teslim lab haftasının Cuma 23.59'u.
 
 ## Teslim
 
-`lab08/` klasörünü portfolyo deponuza push edin ve lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 8 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab08-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Portfolyo (KT2) **ayrı bir depodur**: kilometre taşı sürümünü lab deposuna değil, Classroom 50 ile verilen portfolyo deponuza push edin; onun son teslimi de aynı Cuma 23.59. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

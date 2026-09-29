@@ -218,6 +218,11 @@
       "name": "GitHub Codespaces",
       "url": "https://github.com/features/codespaces",
       "desc": "Tarayıcıda çalışan tam VS Code; kendi bilgisayarına kurulum yapamayanlar için."
+    },
+    {
+      "name": "Classroom 50",
+      "url": "https://classroom50.org",
+      "desc": "Lab ve portfolyo depolarının dağıtıldığı, otomatik kontrolün çalıştığı platform."
     }
   ],
   "resources": [
@@ -383,7 +388,8 @@
       "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü zorunludur.",
       "Her teslimde README.md ve kısa AI beyanı bulunur (şablon: /rehber/ai-beyani).",
       "Kod yapay zeka ile yazılabilir (yeşil bölge) ama her satırını anlatabilmelisiniz; sınavda o kodu kağıda yazmanız istenir.",
-      "Teslim, kilometre taşı haftasındaki laboratuvar saatine kadar GitHub'a push ile yapılır; geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
+      "Lab ve kilometre taşı teslimleri, ilgili lab haftasının Cuma 23.59'una kadar GitHub'a push ile yapılır; geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
+      "Lab görevleri ve portfolyo, Classroom 50 üzerinden verilen bağlantılarla açılan depolarda yürütülür; depo adı değiştirilmez.",
       "Kopya bulunan iki depo için de kilometre taşı geçersiz sayılır."
     ]
   },

@@ -1,0 +1,20 @@
+// Örnek 1: Çift mi tek mi?
+digraph CiftTek {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="BAŞLA"];
+    sayi  [shape=box, label="sayi = 17"];
+    karar [shape=diamond, label="sayi % 2 == 0 mı?"];
+    cift  [shape=parallelogram, label="\"17 çift\" yaz"];
+    tek   [shape=parallelogram, label="\"17 tek\" yaz"];
+    bitir [shape=ellipse, label="BİTİR"];
+
+    basla -> sayi -> karar;
+    karar -> cift [label="Evet"];
+    karar -> tek  [label="Hayır"];
+    cift -> bitir;
+    tek -> bitir;
+}

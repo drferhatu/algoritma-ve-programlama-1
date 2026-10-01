@@ -11,7 +11,9 @@ Kontroller:
      SONRA mı (+1 hafta kuralı), status değerleri geçerli mi?
   4. course.json: sections (A/B), assistant, aiPolicy (kirmizi/sari/yesil), portfolio alanları var mı?
   5. Defter tanımlı haftalarda notebooks/*.ipynb ve public/notebooks/*.html var mı?
-  6. (dist varsa) Üretilen HTML'deki iç bağlantılar mevcut dosyalara gidiyor mu?
+  6. Diyagramlar: content/diagrams/*.dot için public/diagrams/*.svg üretilmiş mi;
+     içerikte <Diagram name="..."> ile anılan her ad için .dot var mı? (hata)
+  7. (dist varsa) Üretilen HTML'deki iç bağlantılar mevcut dosyalara gidiyor mu?
 
 Kullanım:
   /opt/miniconda3/envs/ferhat_ml/bin/python scripts/validate_content.py [--strict]
@@ -28,6 +30,9 @@ from urllib.parse import unquote, urljoin, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 WEEKS_DIR = ROOT / "content" / "weeks"
 LABS_DIR = ROOT / "content" / "labs"
+GUIDES_DIR = ROOT / "content" / "guides"
+DIAGRAMS_DIR = ROOT / "content" / "diagrams"
+DIAGRAMS_OUT = ROOT / "public" / "diagrams"
 DATA = ROOT / "content" / "data"
 DIST = ROOT / "dist"
 BASE = "/algoritma-ve-programlama-1"
@@ -211,6 +216,25 @@ def check_notebooks():
     print(f"✓ {n} haftada Java defteri tanımlı")
 
 
+def check_diagrams():
+    dots = {p.stem: p for p in DIAGRAMS_DIR.glob("*.dot")} if DIAGRAMS_DIR.exists() else {}
+    for stem in sorted(dots):
+        if not (DIAGRAMS_OUT / f"{stem}.svg").exists():
+            errors.append(f"content/diagrams/{stem}.dot: public/diagrams/{stem}.svg yok (scripts/build_diagrams.py çalıştırın)")
+    refs = 0
+    for d in (WEEKS_DIR, LABS_DIR, GUIDES_DIR):
+        for p in md_files(d):
+            text = p.read_text(encoding="utf-8")
+            for m in re.finditer(r"<Diagram\b[^>]*?\bname=[\"']([^\"']+)[\"']", text):
+                refs += 1
+                name = m.group(1)
+                if name not in dots:
+                    errors.append(f"{p.name}: <Diagram name=\"{name}\"> için content/diagrams/{name}.dot yok")
+            if p.suffix == ".md" and "<Diagram" in text:
+                errors.append(f"{p.name}: <Diagram> bileşeni yalnızca .mdx dosyalarında çalışır; dosyayı .mdx yapın")
+    print(f"✓ {len(dots)} diyagram kaynağı, {refs} <Diagram> referansı")
+
+
 class LinkParser(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -267,6 +291,7 @@ def main():
     check_labs(milestones)
     check_schedule()
     check_notebooks()
+    check_diagrams()
     check_dist()
     if warnings:
         print("\n! UYARILAR:")

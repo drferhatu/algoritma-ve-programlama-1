@@ -1,0 +1,35 @@
+// ATM para çekme akışı (Hafta 2 bulmacasının çözümü)
+digraph ATM {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla  [shape=ellipse, label="BAŞLA"];
+    kart   [shape=parallelogram, label="Kartı ve şifreyi al"];
+    sifre  [shape=diamond, label="Şifre doğru mu?"];
+    yanlis [shape=box, label="yanlış = yanlış + 1"];
+    ucMu   [shape=diamond, label="yanlış = 3 mü?"];
+    yut    [shape=box, label="Kartı yut"];
+    tutar  [shape=parallelogram, label="Çekilecek tutarı al"];
+    limit  [shape=diamond, label="tutar ≤ 5000 mi?\n(günlük limit)"];
+    bakiye [shape=diamond, label="bakiye ≥ tutar mı?"];
+    ver    [shape=box, label="Parayı ver\nbakiye = bakiye - tutar"];
+    red    [shape=parallelogram, label="Red mesajı göster"];
+    bitir  [shape=ellipse, label="BİTİR"];
+
+    basla -> kart -> sifre;
+    sifre -> tutar  [label="Evet"];
+    sifre -> yanlis [label="Hayır"];
+    yanlis -> ucMu;
+    ucMu -> yut  [label="Evet"];
+    ucMu -> kart [label="Hayır"];
+    yut -> bitir;
+    tutar -> limit;
+    limit -> bakiye [label="Evet"];
+    limit -> red    [label="Hayır"];
+    bakiye -> ver [label="Evet"];
+    bakiye -> red [label="Hayır"];
+    ver -> bitir;
+    red -> bitir;
+}

@@ -2,6 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Toc from '@/components/Toc.astro';
 import { getCollection, render } from 'astro:content';
+import Diagram from '@/components/Diagram.astro';
+import CodeTry from '@/components/CodeTry.astro';
 import { href } from '@/lib/site';
 
 export async function getStaticPaths() {
@@ -21,7 +23,7 @@ const { Content, headings } = await render(guide);
     </div>
   </header>
   <div class="wrap grid gap-12 py-12 lg:grid-cols-[1fr_240px]">
-    <article class="prose-lesson min-w-0 max-w-3xl" data-reading-progress><Content /></article>
+    <article class="prose-lesson min-w-0 max-w-3xl" data-reading-progress><Content components={{ Diagram, CodeTry }} /></article>
     <aside class="hidden lg:block"><div class="sticky top-24"><Toc headings={headings} /></div></aside>
   </div>
 </BaseLayout>

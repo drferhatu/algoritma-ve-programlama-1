@@ -1,0 +1,22 @@
+// Lab 2, Görev 2: geri sayım (öğrenci bundan GeriSayim.java yazar)
+digraph GeriSayim {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="BAŞLA"];
+    ilk   [shape=box, label="i = 10"];
+    karar [shape=diamond, label="i ≥ 1 mi?"];
+    yaz   [shape=parallelogram, label="i'yi yaz (ayrı satır)"];
+    azalt [shape=box, label="i = i - 1"];
+    son   [shape=parallelogram, label="\"Basla!\" yaz"];
+    bitir [shape=ellipse, label="BİTİR"];
+
+    basla -> ilk -> karar;
+    karar -> yaz [label="Evet"];
+    yaz -> azalt;
+    azalt -> karar;
+    karar -> son [label="Hayır"];
+    son -> bitir;
+}

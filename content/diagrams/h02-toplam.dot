@@ -1,0 +1,22 @@
+// Örnek 2: 1'den 10'a toplam (tekrar yapısı)
+digraph Toplam {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla  [shape=ellipse, label="BAŞLA"];
+    ilk    [shape=box, label="toplam = 0\ni = 1"];
+    karar  [shape=diamond, label="i ≤ 10 mu?"];
+    ekle   [shape=box, label="toplam = toplam + i"];
+    artir  [shape=box, label="i = i + 1"];
+    yaz    [shape=parallelogram, label="toplam'ı yaz"];
+    bitir  [shape=ellipse, label="BİTİR"];
+
+    basla -> ilk -> karar;
+    karar -> ekle [label="Evet"];
+    ekle -> artir;
+    artir -> karar;
+    karar -> yaz [label="Hayır"];
+    yaz -> bitir;
+}

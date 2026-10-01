@@ -1,0 +1,21 @@
+// Kaynak koddan çalışan programa: derleme süreci
+digraph Derleme {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    kaynak [shape=box, label="Kaynak kod\nMerhaba.java (siz yazarsınız)"];
+    javac  [shape=box, label="javac\n(derleyici)"];
+    hata   [shape=diamond, label="Hata var mı?"];
+    mesaj  [shape=parallelogram, label="Hata mesajı:\nhangi satır, ne bekliyor"];
+    sinif  [shape=box, label="Bytecode\nMerhaba.class"];
+    jvm    [shape=box, label="JVM\n(java komutu)"];
+    cikti  [shape=parallelogram, label="Ekrandaki çıktı"];
+
+    kaynak -> javac -> hata;
+    hata -> mesaj [label="Evet"];
+    mesaj -> kaynak [label="düzelt, tekrar dene", style=dashed];
+    hata -> sinif [label="Hayır"];
+    sinif -> jvm -> cikti;
+}

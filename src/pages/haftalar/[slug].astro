@@ -6,6 +6,7 @@ import ModuleChip from '@/components/ModuleChip.astro';
 import NotebookEmbed from '@/components/NotebookEmbed.astro';
 import CodeTry from '@/components/CodeTry.astro';
 import Puzzle from '@/components/Puzzle.astro';
+import Diagram from '@/components/Diagram.astro';
 import { render } from 'astro:content';
 import {
   getWeeksSorted, getLabsSorted, moduleOf, moduleColorVar, scheduleOf, theoryLine, labLine, getLabDates,
@@ -37,7 +38,7 @@ const tocExtra = [
 ];
 const tocLab = [{ slug: 'lab', text: 'Laboratuvar' }, ...(labRender?.headings ?? []).filter((h) => h.depth === 2).map((h) => ({ slug: h.slug, text: h.text }))];
 const pageTitle = `Hafta ${week.data.week} — ${week.data.title}`;
-const components = { NotebookEmbed, CodeTry, Puzzle };
+const components = { NotebookEmbed, CodeTry, Puzzle, Diagram };
 ---
 <BaseLayout title={pageTitle} description={week.data.description} ogType="article">
   <!-- Hafta başlığı -->

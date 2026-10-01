@@ -1,0 +1,21 @@
+// Akış diyagramı sembolleri (küçük açıklama diyagramı)
+digraph Semboller {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="Başla / Bitir\n(elips)"];
+    girdi [shape=parallelogram, label="Girdi / Çıktı\n(paralelkenar)"];
+    islem [shape=box, label="İşlem\n(dikdörtgen)"];
+    karar [shape=diamond, label="Karar\n(elmas)"];
+    db    [shape=cylinder, label="Veritabanı\n(silindir)"];
+    bitir [shape=ellipse, label="Bitir"];
+
+    basla -> girdi [label="ok: akış yönü"];
+    girdi -> islem;
+    islem -> karar;
+    karar -> db    [label="Evet"];
+    karar -> bitir [label="Hayır"];
+    db -> bitir;
+}

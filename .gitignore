@@ -38,3 +38,6 @@ instructions.md
 
 # defterlerin gömülü görünümü derlemede üretilir (scripts/build_notebooks.py)
 public/notebooks/
+
+# Graphviz diyagramlarının SVG çıktıları derlemede üretilir (scripts/build_diagrams.py)
+public/diagrams/

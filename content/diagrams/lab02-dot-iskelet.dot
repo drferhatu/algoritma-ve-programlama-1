@@ -1,0 +1,17 @@
+// Lab 2 başlangıç iskeleti: kopyalayın, düğüm ekleyerek genişletin
+digraph Iskelet {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica"];
+
+    basla [shape=ellipse, label="BAŞLA"];
+    islem [shape=box, label="x = 5"];
+    karar [shape=diamond, label="x > 3 mü?"];
+    cikti [shape=parallelogram, label="\"büyük\" yaz"];
+    bitir [shape=ellipse, label="BİTİR"];
+
+    basla -> islem -> karar;
+    karar -> cikti [label="Evet"];
+    karar -> bitir [label="Hayır"];
+    cikti -> bitir;
+}

@@ -1,0 +1,96 @@
+---
+/**
+ * Graphviz diyagramı (derleme zamanında SVG olarak gömülür).
+ *
+ * Kaynak: content/diagrams/<name>.dot → scripts/build_diagrams.py → public/diagrams/<name>.svg
+ * MDX'te kullanım (import gerekmez; hafta/lab sayfaları bileşeni otomatik verir):
+ *   <Diagram name="h02-atm" caption="ATM para çekme akışı" />
+ *   <Diagram name="h02-cift-tek" caption="Çift/tek kararı" dot width="520px" />
+ *
+ * Props:
+ *   name     content/diagrams altındaki dosya adı (uzantısız)
+ *   caption  şekil altyazısı (isteğe bağlı)
+ *   dot      true ise altta katlanabilir "DOT kaynağı" kutusu: kod + Kopyala + Graphviz Online bağlantısı
+ *   width    diyagramın en fazla genişliği (ör. "520px", "100%"); varsayılan 100%
+ *
+ * SVG dosyası yoksa derleme durmaz; sayfada sarı uyarı kutusu çıkar ve konsola uyarı yazılır.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props { name: string; caption?: string; dot?: boolean; width?: string; }
+const { name, caption, dot = false, width = '100%' } = Astro.props;
+
+const GRAPHVIZ_ONLINE = 'https://dreampuf.github.io/GraphvizOnline/';
+const root = process.cwd();
+const svgPath = path.join(root, 'public', 'diagrams', `${name}.svg`);
+const dotPath = path.join(root, 'content', 'diagrams', `${name}.dot`);
+
+let svg = '';
+if (fs.existsSync(svgPath)) {
+  svg = fs.readFileSync(svgPath, 'utf8')
+    // XML prologu, DOCTYPE ve Graphviz'in yorum satırları HTML'e girmesin
+    .replace(/<\?xml[^>]*\?>\s*/g, '')
+    .replace(/<!DOCTYPE[^>]*>\s*/gi, '')
+    .replace(/<!--[\s\S]*?-->\s*/g, '')
+    // kök <svg> üzerindeki sabit width/height kaldırılır; viewBox ile ölçeklenir
+    .replace(/<svg\b([^>]*)>/, (_m, attrs: string) => {
+      const cleaned = attrs.replace(/\s(width|height)="[^"]*"/g, '');
+      return `<svg${cleaned} role="img" aria-label="${(caption ?? name).replace(/"/g, '&quot;')}" focusable="false">`;
+    })
+    .trim();
+} else {
+  console.warn(`[Diagram] SVG bulunamadı: public/diagrams/${name}.svg — önce scripts/build_diagrams.py çalıştırın.`);
+}
+
+let dotSource = '';
+if (dot) {
+  if (fs.existsSync(dotPath)) dotSource = fs.readFileSync(dotPath, 'utf8').replace(/\s+$/, '');
+  else console.warn(`[Diagram] DOT kaynağı bulunamadı: content/diagrams/${name}.dot`);
+}
+---
+<figure class="diagram not-prose" data-diagram={name} data-pagefind-ignore>
+  {svg ? (
+    <div class="diagram-svg" style={`max-width:${width}`} set:html={svg} />
+  ) : (
+    <div class="diagram-missing" role="status">
+      <strong>Diyagram henüz üretilmedi:</strong> <code>{name}</code>
+      <span class="block text-xs mt-1">content/diagrams/{name}.dot → <code>scripts/build_diagrams.py</code></span>
+    </div>
+  )}
+  {caption && <figcaption class="diagram-caption">{caption}</figcaption>}
+  {dot && dotSource && (
+    <details class="diagram-dot">
+      <summary>DOT kaynağı</summary>
+      <div class="diagram-dot-tools">
+        <button type="button" class="codetry-btn" data-copy aria-live="polite">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span data-copy-label>Kopyala</span>
+        </button>
+        <a href={GRAPHVIZ_ONLINE} target="_blank" rel="noopener" class="codetry-btn">Graphviz Online'da aç ↗</a>
+        <span class="text-xs text-ink-3">Kodu kopyalayıp Graphviz Online'a yapıştırın; kendi diyagramınızı deneyin.</span>
+      </div>
+      <pre class="diagram-dot-code"><code>{dotSource}</code></pre>
+    </details>
+  )}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.diagram-dot').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('[data-copy]');
+    const label = box.querySelector<HTMLElement>('[data-copy-label]');
+    const code = box.querySelector<HTMLElement>('.diagram-dot-code');
+    if (!btn || !code) return;
+    if (!navigator.clipboard) { btn.hidden = true; return; }
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.innerText.replace(/\n$/, ''));
+        btn.setAttribute('data-copied', '');
+        if (label) label.textContent = 'Kopyalandı';
+        setTimeout(() => { btn.removeAttribute('data-copied'); if (label) label.textContent = 'Kopyala'; }, 1800);
+      } catch {
+        if (label) label.textContent = 'Kopyalanamadı';
+      }
+    });
+  });
+</script>

@@ -50,6 +50,11 @@ jobs:
           python ijava/install.py --sys-prefix
           jupyter kernelspec list
 
+      - name: Graphviz diyagramlarını SVG'ye derle
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq graphviz
+          python scripts/build_diagrams.py
+
       - name: Defterleri çalıştır ve HTML'e çevir
         run: python scripts/build_notebooks.py --execute
 

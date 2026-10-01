@@ -13,6 +13,7 @@ Canlı adres: `https://drferhatu.github.io/algoritma-ve-programlama-1/` · Depo:
 | Stil | [Tailwind CSS 4](https://tailwindcss.com) | Tasarım sistemi tek CSS dosyasında token olarak (`src/styles/global.css`) |
 | İçerik | Markdown/MDX + JSON | Haftalar ve lablar Markdown, künye/modüller/takvim JSON |
 | Kod | Shiki | ```java blokları derlemede renklendirilir; `CodeTry` ile kopyalanır |
+| Diyagram | [Graphviz](https://graphviz.org) | `content/diagrams/*.dot` derlemede SVG'ye çevrilir, `<Diagram>` ile sayfaya gömülür |
 | Defterler | Jupyter + [IJava](https://github.com/SpencerPark/IJava) | Derste çalıştırılan Java defterleri sitede gömülü görünür |
 | Arama | [Pagefind](https://pagefind.app) | Derleme sonrası tamamen statik arama dizini |
 | Dağıtım | GitHub Actions → GitHub Pages | `main` dalına her push'ta otomatik derleme ve yayın |
@@ -25,6 +26,7 @@ content/
   data/modules.json       modüller (başlık, haftalar, renk, özet)
   data/schedule.json      haftalık teori ve lab tarihleri (A/B) ve durumlar (tatil/ertelendi/sınav)
   weeks/hafta-01.mdx …    14 haftalık teori dosyası (her hafta tek dosya; .md veya .mdx)
+  diagrams/*.dot          Graphviz diyagram kaynakları (→ public/diagrams/*.svg, derlemede üretilir)
   labs/lab-01.md …        14 laboratuvar dosyası (haftanın sayfasında "Laboratuvar" sekmesi)
   guides/*.md             rehberler (/rehber/<ad>; liste /rehberler)
   announcements/*.md      duyurular
@@ -41,6 +43,7 @@ scripts/
   generate_week_files.py  hafta ve lab iskeletlerini üretir (mevcut dosyaları ezmez)
   validate_content.py     içerik + derleme doğrulaması (haftalar, lablar, takvim, defter, kırık bağlantı)
   build_notebooks.py      defterleri IJava ile çalıştırır ve HTML'e çevirir (kernel yoksa mevcut çıktıları kullanır)
+  build_diagrams.py       content/diagrams/*.dot → public/diagrams/*.svg (Graphviz `dot` gerekir)
   make_qr.py              iletişim kanalları için karekod üretir
 public/                   favicon, og.png, robots.txt, .nojekyll, qr/
 .github/workflows/deploy.yml  Java 21 + IJava + Node 22 ile GitHub Pages dağıtımı
@@ -64,7 +67,32 @@ Python scriptleri için `ferhat_ml` conda ortamı kullanılır:
 /opt/miniconda3/envs/ferhat_ml/bin/python scripts/validate_content.py          # içerik doğrulaması
 /opt/miniconda3/envs/ferhat_ml/bin/python scripts/generate_week_files.py       # eksik hafta/lab iskeletleri
 /opt/miniconda3/envs/ferhat_ml/bin/python scripts/build_notebooks.py --execute # defterleri çalıştır + HTML
+/opt/miniconda3/envs/ferhat_ml/bin/python scripts/build_diagrams.py [--force]  # .dot → .svg (brew install graphviz)
 ```
+
+Tam yerel derleme sırası (CI'daki `deploy.yml` ile aynı): **diagrams → notebooks → `npm run build` → validate**
+
+```bash
+/opt/miniconda3/envs/ferhat_ml/bin/python scripts/build_diagrams.py
+/opt/miniconda3/envs/ferhat_ml/bin/python scripts/build_notebooks.py --execute
+npm run build
+/opt/miniconda3/envs/ferhat_ml/bin/python scripts/validate_content.py
+```
+
+### Diyagramlar (`<Diagram>`)
+
+- Kaynak: `content/diagrams/<ad>.dot` (Graphviz DOT, UTF-8, Türkçe etiketler). Adlandırma: `h02-atm.dot`, `h02-cift-tek.dot`, `lab02-ortalama.dot`.
+- `scripts/build_diagrams.py` değişen `.dot` dosyalarını `public/diagrams/<ad>.svg` olarak üretir (git'e girmez).
+- `.mdx` dosyasında, import gerekmeden:
+
+  ```mdx
+  <Diagram name="h02-atm" caption="ATM para çekme akışı" />
+  <Diagram name="h02-cift-tek" caption="Çift/tek kararı" dot width="520px" />
+  ```
+
+  `dot` verilirse altta katlanabilir "DOT kaynağı" kutusu çıkar (Kopyala + [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/) bağlantısı). `width` en fazla genişliktir (varsayılan `100%`).
+- SVG derleme zamanında sayfaya inline gömülür (metin seçilebilir, Pagefind dizinine girmez). SVG yoksa derleme durmaz; sayfada sarı "Diyagram henüz üretilmedi" kutusu görünür.
+- `<Diagram>` yalnızca `.mdx` dosyalarında çalışır; bir lab/haftada diyagram gerekiyorsa dosyayı `.mdx` yapın (koleksiyonlar `.md` ve `.mdx` kabul eder).
 
 ## Veri sözleşmesi
 

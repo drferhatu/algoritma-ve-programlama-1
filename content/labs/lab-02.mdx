@@ -1,0 +1,220 @@
+---
+week: 2
+title: "Lab 2 · Diyagramdan Koda, Koddan Diyagrama"
+description: "Lab 1'deki kodun ve verilen bir programın akış diyagramını DOT ile çizip PNG olarak üretme; verilen iki diyagramdan tam Java dosyası yazma; üç hatalı dosyayı düzeltip hata türlerini sınıflandırma; kantin alt akışını diyagram ve sözde kodla yazma."
+status: hazir
+objectives:
+  - "Çalışan bir Java programından Graphviz DOT ile akış diyagramı üretir, Graphviz Online'da çizdirir ve PNG olarak indirir."
+  - "Verilen bir akış diyagramını class/main iskeletli tam bir Java dosyasına çevirir, derler ve beklenen çıktıyı alır."
+  - "Bilerek hatalı üç dosyada sözdizimi, çalışma zamanı ve mantık hatalarını bulur, düzeltir ve her birini türüyle raporlar."
+  - "Bir alt akışı (stok kontrolü ve sepete ekleme) kod yazmadan diyagram ve sözde kodla ifade eder."
+tools:
+  - "Graphviz Online"
+  - "JDK 21 / Codespaces"
+  - "Git"
+deliverable: "Lab 2 deposu: 3 .dot + 3 .png, NotHarfi.java, GeriSayim.java, düzeltilmiş Hatali1-3.java, hatalar.md, KantinStok.md"
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 7 Ekim 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 8 Ekim 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [2. haftanın](/haftalar/hafta-02) teorisini uyguluyor: akış diyagramı, sözde kod, tam Java dosyası ve üç hata türü. Sloganımız iki yönlü: **koddan diyagram üret, diyagramdan kod üret.** Kendi bilgisayarınız ya da Codespaces; ikisi de olur.
+
+> [!not] Lab 2 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab02/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab02/accept)**
+> Deponuz `algo1-lab02-KULLANICIADI` adıyla oluşur; içinde `Hatali1.java`, `Hatali2.java`, `Hatali3.java` hazır gelir. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Lab 1'de organizasyona davet aldıysanız bağlantı doğrudan çalışır. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
+> DOT **sözdizimini** yapay zekaya sorabilirsiniz: "Graphviz'de elmas nasıl çizilir?", "ok üzerine Evet yazmak için ne yazmalıyım?", "iki düğümü aynı hizaya nasıl koyarım?" serbest. Ama "şu kodun diyagramını çiz" ya da "şu diyagramdan Java yaz" demek görevi yaptırmaktır ve **yasaktır**. Teslim ritüelinde diyagramınızı anlatacaksınız; lab sorumlu hocanız "bu ok neden buraya gidiyor?" diye sorduğunda cevabı bilmeniz gerekir. Lab sorumlu hocanız istediğinde ekranınızı görebilir.
+
+## Adım 0 · Lab 1 eksikleri ve depo (5 dk)
+
+1. Lab 1'de geçmeyen testiniz varsa **şimdi değil**, lab bitince düzeltin; Lab 1'in son teslimi 2 Ekim Cuma 23.59'du, süre doldu. Bugün yalnızca `CarpimTablosu.java` dosyanıza ihtiyacınız var; yoksa Lab 1 sayfasındaki tarife göre 3 dakikada yazın.
+2. Yukarıdaki kabul bağlantısından Lab 2 deponuzu oluşturun.
+3. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab02-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**). Terminalde `javac -version` 21 ya da üstü demeli.
+4. Ayrı bir sekmede [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/) açık dursun.
+
+Bütün dosyalar deponun **kök dizinine**; alt klasör açmayın, otomatik kontrol kökte arar.
+
+## Görev 1 · Koddan diyagrama (20 dk)
+
+Elinizde çalışan kod var; ondan diyagram üreteceksiniz. Zor olan kısım çizmek değil, kodun her satırını bir sembole eşlemek: değişken tanımı dikdörtgen, `for` koşulu elmas, `println` paralelkenar.
+
+Başlangıç için küçük bir DOT iskeleti. Kopyalayın, Graphviz Online'ın sol tarafına yapıştırın; sağda çizim belirince düğüm ekleyip genişletin.
+
+<Diagram name="lab02-dot-iskelet" caption="Beş düğümlük başlangıç iskeleti. Altındaki DOT kaynağını kopyalayıp genişletin." dot width="260px" />
+
+DOT'un bu lab için yetecek üç kuralı:
+
+- Düğüm tanımı: `ad [shape=box, label="metin"];`. Şekiller: `ellipse` başla/bitir, `box` işlem, `diamond` karar, `parallelogram` girdi/çıktı.
+- Ok: `a -> b;`. Karardan çıkan oklara etiket: `karar -> islem [label="Evet"];`.
+- Düğüm adları ASCII (`basla`, `karar1`); Türkçe karakterler yalnızca `label` içinde. Her satır noktalı virgülle biter; Java gibi.
+
+PNG indirmek için: Graphviz Online'da üstteki **Format** menüsünden `png-image` seçin, sağdaki görsele **sağ tıklayıp** "Resmi farklı kaydet" deyin. Dosya adını aşağıdaki gibi verin.
+
+### 1a · `CarpimTablosu.dot` ve `CarpimTablosu.png`
+
+Lab 1'deki `CarpimTablosu.java` dosyanızın akış diyagramı. Beklenen iskelet: BAŞLA → `i = 1` → `i ≤ 10 mu?` elması → Evet: `5 x i = ...` yazdır (paralelkenar) → `i = i + 1` → elmasa geri ok; Hayır: BİTİR. Lab 1'de tabloyu 10'dan 1'e yazdırdıysanız diyagramınız da öyle olsun; diyagram **sizin** kodunuzu anlatmalı.
+
+Önce `CarpimTablosu.dot` dosyasını deponuzun kök dizinine kaydedin (VS Code'da yeni dosya, içine DOT kodu). Sonra aynı kodu Graphviz Online'da çizdirip `CarpimTablosu.png` olarak indirin ve depoya koyun.
+
+### 1b · `Ortalama.dot` ve `Ortalama.png`
+
+Aşağıdaki programın diyagramı. Önce kodu okuyun; `printf` satırı bir çıktı, `if` bir karar.
+
+```java
+public class Ortalama {
+    public static void main(String[] args) {
+        int not1 = 70;
+        int not2 = 80;
+        int not3 = 85;
+        double ortalama = (not1 + not2 + not3) / 3.0;
+        System.out.printf("Ortalama: %.2f%n", ortalama);
+        if (ortalama >= 60) {
+            System.out.println("Geçti");
+        } else {
+            System.out.println("Kaldı");
+        }
+    }
+}
+```
+
+`Ortalama.dot` ve `Ortalama.png` deponun kök dizininde. Kontrol listesi: tek BAŞLA, tek BİTİR, elmasın iki okunda Evet / Hayır, her `println` ve `printf` paralelkenar.
+
+## Görev 2 · Diyagramdan koda (20 dk)
+
+Şimdi ters yön: diyagram verildi, kodu siz yazacaksınız. İki dosya; ikisi de **tam dosya** (`public class` + `main`), ikisi de derlenip çalışmalı. Girdi yok; değerler kodda sabit.
+
+### 2a · `NotHarfi.java`
+
+<Diagram name="lab02-not-harfi" caption="Puandan harf notu. Her elmasın Hayır oku bir sonraki elmasa gidiyor: Java'da else if zinciri." width="520px" />
+
+`int puan = 73;` sabit. 90 ve üstü `A`, 80 ve üstü `B`, 70 ve üstü `C`, 60 ve üstü `D`, altı `F`. Çıktı **tam olarak** şu satır olmalı (iki nokta, bir boşluk, harf):
+
+```
+Harf: C
+```
+
+Otomatik kontrol bu satırı birebir arar. İpucu: elmas zincirini `if / else if / else if / else` olarak yazın; sıra önemli, 90'dan başlayın. Bitince `puan`'ı 95, 59 ve 80 yapıp deneyin; her seferinde diyagramda hangi oku izlediğinizi söyleyebilmelisiniz. Teslimde `puan = 73` kalsın.
+
+### 2b · `GeriSayim.java`
+
+<Diagram name="lab02-geri-sayim" caption="Geri sayım: geriye dönen ok tekrar yapısı; Hayır çıkışı döngünün bittiği yer." width="360px" />
+
+10'dan 1'e her sayı **ayrı satırda**, sonra `Basla!` (ASCII, ş yok; otomatik kontrol böyle arar):
+
+```
+10
+9
+8
+...
+1
+Basla!
+```
+
+İpucu: `for (int i = 10; i >= 1; i--)`. Diyagramdaki `i = i - 1` kutusu `i--` oldu, `i ≥ 1 mi?` elması döngü koşulu. Derleyin, çalıştırın, çıktıyı sayın: 10 satır sayı, 1 satır `Basla!`.
+
+## Görev 3 · Hata avı (15 dk)
+
+Deponuzda üç dosya hazır geldi; üçü de **bozuk**. Her birinde bir tür hata var. Dosyaları yerinde düzeltin (adlarını değiştirmeyin) ve `hatalar.md` dosyasına ne bulduğunuzu yazın.
+
+| Dosya | Hata türü | İpucu | Düzelince |
+|---|---|---|---|
+| `Hatali1.java` | Sözdizimi | `javac` iki şikayette bulunuyor: bir noktalı virgül eksik ve `system` küçük harfle yazılmış. Mesajı okuyun; satır numarasını veriyor. | Derlenir ve `Merhaba Lab 2` yazar |
+| `Hatali2.java` | Çalışma zamanı | Derlenir, ama çalışınca çöker: `int ogrenciSayisi = 0;` ve `toplam / ogrenciSayisi`. Hata mesajındaki `ArithmeticException` satırını okuyun. Sınıfta 3 öğrenci var; `toplam = 75`. | `Ortalama: 25` yazar |
+| `Hatali3.java` | Mantık | Derlenir, çalışır, çökmez, **yanlış sonuç** verir: `double ort = (70 + 80 + 85) / 3;` → `78.0`. Gerçek ortalama 78,33. Neden? Geçen haftanın `7 / 2` sorusu. | `printf("%.2f")` ile `Ortalama: 78.33` yazar |
+
+Sıra önemli: `Hatali1` düzelmeden derlenmez, `Hatali2` çalıştırmadan çökmez, `Hatali3` ise çıktıyı önceden tahmin etmeden hiç fark edilmez. Her dosyayı önce **çalıştırmadan** okuyun ve "bence şu satır" deyin; sonra derleyip çalıştırıp doğrulayın.
+
+### `hatalar.md`
+
+Deponun kök dizinine, şu şablonla (üç dosya için üç blok):
+
+```markdown
+# Lab 2 · Hata avı raporu
+
+## Hatali1.java
+- Satır: ...
+- Hata türü: sözdizimi / çalışma zamanı / mantık
+- Neden hata: ...
+- Nasıl düzelttim: ...
+- Derleyici / JVM mesajı (varsa): ...
+
+## Hatali2.java
+...
+
+## Hatali3.java
+...
+
+## En zor bulduğum hata ve nedeni
+...
+```
+
+"Neden hata" satırı tek kelime olmasın; "noktalı virgül yok" yerine "Java'da her deyim noktalı virgülle biter, 7. satırdaki `println` deyimi bitmemiş" gibi bir cümle. Bu raporu lab sorumlu hocanız okuyacak.
+
+## Görev 4 · Kantin alt akışı (15 dk)
+
+Derste kantin sipariş uygulamasının büyük resmini gördünüz; "Stokta mı?" elmasının içindeki alt akışın sözde kodunu da. Şimdi o alt akışı bir adım öteye taşıyın: **kod yok**, yalnızca diyagram ve sözde kod.
+
+Alt akış: **stok kontrolü ve sepete ekleme.** Girdi: `urunKodu`, `adet`. Dersteki sürüme iki kural ekleyin:
+
+- `adet` 0 ya da negatifse "Geçersiz adet" mesajı ver, hiçbir şey yapma.
+- Stok `adet`'ten azsa "Bu üründen en fazla N adet alabilirsiniz" mesajı ver; `N` o anki stok.
+- Stok yeterliyse: `stok = stok - adet`, sepete ekle, `toplam = toplam + fiyat × adet`.
+
+Teslim edilecek üç dosya, deponun kök dizininde:
+
+1. `KantinStok.dot`: alt akışın DOT kaynağı. Ürünler veritabanını `shape=cylinder` ile gösterin; en az iki elmas (adet geçerli mi, stok yeter mi), tek BAŞLA, tek BİTİR.
+2. `KantinStok.png`: Graphviz Online'dan indirilmiş çizim.
+3. `KantinStok.md`: içinde sözde kod (dersteki `BAŞLA / EĞER ... İSE / DEĞİLSE / BİTİR` biçimi) ve altına iki cümle: bu alt akıştaki hangi karar bugün yazdığınız `NotHarfi.java`'daki kararla aynı yapıda, hangisi farklı?
+
+Sözde kod `KantinStok.md` içinde üç ters tırnakla (` ```text `) açılan bir blokta dursun.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 2: diyagramlar, kod ve hata avı"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 9 Ekim 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Lab 1'deki gibi deponuzda **Add file → Upload files** ile de yükleyebilirsiniz; PNG dosyaları için bu çoğu zaman en kolay yol. Ricamız aynı: dosyaları teker teker değil, **hepsini birden** yükleyin. Her yükleme kontrolü baştan çalıştırır; on bir dosyayı on bir kez yüklemek on bir ayrı kontrol demektir.
+
+Kontrol listesi: deponuzun kökünde tam olarak şunlar olmalı: `CarpimTablosu.dot`, `CarpimTablosu.png`, `Ortalama.dot`, `Ortalama.png`, `NotHarfi.java`, `GeriSayim.java`, `Hatali1.java`, `Hatali2.java`, `Hatali3.java` (düzeltilmiş), `hatalar.md`, `KantinStok.dot`, `KantinStok.png`, `KantinStok.md`.
+
+### Otomatik kontrol (100 puan)
+
+| # | Test | Puan |
+|---|---|---|
+| 1 | `CarpimTablosu.dot` Graphviz ile hatasız render ediliyor | 10 |
+| 2 | `CarpimTablosu.png` var | 5 |
+| 3 | `Ortalama.dot` Graphviz ile hatasız render ediliyor | 10 |
+| 4 | `Ortalama.png` var | 5 |
+| 5 | `NotHarfi` derleniyor ve çıktıda `Harf: C` satırı var | 15 |
+| 6 | `GeriSayim` çıktısı 10'dan 1'e ayrı satırlar ve sonunda `Basla!` | 15 |
+| 7 | `Hatali1` derleniyor | 10 |
+| 8 | `Hatali2` çalışıyor ve çıktıda `Ortalama: 25` var | 10 |
+| 9 | `Hatali3` çıktısında `78.33` var | 10 |
+| 10 | `KantinStok.dot` render ediliyor, `hatalar.md` ve `KantinStok.md` var | 10 |
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol yalnızca dosyanın varlığına, DOT'un derlenip derlenmediğine ve birkaç çıktı satırına bakar. Diyagramınızın **doğruluğu** (her satır doğru sembolde mi, Evet / Hayır etiketleri var mı, geriye dönen ok doğru yerde mi), `hatalar.md`'deki açıklamaların kalitesi ve `KantinStok.md`'deki sözde kod lab sorumlu hocanızın değerlendirmesidir. Render olan ama kodu yanlış anlatan bir diyagram otomatik kontrolden tam puan alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+
+> [!not] Teslim ritüeli: 30 saniyede diyagramınızı anlatın
+> Push ettikten sonra lab sorumlu hocanızı çağırın ve bu kez bir **diyagramınızı** anlatın: hangi kutu kodun hangi satırı, elmasın Hayır oku neden oraya gidiyor, geriye dönen ok kodda nerede. Lab 1'de kodu anlattınız; bu lab'da anlatılan şey diyagram. Anlatamadığınız diyagram sizin değildir.
+
+## Bitiremediyseniz
+
+Lab'da Adım 0 (depo açıldı), Görev 1a (ilk `.dot` ve `.png`) ve Görev 2'den en az bir dosyanın derlenip push edilmiş olması yeterli. Kalanı **9 Ekim Cuma 23.59**'a kadar evde bitirip push edin; Graphviz Online evde de aynı şekilde çalışır, kurulum istemez. Cuma'dan sonra gelen push'lar puanlanmaz. Takıldığınız yer DOT sözdizimiyse yapay zekaya sorabilirsiniz (sarı bölge); takıldığınız yer "bu kod ne yapıyor" ise ofis saatine gelin.

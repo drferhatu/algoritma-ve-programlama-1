@@ -1,0 +1,19 @@
+// Geçen haftanın nehir bulmacası: yalnızca sıra yapısı, karar yok
+digraph Nehir {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="BAŞLA\n(hepsi sol kıyıda)"];
+    h1 [shape=box, label="1. Tavuğu karşıya götür"];
+    h2 [shape=box, label="2. Yalnız dön"];
+    h3 [shape=box, label="3. Tilkiyi karşıya götür"];
+    h4 [shape=box, label="4. Tavuğu geri getir"];
+    h5 [shape=box, label="5. Mısırı karşıya götür"];
+    h6 [shape=box, label="6. Yalnız dön"];
+    h7 [shape=box, label="7. Tavuğu karşıya götür"];
+    bitir [shape=ellipse, label="BİTİR\n(hepsi sağ kıyıda)"];
+
+    basla -> h1 -> h2 -> h3 -> h4 -> h5 -> h6 -> h7 -> bitir;
+}

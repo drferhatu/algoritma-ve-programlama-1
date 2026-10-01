@@ -1,0 +1,35 @@
+// Lab 2, Görev 2: puandan harf notu (öğrenci bundan NotHarfi.java yazar)
+digraph NotHarfi {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="BAŞLA"];
+    puan  [shape=box, label="puan = 73"];
+    k90   [shape=diamond, label="puan ≥ 90 mı?"];
+    k80   [shape=diamond, label="puan ≥ 80 mi?"];
+    k70   [shape=diamond, label="puan ≥ 70 mi?"];
+    k60   [shape=diamond, label="puan ≥ 60 mı?"];
+    yA    [shape=parallelogram, label="\"Harf: A\" yaz"];
+    yB    [shape=parallelogram, label="\"Harf: B\" yaz"];
+    yC    [shape=parallelogram, label="\"Harf: C\" yaz"];
+    yD    [shape=parallelogram, label="\"Harf: D\" yaz"];
+    yF    [shape=parallelogram, label="\"Harf: F\" yaz"];
+    bitir [shape=ellipse, label="BİTİR"];
+
+    basla -> puan -> k90;
+    k90 -> yA  [label="Evet"];
+    k90 -> k80 [label="Hayır"];
+    k80 -> yB  [label="Evet"];
+    k80 -> k70 [label="Hayır"];
+    k70 -> yC  [label="Evet"];
+    k70 -> k60 [label="Hayır"];
+    k60 -> yD  [label="Evet"];
+    k60 -> yF  [label="Hayır"];
+    yA -> bitir;
+    yB -> bitir;
+    yC -> bitir;
+    yD -> bitir;
+    yF -> bitir;
+}

@@ -1,0 +1,33 @@
+// Kantin sipariş uygulaması: üst düzey akış (bu dönem yazılmıyor, büyük resim)
+digraph Kantin {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla    [shape=ellipse, label="BAŞLA"];
+    ac       [shape=parallelogram, label="Kullanıcı sayfayı açar,\nmenü gösterilir"];
+    urunDB   [shape=cylinder, label="Ürünler DB"];
+    sec      [shape=parallelogram, label="Ürün ve adet seç"];
+    stok     [shape=diamond, label="Stokta mı?"];
+    sepet    [shape=box, label="Sepete ekle\ntoplam = toplam + fiyat × adet"];
+    baska    [shape=diamond, label="Başka ürün var mı?"];
+    odeme    [shape=diamond, label="Ödeme başarılı mı?"];
+    kaydet   [shape=box, label="Siparişi kaydet"];
+    sipDB    [shape=cylinder, label="Siparişler DB"];
+    goster   [shape=parallelogram, label="Sipariş numarasını göster"];
+    bitir    [shape=ellipse, label="BİTİR"];
+
+    basla -> ac;
+    urunDB -> ac [label="menü verisi", style=dashed];
+    ac -> sec -> stok;
+    stok -> sepet [label="Evet"];
+    stok -> sec   [label="Hayır: \"tükendi\" mesajı"];
+    sepet -> baska;
+    baska -> sec   [label="Evet"];
+    baska -> odeme [label="Hayır"];
+    odeme -> odeme  [label="Hayır: tekrar dene"];
+    odeme -> kaydet [label="Evet"];
+    kaydet -> sipDB [style=dashed];
+    kaydet -> goster -> bitir;
+}

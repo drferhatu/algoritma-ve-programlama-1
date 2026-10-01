@@ -1,0 +1,417 @@
+---
+week: 2
+title: "Akış Diyagramı, Sözde Kod ve Java Program Yapısı"
+topic: "Algoritmayı akış diyagramı ve sözde kodla ifade etme; bir Java programının anatomisi (class, main), derleme süreci (JDK, javac, bytecode) ve üç hata türü"
+description: "Önce çiz, sonra yaz, sonra kır: bir ATM akışını kağıda çiziyor, aynı akışı sözde koda ve Java'ya çeviriyor, tam bir Java dosyasının iskeletini ve derleme sürecini görüyor, bilerek bozulmuş bir programda üç hata türünü avlıyoruz."
+module: m1
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+tags:
+  - "akış diyagramı"
+  - "sözde kod"
+  - "Graphviz"
+  - "DOT"
+  - "JDK"
+  - "javac"
+  - "main"
+  - "hata türleri"
+objectives:
+  - "Basit bir algoritmayı standart sembollerle akış diyagramı ve Türkçe sözde kod olarak yazar; sıra, seçim ve tekrar yapılarını diyagramda gösterir."
+  - "Aynı algoritmayı diyagram, sözde kod ve Java olarak üç biçimde yan yana okur ve birinden diğerine çevirir."
+  - "Bir Java dosyasının zorunlu iskeletini (class, main, süslü parantez, noktalı virgül) açıklar; javac ile derleyip java ile çalıştırır."
+  - "JDK, JVM ve bytecode kavramlarını bir cümleyle söyler; derleme sürecini çizer."
+  - "Sözdizimi, çalışma zamanı ve mantık hatalarını bilerek bozulmuş bir programda bulup sınıflandırır."
+  - "Graphviz Online'da DOT koduyla küçük bir akış diyagramı çizer."
+tools:
+  - "Java Playground"
+  - "Graphviz Online"
+  - "JDK 21"
+resources:
+  - title: "Think Java 2, Bölüm 1: Computer Programming"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch01.html"
+    note: "Program nedir, derleme, üç hata türü; bu haftanın ikinci yarısının kitap karşılığı."
+  - title: "Think Java 2, Bölüm 2: Variables and Operators"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch02.html"
+    note: "Değişkenler, atama, tam sayı bölmesi; hata avındaki mantık hatasının kaynağı burada."
+  - title: "Graphviz Online"
+    url: "https://dreampuf.github.io/GraphvizOnline/"
+    note: "Kurulum yok: sola DOT kodu, sağda diyagram. Lab 2'de diyagramları bununla üreteceksiniz."
+  - title: "Graphviz DOT dili dokümanı"
+    url: "https://graphviz.org/doc/info/lang.html"
+    note: "DOT sözdiziminin resmî tanımı; shape, label ve ok kuralları için başvuru."
+---
+
+## Derse Başlamadan Önce
+
+- **Kağıt ve kalem.** Bu hafta bulmaca kağıtta çizilecek; telefon ekranında diyagram çizmek işkencedir.
+- Tarayıcıda [Java Playground](https://dev.java/playground/) açık olsun; geçen haftaki gibi sınıf ve `main` yazmadan kod çalıştıracağız.
+- [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/) adresini bir kez açın. Sol tarafta hazır bir örnek kod, sağ tarafta onun çizimi görünür. Hiçbir şey yazmanıza gerek yok; yalnızca sayfanın açıldığını ve sağ tarafın kendiliğinden çizildiğini görün. Lab 2'de diyagramları bu araçla üretip PNG olarak indireceksiniz.
+- Geçen haftanın nehir bulmacası kağıdı yanınızdaysa getirin; bugün onu diyagrama çevireceğiz.
+
+> [!not] Bu haftanın sloganı: önce çiz, sonra yaz, sonra kır
+> Önce bir akışı kağıda **çizeceğiz**, sonra aynı akışı sözde kod ve Java olarak **yazacağız**, en sonunda da çalışan bir programı bilerek **kıracağız** ve üç farklı hata türünü avlayacağız. A şubesi Cuma 09.15, B şubesi Cuma 13.15; tek oturum.
+
+## Haftanın Bulmacası
+
+<Puzzle title="ATM" kind="bulmaca">
+
+Bir ATM'den para çekme sürecini düşünün. Kart takılır, şifre girilir, tutar yazılır, para çıkar. Ama arada kararlar var:
+
+- Şifre yanlışsa tekrar sorulur; **üçüncü yanlışta kart yutulur**.
+- İstenen tutar **günlük limit olan 5000 TL'den** büyükse işlem reddedilir.
+- Bakiye istenen tutarı karşılamıyorsa işlem reddedilir.
+- Her şey yolundaysa para verilir ve bakiye düşer.
+
+**Görev:** Bu süreci kağıda, **kutular ve oklarla** çizin. Sembol bilmeniz gerekmiyor; her adım için bir kutu, her soru için bir "evet / hayır" ayrımı yeterli. Yanınızdaki kişiyle ikili çalışın; **8 dakikanız** var.
+
+Bitirince şu üç soruya cevap yazın:
+
+1. Kaç farklı türde kutu kullandınız? (Soru soran, iş yapan, bir şey gösteren...)
+2. Hangi okla "geri" döndünüz? Neden geri dönmek gerekti?
+3. Çiziminizin kaç tane bitiş noktası var? Tek olmalı mı?
+
+</Puzzle>
+
+Çizimlerin çoğunda üç tür kutu kendiliğinden çıkar: **iş yapan** (bakiyeyi düşür), **soru soran** (şifre doğru mu?) ve **bir şey alan ya da gösteren** (tutarı al, mesaj göster). Akış diyagramının sembolleri işte bu üç ihtiyaçtan doğdu; birazdan tabloyu göreceksiniz.
+
+> [!uyari] Önce kendiniz çizin
+> Aşağıdaki çözümü bulmacayı bitirmeden açmayın. Kendi çiziminizle karşılaştırmak, hazır çizimi okumaktan on kat daha öğreticidir.
+
+<Diagram name="h02-atm" caption="ATM para çekme akışı: bulmacanın bir çözümü. Sizinki farklı olabilir; önemli olan her kararın iki çıkışının ve tek bir bitişin olması." dot width="520px" />
+
+Çizimin altındaki **DOT kaynağı**nı açın: diyagram, yaklaşık 25 satırlık bir metinden üretildi. "Kopyala" deyip Graphviz Online'a yapıştırırsanız aynı çizimi kendi tarayıcınızda görürsünüz. Lab 2'de diyagramları böyle, kodla çizeceksiniz; çünkü kod düzeltmek çizim düzeltmekten kolaydır.
+
+## Ders Notları
+
+### Akış diyagramı sembolleri
+
+Akış diyagramı (flowchart), bir algoritmanın adımlarını ve adımlar arasındaki geçişleri **standart sembollerle** gösteren çizimdir. Standart olması önemli: dünyanın öbür ucundaki bir mühendis elması gördüğünde "burada bir karar var" der.
+
+| Sembol | Şekil | Anlamı | ATM'de |
+|---|---|---|---|
+| Başla / Bitir | Elips (oval) | Akışın tek giriş ve tek çıkış noktası | BAŞLA, BİTİR |
+| İşlem | Dikdörtgen | Hesaplama, atama, bir şey yapma | `bakiye = bakiye - tutar` |
+| Karar | Elmas (baklava) | Evet / Hayır sorusu; iki çıkış | "Şifre doğru mu?" |
+| Girdi / Çıktı | Paralelkenar | Dışarıdan veri alma ya da gösterme | "Tutarı al", "Red mesajı göster" |
+| Veritabanı | Silindir | Kalıcı veri deposu (büyük uygulamalarda) | Bankanın hesap kayıtları |
+| Ok | Çizgi ve ok ucu | Akış yönü; karardan çıkanlara "Evet" / "Hayır" yazılır | Her bağlantı |
+
+<Diagram name="h02-semboller" caption="Altı sembol bir arada. Karardan çıkan her okun etiketi olmalı." dot width="300px" />
+
+Çizim kuralları kısa: akış **yukarıdan aşağı** gider; **tek BAŞLA, tek BİTİR** olur; her karar elmasından **iki ok** çıkar ve ikisinin de etiketi vardır; oklar mümkünse kesişmez. Son bir kural daha: diyagram, okuyanın ne olup bittiğini kodu görmeden anlamasını sağlamalı. Sağlamıyorsa kutular fazla kalabalık ya da fazla seyrektir.
+
+> [!tanim] DOT dili
+> Graphviz'in metin tabanlı çizim dili. `basla -> karar;` yazarsınız, program oku çizer; `karar [shape=diamond]` yazarsınız, elmas çizer. Çizimi elle hizalamakla uğraşmazsınız; yerleşimi Graphviz hesaplar. Bu derste diyagramları DOT ile yazıyoruz, çünkü metin kopyalanır, düzeltilir, karşılaştırılır; çizim zor düzeltilir.
+
+### Üç temel yapı: sıra, seçim, tekrar
+
+1960'larda kanıtlanmış bir sonuç var (Böhm ve Jacopini): **her program yalnızca üç yapıyla yazılabilir.**
+
+- **Sıra (sequence):** adımlar art arda gelir. Diyagramda düz bir ok zinciri.
+- **Seçim (selection):** bir koşula göre iki yoldan biri. Diyagramda elmas; Java'da `if` / `else`.
+- **Tekrar (iteration):** bir koşul sağlandığı sürece aynı adımlar. Diyagramda **geriye dönen bir ok**; Java'da `for` / `while`.
+
+Geçen haftanın nehir bulmacası bunların en basitiydi: yalnızca **sıra**. Yedi hamle, hiç karar yok.
+
+<Diagram name="h02-nehir" caption="Geçen haftanın bulmacası, bu kez diyagram. Yalnızca sıra yapısı: tek yol, hiç elmas yok." width="300px" />
+
+ATM'de ise üçü de vardı: kartı al ve şifreyi sor (sıra), şifre doğru mu (seçim), yanlışsa tekrar sor (tekrar: elmastan yukarıya dönen ok). Dönem boyunca yazacağınız her program bu üçünün iç içe geçmiş hali olacak; 4. haftada seçim, 6-7. haftalarda tekrar yapısını derinlemesine göreceğiz.
+
+### Üç örnek, her biri üç dilde
+
+Aynı algoritmayı üç biçimde yan yana okuyacağız: **diyagram** (göz için), **sözde kod** (insan için), **Java** (makine için). Üçü aynı şeyi söyler; dil değişir, yapı değişmez.
+
+Sözde kodda şu Türkçe kelimeleri kullanacağız: `BAŞLA`, `BİTİR`, `EĞER ... İSE`, `DEĞİLSE`, `TEKRARLA ... OLDUKÇA`, `YAZ`. Derlenmez, kural kitabı yoktur; tek ölçüt, okuyan kişinin her satırı tek anlamla anlayabilmesi.
+
+#### Örnek 1 · Çift mi tek mi? (seçim)
+
+<Diagram name="h02-cift-tek" caption="Bir elmas, iki çıkış, tek bitiş." width="360px" />
+
+```text
+BAŞLA
+  sayi = 17
+  EĞER sayi'nin 2'ye bölümünden kalan 0 İSE
+      YAZ sayi, "çift"
+  DEĞİLSE
+      YAZ sayi, "tek"
+BİTİR
+```
+
+<CodeTry title="Örnek 1 · Çift mi tek mi?" hint="Geçen haftanın üçüncü programı. sayi'yi 18 yapıp tekrar çalıştırın; diyagramda hangi oku izlediniz?">
+
+```java
+int sayi = 17;
+if (sayi % 2 == 0) {
+    System.out.println(sayi + " çift");
+} else {
+    System.out.println(sayi + " tek");
+}
+```
+
+</CodeTry>
+
+Üçünü üst üste koyun: elmas = `EĞER ... İSE` = `if (...)`. "Evet" oku = `İSE`'nin altındaki satır = ilk süslü parantez bloğu. "Hayır" oku = `DEĞİLSE` = `else`. Bire bir.
+
+#### Örnek 2 · 1'den 10'a toplam (tekrar)
+
+Önce tahmin: 1 + 2 + ... + 10 kaç eder? Cevabı söylemeden önce diyagramı kağıt üzerinde **elle izleyin**: `toplam` ve `i` için iki sütun açın, elmastan her geçişte değerleri yazın. Kaç kez "Evet" dediniz?
+
+<Diagram name="h02-toplam" caption="Elmastan yukarıya dönen ok: tekrar yapısı. 'Hayır' çıkışı döngünün bittiği yer." width="360px" />
+
+```text
+BAŞLA
+  toplam = 0
+  i = 1
+  TEKRARLA i ≤ 10 OLDUKÇA
+      toplam = toplam + i
+      i = i + 1
+  YAZ toplam
+BİTİR
+```
+
+<CodeTry title="Örnek 2 · 1'den 10'a toplam" hint="Önce tahmin edin (55 mi?), sonra çalıştırın. 10'u 100 yapın: Gauss'un ilkokulda bulduğu sayı çıkmalı.">
+
+```java
+int toplam = 0;
+for (int i = 1; i <= 10; i++) {
+    toplam = toplam + i;
+}
+System.out.println("Toplam: " + toplam);
+```
+
+</CodeTry>
+
+`for` satırı diyagramdaki üç kutuyu tek satıra sıkıştırır: `int i = 1` başlangıç kutusu, `i <= 10` elmas, `i++` artırma kutusu. Sözde kodda bunları ayrı ayrı yazdık; Java yalnızca kısaltıyor. `toplam = toplam + i` satırı matematikte saçma, programlamada normal: sağ taraf hesaplanır, sonuç sol taraftaki kutuya konur.
+
+#### Örnek 3 · ATM'nin Java hali (iç içe seçim)
+
+Bulmacanın diyagramı yukarıda. Sözde kodu yazalım; "üç yanlışta kart yut" kısmı klavyeden girdi gerektirdiği için (bu 3. haftanın konusu) bu hafta yanlış sayısını bir değişkende sabit tutuyoruz.
+
+```text
+BAŞLA
+  bakiye = 3000, istek = 1200, yanlisSifre = 0, limit = 5000
+  EĞER yanlisSifre ≥ 3 İSE
+      YAZ "Kart yutuldu"
+  DEĞİLSE
+      EĞER istek > limit İSE
+          YAZ "Günlük limit aşıldı"
+      DEĞİLSE EĞER bakiye ≥ istek İSE
+          bakiye = bakiye - istek
+          YAZ "Para verildi, kalan:", bakiye
+      DEĞİLSE
+          YAZ "Yetersiz bakiye"
+BİTİR
+```
+
+<CodeTry title="Örnek 3 · ATM" hint="Dört değişkenle oynayın: istek = 6000 ne der? bakiye = 1000 ne der? yanlisSifre = 3 ne der? Her seferinde diyagramda hangi yolu izlediğinizi parmağınızla gösterin.">
+
+```java
+int bakiye = 3000;
+int istek = 1200;
+int yanlisSifre = 0;
+int gunlukLimit = 5000;
+
+if (yanlisSifre >= 3) {
+    System.out.println("Kart yutuldu.");
+} else {
+    if (istek > gunlukLimit) {
+        System.out.println("Günlük limit aşıldı.");
+    } else if (bakiye >= istek) {
+        bakiye = bakiye - istek;
+        System.out.println("Para verildi. Kalan bakiye: " + bakiye);
+    } else {
+        System.out.println("Yetersiz bakiye.");
+    }
+}
+```
+
+</CodeTry>
+
+Dikkat: bir `if`in `else` bloğunun **içinde** başka bir `if` var. Diyagramda bu, bir elmasın "Hayır" okunun başka bir elmasa gitmesidir. Kodda girinti (satır başındaki boşluk) bu iç içeliği gösterir; Java girintiyi umursamaz ama okuyan insan umursar.
+
+### Sözde kod neden yazılır?
+
+Sözde kod, diyagram ile Java arasındaki köprüdür. Diyagram büyüyünce (30 kutu) okunmaz olur; Java ise noktalı virgül, parantez, tip gibi ayrıntılarla düşünceyi boğar. Sözde kod ikisinin ortasında durur: yapı bellidir, tören yoktur. Sınavda bir problem için önce sözde kod yazıp sonra Java'ya çevirenler, doğrudan Java'ya atlayanlardan daha az hata yapar; bunu her dönem görüyoruz. Bir de ekip işi var: sözde kodu Python yazan arkadaşınız da okur, Java yazan da.
+
+### Bir Java dosyasının anatomisi
+
+Playground'da `System.out.println("Merhaba");` yazıp çalıştırdınız. Lab 1'de ise aynı satırın etrafına beş satır tören eklemek zorunda kaldınız. İşte o tören, satır satır:
+
+<CodeTry title="Tam bir Java dosyası: Merhaba.java" hint="Bu iskelet Playground'da da derlenir ama kendiliğinden çalışmaz; çünkü Playground main'i çağırmaz. Görmek için en alta Merhaba.main(null); satırını ekleyin. Lab'da ise bu iskelet zorunlu: dosya adı Merhaba.java, javac Merhaba.java, java Merhaba.">
+
+```java
+public class Merhaba {
+    public static void main(String[] args) {
+        String isim = "Ayşe";
+        System.out.println("Merhaba, " + isim + "!");
+    }
+}
+```
+
+</CodeTry>
+
+- **`public class Merhaba`**: Her Java dosyası bir sınıf tanımlar; sınıfın adı dosyanın adıyla **birebir** aynıdır (`Merhaba.java`). Büyük harfle başlar. Şimdilik "programın adı" diye düşünün; sınıfın gerçek anlamı 2. dönemin konusu.
+- **`public static void main(String[] args)`**: Programın **kapısı**. JVM programı çalıştırırken bu satırı arar ve buradan başlar. Beş kelimenin her birinin anlamı var ama bu dönem tek bir şey bilmeniz yeter: bu satır böyle yazılır, harfi harfine.
+- **Süslü parantezler `{ }`**: Bir bloğun nerede başlayıp bittiğini söyler. Her açılan kapanır. Sınıfın bloğu, `main`'in bloğu, `if`in bloğu; iç içe kutular.
+- **Noktalı virgül `;`**: Her cümlenin (deyim) sonunda. Bloğu açan satırların (`class`, `main`, `if`, `for`) sonunda **yoktur**; çünkü onlar cümle değil, kapı.
+- **Girinti**: Her bloğun içi dört boşluk içeride. Java umursamaz, siz umursayın; hata avında girintisi bozuk kodda hatayı bulmak iki kat zordur.
+
+> [!neden] Neden Playground'da bunlar yoktu?
+> Playground'un arkasındaki JShell, yazdığınız satırları görünmez bir sınıfın içine kendisi koyar. Rahat öğrenmek için güzel; ama gerçek bir program dosyadır ve dosya bu iskeleti ister. Bu yüzden derste Playground, labda tam dosya.
+
+### Kaynak koddan çalışan programa
+
+`javac Merhaba.java` sonra `java Merhaba` yazdınız. Arada ne oldu?
+
+<Diagram name="h02-derleme" caption="Kaynak koddan çalışan programa. Hata varsa javac hiç .class üretmez; mesajı okuyup kaynağa dönersiniz." width="380px" />
+
+- **Kaynak kod** (`Merhaba.java`): sizin yazdığınız metin. İnsan okur, makine okumaz.
+- **javac** (derleyici): kaynağı baştan sona okur, kuralları kontrol eder. Bir noktalı virgül eksikse **durur** ve hangi satırda ne beklediğini söyler. Her şey yolundaysa **bytecode** üretir.
+- **Bytecode** (`Merhaba.class`): makineye yakın ama hiçbir gerçek makineye ait olmayan ara dil. Bu yüzden aynı `.class` Windows'ta, Mac'te, telefonda çalışır.
+- **JVM** (`java` komutu): bytecode'u okuyup o bilgisayarın işlemcisine çeviren sanal makine. "Bir kez yaz, her yerde çalıştır" sözünün sebebi.
+
+Üç kısaltma, tek cümle: **JVM** programı çalıştırır; **JRE** = JVM + Java'nın hazır kütüphaneleri (yalnızca çalıştırmak isteyene yeter); **JDK** = JRE + `javac` ve diğer geliştirici araçları (bize lazım olan bu; Lab 1'de kurduğunuz şey).
+
+### Üç hata türü
+
+| Tür | Kim yakalar | Ne zaman | Belirti | Örnek |
+|---|---|---|---|---|
+| **Sözdizimi** (syntax) | `javac` | Derlerken; program hiç çalışmaz | Kırmızı mesaj, satır numarası | Eksik `;`, `system` küçük harf, kapanmamış `{` |
+| **Çalışma zamanı** (runtime) | JVM | Program çalışırken; o satırda çöker | `Exception` mesajı | Sıfıra bölme, olmayan dizi elemanı |
+| **Mantık** (logic) | **Siz** | Hiçbir zaman; program çalışır, sonuç yanlıştır | Belirti yok | `7 / 2`'nin 3 çıkması, `>` yerine `>=` |
+
+İlk ikisi gürültülüdür; bilgisayar bağırır, siz düzeltirsiniz. Üçüncüsü sessizdir ve bu yüzden en tehlikelisidir. Mars Climate Orbiter'ı geçen hafta anlattık: program çalıştı, uydu yandı. Mantık hatasını yakalamanın tek yolu **önce tahmin, sonra çalıştır**: beklediğiniz çıktıyı bilmiyorsanız yanlış çıktıyı fark edemezsiniz.
+
+<Puzzle title="Hata avı, ilk tur" kind="tahmin">
+
+Aşağıdaki program **üç hata** içeriyor: biri sözdizimi, biri çalışma zamanı, biri mantık. Üç dakikanız var; her hatanın **satır numarasını ve türünü** yazın. Düzeltmeyin, yalnızca bulun. Hangisini en zor buldunuz?
+
+```java
+public class NotHesabi {
+    public static void main(String[] args) {
+        int vize = 70;
+        int fin = 85;
+        int odev = 90;
+        int ogrenciSayisi = 0;
+
+        int toplam = vize + fin + odev;
+        double ortalama = toplam / 3;
+        int kisiBasi = toplam / ogrenciSayisi;
+
+        System.out.println("Toplam: " + toplam)
+        System.out.println("Ortalama: " + ortalama);
+        System.out.println("Kişi başı: " + kisiBasi);
+    }
+}
+```
+
+<details>
+<summary>Cevap (üç dakika dolmadan açmayın)</summary>
+
+- **Satır 12, sözdizimi:** `println("Toplam: " + toplam)` sonunda noktalı virgül yok. `javac` durur, `';' expected` der; program hiç çalışmaz. Düzeltmeden diğer ikisini göremezsiniz bile.
+- **Satır 10, çalışma zamanı:** `toplam / ogrenciSayisi` ve `ogrenciSayisi = 0`. Derleyici itiraz etmez (sıfırın değişkende olduğunu derleme anında bilmez); program o satıra gelince `ArithmeticException: / by zero` ile çöker.
+- **Satır 9, mantık:** `toplam / 3` iki tam sayının bölümü, sonuç `81` (gerçek değer 81,67). `double` kutusuna konunca `81.0` olur; nokta görünce doğru sanırsınız. Düzeltme: `toplam / 3.0`. Kimse bağırmaz; öğrenci 0,67 puan kaybeder.
+
+Sıra önemli: önce sözdizimi (derleyici izin vermez), sonra çalışma zamanı (program çöker), en son mantık (yalnızca siz fark edersiniz). Lab 2'de bu üçünün benzeri üç dosyayı düzelteceksiniz.
+
+</details>
+
+</Puzzle>
+
+## Büyük Resim: Kantin Sipariş Uygulaması
+
+Bugün çizdiğimiz diyagramlar 6-12 kutuluk. Gerçek bir uygulama nasıl görünür? Kampüs kantini için web tabanlı bir sipariş uygulaması düşünelim: öğrenci telefondan menüyü açar, ürün seçer, öder, sipariş numarası alır. Arkada bir veritabanı var: ürünler, stoklar, siparişler.
+
+<Diagram name="h02-kantin-akis" caption="Kantin sipariş uygulaması: üst düzey akış. Silindirler veritabanı; kesikli oklar veri okuma ve yazma." dot width="560px" />
+
+Bu diyagramda bugün öğrendiğiniz her şey var: sıra (sayfa aç, menü göster), seçim (stokta mı, ödeme başarılı mı), tekrar (başka ürün varsa seçime dön). Yeni olan tek şey silindir: veri artık bir değişkende değil, programdan bağımsız yaşayan bir veritabanında.
+
+Diyagramdaki "Stokta mı?" elmasının içine yakından bakalım. O tek elmas aslında kendi başına küçük bir akıştır. **Alt akış** denir; sözde kodu şöyle:
+
+```text
+ALT AKIŞ: stok kontrolü ve sepete ekleme
+  GİRDİ: urunKodu, adet
+  stok = Ürünler DB'den urunKodu'nun stoğunu oku
+  fiyat = Ürünler DB'den urunKodu'nun fiyatını oku
+  EĞER stok < adet İSE
+      YAZ "Bu üründen yeterli stok yok"
+  DEĞİLSE
+      stok = stok - adet
+      Ürünler DB'ye yeni stoğu yaz
+      sepete (urunKodu, adet) ekle
+      toplam = toplam + fiyat × adet
+BİTİR
+```
+
+`EĞER stok < adet İSE` satırına bakın: bugün yazdığımız `if (bakiye >= istek)` ile **aynı şey**. Büyük uygulamada kutular büyür, kutuların içindeki yapılar değişmez. Yemeksepeti'nin arkasındaki mühendis de aynı `if`i yazıyor; yalnızca `stok` değişkeni bir veritabanından geliyor ve saniyede binlerce kez okunuyor.
+
+> [!uyari] Bu uygulamayı bu dönem yazmıyoruz
+> Web sayfası, veritabanı, ödeme: bunlar 2. ve 3. sınıfın konuları. Ama **portfolyonuz** bu diyagramın bir kutusu olabilir. KT4'te (14. hafta) sizden şunu isteyeceğiz: uygulamanızın ana akışını çizin ve "benim programım büyük resimde hangi kutuyu dolduruyor?" sorusuna cevap verin. Not hesaplayıcı yazan biri "ortalama hesapla" kutusunu, bütçe takibi yazan "harcama ekle, limit aşıldı mı?" kutusunu doldurmuş olur.
+
+> [!nerede] Sahada
+> Yemeksepeti, Getir, Trendyol: arkalarında bu diyagramın yüzlerce kutulu hali var. "Stokta mı?" kararı bu uygulamalarda saniyede milyonlarca kez verilir; aynı ürünü iki kişi aynı saniyede sepete atınca ne olacağı, veritabanı derslerinin en sevdiği sorudur. Siz bu hafta kararın kendisini öğrendiniz; ölçek sonraki yılların işi.
+
+## Yapay Zeka Anı
+
+Bu hafta yapay zekaya bir şey **çizdiriyoruz**. ChatGPT'ye (ya da Claude, Gemini) şu istemi veriyoruz: *"Şu Java kodunun akış diyagramını Graphviz DOT dili olarak yaz"* ve altına Örnek 3'teki ATM kodunu yapıştırıyoruz. Gelen DOT kodunu [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/)'a yapıştırıp çizdiriyoruz. Sonra sınıfça kontrol:
+
+- Diyagram kodu **doğru** anlatıyor mu? `else if` zinciri elmas zinciri olmuş mu, yoksa tek elmasa sıkıştırılmış mı?
+- Hangi düğüm **eksik**? Çoğu zaman "Kart yutuldu" dalı ya da BİTİR düğümü unutulur; bazen de her `println` için ayrı bitiş çizilir.
+- Karar oklarında **Evet / Hayır** etiketi var mı? Yoksa diyagram iki anlamlıdır ve yapay zeka bunu "unutmuştur".
+- Semboller doğru mu? Yapay zeka sık sık mesaj gösterme işini dikdörtgene koyar; paralelkenar olmalı.
+
+Dersin mesajı: yapay zekanın çizimi genellikle "aşağı yukarı doğru"dur ve mühendislikte "aşağı yukarı" diye bir şey yoktur. Diyagramı okuyup eksiği bulabilen kişi, çizdirene değil, **kontrol edene** dönüşür; piyasada aranan kişi de odur.
+
+> [!uyari] Trafik ışığı hatırlatması: Lab 2 sarı bölge
+> Labda yapay zekaya DOT sözdizimini sorabilirsiniz: "Graphviz'de elmas nasıl çizilir?", "ok etiketi nasıl yazılır?" serbest. Ama "şu kodun diyagramını çiz" demek görevi yaptırmaktır ve yasaktır. Diyagramı **siz** çizeceksiniz; ritüelde de kendi diyagramınızı lab sorumlu hocanıza anlatacaksınız. Anlatamadığınız diyagram sizin değildir.
+
+## Temel Kavramlar
+
+- **Akış diyagramı (flowchart)**: Algoritmanın standart sembollerle çizimi; elips başla/bitir, dikdörtgen işlem, elmas karar, paralelkenar girdi/çıktı, silindir veritabanı.
+- **Sözde kod (pseudocode)**: Programlama diline benzeyen ama derlenmeyen, insan için yazılmış adımlar; `BAŞLA`, `EĞER ... İSE`, `TEKRARLA ... OLDUKÇA`, `BİTİR`.
+- **Sıra, seçim, tekrar**: Her programın kurulduğu üç yapı; düz ok, elmas, geriye dönen ok.
+- **DOT / Graphviz**: Diyagramı metin olarak yazıp otomatik çizdiren dil ve araç; `a -> b;` bir oktur.
+- **class**: Bir Java dosyasının tanımladığı sınıf; adı dosya adıyla aynı, büyük harfle başlar.
+- **main**: Programın kapısı; JVM çalıştırmaya `public static void main(String[] args)` satırından başlar.
+- **Blok ve `{ }`**: Birlikte çalışan satır grubu; süslü parantezle sınırlanır, her açılan kapanır.
+- **Derleyici (javac)**: Kaynak kodu baştan sona kontrol edip bytecode'a çeviren program; hata varsa çevirmez.
+- **Bytecode (.class)**: Hiçbir gerçek makineye ait olmayan ara dil; taşınabilirliğin sırrı.
+- **JVM, JRE, JDK**: Çalıştıran sanal makine; JVM + kütüphaneler; hepsi + `javac` ve araçlar.
+- **Sözdizimi hatası**: Derleyicinin yakaladığı yazım hatası; program hiç çalışmaz.
+- **Çalışma zamanı hatası**: Program çalışırken çökmesi; sıfıra bölme gibi.
+- **Mantık hatası**: Program çalışır, sonuç yanlıştır; yalnızca tahminle yakalanır.
+
+## Sahadan Örnekler
+
+- **Margaret Hamilton, Apollo yazılımı.** Geçen hafta 1201 alarmını anlattık. Hamilton'ın ekibi o kodu yazmadan önce her görevi akış şemalarıyla planlıyordu; öncelik sırası, hangi koşulda hangi görevin bırakılacağı, kağıt üzerinde elmaslarla çizilmişti. İniş anındaki doğru karar, o kağıtlardaki bir "Evet" okudur.
+- **Havayolu check-in.** Havalimanında bir kioska yaklaştığınızda arkada tam da bugünkü gibi bir diyagram çalışır: rezervasyon bulundu mu, pasaport geçerli mi, bagaj 23 kg'ı aşıyor mu, koltuk seçildi mi. Her elmas her gün milyonlarca kez değerlendirilir ve biri yanlış çizilirse haberlerde çıkar.
+- **Sektörde isim değişti, mantık değişmedi.** Yazılım şirketlerinde bugün "flowchart" yerine "sequence diagram", "activity diagram" ya da "BPMN" duyarsınız. Semboller biraz farklı, araçlar başka; ama elmas yine karar, ok yine akış. Bugün öğrendiğiniz okuma becerisi o diyagramlarda da aynen işe yarar.
+
+## Portfolyo
+
+Konu dağıtımı ve ortak sözleşme yakında duyurulacak; KT1 (5. hafta) için henüz bir şey teslim etmiyorsunuz. Ama bu hafta bir şey yapabilirsiniz: uygulamanız için düşündüğünüz konunun **ana akışını kağıda çizin**. Beş-sekiz kutu yeter: kullanıcı ne verir, program neye karar verir, ne gösterir. Konu değişse bile çizim alışkanlığı kalır; KT4'te bu çizimin büyümüş halini isteyeceğiz. Takvim: KT1 5. hafta, KT2 8. hafta, KT3 11. hafta, KT4 14. hafta ([Ders Hakkında · Portfolyo](/ders-hakkinda)).
+
+## Laboratuvara Hazırlık
+
+Lab 2, A şubesi için **7 Ekim Çarşamba 13.15**, B şubesi için **8 Ekim Perşembe 15.15**; yürütücü Arş. Gör. Ömer Miraç Kökçam. Bu kez işin yarısı diyagram: koddan diyagram üreteceksiniz, diyagramdan kod üreteceksiniz, üç hatalı dosyayı düzelteceksiniz.
+
+Lab'a gelirken:
+
+- [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/)'ı **denemiş** gelin: bu sayfadaki ATM diyagramının DOT kaynağını kopyalayıp yapıştırın, sağda çizildiğini görün, bir düğümün etiketini değiştirin. PNG indirmeyi de deneyin: üstteki **Format** menüsünden `png-image` seçin, sağdaki görsele sağ tıklayıp "Resmi farklı kaydet" deyin.
+- **Lab 1'i bitirmiş olun**; son teslim 2 Ekim Cuma 23.59. Lab 2'nin ilk görevi Lab 1'deki `CarpimTablosu.java`'nın diyagramını çizmek; dosya yoksa görev de yok.
+- Codespaces ya da yerel JDK'nız çalışır durumda olsun; Lab 2'de iki tam Java dosyası derleyeceksiniz.
+- Ayrıntı ve görev listesi: [Lab 2](/laboratuvar/lab-02).
+
+## Tartışma Soruları
+
+1. ATM diyagramınızda "üç yanlışta kart yut" kuralı için geriye dönen bir ok çizdiniz. Bu ok olmasaydı diyagram ne anlatırdı? Sonsuz döngü bir diyagramda nasıl görünür?
+2. Sözde kod derlenmediğine göre "yanlış sözde kod" diye bir şey var mıdır? İki kişinin aynı sözde koddan farklı program yazması mümkün mü?
+3. Mantık hatasını hiçbir araç yakalamıyorsa, bir programın doğru çalıştığına nasıl ikna olursunuz? "Çalıştırdım, çıktı makul görünüyor" yeter mi?
+4. Yapay zekanın çizdiği diyagramda bir düğüm eksikti. Bunu fark etmek için neyi bilmeniz gerekti? O bilgiye sahip olmayan biri aynı diyagramı neden "doğru" kabul eder?
+5. Kantin uygulamasındaki "Stokta mı?" kararı ile ATM'deki "Bakiye yeter mi?" kararı aynı yapıysa, bir uygulamayı diğerinden "büyük" yapan nedir?
+
+## Haftanın Özeti
+
+ATM para çekme akışını kağıda çizerek başladık; çizimden üç kutu türü çıktı ve akış diyagramının sembollerine dönüştü. Her programın üç yapıdan kurulduğunu gördük: sıra, seçim, tekrar; geçen haftanın nehir bulmacası yalnızca sıraydı, ATM üçünü de içeriyordu. Üç örneği üç dilde yan yana okuduk: diyagram, Türkçe sözde kod, Java; elmasın `if`, geriye dönen okun `for` olduğunu gördük. Sonra Playground'da yazmadığımız töreni açtık: `class`, `main`, süslü parantez, noktalı virgül; kaynak koddan `javac` ile bytecode'a, oradan JVM ile çıktıya giden yolu çizdik. Hata avının ilk turunda sözdizimi, çalışma zamanı ve mantık hatasını aynı programda bulduk; en sinsisinin bağırmayan olduğunu öğrendik. Kantin sipariş uygulamasında büyük resmin de aynı üç yapıdan kurulduğunu gördük. Gelecek hafta: klavyeden girdi almak (`Scanner`), değişken tipleri ve aritmetik; ATM'deki "yanlış sayısı" o zaman gerçekten sayılacak.

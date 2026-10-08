@@ -1,0 +1,192 @@
+---
+week: 3
+title: "Lab 3 · Programınız Size Soru Soruyor"
+description: "Scanner ile klavyeden okuyan altı küçük program: VKİ, saniye çevirme, sıcaklık, hesap makinesi, ad soyad ve para üstü; tam sayı bölmesi, printf ve Enter tuzağını yaşayarak öğrenme."
+status: hazir
+objectives:
+  - "Scanner ile int, double ve tam satır String okuyan tam Java dosyaları yazar, derler ve terminalde girdi vererek çalıştırır."
+  - "printf ile %.2f biçiminde yazdırır; tam sayı bölmesi ve kalan işlemiyle birim dönüşümü yapar."
+  - "nextInt sonrası nextLine tuzağını kendi programında görür ve çözer."
+  - "Yanlış tipte girdi verildiğinde ne olduğunu gözlemleyip iki cümleyle raporlar."
+tools:
+  - "JDK 21 / Codespaces"
+  - "VS Code"
+  - "Scanner"
+  - "Git"
+deliverable: "Lab 3 deposu: VkiHesap.java, SaniyeCevir.java, Sicaklik.java, HesapMakinesi.java, AdSoyad.java, gozlem.md ve bonus ParaUstu.java"
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 14 Ekim 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 15 Ekim 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [3. haftanın](/haftalar/hafta-03) teorisini uyguluyor: değişkenler, tipler, operatörler ve `Scanner`. Derste program ilk kez size soru sordu, bu labda ise altı program yazacaksınız ve altısı da soru soruyor. Hiçbiri Java Playground'da çalışmaz, çünkü Playground klavyeden girdi almaz. Bu yüzden bu lab tamamen Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor.
+
+> [!not] Lab 3 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab03/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab03/accept)**
+> Deponuz `algo1-lab03-KULLANICIADI` adıyla oluşur ve bu kez boş gelir, altı dosyayı siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
+> Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "printf'te iki ondalık basamak nasıl yazılır?", "nextInt sonrası nextLine neden boş dönüyor?", "InputMismatchException ne demek?" serbest. Ama "kilo ve boy okuyup VKİ hesaplayan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**. Teslim ritüelinde lab sorumlu hocanız "programınız hangi satırda kullanıcıyı bekliyor?" diye soracak ve o satırı siz yazdıysanız cevabı bilirsiniz. Lab sorumlu hocanız istediğinde ekranınızı görebilir.
+
+## Adım 0 · Depo ve ortam (5 dk)
+
+1. Yukarıdaki kabul bağlantısından Lab 3 deponuzu oluşturun.
+2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab03-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**).
+3. Terminale `java -version` yazın ve 21 ya da üstünü gördüğünüzden emin olun. Görmüyorsanız lab sorumlu hocanızı hemen çağırın, çünkü bu labda terminal olmadan hiçbir görev yapılamaz.
+4. Lab 2'de geçmeyen testiniz varsa süre doldu (9 Ekim), bugün ona dönmeyin.
+
+Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+
+## Ortak iskelet: Scanner'lı bir dosya
+
+Altı görevin altısı da aynı iskeletle başlıyor. Bir kez okuyun, sonra her görev için kopyalayıp sınıf adını ve içini değiştirin. Derste gördüğünüz üç adım burada: en üstte `import`, `main` içinde `new Scanner(System.in)`, sonra `next...()` ile okuma.
+
+```java
+import java.util.Scanner;
+
+public class Iskelet {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Bir sayı girin: ");
+        int sayi = klavye.nextInt();
+
+        System.out.println("Girdiğiniz sayı: " + sayi);
+    }
+}
+```
+
+Derleyip çalıştırmak Lab 1'deki gibi iki komut, ama bu kez program ikinci komuttan sonra **durup bekler** ve siz bir şey yazıp Enter'a basınca devam eder:
+
+```bash
+javac Iskelet.java
+java Iskelet
+```
+
+Terminalde `Bir sayı girin:` yazısını görüp imlecin yanıp söndüğünü fark ettiğinizde programınız size soru sormuş demektir. Her görevde çıktı biçimi **birebir** verilmiştir, çünkü otomatik kontrol programınızı belirtilen girdiyle çalıştırıp çıktıda o satırı aynen arar. Bir boşluk fazla, bir iki nokta eksik olursa test geçmez. Soru metinleri (`Kilonuz: ` gibi) serbesttir, kontrol yalnızca cevap satırına bakar.
+
+> [!uyari] Türkçe karakter yok
+> Çıktılarda `Zayif`, `Fazla kilolu`, `yasindasin`, `kurus` gibi ASCII yazım kullanın, çünkü otomatik kontrol ASCII bekler ve terminaller Türkçe karakteri her ortamda aynı göstermez. Soru metinlerinde istediğinizi yazabilirsiniz, cevap satırları ASCII.
+
+## Görev 1 · `VkiHesap.java` (20 puan, 12 dk)
+
+Dersteki VKİ programının bir adım ilerisi. Program önce kiloyu (`double`, kilogram), sonra boyu (`double`, metre) okur, VKİ'yi kilo bölü boyun karesi olarak hesaplar ve `printf` ile **iki ondalık basamakla** yazar. 80 ve 1.75 için çıktı tam olarak şu satırı içermeli:
+
+```
+VKI: 26.12
+```
+
+Altına bir satır daha: VKİ 18.5'in altındaysa `Zayif`, 25'in altındaysa `Normal`, 30'un altındaysa `Fazla kilolu`, diğer durumlarda `Obez`. Bunun için geçen haftaki `if / else if / else` zincirini kullanın. 80 ve 1.75 için ikinci satır `Fazla kilolu` olmalı. Dikkat: `boy * boy` paranteze alın, çünkü `kilo / boy * boy` soldan sağa hesaplanır ve sonuç yine kilo çıkar. Bitince 60 ve 1.70 ile de deneyin, `20.76` ve `Normal` görmelisiniz.
+
+## Görev 2 · `SaniyeCevir.java` (15 puan, 8 dk)
+
+Toplam saniyeyi (`int`) okur ve saat, dakika, saniye olarak yazar. 7384 için çıktı:
+
+```
+2 saat 3 dakika 4 saniye
+```
+
+Yalnızca `/` ve `%` ile çözün, döngü ya da `if` yok. Dersteki akıl yürütme: `7384 / 3600` tam saat sayısı, `7384 % 3600` saatlerden artan saniye. O artanı 60 ile bir kez daha bölüp kalanını alın. Üç sayıyı tek `println` ya da `printf` satırında, aralarında birer boşlukla yazın. 3661 ile deneyin: `1 saat 1 dakika 1 saniye`.
+
+## Görev 3 · `Sicaklik.java` (15 puan, 8 dk)
+
+Celsius sıcaklığı (`double`) okur, Fahrenheit'a çevirir (`F = C × 9/5 + 32`) ve `printf` ile iki basamak yazar. 37 için:
+
+```
+Fahrenheit: 98.60
+```
+
+Buradaki tuzak dersin pizzası: formülü `celsius * 9 / 5 + 32` yazarsanız `celsius` double olduğu için soldan sağa doğru çalışır, ama `9 / 5 * celsius + 32` yazarsanız önce `9 / 5` hesaplanır, bıçaksız bölme 1 verir ve 37 için 69.00 çıkar. En güvenlisi `9.0 / 5` yazmaktır, çünkü taraflardan biri ondalıklı olunca bıçak masadadır. 100 ile deneyin: `212.00`.
+
+## Görev 4 · `HesapMakinesi.java` (15 puan, 8 dk)
+
+İki tam sayı okur ve beş satır yazar. 12 ve 4 için çıktı tam olarak:
+
+```
+12 + 4 = 16
+12 - 4 = 8
+12 * 4 = 48
+12 / 4 = 3
+12 % 4 = 0
+```
+
+Her satırda sayılar, işaret ve `=` arasında birer boşluk var. Bölme satırını `int` bölmesi olarak bırakın, yani 7 ve 2 için `7 / 2 = 3` çıkmalı, çünkü bu labda bıçak yok. Beş `println` yazmak yeterli, ama tek bir `printf` biçimini beş kez kullanmak da iyi bir alıştırma. İkinci sayıya 0 verip ne olduğuna bakın ve mesajı okuyun, bu gözlem 4. haftada işinize yarayacak.
+
+## Görev 5 · `AdSoyad.java` (20 puan, 10 dk)
+
+Program önce yaşı (`int`), sonra ad soyadı (**tam satır**, boşluklu) okur ve selamlar. 19 ve `Ali Veli` için:
+
+```
+Merhaba Ali Veli, 19 yasindasin.
+```
+
+Dersin Enter tuzağı tam olarak burada. Yaşı `nextInt()` ile okuduğunuzda Enter tuşu akışta kalır ve hemen ardından gelen `nextLine()` o Enter'ı okuyup boş döner, çıktınız `Merhaba , 19 yasindasin.` olur. Çözümü derste gördünüz: sayıyı okuduktan sonra, adı okumadan önce akıştaki Enter'ı yutan **bir satır** gerekiyor. Ad için `next()` kullanmayın, çünkü o yalnızca ilk boşluğa kadar okur ve `Ali Veli`'den `Ali` kalır. Önce tuzağa bilerek düşün, boş çıktıyı gözünüzle görün, sonra düzeltin; `gozlem.md` için malzeme toplamış olursunuz.
+
+## Görev 6 · Bonus `ParaUstu.java` (15 puan, 10 dk)
+
+Kuruş cinsinden bir tutarı (`int`) okur ve en az sayıda madeni parayla bozar. Madeni paralar sırayla 100 kuruş (1 TL), 50, 25, 10, 5 ve 1 kuruş. 287 için altı satır, tam olarak:
+
+```
+1 TL: 2
+50 kurus: 1
+25 kurus: 1
+10 kurus: 1
+5 kurus: 0
+1 kurus: 2
+```
+
+Yalnızca `/` ve `%` ile, döngü yok. Akıl yürütme Görev 2 ile aynı ve bir basamak daha uzun: `287 / 100` kaç tane 1 TL, `287 % 100` kalan 87 kuruş. 87'yi 50 ile bölüp kalanını alın, kalanı 25 ile, sonra 10, 5 ve 1 ile. Her adımda "kalan"ı yeni bir değişkene koymak kodu okunur yapar. Para neden kuruş cinsinden `int`, dersteki Büyük Resim'i hatırlayın.
+
+## `gozlem.md` (puanlanmaz, lab sorumlu hocanız okur)
+
+Deponun kök dizinine `gozlem.md` adında bir dosya açın ve **iki cümle** yazın: Görev 5'teki programa yaş yerine `on dokuz` yazdığınızda ne oldu ve terminaldeki hata mesajında hangi kelimeyi gördünüz (`InputMismatchException` olmalı). İsterseniz bir cümle daha ekleyip Görev 4'te ikinci sayıya 0 verince ne gördüğünüzü yazın. Bu dosyayı otomatik kontrol test etmez, lab sorumlu hocanız okur. Amaç kullanıcının her zaman beklediğiniz şeyi yazmayacağını bir kez kendi gözünüzle görmeniz.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 3: Scanner programlari"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 16 Ekim 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Deponuzda **Add file → Upload files** ile de yükleyebilirsiniz. Ricamız aynı: dosyaları teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır ve yedi dosyayı yedi kez yüklemek yedi ayrı kontrol demektir.
+
+Kontrol listesi: deponuzun kökünde `VkiHesap.java`, `SaniyeCevir.java`, `Sicaklik.java`, `HesapMakinesi.java`, `AdSoyad.java`, `gozlem.md` ve bonusu yaptıysanız `ParaUstu.java` olmalı. Her dosyadaki sınıf adı dosya adıyla birebir aynı olmalı, aksi halde `javac` derlemez.
+
+### Otomatik kontrol (100 puan)
+
+Her görev için **iki test** çalışır. Birincisi aşağıdaki tabloda yazan girdiyi verir ve belirtilen satırı **birebir** arar. İkincisi aynı programı **başka sayılarla** çalıştırır; o sayıları önceden söylemiyoruz, çünkü programınızın yalnızca örnekteki değerler için değil her girdi için doğru çalışması gerekiyor. İkinci test başarısız olursa raporda yalnızca kendi çıktınızı görürsünüz. Çıktıyı ezbere yazdıran bir program ilk testi geçer, ikincisini geçemez.
+
+| # | Test | Örnek girdi | Aranan çıktı | Puan (örnek + gizli) |
+|---|---|---|---|---|
+| 1 | `VkiHesap` derleniyor ve VKİ satırı doğru | `80` ve `1.75` | `VKI: 26.12` | 10 + 10 |
+| 2 | `SaniyeCevir` | `7384` | `2 saat 3 dakika 4 saniye` | 8 + 7 |
+| 3 | `Sicaklik` | `37` | `Fahrenheit: 98.60` | 8 + 7 |
+| 4 | `HesapMakinesi` beş satırın beşi | `12` ve `4` | `12 + 4 = 16` … `12 % 4 = 0` | 8 + 7 |
+| 5 | `AdSoyad` | `19` ve `Ali Veli` | `Merhaba Ali Veli, 19 yasindasin.` | 10 + 10 |
+| 6 | `ParaUstu` (bonus) altı satırın altısı | `287` | `1 TL: 2` … `1 kurus: 2` | 8 + 7 |
+
+> [!uyari] Ondalık sayıyı nokta ile girin
+> Otomatik kontrol ve Codespaces İngilizce yerel ayarda çalışır, bu yüzden `1.75` nokta ile girilir; `1,75` yazarsanız `InputMismatchException` alırsınız. Kendi bilgisayarınız Türkçe ayarlıysa terminalde virgül istenebilir; bu, programın hatası değildir. Çıktıda `printf` Türkçe ayarda `26,12` yazabilir, kontrol ikisini de kabul eder.
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol yalnızca verilen girdiyle verilen çıktının çıkıp çıkmadığına bakar. Değişken isimlerinizin anlamlı olup olmadığı (`a`, `b`, `c` yerine `kilo`, `boy`, `vki`), `boy * boy` yerine `Math.pow` seçiminizin gerekçesi, `gozlem.md`'deki iki cümle ve ritüelde verdiğiniz cevap lab sorumlu hocanızın değerlendirmesidir. Doğru çıktıyı veren ama her değişkeni `x` diye adlandıran program otomatik kontrolden tam puan alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+
+> [!not] Teslim ritüeli: 30 saniyede "programınız nerede bekliyor?"
+> Push ettikten sonra lab sorumlu hocanızı çağırın. Bu kez soru şu: "Programınız hangi satırda kullanıcıyı bekliyor ve o satırdan önce ekranda ne var?" Bir programınızı açıp o satırı gösterin, Enter tuşunun nerede kaldığını ve Görev 5'te onu hangi satırın yuttuğunu söyleyin. Lab 1'de kodu, Lab 2'de diyagramı anlattınız; bu labda anlatılan şey programın durduğu an.
+
+## Bitiremediyseniz
+
+Lab'da Adım 0 (depo açıldı, `java -version` çalıştı), Görev 1 ve Görev 2'nin derlenip push edilmiş olması yeterli. Kalanı **16 Ekim Cuma 23.59**'a kadar evde bitirip push edin; Codespaces evde de aynı şekilde çalışır. Cuma'dan sonra gelen push'lar puanlanmaz. Takıldığınız yer `printf` biçimi ya da Enter tuzağının sebebiyse yapay zekaya sorabilirsiniz (sarı bölge); takıldığınız yer "bu program ne hesaplamalı" ise ofis saatine gelin.

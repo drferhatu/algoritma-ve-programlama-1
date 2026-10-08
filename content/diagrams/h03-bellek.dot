@@ -1,0 +1,21 @@
+// Bellekte değişken kutuları: her kutunun bir tipi, bir adı ve bir değeri var
+digraph Bellek {
+    charset="UTF-8";
+    rankdir=TB;
+    ranksep=0.25;
+    nodesep=0.3;
+    node [shape=record, fontname="Helvetica", fontsize=11];
+    edge [style=invis];
+
+    subgraph cluster_bellek {
+        label="Bellek (RAM)";
+        fontname="Helvetica"; fontsize=11; style=rounded; color="#9ca3af";
+        baslik [shape=plaintext, label="tip · isim · değer", fontcolor="#6b7280"];
+        yas   [label="int | yas | 19"];
+        boy   [label="double | boy | 1.75"];
+        harf  [label="char | harf | 'A'"];
+        aktif [label="boolean | aktif | true"];
+        ad    [label="String | ad | \"Ayşe\""];
+        baslik -> yas -> boy -> harf -> aktif -> ad;
+    }
+}

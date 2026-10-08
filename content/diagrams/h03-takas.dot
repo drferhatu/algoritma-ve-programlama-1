@@ -1,0 +1,36 @@
+// Haftanın bulmacası: iki değişkenin değerini üçüncü bir kutuyla takas etmek (bellekteki üç an)
+digraph Takas {
+    charset="UTF-8";
+    rankdir=TB;
+    ranksep=0.25;
+    nodesep=0.3;
+    node [shape=record, fontname="Helvetica", fontsize=11];
+    edge [style=invis];
+
+    subgraph cluster_1 {
+        label="1 · Başlangıç";
+        fontname="Helvetica"; fontsize=11; style=rounded; color="#9ca3af";
+        a1 [label="int a | 5"];
+        b1 [label="int b | 7"];
+        g1 [label="int gecici | ?"];
+        a1 -> b1 -> g1;
+    }
+
+    subgraph cluster_2 {
+        label="2 · gecici = a;";
+        fontname="Helvetica"; fontsize=11; style=rounded; color="#9ca3af";
+        a2 [label="int a | 5"];
+        b2 [label="int b | 7"];
+        g2 [label="int gecici | 5"];
+        a2 -> b2 -> g2;
+    }
+
+    subgraph cluster_3 {
+        label="3 · a = b;  b = gecici;";
+        fontname="Helvetica"; fontsize=11; style=rounded; color="#9ca3af";
+        a3 [label="int a | 7"];
+        b3 [label="int b | 5"];
+        g3 [label="int gecici | 5"];
+        a3 -> b3 -> g3;
+    }
+}

@@ -1,0 +1,466 @@
+---
+week: 3
+title: "Değişkenler, Veri Tipleri, Operatörler ve Scanner"
+topic: "Java'da değişken ve ilkel veri tipleri (int, double, char, boolean, String), aritmetik operatörler ve öncelik, tür dönüşümü, sabitler, Scanner ile klavyeden girdi"
+description: "Programın ilk kez bize soru sorduğu hafta: değişkeni bir not kağıdı, int ile double'ı kumbara ile banka hesabı, 7/2'yi bölüşülemeyen pizza olarak anlıyor; taşma, tür dönüşümü ve sabitleri gördükten sonra klavyeden okuyan ilk tam programı birlikte okuyoruz."
+module: m1
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+tags:
+  - "değişken"
+  - "int"
+  - "double"
+  - "String"
+  - "operatör"
+  - "tür dönüşümü"
+  - "final"
+  - "Scanner"
+  - "printf"
+objectives:
+  - "Uygun tipte değişken tanımlar ve değer atar; int, double, char, boolean ve String'i ne zaman seçeceğini bir cümleyle gerekçelendirir."
+  - "Aritmetik operatörleri ve öncelik kurallarını uygulayarak bir ifadenin sonucunu elle hesaplar; tam sayı bölmesi ve kalan işlemini ayırt eder."
+  - "Otomatik genişleme ile casting'i açıklar; (int) 3.9'un neden 3 olduğunu ve 0.1 + 0.2'nin neden tam 0.3 olmadığını söyler."
+  - "Magic number yerine final sabit kullanır ve bunun neden gerektiğini anlatır."
+  - "Scanner ile klavyeden sayı ve metin okuyan tam bir program yazar; nextInt sonrası nextLine tuzağını tanır ve çözer."
+tools:
+  - "Java Playground"
+  - "JDK 21 / Codespaces"
+  - "Scanner"
+resources:
+  - title: "Think Java 2, Bölüm 2: Variables and Operators"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch02.html"
+    note: "Değişken, atama, tam sayı bölmesi, yuvarlama hatası; bu haftanın ilk yarısının kitap karşılığı."
+  - title: "Think Java 2, Bölüm 3: Input and Output"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch03.html"
+    note: "Scanner, printf ve Enter tuşu tuzağı; bu haftanın ikinci yarısı."
+  - title: "Java Tutorials: Primitive Data Types"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html"
+    note: "Sekiz ilkel tipin resmî listesi ve sınırları; int'in 2.147.483.647 sınırı burada yazar."
+  - title: "Scanner sınıfı belgesi (Java 21)"
+    url: "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Scanner.html"
+    note: "nextInt, nextDouble ve nextLine metotlarının resmî açıklaması; labda takıldığınızda bakılacak yer."
+---
+
+## Derse Başlamadan Önce
+
+- Kağıt ve kalem getirin, çünkü bulmaca yine kağıtta başlıyor ve bu hafta kağıda küçük kutular çizeceğiz.
+- Tarayıcınızda [Java Playground](https://dev.java/playground/) açık olsun, çünkü dersin ilk yarısındaki kodların hepsi orada çalışıyor ve her birini önce tahmin edip sonra çalıştıracağız.
+- **Lab 2'nin son teslimi bu akşam, 9 Ekim Cuma 23.59.** Bu kez teori günü ile teslim günü aynı güne denk geliyor, bu yüzden Releases sayfasında geçmeyen bir testiniz varsa dersten sonra oturup düzeltin.
+- Codespaces'i daha önce hiç açmadıysanız bu hafta sonu bir kez açıp `java -version` yazın, çünkü dersin ikinci yarısındaki programlar Playground'da çalışmaz ve Lab 3'te onları kendi terminalinizde çalıştıracaksınız.
+
+> [!not] Bu haftanın hikayesi
+> Şimdiye kadar yazdığınız her program konuşan ama dinlemeyen biriydi: değerleri siz koda yazıyordunuz, program da onları ekrana basıyordu. Bu hafta program ilk kez durup size bir soru soracak ve cevabınızı bekleyecek. Ama soruyu sorabilmesi için önce cevabı koyacağı kutuyu, kutunun tipini ve o kutuyla ne yapabileceğini bilmesi gerekiyor, bu yüzden ders değişkenle başlıyor ve `Scanner` ile bitiyor. Tek oturum, A şubesi Cuma 09.15, B şubesi Cuma 13.15.
+
+## Haftanın Bulmacası
+
+<Puzzle title="İki bardak" kind="bulmaca">
+
+Masada iki bardak var: biri ağzına kadar **su**, diğeri ağzına kadar **çay** dolu. Görev, suyu çay bardağına, çayı su bardağına geçirmek, yani iki bardağın içeriğini **takas etmek**. Bardaklar aynı boyda ve ikisi de tamamen dolu, bu yüzden birini diğerinin üstüne boşaltırsanız karışır ve taşar.
+
+Yanınızdaki kişiyle ikili çalışın, **3 dakikanız** var. Kağıda adımları numaralı liste olarak yazın ve bitince şu iki soruya cevap verin:
+
+1. İki bardakla yapılabiliyor mu? Yapılamıyorsa en az kaç bardak gerekiyor?
+2. Üçüncü bardağı işin sonunda ne yapıyorsunuz?
+
+Şimdi aynı bulmacayı kağıdın alt yarısında Java ile çözün. Elinizde `int a = 5;` ve `int b = 7;` var ve sonunda `a`'nın 7, `b`'nin 5 olmasını istiyorsunuz. Birisi tahtaya şunu yazdı:
+
+```java
+a = b;
+b = a;
+```
+
+Bu neden çalışmaz? Her satırdan sonra `a` ve `b`'nin içinde ne olduğunu kağıda yazın, sonra düzeltin.
+
+</Puzzle>
+
+Çoğu grup 30 saniyede "üçüncü bardak" der ve haklıdır, çünkü iki dolu kabın içeriğini araya boş bir kap koymadan takas etmenin yolu yoktur. Java'da da aynı şey olur: `a = b;` satırı `b`'nin içindeki 7'yi `a`'ya kopyalar ve o anda `a`'daki 5 **silinir**, geri gelmez. İkinci satır `b = a;` artık 7'yi 7'nin üstüne yazar, yani iki kutuda da 7 kalır ve 5 kaybolmuştur. Çözüm bulmacadaki üçüncü bardağın ta kendisi: önce 5'i geçici bir kutuya koyarsınız, sonra 7'yi `a`'ya, en son geçicideki 5'i `b`'ye.
+
+<Diagram name="h03-takas" caption="Üç kutuyla takas: bellekteki üç an. Soldan sağa: başlangıç, geçiciye kopyalama, iki atama sonrası." dot width="480px" />
+
+<CodeTry title="Takas" hint="Önce tahtadaki hatalı iki satırı çalıştırın ve iki 7 görün. Sonra gecici ile düzeltin. Üçüncü deneme: gecici yerine tek bir ifadeyle takas yapılabilir mi? (a = a + b; b = a - b; a = a - b; satırlarını deneyin ve neden 'hileli' olduğunu tartışın.)">
+
+```java
+int a = 5;
+int b = 7;
+int gecici = a;
+a = b;
+b = gecici;
+System.out.println("a = " + a + ", b = " + b);
+```
+
+</CodeTry>
+
+Bu küçük bulmacanın dersin tamamını özetlemesi şundan: `=` işareti matematikteki eşitlik değil, **kopyalama** emridir. Sağ taraftaki değer hesaplanır ve sol taraftaki kutuya konur, kutuda daha önce ne varsa üstüne yazılır. Bu cümleyi aklınızda tutarsanız bu haftaki her şey yerine oturacak, çünkü bugün öğreneceğimiz her şey kutular, kutuların tipi ve kutular arasında taşınan değerler üzerine.
+
+## Ders Notları
+
+### Değişken: sipariş alan kişinin elindeki kağıt
+
+Kantinde sipariş alan kişiyi düşünün. Siz "bir tost, bir ayran" dersiniz ve o kişi masaya bakıp elindeki küçük kağıda yazar: masa 4, tost 1, ayran 1. Sonra bir sonraki masaya geçer ve aynı kağıda, bu kez masa 5 için yeni bir satır açar. O kağıt olmasa siparişi mutfağa taşıyana kadar unutur, kağıt olunca ise her masanın bilgisi bir yerde durur ve gerektiğinde okunur. Program da tam olarak böyle çalışır: bir değeri hemen kullanmayacaksa onu bir **değişkene** (variable) yazar, ihtiyaç duyduğunda okur ve istediğinde üstünü karalayıp yenisini yazar.
+
+Java'da o kağıttaki her satırın üç parçası var. **Tip** (type) satıra ne tür bir şey yazılacağını söyler, mesela tam sayı mı, ondalıklı sayı mı, metin mi. **İsim** (name) satırı sonradan bulmamızı sağlar. **Değer** (value) ise o an satırda yazılı olan şeydir ve program boyunca değişebilir, zaten adı da bu yüzden "değişken". Tanımlama ile atamayı ayrı ayrı yazmak da mümkündür, ama genellikle tek satırda birleştiririz.
+
+```java
+int masa;          // tanımlama: int tipinde, masa adında bir kutu aç
+masa = 4;          // atama: kutuya 4 koy
+int tost = 1;      // ikisi birden: tanımla ve ilk değeri ver
+```
+
+<Diagram name="h03-bellek" caption="Bellekte beş kutu: her birinin tipi, adı ve o anki değeri. Kutunun büyüklüğünü ve içine ne konabileceğini tip belirler." width="240px" />
+
+İsim seçerken Java'nın kuralı ve bizim alışkanlığımız var. Kural, ismin harfle başlaması, boşluk ve tire içermemesi ve `int`, `class` gibi ayrılmış kelimelerden olmamasıdır. Alışkanlık ise **camelCase** yazımıdır: ilk kelime küçük harfle başlar, sonraki her kelimenin ilk harfi büyük olur, `ogrenciSayisi`, `toplamTutar`, `vizeNotu` gibi. Türkçe karakterleri (ş, ğ, ı, ö, ü, ç) isimlerde kullanmıyoruz, çünkü Java bunlara izin verse de bazı terminaller ve araçlar bozuk gösterir, otomatik kontroller ASCII bekler ve klavyeniz değiştiğinde `öğrenci` yazmak eziyete döner. Yani `ogrenciSayisi` yazıyoruz, `öğrenciSayısı` değil.
+
+<CodeTry title="İlk kutular" hint="Her satırı okuyun ve çıktıyı tahmin edin. Sonra yas satırını silip çalıştırın: Java 'cannot find symbol' der, çünkü olmayan bir kutuyu okumaya çalıştınız.">
+
+```java
+String ad = "Ayşe";
+int yas = 19;
+double boy = 1.75;
+char harf = 'A';
+boolean aktif = true;
+
+System.out.println(ad + " " + yas + " yaşında, boyu " + boy);
+System.out.println("Harf: " + harf + ", aktif mi: " + aktif);
+yas = yas + 1;
+System.out.println("Bir yıl sonra: " + yas);
+```
+
+</CodeTry>
+
+> [!tanim] Değişken
+> Bellekte tipi ve adı olan, içine o tipe uygun bir değer konabilen kutudur. Tanımlamak kutuyu açar, atamak içine değer koyar, okumak değeri kopyalar. Aynı kutuya yeni değer atadığınızda eskisi silinir.
+
+### Tipler: kumbara ile banka hesabı
+
+Çocukken bozuk para kumbaranız vardı. İçine yalnızca madeni para girerdi, her şey tam sayıydı, 1 lira, 5 lira, 20 lira, ve kumbaranın bir kapasitesi vardı, dolunca daha fazla para almazdı. Sonra bir banka hesabı açtınız. Orada 12,37 lira gibi kuruşlu tutarlar durabilir, bakiye milyonlara çıkabilir, ama hesap özetine baktığınızda tutarın "yaklaşık" yazıldığını, bazen son kuruşun yuvarlandığını fark edersiniz. Java'daki `int` o kumbaradır, `double` ise o banka hesabı: ilki tam sayıları eksiksiz ama sınırlı bir aralıkta tutar, ikincisi ondalıklı sayıları çok geniş bir aralıkta ama yaklaşık tutar.
+
+Elimizde beş tip var ve dönem boyunca bu beşi yetecek. `int` tam sayı içindir ve yaş, adet, sayaç gibi şeyleri tutar. `double` ondalıklı sayı içindir ve boy, ağırlık, ortalama, sıcaklık gibi şeyleri tutar. `char` tek bir karakterdir ve tek tırnakla yazılır, `'A'` gibi. `boolean` yalnızca `true` ya da `false` tutar ve 4. haftada kararların dili olacak. `String` ise metindir, çift tırnakla yazılır ve büyük harfle başlar, çünkü diğer dördü gibi Java'nın yerleşik ilkel tipi (primitive type) değil, bir **sınıftır** (class). Şimdilik "metin kutusu" demeniz yeter, sınıfın ne olduğunu 2. dönem öğreneceksiniz.
+
+| Tip | Ne tutar | Örnek | Nerede kullanırsınız |
+|---|---|---|---|
+| `int` | Tam sayı, yaklaşık ±2,1 milyar | `int yas = 19;` | Yaş, adet, sayaç, öğrenci numarası |
+| `double` | Ondalıklı sayı, çok geniş aralık, yaklaşık | `double boy = 1.75;` | Boy, ortalama, sıcaklık, oran |
+| `char` | Tek karakter, tek tırnak | `char harf = 'A';` | Harf notu, cinsiyet kodu |
+| `boolean` | `true` / `false` | `boolean aktif = true;` | Evet/hayır soruları, bayraklar |
+| `String` | Metin, çift tırnak, sınıf | `String ad = "Ayşe";` | İsim, adres, mesaj |
+
+Kumbaranın kapasitesi `int` için gerçek bir sınırdır: en büyük değer **2.147.483.647**'dir, çünkü Java bir `int`'i 32 bitte tutar ve 32 bite ancak bu kadar sığar. Peki kumbara doluyken bir lira daha atarsanız ne olur? Bilgisayar size "doldu" demez ve hata da vermez, sayaç tıpkı eski bir arabanın kilometre saati gibi başa döner ve 2.147.483.647 + 1 işleminin sonucu **eksi** 2.147.483.648 çıkar. Buna **taşma** (overflow) denir ve sessiz olduğu için mantık hatalarının en sinsilerindendir. Sahadan Örnekler'de bir roketi düşüren halini okuyacaksınız.
+
+<CodeTry title="Kumbara taşarsa" hint="Önce tahmin edin: büyük + 1 ne yazar? Sonra çalıştırın. İkinci deneme: int yerine long yazın (long büyük = 2147483647L;) ve farkı görün. long 64 bitlik kumbaradır.">
+
+```java
+int buyuk = 2147483647;
+System.out.println("En büyük int: " + buyuk);
+System.out.println("Bir fazlası:  " + (buyuk + 1));
+
+double hesap = 2147483647.0;
+System.out.println("double'da bir fazlası: " + (hesap + 1));
+```
+
+</CodeTry>
+
+> [!neden] Neden iki ayrı sayı tipi var, her şeyi double yapsak olmaz mı?
+> Olmaz, çünkü `double` yaklaşık tutar. Kantinde 3 tost sattıysanız "yaklaşık 3" tost satmış olamazsınız, bir öğrencinin numarası "yaklaşık 2201234" olamaz. Tam olması gereken her şey `int`'e, ölçülen ve zaten yaklaşık olan her şey `double`'a gider. Para ise ikisinin arasında garip bir yerde durur ve o hikayeyi Büyük Resim bölümünde anlatacağız.
+
+### Operatörler: iki arkadaş ve yedi dilim pizza
+
+İki arkadaş yedi dilimlik bir pizza söylüyor ve eşit bölüşmek istiyor. Bıçak varsa herkes 3,5 dilim alır ve mesele biter. Ama bıçak yoksa dilimler bölünemez, herkes 3 dilim alır ve **1 dilim ortada kalır**. Java'da `/` işareti iki tam sayı arasına girdiğinde elinde bıçak yoktur: `7 / 2` sonucu 3'tür, çünkü iki `int` bölündüğünde sonuç yine `int` olmak zorundadır ve ondalık kısım yuvarlanmadan atılır. Ortada kalan o 1 dilimi veren işaret ise `%`'dir, yani `7 % 2` sonucu 1'dir ve buna **kalan** (modulo) işlemi denir.
+
+Bıçağı masaya koymanın yolu bölme işlemine en az bir `double` sokmaktır. `7 / 2.0` yazdığınızda Java "taraflardan biri ondalıklı, demek ki sonuç da ondalıklı" der ve 3,5 verir. Dikkat etmeniz gereken ince nokta şu: `double sonuc = 7 / 2;` yazarsanız da 3,5 **çıkmaz**, çünkü önce sağ taraf hesaplanır, bıçaksız bölme 3 verir, sonra o 3 `double` kutusuna konur ve 3.0 olur. Geçen haftanın hata avındaki `81.0` tam olarak buydu.
+
+<CodeTry title="Pizza" hint="Her satır için önce tahmin, sonra Run. Son satırı 7 / 2 * 2.0 yapın; neden 6.0 çıkıyor? Soldan sağa: önce 7 / 2 = 3, sonra 3 * 2.0.">
+
+```java
+int dilim = 7;
+int kisi = 2;
+
+System.out.println("Kişi başı (bıçaksız): " + dilim / kisi);
+System.out.println("Ortada kalan:         " + dilim % kisi);
+System.out.println("Kişi başı (bıçakla):  " + dilim / 2.0);
+System.out.println("Kişi başı (bıçakla):  " + (double) dilim / kisi);
+
+double yanlis = dilim / kisi;
+System.out.println("Önce böl sonra double: " + yanlis);
+```
+
+</CodeTry>
+
+Kalan işlemi ilk bakışta işe yaramaz görünür, oysa günlük hayatta sürekli kullanırız. Lab 1'in bonusunu hatırlayın: 7384 saniyeyi saat, dakika ve saniyeye çevirmek gerekiyordu. Bir saat 3600 saniye olduğuna göre `7384 / 3600` size kaç **tam** saat olduğunu söyler (2), `7384 % 3600` ise saatlere sığmayıp artan saniyeleri verir (184). Aynı işi bir kez daha 60 ile yaparsanız 3 dakika 4 saniye çıkar ve elinizde "2 saat 3 dakika 4 saniye" vardır. Lab 3'te bunu klavyeden okunan bir sayı için yazacaksınız, ayrıca para üstünü en az madeni parayla bozmak da aynı iki işaretle çözülür.
+
+Birden fazla işaret bir araya geldiğinde Java matematikteki sırayı izler: önce parantez, sonra çarpma, bölme ve kalan (`* / %`), en sonra toplama ve çıkarma (`+ -`), eşit öncelikte olanlar ise soldan sağa. `1 + 2 * 3` bu yüzden 7'dir, `(1 + 2) * 3` ise 9. Kuralı ezberlemek yerine şüphe duyduğunuz her yere parantez koyun, çünkü fazladan parantez hiçbir zaman hata değildir ama eksik parantez her zaman mantık hatasıdır.
+
+Son olarak iki kısaltma var ve ikisini de geçen haftaki `for` satırında gördünüz. `sayac++` yazmak `sayac = sayac + 1` demektir, `toplam += 5` ise `toplam = toplam + 5`. Aynı aile `--`, `-=`, `*=`, `/=` ile devam eder. Bunlar yeni bir şey yapmaz, yalnızca sık yazılan bir cümleyi kısaltır, tıpkı "geliyorum" yerine "glyrm" yazmak gibi ama bu kez herkesin anladığı bir kısaltma.
+
+> [!uyari] Bölen sıfırsa
+> `int` bölmesinde bölen 0 ise program `ArithmeticException: / by zero` ile çöker, geçen hafta gördük. `double` bölmesinde ise çökmez ve `Infinity` yazar. İkisi de kullanıcıya göstermek isteyeceğiniz şeyler değil. Bölenin sıfır olup olmadığını kontrol etmeyi 4. haftada `if` ile yapacağız.
+
+### Tür dönüşümü: küçük bardaktan büyüğe, büyükten küçüğe
+
+Elinizde bir çay bardağı dolusu su var ve onu bir su bardağına boşaltıyorsunuz. Hiçbir şey taşmaz, hiçbir şey kaybolmaz, su bardağının üst kısmı boş kalır, o kadar. Şimdi tersini yapın ve dolu su bardağını çay bardağına boşaltın: sığmayan kısım masaya dökülür ve geri gelmez. Java'da tipler arasında değer taşımak tam olarak böyledir. Küçük tipten büyüğe, yani `int`'ten `double`'a geçiş **otomatiktir** (widening), çünkü hiçbir şey kaybolmaz ve Java bunu sormadan yapar. Büyükten küçüğe, yani `double`'dan `int`'e geçiş ise kaybedilecek bir şey olduğu için otomatik değildir ve sizden açıkça izin ister; bu izne **casting** denir.
+
+```java
+int yas = 19;
+double d = yas;          // otomatik: 19 → 19.0, hiçbir şey kaybolmadı
+
+double boy = 1.75;
+int tam = (int) boy;     // casting: 1.75 → 1, ondalık kısım masaya döküldü
+```
+
+Casting'in en çok yanıltan tarafı **yuvarlamamasıdır**. `(int) 3.9` sonucu 4 değil 3'tür, çünkü casting ondalık kısmı yuvarlamaz, keser ve atar. Gerçekten yuvarlamak istiyorsanız `Math.round(3.9)` yazarsınız ve 4 alırsınız. Aynı `Math` sınıfında `Math.sqrt` karekök, `Math.pow` üs, `Math.abs` mutlak değer için hazır bekliyor ve ileride birçok işinizi görecek.
+
+Bir de banka hesabının "yaklaşık" tutma huyu var. `0.1 + 0.2` yazıp çalıştırdığınızda 0.3 değil `0.30000000000000004` görürsünüz, çünkü bilgisayar sayıları ikilik tabanda tutar ve 0,1 ikilik tabanda tıpkı onluk tabandaki 1/3 gibi sonsuz kesirdir, bir yerden kesilince de küçücük bir hata kalır. Bu hata genellikle zararsızdır, ama paraya gelince hikaye değişir ve Büyük Resim'de o hikayeyi anlatacağız.
+
+<CodeTry title="Bardaklar" hint="Her satırı önce tahmin edin. (int) 3.9 için 4 diyen el kaldırsın, sonra çalıştırın. Son satırı 0.1 + 0.2 == 0.3 yapıp true mu false mu çıktığına bakın.">
+
+```java
+double puan = 3.9;
+System.out.println("Casting:     " + (int) puan);
+System.out.println("Math.round:  " + Math.round(puan));
+
+int a = 7;
+double ortalama = a / 2;
+double dogru = (double) a / 2;
+System.out.println("Önce böl:    " + ortalama);
+System.out.println("Önce çevir:  " + dogru);
+
+System.out.println("0.1 + 0.2 =  " + (0.1 + 0.2));
+```
+
+</CodeTry>
+
+### Sabitler: 0.20 sayısı kodda on dört yerde geçerken
+
+Bir kantin uygulamasında KDV hesabı yapmak gerekiyordu ve programı yazan arkadaş her fiyatın yanına `* 0.20` ekledi. Program çalıştı, herkes mutlu oldu ve aradan altı ay geçti. Sonra KDV oranı değişti. Arkadaş koda girdi, on dört yerde `0.20` buldu ve hepsini değiştirdi, ama on beşinci bir yer vardı ve onu göremedi. Üstelik koddaki başka bir `0.20` KDV değil, öğrenci indirimiydi ve o da yanlışlıkla değişti. Programdaki her satır çalıştı, kimse bağırmadı ve kasada aylarca yanlış tutar kesildi. Böyle, kodun ortasında anlamı belirsiz duran çıplak sayılara **sihirli sayı** (magic number) denir ve kötü şöhretlidir.
+
+Çözüm, sayıya bir kez isim vermek ve her yerde o ismi kullanmaktır. Java'da bunu `final` kelimesiyle yaparsınız, çünkü `final` o kutuya bir kez değer konduktan sonra bir daha değiştirilemeyeceğini söyler ve yanlışlıkla üstüne yazmayı derleyici engeller. Sabit isimleri alışkanlık gereği büyük harf ve alt çizgiyle yazılır, `KDV_ORANI`, `GUNLUK_LIMIT`, `MAKS_OGRENCI` gibi, böylece kodu okuyan biri bunların değişmeyeceğini isminden anlar.
+
+<CodeTry title="Sabit" hint="Çalıştırın, sonra 'KDV_ORANI = 0.18;' satırını en alta ekleyip tekrar çalıştırın: derleyici 'cannot assign a value to final variable' der. Bu hata sizin dostunuz.">
+
+```java
+final double KDV_ORANI = 0.20;
+double tost = 45.0;
+double ayran = 15.0;
+
+double araToplam = tost + ayran;
+double kdv = araToplam * KDV_ORANI;
+double toplam = araToplam + kdv;
+
+System.out.println("Ara toplam: " + araToplam);
+System.out.println("KDV: " + kdv);
+System.out.println("Toplam: " + toplam);
+```
+
+</CodeTry>
+
+### Scanner: programın ilk kez bize soru sorması
+
+Bu derse kadar yazdığımız programlar tek yönlü konuşuyordu: biz koda `int yas = 19;` yazıyorduk ve program onu ekrana basıyordu, ama programı çalıştıran kişi 20 yaşındaysa kodu açıp düzeltmek zorundaydı. Gerçek programlar böyle çalışmaz, çünkü ATM sizin bakiyenizi kodun içinde taşımaz, size sorar. Bu hafta programınız ilk kez ekrana bir soru yazıp duracak, siz bir şey yazıp Enter'a basana kadar bekleyecek ve yazdığınızı bir kutuya koyacak. Bunu yapan araç Java'nın `Scanner` sınıfıdır ve kullanımı üç adımdır.
+
+Birinci adım dosyanın en üstüne `import java.util.Scanner;` yazmaktır, çünkü `Scanner` Java'nın her programda açık gelen `java.lang` paketinde değil, `java.util` paketindedir ve kullanmadan önce "bunu kullanacağım" demeniz gerekir. İkinci adım `Scanner klavye = new Scanner(System.in);` ile bir okuyucu yaratmaktır, çünkü `System.in` klavyeden gelen karakter akışıdır ve `Scanner` o akışı sayılara ve kelimelere ayıran tercümandır. Üçüncü adım ise okumaktır: `klavye.nextInt()` sıradaki tam sayıyı, `klavye.nextDouble()` sıradaki ondalıklı sayıyı, `klavye.nextLine()` ise Enter'a kadar olan **bütün satırı** verir.
+
+<Diagram name="h03-scanner" caption="Scanner ile girdi akışı: klavyeden System.in'e, oradan Scanner'a, nextInt() ile değişkene. Enter tuşunun kendisi akışta kalır ve biraz sonra bunun başımıza ne açtığını göreceğiz." dot width="100%" />
+
+> [!uyari] Bu program Playground'da çalışmaz
+> Java Playground klavyeden girdi almayı desteklemez, bu yüzden aşağıdaki programları orada çalıştıramazsınız ve bunları `CodeTry` kutusunda değil düz kod bloğu olarak veriyoruz. Derste bu programları Codespaces ya da yerel terminalde canlı çalıştıracağım, siz de Lab 3'te aynısını kendi ortamınızda yapacaksınız. Playground'da denemek isterseniz `nextInt()` satırlarını `int yas = 19;` gibi sabit atamalarla değiştirin, gerisi aynen çalışır.
+
+```java
+import java.util.Scanner;
+
+public class YasBoy {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Yaşınız: ");
+        int yas = klavye.nextInt();
+
+        System.out.print("Boyunuz (metre): ");
+        double boy = klavye.nextDouble();
+
+        System.out.println("Gelecek yıl " + (yas + 1) + " yaşında olacaksınız.");
+        System.out.printf("Boyunuz %.2f metre, yani %d santimetre.%n", boy, (int) (boy * 100));
+    }
+}
+```
+
+İki yeni şey var. `System.out.print` satır sonunda aşağı inmez, bu yüzden soru ile cevabınız aynı satırda durur ve kullanıcı ne cevaplayacağını görür. `System.out.printf` ise biçimli yazdırır: `%d` yerine bir tam sayı, `%.2f` yerine iki ondalık basamakla yuvarlanmış bir `double`, `%s` yerine bir metin gelir ve `%n` satır sonu demektir. `%.2f` bu haftanın en çok işinize yarayacak parçasıdır, çünkü 26.122448979591837 yerine 26.12 yazar ve otomatik kontroller de tam olarak bunu bekler.
+
+Şimdi tuzak. Programınız önce yaş, sonra ad soyad soruyor olsun. Siz `19` yazıp Enter'a basarsınız, program yaşı alır, "Adınız soyadınız:" diye sorar ve **sormasıyla geçmesi bir olur**, ad kutusu bomboş kalır. Olan şu: Enter tuşuna bastığınızda klavye akışına `19` ile birlikte görünmez bir satır sonu karakteri de gider, `nextInt()` yalnızca 19'u alır ve satır sonunu akışta bırakır, sonra gelen `nextLine()` "bana Enter'a kadar olan her şeyi ver" der ve akışta ilk gördüğü şey o kalan Enter olduğu için boş bir metinle hemen geri döner. Yani **Enter tuşu da bir karakterdir** ve biri onu okumadıkça orada bekler.
+
+```java
+import java.util.Scanner;
+
+public class Tuzak {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Yaşınız: ");
+        int yas = klavye.nextInt();
+        klavye.nextLine();                       // kalan Enter'ı yut, çözüm bu satır
+
+        System.out.print("Adınız soyadınız: ");
+        String ad = klavye.nextLine();
+
+        System.out.println("Merhaba " + ad + ", " + yas + " yaşındasın.");
+    }
+}
+```
+
+Çözüm tek satırdır: `nextInt()`'ten sonra, metni okumadan önce bir kez `klavye.nextLine();` yazıp sonucunu hiçbir yere koymazsınız, o satır kalan Enter'ı yutar ve bir sonraki `nextLine()` gerçekten sizin yazdığınızı okur. `next()` metodu ise yalnızca ilk boşluğa kadar olan tek kelimeyi okur, bu yüzden "Ali Veli" gibi boşluklu bir ad için işe yaramaz ve `nextLine()` gerekir. Lab 3'ün 5. görevi bu tuzağın ta kendisi ve çözümünü biliyorsunuz, ama kodu siz yazacaksınız.
+
+> [!not] Yanlış tipte girdi
+> Program `nextInt()` ile beklerken siz "on dokuz" yazarsanız `Scanner` bunu sayıya çeviremez ve program `InputMismatchException` ile çöker. Bu bir çalışma zamanı hatasıdır ve kullanıcıdan gelen her şeyin kontrol edilmesi gerektiğini hatırlatır. Labda bunu bilerek deneyip `gozlem.md` dosyasına iki cümle yazacaksınız. Girdiyi kontrol etmeyi ise `if` ile 4. haftada göreceğiz.
+
+### Küçük hesap örneği: VKİ hesaplayıcı
+
+Bugün öğrendiğimiz her şeyi tek bir programda toplayalım. Vücut kitle indeksi (VKİ) kiloyu boyun karesine bölerek bulunur, mesela 80 kilo ve 1,75 metre için 80 / (1,75 × 1,75) = 26,12 çıkar. Programı birlikte okuyacağız ve her satırda "hangi tip, neden" sorusunu soracağız, çünkü Lab 3'ün ilk görevi bu programın bir adım ilerisi.
+
+```java
+import java.util.Scanner;
+
+public class VkiHesap {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Kilonuz (kg): ");
+        double kilo = klavye.nextDouble();
+
+        System.out.print("Boyunuz (m): ");
+        double boy = klavye.nextDouble();
+
+        double vki = kilo / (boy * boy);
+
+        System.out.printf("VKI: %.2f%n", vki);
+    }
+}
+```
+
+Kilo ve boy neden `double`, çünkü 72,5 kilo olabilirsiniz ve 1,75 metre zaten ondalıklı. `boy * boy` neden parantez içinde, çünkü parantez olmasa `kilo / boy * boy` soldan sağa hesaplanır, önce kiloyu boya böler sonra boyla çarpar ve sonuç yine kilo çıkar. Bu, parantezin bir mantık hatasını nasıl önlediğinin en temiz örneği. `%.2f` neden var, çünkü kimse 26.122448979591837 okumak istemez. Labda bu programın altına VKİ'ye göre "Zayif", "Normal", "Fazla kilolu", "Obez" yazan bir bölüm ekleyeceksiniz ve bunun için geçen haftaki `if` zincirini kullanacaksınız.
+
+<Puzzle title="Hata avı, ikinci tur" kind="tahmin">
+
+Aşağıdaki program **üç hata** içeriyor: biri derleme anında yakalanır, ikisi ise program çalışırken sessizce yanlış sonuç verir. Üç dakikanız var, her hata için satır numarası ve türünü yazın, düzeltmeyin, yalnızca bulun. İpucu: hataların ikisi bugün anlattığımız iki tuzağın ta kendisi.
+
+```java
+import java.util.Scanner;
+
+public class Kayit {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        System.out.print("Kaç dersiniz var? ");
+        int dersSayisi = klavye.nextInt();
+        System.out.print("Adınız soyadınız: ");
+        String ad = klavye.nextLine();
+        String yas = 19;
+        int ortalama = (85 + 90) / 2;
+        System.out.println(ad + ", " + yas + " yaşında, " + dersSayisi + " ders, ortalama " + ortalama);
+    }
+}
+```
+
+<details>
+<summary>Cevap (üç dakika dolmadan açmayın)</summary>
+
+- **Satır 10, sözdizimi (tip uyuşmazlığı):** `String yas = 19;` yazıyor, oysa 19 bir tam sayı ve `String` kutusuna tam sayı konmaz. `javac` burada durur ve `incompatible types: int cannot be converted to String` der, yani program hiç çalışmaz. Düzeltmesi `int yas = 19;`.
+- **Satır 11, mantık:** `(85 + 90) / 2` iki tam sayının bölümüdür, 175 / 2 bıçaksız pizza gibi 87 verir, oysa gerçek ortalama 87,5. Üstelik sonuç `int` kutusuna konduğu için 87.0 bile görmezsiniz, düpedüz 87 yazar ve kimse bağırmaz. Düzeltmesi `double ortalama = (85 + 90) / 2.0;`.
+- **Satır 9, mantık (Enter tuzağı):** Satır 7'deki `nextInt()` sayıyı alır ama Enter'ı akışta bırakır, satır 9'daki `nextLine()` o Enter'ı okuyup boş metin döner ve çıktı `, 19 yaşında, ...` diye başlar, ad yoktur. Program çökmez, hata vermez, yalnızca eksik yazar. Düzeltmesi satır 7 ile 9 arasına `klavye.nextLine();` eklemek.
+
+Geçen haftanın dersi burada da geçerli: derleyicinin yakaladığı hata en zararsızıdır, çünkü program çalışmadan ortaya çıkar. Diğer ikisi ise ancak çıktıyı önceden bildiğiniz için fark edilir. "Ali Veli, 19 yaşında, 5 ders, ortalama 87.5" beklemeyen biri bu programın çıktısına bakıp "çalışıyor" der.
+
+</details>
+
+</Puzzle>
+
+## Büyük Resim: Kantin Uygulamasında Tipler
+
+Geçen hafta kantin sipariş uygulamasının akışını çizdik ve kutuların içinde `stok`, `fiyat`, `adet`, `toplam` gibi isimler geçti. O isimlerin hepsi bir değişkendi ve bugün artık her birinin **tipini** söyleyebiliriz. Ürün adı bir metindir, yani `String`. Stok adedi tam sayıdır ve yarım tost diye bir şey olmadığı için `int`. Ürünün satışta olup olmadığı evet/hayır sorusudur, yani `boolean`. Fiyat ise ilk bakışta `double` gibi görünür, çünkü 45,50 lira diye bir şey var, ama burada bir hikaye durmamız gerekiyor.
+
+Bankalar parayı `double` ile tutmaz. Sebebi, biraz önce gördüğünüz `0.1 + 0.2 = 0.30000000000000004` hesabıdır: bir kuruşluk hata tek bir siparişte görünmez, ama günde yüz bin işlem yapan bir sistemde o küçücük hatalar birikir, ay sonunda kasa ile kayıt arasında açıklanamayan kuruşlar çıkar ve muhasebe bunu asla kabul etmez. Bu yüzden para çoğunlukla **kuruş cinsinden tam sayı** olarak tutulur: 45,50 lira kodda `int fiyatKurus = 4550;` olur ve tam sayı toplama hiçbir zaman hata yapmaz. Ekrana yazarken 4550'yi 100'e bölüp `%.2f` ile gösterirsiniz, o kadar.
+
+| Veri | Tip | Örnek | Neden bu tip |
+|---|---|---|---|
+| Ürün adı | `String` | `"Tost"` | Metin |
+| Fiyat | `int` (kuruş) | `4550` | Para tam olmalı, `double` yaklaşık tutar |
+| Stok | `int` | `12` | Yarım tost yok |
+| Satışta mı | `boolean` | `true` | Evet/hayır sorusu |
+| KDV oranı | `final double` | `0.20` | Oran ondalıklı, bir kez tanımlanır |
+| Sipariş tutarı | `int` (kuruş) | `13650` | Fiyat × adet toplamı, yine kuruş |
+
+Geçen haftanın alt akışındaki "sepete ekle" kutusunun hesabı bu haftaki operatörlerle şöyle yazılır:
+
+```text
+GİRDİ: fiyatKurus (int), adet (int)
+satirTutari = fiyatKurus × adet
+toplamKurus = toplamKurus + satirTutari
+kdvKurus = toplamKurus × KDV_ORANI          (sonuç double, kuruşa çevrilirken yuvarlanır)
+genelToplamKurus = toplamKurus + kdvKurus
+YAZ genelToplamKurus / 100, ".", genelToplamKurus % 100   (lira ve kuruş: yine / ve %)
+```
+
+Son satıra dikkat edin, çünkü 13650 kuruşu "136.50" diye yazmak için bugünün iki işareti yetiyor: `/` lirayı, `%` kuruşu verir. Pizza bölüşmekle para yazmak aynı iki işaretle çözülüyor ve dönem boyunca bu ikisini sayamayacağınız kadar çok kullanacaksınız.
+
+> [!nerede] Sahada
+> Bankacılık ve e-ticaret sistemlerinde para için ya kuruş cinsinden tam sayı ya da `BigDecimal` adlı özel bir sınıf kullanılır, ikisi de "yaklaşık" tutmaz. Bir işe alım mülakatında "parayı hangi tipte tutarsınız?" sorusu hâlâ sorulur ve `double` diyen adayın mülakatı orada biter. Bugün bunu bilen bir birinci sınıf öğrencisi oldunuz.
+
+## Yapay Zeka Anı
+
+Bu hafta yapay zekaya bir şey yazdırmıyor, **sınav yapıyoruz**. ChatGPT'ye (ya da Claude, Gemini) *"Java'da 7/2 kaç eder?"* diye soruyoruz ve cevabı birlikte okuyoruz. Doğru cevap 3'tür ve iyi bir model bunu söyler, ama bazen "3,5" der ya da "3.5, ancak tam sayı bölmesi yapılırsa 3" gibi iki ucu açık bir cevap verir. Sonra ikinci soruyu soruyoruz: *"Neden?"* Gelen açıklamada "iki int bölününce sonuç int olur ve ondalık kısım atılır" cümlesini arıyoruz, çünkü o cümle varsa model konuyu biliyor, yoksa bir çıktı ezberlemiş demektir.
+
+Dersin mesajı şu: yapay zekanın verdiği bir cevabı ancak **cevabı zaten biliyorsanız** doğrulayabilirsiniz. Bugün öğrendiğiniz pizza hikayesi sizi o cevabı doğrulayabilen kişi yapıyor ve piyasada aranan kişi de tam olarak odur. Zaman kalırsa üçüncü bir soru: *"(int) 3.9 kaç eder?"* Cevapta "yuvarlanır" kelimesi geçiyorsa model yanılıyor, çünkü casting keser.
+
+> [!uyari] Trafik ışığı hatırlatması: Lab 3 sarı bölge
+> Labda yapay zekaya `printf` biçim karakterlerini ya da "nextInt sonrası nextLine neden boş dönüyor?" gibi **kavram** sorularını sorabilirsiniz. Ama "VKİ hesaplayan Java programı yaz" demek görevi yaptırmaktır ve yasaktır. Programı siz yazacaksınız ve ritüelde "programınız hangi satırda kullanıcıyı bekliyor?" sorusuna cevap vereceksiniz, çünkü yazmadığınız programın nerede beklediğini bilemezsiniz.
+
+## Temel Kavramlar
+
+- **Değişken (variable)**: Bellekte tipi ve adı olan kutu; sipariş alan kişinin kağıdındaki bir satır. Tanımlama kutuyu açar, atama içine değer koyar.
+- **Tip (type)**: Kutuya ne konabileceğini ve kutunun büyüklüğünü belirleyen etiket; `int`, `double`, `char`, `boolean` ilkel tiplerdir, `String` bir sınıftır.
+- **Atama (`=`)**: Eşitlik değil kopyalama; sağ taraf hesaplanır, sol kutuya konur, eski değer silinir.
+- **`int`**: Tam sayı, 32 bit, en çok 2.147.483.647; kumbara.
+- **`double`**: Ondalıklı sayı, 64 bit, çok geniş ama yaklaşık; banka hesabı.
+- **Taşma (overflow)**: Kumbara dolunca sayacın başa dönmesi; `int` en büyük değerine 1 eklenince eksiye düşer, hata vermez.
+- **Tam sayı bölmesi**: İki `int` bölününce sonuç `int`, ondalık atılır; `7 / 2 = 3`. Bıçaksız pizza.
+- **Kalan (`%`)**: Bölmeden artan; `7 % 2 = 1`. Saat-dakika-saniye ve para üstü hesaplarının anahtarı.
+- **Öncelik**: Parantez, sonra `* / %`, sonra `+ -`, eşitlerde soldan sağa; şüphede parantez.
+- **Genişleme (widening)**: Küçük tipten büyüğe otomatik dönüşüm, `int` → `double`; küçük bardaktan büyüğe.
+- **Casting**: Büyükten küçüğe açık dönüşüm, `(int) 3.9 = 3`; keser, yuvarlamaz. Büyük bardaktan küçüğe, taşan gider.
+- **Yuvarlama hatası**: `double` ikilik tabanda yaklaşık tutar; `0.1 + 0.2` tam 0.3 değildir. Para için kuruş cinsinden `int`.
+- **`final` ve sabit**: Bir kez atanıp değişmeyen kutu; `KDV_ORANI` gibi büyük harfle. Sihirli sayıların ilacı.
+- **`Scanner`**: Klavyeden okuyan sınıf; `import java.util.Scanner;`, `new Scanner(System.in)`, `nextInt()`, `nextDouble()`, `nextLine()`.
+- **Enter tuzağı**: `nextInt()` satır sonunu akışta bırakır, ardından gelen `nextLine()` boş döner; araya bir `nextLine()` koyarak çözülür.
+- **`printf` ve `%.2f`**: Biçimli yazdırma; iki ondalık basamak, `%d` tam sayı, `%s` metin, `%n` satır sonu.
+
+## Sahadan Örnekler
+
+- **Ariane 5, 1996.** Avrupa Uzay Ajansı'nın yeni roketi ilk uçuşunda, kalkıştan 37 saniye sonra kendini imha etti. Sebep, bir önceki roket Ariane 4'ten alınan yazılımın yatay hızı 64 bitlik ondalıklı bir sayıdan 16 bitlik tam sayıya çevirmesiydi. Ariane 4 o kadar hızlanmıyordu ama Ariane 5 hızlanıyordu ve değer 16 bite sığmadı. Taşma bir hata fırlattı, yedek bilgisayar da aynı yazılımı çalıştırdığı için aynı anda sustu ve roket yön bilgisini kaybetti. Bugün Playground'da gördüğünüz "büyük + 1 eksi çıkıyor" olayı, yaklaşık 370 milyon dolarlık bir roketi düşüren olayın küçük halidir.
+- **2038 problemi.** Birçok sistem zamanı 1 Ocak 1970'ten bu yana geçen saniye sayısı olarak 32 bitlik bir tam sayıda tutar. O sayı 19 Ocak 2038'de 2.147.483.647'ye ulaşıp taşacak ve saat 1901'e dönecek. Çözüm basit, 64 bit kullanmak, ama dünyadaki milyarlarca gömülü cihazın yazılımını güncellemek basit değil. Bugün yazılan kodlardan bazıları o gün hâlâ çalışıyor olacak ve bunu şimdi bilen siz olacaksınız.
+- **Kuruş hataları.** Bir e-ticaret sitesi ürün fiyatlarını `double` ile tutuyordu ve her şey yolunda görünüyordu, ta ki sepete üç tane 0,10 liralık ürün eklenince toplamın 0,30 yerine 0,30000000000000004 çıkmasına, yüzdelik indirimlerin yuvarlanınca bir kuruş eksik ya da fazla gelmesine ve ay sonunda muhasebenin fatura toplamlarıyla banka hesabını tutturamamasına kadar. Her sipariş tek başına doğru görünüyordu, hata ancak yüz binlerce siparişin toplamında ortaya çıktı. Çözüm, fiyatı kuruş cinsinden `int` tutmak oldu, yani bugün Büyük Resim'de konuştuğumuz şey.
+
+## Portfolyo
+
+Konu dağıtımı ve ortak sözleşme yakında duyurulacak, bu yüzden KT1 (5. hafta) için henüz teslim yok. Ama bu hafta yapabileceğiniz çok somut bir şey var: geçen hafta kağıda çizdiğiniz ana akıştaki her kutunun hangi **verileri** tuttuğunu yazın ve her verinin yanına **tipini** koyun. Not hesaplayıcı yazan biri "vize `int`, ağırlık `final double`, ortalama `double`, geçti mi `boolean`" yazar. Bütçe takibi yazan biri harcamayı kuruş cinsinden `int` tutmaya bugün karar verir. Beş-on satır yeter ve KT1'de kodunuzun ilk satırları tam olarak bu liste olacak. Takvim: KT1 5. hafta, KT2 8. hafta, KT3 11. hafta, KT4 14. hafta ([Ders Hakkında · Portfolyo](/ders-hakkinda)).
+
+## Laboratuvara Hazırlık
+
+Lab 3, A şubesi için **14 Ekim Çarşamba 13.15**, B şubesi için **15 Ekim Perşembe 15.15** ve yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Bu labın adı "Programınız size soru soruyor", çünkü altı görevin altısı da klavyeden okuyor ve hiçbiri Playground'da çalışmıyor.
+
+Lab'a gelirken:
+
+- **Codespaces'i bir kez açıp çalıştığından emin olun.** Lab 2 deponuzda **Code → Codespaces** ile açın, terminale `java -version` yazın ve 21 gördüğünüzden emin olun. Lab günü ilk kez açmaya kalkarsanız ilk on dakikanız kurulum beklemekle geçer.
+- Kendi bilgisayarınızla gelecekseniz [JDK ve VS Code rehberini](/rehber/yerel-jdk-vscode) tamamlamış olun ve bir `Scanner`'lı programı terminalde en az bir kez çalıştırın.
+- **Lab 2'nin son teslimi bu akşam 23.59**, Lab 3 deposu açılmadan Lab 2'yi kapatın.
+- Bu sayfadaki `YasBoy` ve `VkiHesap` programlarını okuyup her satırda hangi tipin neden seçildiğini söyleyebiliyor olun, çünkü lab görevleri bu iki programın akrabası.
+- Ayrıntı ve görev listesi: [Lab 3](/laboratuvar/lab-03).
+
+## Tartışma Soruları
+
+1. İki bardak bulmacasında üçüncü bardak işin sonunda boş kalabilir ya da içinde su kalabilir, fark eder mi? `gecici` değişkeni takastan sonra silinmeli mi, yoksa öylece dursa ne olur?
+2. Her sayıyı `double` yapsak `7 / 2` tuzağı ortadan kalkar. Peki neden `int` diye bir tip hâlâ var? Hangi veriler "yaklaşık" olamaz?
+3. Kumbara taşınca Java hata vermiyor ve sessizce eksiye düşüyor. Sizce bu bir tasarım hatası mı, bilinçli bir seçim mi? Hata verseydi Ariane 5 kurtulur muydu?
+4. Enter tuşunun bir karakter olduğunu bugün öğrendiniz. Boşluk da bir karakter mi? "Ali Veli" yazan kullanıcıdan adı `next()` ile okursanız ne olur, bunu bilmeyen bir programcı kaç kullanıcıyı "Ali" olarak kaydeder?
+5. `0.20` sayısını kodda on dört yerde kullanmakla `final double KDV_ORANI = 0.20;` yazmak arasında program çıktısı açısından hiçbir fark yok. O zaman fark nerede ve bu farkı kim öder?
+
+## Haftanın Özeti
+
+İki bardağın içeriğini takas etmeye çalışarak başladık ve üçüncü bardağın gerekliliğinden `=` işaretinin eşitlik değil kopyalama olduğunu çıkardık. Değişkeni kantinde sipariş alan kişinin kağıdındaki bir satır olarak gördük, tipin ne konabileceğini ve kutunun büyüklüğünü belirlediğini öğrendik ve `int` ile `double`'ı kumbara ile banka hesabı olarak ayırdık. Kumbara dolunca sayacın sessizce başa döndüğünü de Playground'da gözümüzle gördük. İki arkadaşın pizzayı bölüşmesiyle `7 / 2`'nin neden 3 olduğunu ve `%`'nin ortada kalan dilim olduğunu anladık, sonra bardaklar arasında su boşaltarak otomatik genişleme ile casting'i ayırdık ve casting'in yuvarlamayıp kestiğini gördük. On dört yerde geçen `0.20`'nin başımıza açtığı dertten `final` sabitlere geçtik. En sonunda program ilk kez bize soru sordu: `Scanner` ile yaş ve boy okuduk, `printf` ile iki basamaklı yazdırdık, Enter tuşunun da bir karakter olduğunu ve `nextInt` sonrası `nextLine`'ın neden boş döndüğünü öğrendik. Kantin uygulamasında paranın neden kuruş cinsinden tam sayı tutulduğunu konuştuk. Gelecek hafta programın karar vermesine, yani `if`, `else` ve karşılaştırma operatörlerine geçiyoruz ve VKİ'nin altına "Normal" yazan satır o zaman ders kitabına girecek.

@@ -1,0 +1,17 @@
+// Scanner ile girdi akışı: klavyeden değişkene
+digraph ScannerAkis {
+    charset="UTF-8";
+    rankdir=LR;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    klavye   [shape=parallelogram, label="Klavye\n(siz yazarsınız: 19 ⏎)"];
+    sysin    [shape=box, label="System.in\n(karakter akışı)"];
+    scanner  [shape=box, label="Scanner\n(akışı parçalara ayırır)"];
+    nextint  [shape=box, label="nextInt()\n(sıradaki sayıyı alır)"];
+    degisken [shape=record, label="{int yas | 19}"];
+    kalan    [shape=note, label="Akışta kalan: ⏎\n(Enter tuşu da bir karakterdir)"];
+
+    klavye -> sysin -> scanner -> nextint -> degisken;
+    scanner -> kalan [style=dashed, label="nextInt() bunu almaz"];
+}

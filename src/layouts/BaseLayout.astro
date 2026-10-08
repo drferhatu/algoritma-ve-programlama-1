@@ -52,6 +52,25 @@ const ogImage = new URL(href('/og.png'), Astro.site);
         } catch (e) {}
       })();
     </script>
+    <script is:inline>
+      // Eski önbellekteki sayfa yeni yayının stil dosyasını bulamazsa (çıplak HTML),
+      // önbelleği atlayarak bir kez yeniden yükle. Yalnızca bir kez dener.
+      window.addEventListener('load', function () {
+        try {
+          var ok = getComputedStyle(document.documentElement).getPropertyValue('--color-ink').trim() !== '';
+          var key = 'css-reload';
+          if (!ok && !sessionStorage.getItem(key)) {
+            sessionStorage.setItem(key, '1');
+            var links = document.querySelectorAll('link[rel="stylesheet"]');
+            Promise.all(Array.prototype.map.call(links, function (l) {
+              return fetch(l.href, { cache: 'reload' }).catch(function () {});
+            })).then(function () { location.reload(); });
+          } else if (ok) {
+            sessionStorage.removeItem(key);
+          }
+        } catch (e) {}
+      });
+    </script>
     <slot name="head" />
   </head>
   <body class="min-h-dvh flex flex-col">

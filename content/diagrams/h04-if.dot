@@ -1,0 +1,17 @@
+// Tek yönlü if: koşul doğruysa blok çalışır, yanlışsa atlanır; iki yol aynı yerde birleşir
+digraph TekYonluIf {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    once  [shape=box, label="önceki satırlar"];
+    kosul [shape=diamond, label="koşul doğru mu?"];
+    blok  [shape=box, label="if bloğu\n(süslü parantez içi)"];
+    sonra [shape=box, label="if'ten sonraki satır"];
+
+    once -> kosul;
+    kosul -> blok  [label="true"];
+    kosul -> sonra [label="false"];
+    blok -> sonra;
+}

@@ -1,0 +1,28 @@
+// Haftanın bulmacası: 0-100 puanı harf notuna çeviren karar ağacı (else-if merdiveni)
+digraph HarfAgaci {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    puan [shape=box, label="puan oku"];
+    k90  [shape=diamond, label="puan ≥ 90 mı?"];
+    k80  [shape=diamond, label="puan ≥ 80 mi?"];
+    k70  [shape=diamond, label="puan ≥ 70 mi?"];
+    k60  [shape=diamond, label="puan ≥ 60 mı?"];
+    yA   [shape=parallelogram, label="A"];
+    yB   [shape=parallelogram, label="B"];
+    yC   [shape=parallelogram, label="C"];
+    yD   [shape=parallelogram, label="D"];
+    yF   [shape=parallelogram, label="F"];
+
+    puan -> k90;
+    k90 -> yA  [label="Evet"];
+    k90 -> k80 [label="Hayır"];
+    k80 -> yB  [label="Evet"];
+    k80 -> k70 [label="Hayır"];
+    k70 -> yC  [label="Evet"];
+    k70 -> k60 [label="Hayır"];
+    k60 -> yD  [label="Evet"];
+    k60 -> yF  [label="Hayır"];
+}

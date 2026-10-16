@@ -1,0 +1,672 @@
+---
+week: 4
+title: "Seçim Yapıları I: boolean, if/else ve İç İçe if"
+topic: "boolean tipi ve karşılaştırma operatörleri; tek yönlü if, if/else, else-if merdiveni ve iç içe if; sarkan else; yaygın seçim hataları"
+description: "Programın ilk kez yol ayrımına geldiği hafta: Apollo 11'in iniş anındaki alarmla açılıyor, evet/hayır sorularını boolean olarak yazmayı, şemsiye almayı if ile, harf notunu merdivenle, sinema biletini iç içe if ile karara bağlamayı öğreniyor; sarkan else tuzağını ve altı yaygın hatayı Playground'da gözümüzle görüyoruz."
+module: m2
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+tags:
+  - "boolean"
+  - "karşılaştırma operatörleri"
+  - "if"
+  - "if/else"
+  - "else-if merdiveni"
+  - "iç içe if"
+  - "sarkan else"
+objectives:
+  - "Karşılaştırma operatörleriyle boolean ifadeler yazar, sonucunu elle değerlendirir ve = ile == farkını bir cümleyle açıklar."
+  - "Tek yönlü if, if/else ve else-if merdiveniyle çok yollu karar yapıları kurar; merdivende sıranın neden önemli olduğunu örnekle gösterir."
+  - "İç içe if'i süslü parantez ve doğru girintiyle yazar; sarkan else tuzağını tanır ve parantezle çözer."
+  - "Scanner ile okunan girdiye göre karar veren tam bir Java dosyası (artık yıl, en büyük sayı, taksi ücreti) yazar ve her dalını ayrı girdiyle test eder."
+  - "if sonrası noktalı virgül, blok unutma, double'ı == ile karşılaştırma gibi yaygın hataları verilen kodda bulur."
+tools:
+  - "Java Playground"
+  - "JDK 21 / Codespaces"
+  - "Scanner"
+resources:
+  - title: "Think Java 2, Bölüm 5: Conditionals and Logic"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch05.html"
+    note: "boolean, karşılaştırma, if/else ve zincirleme koşullar; bu haftanın kitap karşılığı. Mantıksal operatörler kısmı gelecek haftaya ait."
+  - title: "Java Tutorials: The if-then and if-then-else Statements"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/if.html"
+    note: "Resmî sözdizimi ve kısa örnek; labda takıldığınızda ilk bakılacak yer."
+  - title: "3. hafta: Değişkenler, Veri Tipleri, Operatörler ve Scanner"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/haftalar/hafta-03"
+    note: "boolean tipini ve Scanner'ı ilk gördüğünüz sayfa; bu haftaki tam dosyalar o iskeletin üstüne kuruluyor."
+  - title: "2. hafta: Algoritma, Akış Diyagramı ve Java'ya Giriş"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/haftalar/hafta-02"
+    note: "Elmas sembolü ve 'bir elmas, iki çıkış' kuralı; bu haftanın her diyagramı o elmastan türüyor."
+---
+
+## Derse Başlamadan Önce
+
+- Kağıt ve kalem getirin, çünkü bulmaca yine kağıtta başlıyor ve bu hafta kağıda bir karar ağacı çizeceğiz.
+- Tarayıcınızda [Java Playground](https://dev.java/playground/) açık olsun, çünkü bu hafta Playground'da çalışan kod kutusu sayısı önceki haftaların iki katı ve her birini önce tahmin edip sonra çalıştıracağız.
+- **Lab 3'ün son teslimi bu akşam, 16 Ekim Cuma 23.59.** Releases sayfasında geçmeyen testiniz varsa dersten sonra oturup düzeltin, çünkü yarından sonra gelen push'lar puanlanmaz.
+- Geçen hafta VKİ programının altına "Normal" yazan satırı labda yazdınız ama ders kitabına girmemişti. Bugün o satır ders kitabına giriyor ve neden öyle yazıldığını öğreneceksiniz.
+
+> [!not] Bu haftanın hikayesi
+> Şimdiye kadar yazdığınız her program tek bir yoldan yürüdü: ilk satırdan başladı, sırayla aşağı indi ve son satırda bitti. Girdiyi okudu ama girdiye göre **davranışını değiştirmedi**, 80 kilo için de 40 kilo için de aynı satırlar çalıştı. Bugün program ilk kez bir yol ayrımına gelecek, bir soru soracak ve cevaba göre iki yoldan birini seçecek. Bu seçimi yapan yapıya **seçim yapısı** (selection statement) diyoruz ve 2. haftada çizdiğiniz elmas sembolünün Java'daki karşılığı tam olarak bu. Tek oturum, A şubesi Cuma 09.15, B şubesi Cuma 13.15.
+
+## Haftanın Bulmacası
+
+<Puzzle title="Harf notu ağacı" kind="bulmaca">
+
+Bir dersin 0-100 arası puanı şu kurala göre harfe çevriliyor: 90 ve üstü **A**, 80 ve üstü **B**, 70 ve üstü **C**, 60 ve üstü **D**, altı **F**. Bölümün gerçek sisteminde daha fazla harf var, ama bugün beşi yeter.
+
+Yanınızdaki kişiyle ikili çalışın, **4 dakikanız** var. Kağıda bu kuralı bir **karar ağacı** olarak çizin: her soru bir elmas, her elmasın Evet ve Hayır çıkışı var, her yaprakta bir harf. Sonra şu üç puanı ağaçta parmağınızla izleyin ve hangi harfe vardığınızı yazın: **85**, **59**, **90**.
+
+Bitince zor soru: ağacı **ters sırada** kursanız, yani ilk elmasa "puan 60 ve üstü mü?" yazıp Evet dalına D koysanız, sonra 70'i, 80'i, 90'ı sorsanız, 85 puan hangi harfi alır? Neden?
+
+</Puzzle>
+
+Çoğu grup ilk ağacı iki dakikada çizer ve üç puanı doğru izler: 85 ilk elmastan Hayır ile geçer, ikinci elmasta Evet der ve B'ye varır. 59 dört elmasın dördünden de Hayır ile geçip F'ye düşer, 90 ise ilk elmasta Evet deyip A alır. Zor soruda ise tartışma başlar, çünkü ters sıralı ağaçta 85 puan ilk elmasa gelir, "60 ve üstü mü?" sorusuna Evet der ve **D** alır. 85 puanın 70'ten de 80'den de büyük olması hiçbir şeyi değiştirmez, çünkü ağaç ilk Evet'te durur ve geri kalan soruları hiç sormaz.
+
+<Diagram name="h04-harf-agaci" caption="Harf notu karar ağacı. Her elmasın Hayır oku bir sonraki elmasa gidiyor; ilk Evet'te ağaç durur. Bu yüzden sorular büyükten küçüğe sıralanmak zorunda." dot width="520px" />
+
+Bu bulmacanın dersin tamamını özetlemesi şundan: bir karar yapısı sorularını **sırayla** sorar ve **ilk doğru cevapta durur**. Soruların sırası yanlışsa her kutu doğru yazılmış olsa bile program yanlış cevap verir ve bu bir sözdizimi hatası değil, derleyicinin göremediği bir mantık hatasıdır. Bugün göreceğimiz her yapı, en basit `if`'ten en karışık iç içe karara kadar, bu iki cümlenin üstüne kurulu.
+
+## Ders Notları
+
+### Açılış: 20 Temmuz 1969, iniş modülünde bir alarm
+
+Apollo 11'in iniş modülü Ay yüzeyine birkaç dakika uzaklıktayken kabindeki bilgisayar ekranında bir sayı belirdi: **1202**. Neil Armstrong ve Buzz Aldrin bu alarmın ne anlama geldiğini bilmiyordu ve Houston'daki kontrol odasına sordu. Alarm, bilgisayarın yapması istenen işlerin kapasitesini aştığını söylüyordu, çünkü yanlış konumda bırakılan bir radar anahtarı bilgisayara saniyede yüzlerce gereksiz veri gönderiyordu. O an verilecek karar basitti: inişi iptal edip yörüngeye dönmek ya da bilgisayara güvenip devam etmek.
+
+Bilgisayarın yazılımını MIT'de Margaret Hamilton'ın liderliğindeki ekip yazmıştı ve yazılımın içinde tam bu an için tasarlanmış bir karar vardı. Program, yapacak işi kapasitesinden fazla olduğunda önemsiz işleri bırakıp yalnızca iniş için hayati olanları, yani motor kontrolünü ve yönlendirmeyi sürdürecek şekilde yazılmıştı. Yazılım alarmı verdi, gereksiz radar işini düşürdü, kendini yeniden başlattı ve inişe devam etti. Houston "Go" dedi ve Armstrong birkaç dakika sonra Ay'a indi.
+
+Bu hikayeyi bugün anlatmamızın sebebi şu: iyi bir karar yapısı yalnızca normal günde değil, kriz anında da ne yapacağını bilen yapıdır. Hamilton'ın ekibi "bilgisayar aşırı yüklenirse ne olacak?" sorusunu uçuştan yıllar önce sordu ve cevabı koda yazdı. Bu hafta siz de koda "eğer şöyleyse şunu yap, değilse bunu yap" yazmayı öğreneceksiniz ve bu cümlenin Ay'a inmekle VKİ'nin altına "Normal" yazmak arasındaki her ölçekte aynı olduğunu göreceksiniz.
+
+### boolean: evet ya da hayır, üçüncüsü yok
+
+Kantin kasasında sıra sizde ve kasadaki kişi size tek bir soru soruyor: "Öğrenci misiniz?" Bu sorunun yalnızca iki cevabı var, evet ya da hayır, ve "biraz" diye bir seçenek yok. Cevaba göre fiyat değişiyor, yani kasadaki kişi bir karar veriyor ve kararın tek girdisi bu evet/hayır sorusunun cevabı. Programlar da kararlarını tam olarak böyle verir: önce bir evet/hayır sorusu sorulur, cevap alınır, sonra cevaba göre yol seçilir.
+
+Java'da evet/hayır sorularının cevabını tutan tip geçen hafta tabloda gördüğünüz `boolean`'dır ve yalnızca iki değer alır: `true` (doğru) ve `false` (yanlış). Bu haftaya kadar `boolean aktif = true;` gibi değeri elle yazdık, oysa gerçek programlarda `boolean` değerler genellikle bir **karşılaştırmadan** doğar. Karşılaştırmayı yapan altı işarete **ilişkisel operatörler** (relational operators) denir ve her biri iki değeri alıp bir `boolean` üretir.
+
+| Operatör | Okunuşu | Örnek (`puan = 85` için) | Sonuç |
+|---|---|---|---|
+| `==` | eşit mi | `puan == 85` | `true` |
+| `!=` | eşit değil mi | `puan != 85` | `false` |
+| `<` | küçük mü | `puan < 60` | `false` |
+| `>` | büyük mü | `puan > 60` | `true` |
+| `<=` | küçük ya da eşit mi | `puan <= 85` | `true` |
+| `>=` | büyük ya da eşit mi | `puan >= 90` | `false` |
+
+Tabloyu okurken iki şeye dikkat edin. Birincisi, `<=` ve `>=` işaretlerinde eşittir her zaman **sağda** yazılır ve `=<` diye bir şey yoktur, derleyici kabul etmez. İkincisi, karşılaştırmanın sonucu bir değerdir, yani onu bir `boolean` kutuya koyabilir, ekrana yazdırabilir ya da az sonra göreceğiniz gibi `if`'in parantezine verebilirsiniz. Aşağıdaki kutuda altı karşılaştırmanın sonucunu önce kağıda yazın, sonra çalıştırıp karşılaştırın.
+
+<CodeTry title="Altı soru, altı cevap" hint="Önce her satırın true mu false mu olduğunu tahmin edin, sonra Run. Sonra puan'ı 90 yapın ve hangi satırların değiştiğine bakın. Son deneme: sicaklik > 30 satırını bir boolean kutuya koyup (boolean sicak = sicaklik > 30;) o kutuyu yazdırın.">
+
+```java
+int puan = 85;
+double sicaklik = 27.5;
+char harf = 'B';
+
+System.out.println("puan == 85 : " + (puan == 85));
+System.out.println("puan != 85 : " + (puan != 85));
+System.out.println("puan >= 90 : " + (puan >= 90));
+System.out.println("puan < 60  : " + (puan < 60));
+System.out.println("sicaklik > 30 : " + (sicaklik > 30));
+System.out.println("harf == 'B'   : " + (harf == 'B'));
+```
+
+</CodeTry>
+
+Karşılaştırmaları `+` ile metne eklerken parantez içine aldığımıza dikkat edin, çünkü `"puan == 85 : " + puan == 85` yazarsanız Java önce soldan sağa metni `puan` ile birleştirir, sonra o metni 85 ile karşılaştırmaya kalkar ve derleme hatası verir. Geçen haftanın öncelik kuralı burada da geçerli: şüphe duyduğunuz yere parantez koyun. `char` kutuları da karşılaştırılabilir, çünkü bir `char` aslında bir sayıdır ve `'B'` ile `'B'` eşittir, ama `String` metinleri `==` ile **karşılaştırılmaz**; o hikayeyi 2. dönem sınıflarla birlikte anlatacağız, bu dönem yalnızca sayıları ve `char`'ları karşılaştırıyoruz.
+
+> [!tanim] boolean ifade
+> Sonucu `true` ya da `false` olan her şeye **boolean ifade** (boolean expression) denir. `puan >= 90` bir boolean ifadedir, `aktif` adlı bir `boolean` değişken tek başına bir boolean ifadedir, `true` kelimesinin kendisi de öyledir. `if`'in parantezine yalnızca boolean ifade yazılabilir.
+
+### `=` ile `==`: hesabı sormak ile hesabı değiştirmek
+
+Kantinde kasaya gittiniz ve iki farklı cümle kurabilirsiniz. "Hesap 50 lira mı?" dediğinizde bir soru sormuş olursunuz, kasadaki kişi fişe bakar ve size evet ya da hayır der, hesap değişmez. "Hesabı 50 lira yap" dediğinizde ise bir emir vermiş olursunuz, kasadaki kişi fişi siler ve 50 yazar, artık hesap gerçekten 50 liradır. İki cümle birbirine çok benzer ama biri sorar, diğeri değiştirir ve kasadaki kişi ikisini asla karıştırmaz.
+
+Java'da bu iki cümle yalnızca bir karakterle ayrılır. `hesap == 50` sorudur, hesaba dokunmaz ve `true` ya da `false` üretir. `hesap = 50` ise geçen haftadan bildiğiniz **kopyalama** emridir, hesabın içini siler ve 50 yazar. Yorgun bir akşam ikinci eşittir işaretini unutmak çok kolaydır ve bu yüzden `=` ile `==` karışıklığı programlama tarihinin en eski hatalarından biridir.
+
+Java bu konuda size diğer birçok dilden daha çok yardım eder. `if (puan = 85)` yazarsanız derleyici durur ve `incompatible types: int cannot be converted to boolean` der, çünkü `puan = 85` ifadesinin değeri 85'tir, 85 ise bir `boolean` değildir ve `if` onu kabul etmez. Ama kutu zaten `boolean` ise, mesela `if (ogrenci = true)` yazarsanız, derleyici hiçbir şey demez, çünkü atamanın değeri `true`'dur ve `if` bunu seve seve alır. Program derlenir, çalışır ve kullanıcı öğrenci olmasa bile her seferinde öğrenci indirimi uygular.
+
+<CodeTry title="Soru mu, emir mi?" hint="Önce çalıştırın ve ogrenci'nin false olduğu halde 'Ogrenci indirimi' yazıldığını görün. Sonra = yerine == yazın. Son deneme: if (puan = 85) yazın ve derleyicinin mesajını okuyun; o mesaj sizin dostunuz.">
+
+```java
+boolean ogrenci = false;
+int puan = 85;
+
+if (ogrenci = true) {
+    System.out.println("Ogrenci indirimi uygulandi");
+}
+System.out.println("ogrenci simdi: " + ogrenci);
+System.out.println("puan 85 mi: " + (puan == 85));
+```
+
+</CodeTry>
+
+Bu kutudaki küçük bir alışkanlığı şimdiden edinin: bir `boolean` değişkeni hiçbir zaman `== true` ile karşılaştırmayın. `if (ogrenci == true)` yazmak `if (ogrenci)` yazmakla aynı şeydir, çünkü `ogrenci` zaten `true` ya da `false`'tur ve onu tekrar `true` ile karşılaştırmak "evet mi, evet mi?" diye sormaktır. Kısa yazım hem daha okunur hem de tek eşittir hatasını imkansız kılar, çünkü `if (ogrenci)` içinde karıştırılacak bir eşittir yoktur.
+
+### Tek yönlü if: yağmur yağıyorsa şemsiye al
+
+Sabah evden çıkarken pencereden bakarsınız. Yağmur yağıyorsa şemsiyeyi alırsınız, yağmıyorsa almazsınız ve iki durumda da kapıdan çıkıp yürümeye başlarsınız. Pencereye bakmak bir soru sormaktır, şemsiyeyi almak yalnızca cevap evetse yapılan bir iştir, kapıdan çıkmak ise cevap ne olursa olsun yapılır. İşte en basit karar yapısı tam olarak bu: bir soru, cevap evetse yapılacak bir iş ve ardından herkesin yürüdüğü ortak yol.
+
+Java'da bu yapıya **tek yönlü if** (one-way if) denir ve üç parçadan oluşur: `if` kelimesi, parantez içinde bir boolean ifade ve süslü parantez içinde cevap `true` ise çalışacak satırlar. Koşul `false` ise süslü parantezin içi atlanır ve program kapanan parantezden sonraki satırla devam eder. Süslü parantezin içindeki satırlara **blok** (block) denir ve bloktaki satırları bir sekme içeri girintileyerek yazarız, böylece kodu okuyan kişi "bu satırlar koşula bağlı" diye bir bakışta görür.
+
+```java
+if (yagmurVar) {
+    System.out.println("Semsiyeyi al");
+}
+System.out.println("Kapidan cik");
+```
+
+<Diagram name="h04-if" caption="Tek yönlü if akışı: koşul doğruysa blok çalışır, yanlışsa atlanır. İki yol da aynı noktada birleşir ve program devam eder." dot width="360px" />
+
+Süslü parantez konusunda daha ilk günden katı bir alışkanlık edinmenizi istiyorum. Java, bloktaki satır tek ise süslü parantezi yazmamanıza izin verir, yani `if (yagmurVar) System.out.println("Semsiyeyi al");` tek başına derlenir ve çalışır. Ama bu kısayol bir tuzaktır, çünkü altı ay sonra o `if`'e ikinci bir satır eklediğinizde o satır koşula bağlı olmaz, her zaman çalışır ve siz bunu fark etmezsiniz. Bu dersteki kural basit: her `if`'in, bloğunda tek satır olsa bile, süslü parantezi vardır ve Yaygın Hatalar bölümünde bu kuralın neden hayat kurtardığını göreceksiniz.
+
+<CodeTry title="Pozitif mi?" hint="Önce sayi = 7 ile çalıştırın. Sonra sayi = -3 yapın ve yalnızca son satırın yazıldığını görün. Üçüncü deneme: sayi = 0 için ne olur, 0 pozitif mi? Koşulu >= yapmak gerekir mi, karar sizin.">
+
+```java
+int sayi = 7;
+
+if (sayi > 0) {
+    System.out.println(sayi + " pozitif bir sayi");
+}
+System.out.println("Kontrol bitti");
+```
+
+</CodeTry>
+
+Bu kutuyu `-3` ile çalıştırdığınızda yalnızca "Kontrol bitti" yazılır ve program negatif sayı için hiçbir şey söylemez. Bu, tek yönlü `if`'in doğasıdır: cevap hayırsa sessiz kalır. Çoğu zaman bu yeterlidir, ama bazen "hayır" cevabında da bir şey yapmak istersiniz ve bir sonraki yapı tam olarak bunun için var.
+
+> [!neden] Neden bir karar yapısı olmadan bu iş yapılamıyor?
+> 3. haftaya kadar yazdığınız programları düşünün: her satır her çalışmada çalıştı. Negatif sayı için farklı bir cümle yazmak istiyorsanız o cümleyi koyacak bir yer yoktu, çünkü koyduğunuz her satır pozitif sayı için de çalışırdı. `if` size ilk kez "bu satırlar yalnızca şu durumda çalışsın" deme imkanı veriyor ve geçen haftaki `InputMismatchException` notunda "girdiyi kontrol etmeyi 4. haftada göreceğiz" cümlesinin karşılığı budur.
+
+### if/else: ikisinden biri mutlaka olur
+
+Bu kez pencereden baktınız ve kararınız iki yönlü: yağmur yağıyorsa şemsiye alacaksınız, yağmıyorsa güneş gözlüğü. İki durumda da bir şey yapıyorsunuz ve iki şeyi aynı anda yapmıyorsunuz, yani ikisinden **biri mutlaka** olur, ikisi birden **asla**. Tek yönlü `if` bu sahneyi anlatamaz, çünkü "hayır" cevabında sessiz kalır, oysa burada "hayır" cevabının da bir işi var.
+
+Java'da bu yapıya **iki yönlü if/else** (if/else statement) denir ve tek yönlü `if`'in altına `else` kelimesiyle ikinci bir blok eklenir. Koşul `true` ise ilk blok, `false` ise `else` bloğu çalışır ve program sonra ortak yoldan devam eder. `else`'in kendi parantezi yoktur, çünkü `else` bir soru sormaz, yalnızca "yukarıdaki soru hayırsa" demektir.
+
+```java
+if (yagmurVar) {
+    System.out.println("Semsiyeyi al");
+} else {
+    System.out.println("Gunes gozlugunu al");
+}
+System.out.println("Kapidan cik");
+```
+
+<Diagram name="h04-if-else" caption="İki yönlü if/else akışı: bir elmas, iki blok, tek birleşme noktası. 2. haftadaki 'çift mi tek mi' diyagramının Java hali." dot width="400px" />
+
+Bu diyagramı 2. haftada görmüştünüz, çünkü "çift mi tek mi" örneğinin elması tam olarak buydu ve o hafta kodu okumuş ama yazmamıştınız. Şimdi o kodu satır satır anlayabilirsiniz: `sayi % 2 == 0` bir boolean ifadedir, geçen haftanın kalan işlemi ile bu haftanın eşitlik sorusunu birleştirir ve `if` parantezinde bir soru olarak durur. Evet dalı "çift", hayır dalı "tek" yazar ve ikisi birden asla yazılmaz.
+
+<CodeTry title="Çift mi tek mi, bu kez anlayarak" hint="sayi'yi 18, 0 ve -7 ile deneyin. -7 % 2 kaç çıkıyor, Java'da kalan işaretini soldaki sayıdan alır; sonuç yine 'tek' mi?">
+
+```java
+int sayi = 17;
+
+if (sayi % 2 == 0) {
+    System.out.println(sayi + " cift");
+} else {
+    System.out.println(sayi + " tek");
+}
+```
+
+</CodeTry>
+
+İkinci örnek, hayat boyu karşınıza çıkacak bir karar: kullanıcı 18 yaşından büyük mü? Bu soruda sınırın hangi tarafta olduğuna dikkat edin, çünkü `yas > 18` yazarsanız tam 18 yaşındaki kişi çocuk sayılır, `yas >= 18` yazarsanız yetişkin sayılır. Bu tür sınır değerleri karar yapılarının en çok hata üreten noktasıdır ve labda her dalı test ederken sınırın tam üstündeki değeri de mutlaka deneyeceksiniz.
+
+<CodeTry title="Yetişkin mi?" hint="yas = 18 ile çalıştırın: hangi dal? Sonra >= yerine > yazın ve 18'in nereye düştüğüne bakın. Sınır değerini test etmek, karar yapılarının altın kuralı.">
+
+```java
+int yas = 18;
+
+if (yas >= 18) {
+    System.out.println("Yetiskin bileti");
+} else {
+    System.out.println("Cocuk bileti, " + (18 - yas) + " yil sonra yetiskin");
+}
+```
+
+</CodeTry>
+
+> [!not] `else` ne zaman gerekir, ne zaman gerekmez?
+> "Hayır" cevabında yapacak bir şey yoksa `else` yazmayın; boş bir `else` bloğu kodu uzatır ve okuyanı "burada bir şey mi unutuldu?" diye düşündürür. Yapacak bir şey varsa `else` yazın ve işi ikinci bir `if` ile tekrar sormayın, çünkü `if (yas >= 18)` ve altına `if (yas < 18)` yazmak aynı soruyu iki kez sormaktır; ikinci sorunun cevabı ilkinden zaten bellidir.
+
+### else-if merdiveni: harf notu ve sıranın önemi
+
+Bulmacada çizdiğiniz ağaca geri dönelim. Harf notu sorusunun iki değil **beş** cevabı var ve `if/else` yalnızca iki yol sunar. İlk aklınıza gelen çözüm beş ayrı `if` yazmak olabilir, ama 85 puan hem "60 ve üstü" hem "70 ve üstü" hem de "80 ve üstü" sorularına evet der ve üç harf birden yazılır. Bize gereken, sorulara sırayla sorup **ilk evette duran** bir yapı, yani bulmacadaki ağacın ta kendisi.
+
+Java'da bu yapıya **else-if merdiveni** (else-if ladder) denir ve aslında yeni bir şey değildir: bir `if/else`'in `else` bloğuna bir `if/else` daha koymaktan ibarettir, yalnızca `else` ile `if` aynı satıra yazılır ve girinti sağa kaymaz. Koşullar yukarıdan aşağıya sırayla denenir, ilk `true` olanın bloğu çalışır ve merdivenin geri kalanı **atlanır**. Sondaki tek başına `else` ise "hiçbiri tutmadıysa" demektir ve isteğe bağlıdır, ama harf notu gibi her girdinin bir cevabı olması gereken yerlerde mutlaka yazılır.
+
+<CodeTry title="Harf notu" hint="puan = 85, 59, 90 ile çalıştırın ve bulmacadaki izlemenizle karşılaştırın. Sonra merdiveni TERS çevirin: ilk satırı puan >= 60 yapın, sırayla 70, 80, 90 yazın ve 85'in D aldığını gözünüzle görün.">
+
+```java
+int puan = 85;
+char harf;
+
+if (puan >= 90) {
+    harf = 'A';
+} else if (puan >= 80) {
+    harf = 'B';
+} else if (puan >= 70) {
+    harf = 'C';
+} else if (puan >= 60) {
+    harf = 'D';
+} else {
+    harf = 'F';
+}
+System.out.println("Harf: " + harf);
+```
+
+</CodeTry>
+
+Merdivende sıranın neden bu kadar önemli olduğunu bir kez daha, bu kez kodun üstünden düşünelim. `puan >= 80` koşulu 85 için `true`'dur, ama 95 için de `true`'dur, çünkü 95 de 80'den büyüktür. Merdivenin doğru çalışmasının tek sebebi 95'in bir üst basamakta, `puan >= 90` satırında zaten yakalanmış ve merdivenin geri kalanının atlanmış olmasıdır. Yani her basamak üstündeki basamakların "hayır" dediği varsayımıyla yazılır ve ikinci basamağa gelen puanın 90'dan küçük olduğunu söylemenize gerek yoktur, çünkü oraya 90'dan küçük olmayan puan zaten gelemez. Sırayı bozduğunuzda bu varsayım çöker ve 85 puan D alır.
+
+Geçen hafta Lab 3'te VKİ programının altına "Zayif", "Normal", "Fazla kilolu", "Obez" yazan satırları yazdınız ve o satırlar tam olarak bir merdivendi. O gün kuralı labdan ezbere kullandınız, bugün ise neden `vki < 18.5` ile başladığını ve neden son basamağın tek bir `else` olduğunu açıklayabilirsiniz. Merdiven bu kez küçükten büyüğe sıralı, çünkü sorular "küçük mü" diye soruyor ve küçükten büyüğe gitmek "ilk evette dur" kuralıyla uyumlu.
+
+<CodeTry title="VKİ sınıflaması, bu kez kitapta" hint="kilo = 80, boy = 1.75 için 'Fazla kilolu'. Sonra 50 ve 1.75 deneyin. Üçüncü deneme: ikinci ve üçüncü basamağın yerini değiştirin; 22 VKİ hangi sınıfa düşüyor?">
+
+```java
+double kilo = 80;
+double boy = 1.75;
+double vki = kilo / (boy * boy);
+String sinif;
+
+if (vki < 18.5) {
+    sinif = "Zayif";
+} else if (vki < 25) {
+    sinif = "Normal";
+} else if (vki < 30) {
+    sinif = "Fazla kilolu";
+} else {
+    sinif = "Obez";
+}
+System.out.printf("VKI: %.2f, sinif: %s%n", vki, sinif);
+```
+
+</CodeTry>
+
+> [!uyari] Merdiven mi, ardışık if'ler mi?
+> Cevaplar birbirini dışlıyorsa, yani bir girdi için yalnızca **bir** cevap doğruysa (harf notu, VKİ sınıfı, yaş grubu) merdiven kullanın. Cevaplar birbirinden bağımsızsa, yani aynı girdi için birden fazlası aynı anda doğru olabiliyorsa (bir sayı hem 2'ye hem 5'e bölünebilir; bir quiz'de üç sorunun üçü de doğru olabilir) ardışık `if`'ler kullanın. İkisini karıştırmak ya üç harf birden yazdırır ya da quiz'de ikinci doğru cevabı saymaz.
+
+Ardışık `if`'lerin ne zaman doğru seçim olduğunu bir sayaç örneğiyle görelim. Üç soruluk bir quiz'de her cevabı anahtardaki cevapla karşılaştırıp doğru sayısını artırıyoruz ve üç kontrol birbirinden bağımsız, çünkü birinci sorunun doğru olması ikincinin kontrol edilmesini engellememeli. Burada `else if` yazsaydınız birinci cevap doğru çıktığında ikinci ve üçüncü soruya hiç bakılmaz ve tam puan alan öğrenciye "Dogru: 1 / 3" yazardı.
+
+<CodeTry title="Üç soruluk quiz" hint="Önce çalıştırın: 3 / 3. Sonra cevap2'yi 'A' yapın: 2 / 3. Üçüncü deneme: if'leri else if'e çevirin ve üç doğru cevaba rağmen 1 / 3 çıktığını görün. Lab 4'ün 5. görevi bu programın Scanner'lı hali.">
+
+```java
+char cevap1 = 'B';
+char cevap2 = 'D';
+char cevap3 = 'A';
+int dogru = 0;
+
+if (cevap1 == 'B') {
+    dogru++;
+}
+if (cevap2 == 'D') {
+    dogru++;
+}
+if (cevap3 == 'A') {
+    dogru++;
+}
+System.out.println("Dogru: " + dogru + " / 3");
+```
+
+</CodeTry>
+
+### İç içe if: önce kapıdan gir, sonra odayı seç
+
+Bir binaya giriyorsunuz ve kapıda görevli sizi karşılıyor. Önce kimliğinize bakıyor ve içeri girip giremeyeceğinize karar veriyor, bu ilk karar. İçeri girdiyseniz bu kez ikinci bir görevli hangi odaya gideceğinizi soruyor, bu ikinci karar ve yalnızca ilk kapıdan geçenlere soruluyor. Kapıda kalan kişiye oda sorulmaz, çünkü o kişi için ikinci soru anlamsızdır. Bir kararın yalnızca başka bir kararın belirli bir cevabında anlamlı olduğu durumlarda kararlar **iç içe** (nested) yazılır.
+
+Sinema gişesindeki fiyat tam olarak böyle bir karar. Önce yaşa bakılıyor: 18 yaşından küçükler ne olursa olsun çocuk bileti alıyor ve öğrenci olup olmadıkları sorulmuyor. 18 ve üstü ise ikinci kapıdan geçiyor ve bu kez öğrenci olup olmadığı soruluyor, öğrenciyse indirimli, değilse tam bilet. Java'da bu yapı bir `if/else`'in bloğunun içine ikinci bir `if/else` yazarak kurulur ve içteki karar bir sekme daha içeri girintilenir, böylece okuyan kişi hangi sorunun hangi sorunun içinde olduğunu girintiden görür.
+
+<Diagram name="h04-ic-ice" caption="İç içe karar: sinema bileti. İkinci elmas yalnızca ilk elmasın Hayır dalında soruluyor; 17 yaşındaki kişiye öğrenci olup olmadığı hiç sorulmuyor." dot width="520px" />
+
+<CodeTry title="Sinema bileti" hint="yas = 17 için öğrenci değeri ne olursa olsun 80. yas = 20 ve ogrenci = 'e' için 80, ogrenci = 'h' için 150. Her üç yolu da deneyin, çünkü labda üç yolu da test ettiğinizi anlatacaksınız.">
+
+```java
+int yas = 20;
+char ogrenci = 'e';
+
+if (yas < 18) {
+    System.out.println("Bilet: 80 TL (cocuk)");
+} else {
+    if (ogrenci == 'e') {
+        System.out.println("Bilet: 80 TL (ogrenci)");
+    } else {
+        System.out.println("Bilet: 150 TL");
+    }
+}
+```
+
+</CodeTry>
+
+İç içe `if`'te girintinin **yalnızca sizin için** olduğunu bilmeniz gerekiyor. Java boşlukları görmez, satırları hangi `if`'e bağlayacağına yalnızca süslü parantezlere bakarak karar verir ve girinti ne derse desin ona uymaz. Bu, süslü parantezi her zaman yazmanızın ikinci ve asıl sebebi, çünkü parantezsiz iç içe `if`'te bir `else`'in hangi `if`'e ait olduğu konusunda Java ile sizin fikriniz uyuşmayabilir ve bu uyuşmazlığa **sarkan else** (dangling else) denir.
+
+Kural şudur: süslü parantez yoksa `else`, kendisinden önceki **en yakın** `if`'e aittir ve girinti bu kuralı değiştirmez. Aşağıdaki kodda `else` girintisiyle dıştaki `if (yas >= 18)`'e aitmiş gibi görünüyor ve kodu yazan kişi de öyle niyetlenmiş, ama Java onu en yakın `if`'e, yani `if (ogrenci)`'ye bağlar. Sonucu önce kağıda yazın, sonra çalıştırın.
+
+<CodeTry title="Sarkan else: tahmin edin" hint="Önce çalıştırmadan tahmin edin: 20 yaşındaki öğrenci olmayan kişi için ne yazar? Sonra çalıştırın. Düzeltmek için iç if'i süslü parantez içine alın ve tekrar çalıştırın; bu kez hiçbir şey yazmaması gerekir, çünkü else artık dış if'eait.">
+
+```java
+int yas = 20;
+boolean ogrenci = false;
+
+if (yas >= 18)
+    if (ogrenci)
+        System.out.println("Ogrenci bileti");
+else
+    System.out.println("Cocuk bileti");
+```
+
+</CodeTry>
+
+Çıktı "Cocuk bileti", oysa kişi 20 yaşında. Olan şu: dıştaki `if (yas >= 18)` `true`, içeri girildi, `if (ogrenci)` `false` ve `else` o `if`'e ait olduğu için çalıştı. Yazan kişi `else`'i "18'den küçükse" diye düşünmüştü, Java ise "öğrenci değilse" diye okudu ve ikisi de haklı görünüyor, ama program yalnızca Java'yı dinler. Çözüm her zaman aynıdır: içteki `if`'i süslü parantez içine alırsınız, böylece `else` o parantezin dışında kalır ve ait olduğu `if` tartışmasız hale gelir.
+
+```java
+if (yas >= 18) {
+    if (ogrenci) {
+        System.out.println("Ogrenci bileti");
+    }
+} else {
+    System.out.println("Cocuk bileti");
+}
+```
+
+> [!tanim] Sarkan else (dangling else)
+> Süslü parantez kullanılmayan iç içe `if`'lerde bir `else`'in hangi `if`'e ait olduğunun belirsiz görünmesi. Java'nın kuralı kesindir: `else` en yakın `if`'e aittir ve girinti bunu değiştirmez. Çare, her bloğu süslü paranteze almaktır; o zaman belirsizlik hiç doğmaz.
+
+### Girdi ve karar birlikte: üç tam program
+
+Şimdiye kadar bütün kutularda değerleri koda yazdık, çünkü Playground klavyeden okumaz. Gerçek programlarda ise karar, kullanıcının yazdığı değere göre verilir ve geçen haftanın `Scanner`'ı ile bu haftanın `if`'i ilk kez aynı dosyada buluşur. Aşağıdaki üç program tam dosyadır, derste Codespaces ya da yerel terminalde canlı çalıştıracağım ve Lab 4'ün görevleri bu üç programın birer akrabası.
+
+> [!uyari] Bu programlar Playground'da çalışmaz
+> Java Playground klavyeden girdi almaz, bu yüzden aşağıdaki üç program `CodeTry` kutusunda değil düz kod bloğu olarak verildi. Playground'da denemek isterseniz `nextInt()` ve `nextDouble()` satırlarını `int yil = 2024;` gibi sabit atamalarla değiştirin; karar yapısı aynen çalışır. Labda ise bunların akrabalarını kendi terminalinizde çalıştıracaksınız.
+
+İlk program bir yılın artık yıl olup olmadığına karar veriyor ve kural üç parçalı: yıl 4'e bölünüyorsa artık yıldır, ama 100'e de bölünüyorsa artık yıl değildir, ama 400'e de bölünüyorsa yine artık yıldır. Bu üç "ama" iç içe üç kapı gibidir: 4 kapısından geçemeyen (2023) hemen dışarıda kalır, geçen (2024) 100 kapısına gelir, 100'e bölünmeyen hemen artık yıl ilan edilir, bölünen (1900, 2000) ise son kapıya, 400 sorusuna gelir. 2000 oradan geçer ve artık yıldır, 1900 geçemez ve değildir.
+
+```java
+import java.util.Scanner;
+
+public class ArtikYil {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Yil: ");
+        int yil = klavye.nextInt();
+
+        if (yil % 4 == 0) {
+            if (yil % 100 == 0) {
+                if (yil % 400 == 0) {
+                    System.out.println(yil + " artik yil");
+                } else {
+                    System.out.println(yil + " artik yil degil");
+                }
+            } else {
+                System.out.println(yil + " artik yil");
+            }
+        } else {
+            System.out.println(yil + " artik yil degil");
+        }
+    }
+}
+```
+
+Üç kat iç içe `if` okuması zor görünüyor ve haklısınız, çünkü aynı cümleyi "4'e bölünüyor **ve** 100'e bölünmüyor, **ya da** 400'e bölünüyor" diye tek satırda söylemek mümkün. O "ve" ile "ya da" kelimelerinin Java karşılığı gelecek haftanın konusu ve o gün bu programın üç katını tek satıra indireceğiz. Bugün ise iç içe `if`'in kendisi konu, bu yüzden Lab 4'te artık yılı tam olarak bu üç katlı biçimde yazacaksınız ve gelecek hafta aradaki farkı kendi gözünüzle göreceksiniz.
+
+İkinci program üç sayı okuyup en büyüğünü buluyor ve burada yeni bir düşünce biçimi var: "en büyük" bir anda bulunmaz, **adım adım** bulunur. Önce ilk sayıyı en büyük ilan edersiniz, sonra ikinciye bakar ve daha büyükse unvanı ona verirsiniz, sonra üçüncüye aynısını yaparsınız. Her adım tek yönlü bir `if`'tir ve bu adımlar birbirinden bağımsız olduğu için ardışık `if` doğru seçimdir, merdiven değil. Bu kalıp ileride bir listedeki en büyük sayıyı bulurken, en yüksek notu ararken ve daha pek çok yerde aynen karşınıza çıkacak.
+
+```java
+import java.util.Scanner;
+
+public class EnBuyuk {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+
+        System.out.print("Uc tam sayi: ");
+        int a = klavye.nextInt();
+        int b = klavye.nextInt();
+        int c = klavye.nextInt();
+
+        int enBuyuk = a;
+        if (b > enBuyuk) {
+            enBuyuk = b;
+        }
+        if (c > enBuyuk) {
+            enBuyuk = c;
+        }
+
+        System.out.println("En buyuk: " + enBuyuk);
+    }
+}
+```
+
+Bu programı `3 42 7` ile çalıştırdığınızda `En buyuk: 42` yazar ve `-5 -2 -9` ile çalıştırdığınızda `-2` yazar, çünkü negatif sayılarla da aynı akıl yürütme çalışır. Dikkat edin, `enBuyuk`'u başlangıçta `0` yapsaydınız üç negatif sayı için program `0` yazardı, çünkü hiçbiri sıfırdan büyük değildir ve unvan hiç el değiştirmezdi. "En büyüğü ilk elemandan başlat" kuralının sebebi bu ve labdaki gizli testlerden birinin negatif sayılarla gelmesinin sebebi de bu.
+
+Üçüncü program bir taksi ücreti hesaplıyor: açılış 30 TL, kilometre başına 20 TL ve gece yarısı ile sabah beş arasında yüzde 50 gece zammı. Burada kararın yaptığı iş ekrana yazmak değil, bir değişkeni **değiştirmek**; ücret önce normal tarifeyle hesaplanır, sonra saat uygunsa `if` içinde üstüne yazılır ve en sonda tek bir `printf` ne olduysa onu basar. Saat sınırının iki ucu olduğu için, yani hem 0'dan küçük olmamalı hem 5'ten büyük olmamalı, iki soruyu iç içe soruyoruz.
+
+```java
+import java.util.Scanner;
+
+public class Taksi {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        final double ACILIS = 30.0;
+        final double KM_UCRETI = 20.0;
+
+        System.out.print("Mesafe (km): ");
+        double km = klavye.nextDouble();
+        System.out.print("Saat (0-23): ");
+        int saat = klavye.nextInt();
+
+        double ucret = ACILIS + KM_UCRETI * km;
+
+        if (saat >= 0) {
+            if (saat <= 5) {
+                ucret = ucret * 1.5;
+            }
+        }
+
+        System.out.printf("Ucret: %.2f%n", ucret);
+    }
+}
+```
+
+4 km ve saat 14 için `Ucret: 110.00`, aynı mesafe saat 3 için `Ucret: 165.00` yazar. İki sabitin `final` ile en üstte durduğuna dikkat edin, geçen haftanın "0.20 on dört yerde" hikayesi burada da geçerli ve tarife değiştiğinde yalnızca o iki satır değişir. Lab 4'ün 4. görevi bu programın kendisi ve `izleme.md` dosyasında bu programı üç farklı girdiyle kağıt üzerinde izleyeceksiniz, çünkü bir karar yapısını anlamanın en iyi yolu her girdi için "hangi dal çalıştı?" sorusunu elle cevaplamaktır.
+
+### Yaygın hatalar: altı tuzak, altı küçük kod
+
+Karar yapıları derleyicinin yakalayamadığı hataların yuvasıdır, çünkü hatalı bir `if` çoğu zaman derlenir, çalışır ve yalnızca **yanlış dalı** seçer. Aşağıdaki altı tuzağın her biri üç dört satırlık bir kod ve o kodun neden yanlış olduğunu söyleyen bir açıklama. Her birini Playground'a yapıştırıp çalıştırın, çünkü bu hataları bir kez gözünüzle görmek yüz kez okumaktan daha kalıcıdır.
+
+**1. `if` sonrası noktalı virgül.** Parantezden sonra gelen `;` tek başına boş bir ifadedir ve Java onu `if`'in gövdesi sayar, süslü parantezli blok ise koşuldan bağımsız her zaman çalışır. Aşağıdaki kod `sayi` negatif olmasına rağmen "Pozitif" yazar.
+
+```java
+int sayi = -3;
+if (sayi > 0);
+{
+    System.out.println("Pozitif");
+}
+```
+
+**2. `=` ile `==`.** Tek eşittir atamadır ve `boolean` değişkende derleyici susar; aşağıdaki kod `acik` `false` olmasına rağmen "Kantin acik" yazar ve üstelik `acik`'i `true` yapar.
+
+```java
+boolean acik = false;
+if (acik = true) {
+    System.out.println("Kantin acik");
+}
+```
+
+**3. `double`'ları `==` ile karşılaştırmak.** Geçen haftadan hatırlayın, `0.1 + 0.2` tam olarak `0.3` değildir ve bu yüzden aşağıdaki karşılaştırma `false` çıkar, program "Esit degil" yazar. Ondalıklı sayıları eşitlikle değil, aralıkla karşılaştırın, mesela farkın mutlak değeri `0.0001`'den küçük mü diye sorun.
+
+```java
+double toplam = 0.1 + 0.2;
+if (toplam == 0.3) {
+    System.out.println("Esit");
+} else {
+    System.out.println("Esit degil: " + toplam);
+}
+```
+
+**4. Bloğu unutmak.** Süslü parantez yoksa yalnızca ilk satır koşula bağlıdır, ikinci satır girintisi ne olursa olsun her zaman çalışır; aşağıdaki kod yaş 15 olduğu halde "Bilet kesildi" yazar.
+
+```java
+int yas = 15;
+if (yas >= 18)
+    System.out.println("Yetiskin");
+    System.out.println("Bilet kesildi");
+```
+
+**5. Merdivende yanlış sıra.** Bulmacanın ters ağacı: aşağıdaki merdiven 85 puana "D" verir, çünkü ilk basamak `puan >= 60` daha 85'i görür görmez `true` olur ve merdiven durur.
+
+```java
+int puan = 85;
+if (puan >= 60) {
+    System.out.println("D");
+} else if (puan >= 80) {
+    System.out.println("B");
+}
+```
+
+**6. Girinti yalanı.** Aşağıdaki `else` girintisine bakılırsa dıştaki `if`'e aittir, oysa en yakın `if`'e, yani `if (ogrenci)`'ye aittir ve 25 yaşındaki öğrenci olmayan kişiye "Cocuk" yazılır. Sarkan else'in ta kendisi ve çaresi süslü parantez.
+
+```java
+int yas = 25;
+boolean ogrenci = false;
+if (yas >= 18)
+    if (ogrenci) System.out.println("Ogrenci");
+else
+    System.out.println("Cocuk");
+```
+
+> [!not] Ortak nokta
+> Altı hatanın altısı da derlenir ve beşi çalışırken hiçbir uyarı vermez. Hepsinin ortak ilacı aynı: her `if`'e süslü parantez, eşitlik için çift eşittir, `double` için aralık, merdivende büyükten küçüğe ya da küçükten büyüğe tutarlı sıra ve her dalı ayrı bir girdiyle test etmek.
+
+<Puzzle title="Hata avı, üçüncü tur" kind="tahmin">
+
+Aşağıdaki program **üç hata** içeriyor ve üçü de bugün gördüğünüz tuzaklardan. Biri derleyici tarafından yakalanmaz ama her zaman yanlış dalı seçer, biri her zaman yazar, biri ise doğru görünüp yanlış cevap verir. Üç dakikanız var, her hata için satır numarası ve ne olduğunu yazın, düzeltmeyin.
+
+```java
+import java.util.Scanner;
+
+public class Burs {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        System.out.print("Ortalama: ");
+        double ort = klavye.nextDouble();
+        boolean devamsiz = false;
+        if (devamsiz = true) {
+            System.out.println("Burs yok: devamsizlik");
+        }
+        if (ort < 2.0);
+            System.out.println("Burs yok: ortalama dusuk");
+        if (ort >= 2.0) {
+            System.out.println("Burs: temel");
+        } else if (ort >= 3.0) {
+            System.out.println("Burs: yarim");
+        } else if (ort >= 3.5) {
+            System.out.println("Burs: tam");
+        }
+    }
+}
+```
+
+<details>
+<summary>Cevap (üç dakika dolmadan açmayın)</summary>
+
+- **Satır 9, `=` ile `==`:** `if (devamsiz = true)` bir atamadır, değeri `true`'dur ve `boolean` olduğu için derleyici susar. Program her öğrenciye "Burs yok: devamsizlik" yazar ve üstelik `devamsiz`'ı `true` yapar. Düzeltmesi `if (devamsiz)`.
+- **Satır 12, `if` sonrası noktalı virgül:** `if (ort < 2.0);` satırındaki noktalı virgül `if`'in gövdesidir ve boştur. Satır 13 girintili durduğu halde koşula bağlı değildir ve her ortalama için "Burs yok: ortalama dusuk" yazar. Düzeltmesi noktalı virgülü silip 13. satırı süslü paranteze almak.
+- **Satır 14-20, merdiven sırası:** İlk basamak `ort >= 2.0`, 3.8 ortalamalı öğrenciyi de yakalar ve "Burs: temel" yazıp durur; "yarim" ve "tam" basamaklarına hiçbir öğrenci ulaşamaz. Düzeltmesi basamakları büyükten küçüğe sıralamak: önce 3.5, sonra 3.0, en son 2.0.
+
+Bu üç hatanın üçü de derlenir ve program her girdide bir şey yazar, yani "çalışıyor" görünür. Hatalı olduğunu ancak 3.8 ortalama için "Burs: tam" beklediğinizi bildiğiniz için anlarsınız. Karar yapılarında test etmek demek, her dal için o dala düşeceğini bildiğiniz bir girdi hazırlamak demektir.
+
+</details>
+
+</Puzzle>
+
+## Büyük Resim: Kantin Uygulamasında Kararlar
+
+İki haftadır kantin sipariş uygulamasını büyütüyoruz. 2. haftada akışını çizdik, 3. haftada her kutunun tipini söyledik ve o akışta elmas olan yerleri hep "stokta mı?" diye yazıp geçtik. Bugün o elmasları gerçekten yazabiliriz, çünkü "sepete ekle" alt akışında art arda en az üç karar var: ürün stokta mı, müşteri öğrenci mi, saat kampanya saatine denk geliyor mu. Üçü de birbirine bağlı, çünkü stokta olmayan ürüne indirim hesaplamanın anlamı yok ve öğrenci indirimi ile kampanya indirimi aynı anda uygulanmıyor, hangisi büyükse o geçerli.
+
+```text
+GİRDİ: stok (int), ogrenci (boolean), saat (int), fiyatKurus (int)
+
+EĞER stok > 0 İSE
+    EĞER ogrenci İSE
+        indirimKurus = fiyatKurus × 0.20
+    DEĞİLSE
+        EĞER saat >= 14 İSE
+            EĞER saat < 16 İSE
+                indirimKurus = fiyatKurus × 0.10
+            DEĞİLSE
+                indirimKurus = 0
+        DEĞİLSE
+            indirimKurus = 0
+    odenecekKurus = fiyatKurus - indirimKurus
+    sepete ekle, stok = stok - 1
+DEĞİLSE
+    "Stokta yok" yaz
+```
+
+Bu sözde kodu okuyun ve dört kat iç içe kararın nasıl göründüğüne bakın. Doğru çalışıyor, her dalı izleyebilirsiniz ve bugün öğrendiklerinizle Java'ya çevirmek bir dakikalık iş. Ama altı ay sonra "hafta sonu indirimi" eklemek istediğinizde beşinci katı nereye açacağınızı bulmak için bütün ağacı yeniden okumanız gerekecek ve sarkan else'in böyle bir ağaçta nereye saklanacağını kestirmek kolay değil. Karar yapısı büyüdükçe okunmaz olur ve bu, programlamada çözülmüş bir dertten çok yönetilen bir derttir.
+
+Gelecek hafta bu ağacı iki araçla sadeleştireceğiz. "14'ten büyük **ve** 16'dan küçük" gibi iki soruyu tek parantezde birleştiren **mantıksal operatörler**, iki katlı saat kontrolünü tek satıra indirecek ve artık yıl programı üç kattan bir kata inecek. Ürün kodu gibi "tam olarak hangi değer?" sorularını merdivensiz soran **switch** yapısı ise menüdeki on ürünü on basamaklı bir merdiven yazmadan ayırt etmenizi sağlayacak. Bugünkü iç içe `if`'i iyi anlamanız o iki aracın ne işe yaradığını anlamanız için gerekli, çünkü ikisi de yeni bir şey yapmaz, yalnızca bugün elle kurduğunuz ağacı daha kısa yazar.
+
+> [!nerede] Sahada
+> Gerçek bir e-ticaret sisteminde sepete ekleme kararı onlarca koşul içerir: stok, kampanya, kupon, üyelik seviyesi, kargo bölgesi, ödeme yöntemi. Bu koşulların sırası bir tasarım kararıdır ve ürün yöneticisiyle yazılımcının üstünde en çok tartıştığı şeydir, çünkü "önce kupon mu, önce üyelik indirimi mi?" sorusunun cevabı şirkete ayda milyonlarca lira fark ettirir. Bugün 85 puanın D almasına sebep olan sıra hatası, o sistemde yanlış müşteriye yanlış indirim demektir.
+
+## Yapay Zeka Anı
+
+Bu hafta yapay zekayı bir öğretmen gibi kullanıp cevabını **sınıyoruz**. ChatGPT'ye (ya da Claude, Gemini) *"Java'da sarkan else nedir, bir örnekle açıkla"* diye soruyoruz ve verdiği kod örneğini olduğu gibi Playground'a yapıştırıp çalıştırıyoruz. İyi bir cevap, bizim bugün gördüğümüz gibi parantezsiz iç içe iki `if` ve bir `else` içerir, çıktının neden şaşırtıcı olduğunu açıklar ve süslü parantezli düzeltmeyi verir. Kötü bir cevap ise ya parantezli bir örnek verip "işte sarkan else" der, ki o örnekte sarkan bir şey yoktur, ya da çıktıyı yanlış söyler.
+
+Dersin mesajı geçen haftakiyle aynı ama bir adım ileride: yapay zekanın verdiği **kodu** doğrulamanın yolu onu çalıştırmaktır ve çalıştırdığınızda ne beklediğinizi bilmek zorundasınız. Örneği Playground'a yapıştırmadan önce çıktıyı kağıda yazın, sonra çalıştırın ve ikisi uyuşmuyorsa ya siz ya da model yanılıyor demektir. Hangisinin yanıldığını bulmak için bugün öğrendiğiniz kuralı, yani "`else` en yakın `if`'e aittir" cümlesini kullanırsınız ve işte bu yüzden kuralı bilmeden aracı kullanmak olmuyor.
+
+> [!uyari] Trafik ışığı hatırlatması: Lab 4 sarı bölge
+> Labda yapay zekaya "else if ile iki ayrı if arasındaki fark nedir?" ya da "printf'te %.2f ne demek?" gibi **kavram** sorularını sorabilirsiniz. Ama "yaş ve öğrenci bilgisini okuyup bilet fiyatı yazan Java programı yaz" demek görevi yaptırmaktır ve yasaktır. Teslim ritüelinde lab sorumlu hocanız "üç dalı da nasıl test ettin?" diye soracak ve dalları siz yazdıysanız her biri için hangi girdiyi verdiğinizi bilirsiniz.
+
+## Temel Kavramlar
+
+- **Seçim yapısı (selection statement)**: Programın bir koşula göre iki ya da daha fazla yoldan birini seçmesi; 2. haftadaki elmas sembolünün Java karşılığı.
+- **boolean**: Yalnızca `true` ya da `false` tutan tip; evet/hayır sorusunun cevabı.
+- **İlişkisel operatörler**: `==`, `!=`, `<`, `>`, `<=`, `>=`; iki değeri karşılaştırıp bir `boolean` üretir. Eşittir her zaman sağda.
+- **boolean ifade**: Sonucu `true` ya da `false` olan ifade; `if`'in parantezine yalnızca bu yazılabilir.
+- **`=` ile `==`**: Tek eşittir kopyalama emri, çift eşittir eşitlik sorusu; hesabı değiştirmek ile hesabı sormak.
+- **Tek yönlü if**: Koşul doğruysa blok çalışır, yanlışsa atlanır; şemsiye.
+- **Blok**: Süslü parantez arasındaki satırlar; bu derste tek satır olsa bile parantez yazılır.
+- **if/else**: İki bloktan biri mutlaka, ikisi birden asla; şemsiye ya da güneş gözlüğü.
+- **else-if merdiveni**: Çok yollu, birbirini dışlayan karar; yukarıdan aşağıya sırayla sorulur, ilk evette durur, sıra yanlışsa 85 puan D alır.
+- **Ardışık if'ler**: Birbirinden bağımsız kararlar; quiz sayacı, en büyük sayı. Merdivenle karıştırılmaz.
+- **İç içe if**: Bir kararın yalnızca başka bir kararın belirli cevabında sorulması; önce kapı, sonra oda.
+- **Sarkan else (dangling else)**: Parantezsiz iç içe `if`'te `else`'in en yakın `if`'e bağlanması; girinti değil parantez belirler.
+- **Sınır değeri**: `>` ile `>=` arasındaki fark; 18 yaşındaki kişinin hangi dala düştüğünü belirler ve her dalla birlikte test edilir.
+- **`double` ve `==`**: Ondalıklı sayılar yuvarlama hatası taşır, eşitlikle değil aralıkla karşılaştırılır.
+
+## Sahadan Örnekler
+
+- **Apollo 11, 1969.** İniş modülü Ay yüzeyine dakikalar kala 1202 ve 1201 alarmlarını verdi, çünkü yanlış konumdaki bir radar anahtarı bilgisayarı gereksiz veriyle boğuyordu. Margaret Hamilton'ın ekibinin yazdığı yazılım aşırı yüklenme durumunu önceden hesaba katmıştı: düşük öncelikli işleri bırakıp yönlendirme ve motor kontrolünü sürdürdü, kendini yeniden başlattı ve iniş tamamlandı. Yazılımın bu kararı uçuş sırasında değil, yıllar önce masa başında "ya kapasite yetmezse?" sorusu sorulurken verilmişti ve bugün yazdığınız her `else` bloğu aynı sorunun küçük bir cevabıdır.
+- **Therac-25, 1985-1987.** Kanser tedavisinde kullanılan bir radyasyon cihazının yazılımı, operatör ayarları hızlı değiştirdiğinde iki çalışma modunu karıştırıyor ve hastaya olması gerekenin çok üstünde doz veriyordu. Önceki modellerde bunu önleyen donanım kilitleri vardı, Therac-25'te o kilitler kaldırılıp iş yalnızca yazılımdaki kontrollere bırakılmıştı ve yazılım "bu durum hiç olmaz" varsayılan bir dalı test etmemişti. En az altı hasta aşırı doz aldı ve üçü hayatını kaybetti. Yazılım mühendisliğinde bu olay, koşulların her dalının test edilmesi ve "olmaz" denen dalın da yazılması gerektiğinin en ağır dersidir.
+- **Kampanya koşulunun yanlış sırası.** Bir e-ticaret sitesi sepet toplamına göre kademeli indirim uyguluyordu: 500 lira üstüne yüzde 5, 1000 lira üstüne yüzde 10, 2000 lira üstüne yüzde 15. Yazılımcı merdiveni küçükten büyüğe yazdı, yani ilk basamak "500'ün üstü mü?" sorusuydu ve 2500 liralık sepet de bu soruya evet deyip yüzde 5 ile çıktı. Kampanya bir hafta boyunca çalıştı, kimse hata görmedi, çünkü her sepete bir indirim uygulanıyordu ve şikayetler ancak büyük alışveriş yapan müşteriler "yüzde 15 nerede?" diye sorunca geldi. Bugün bulmacada 85 puanın D almasına sebep olan hata, orada bir haftalık kampanya bütçesinin yanlış dağıtılmasına sebep oldu.
+
+## Portfolyo
+
+Proje konularının dağıtımı bu hafta sonu duyurulacak ve ilk kilometre taşı KT1'in teslimi **6 Kasım Cuma 23.59**; araya giren bayram tatili yüzünden bir hafta ileri aldık. Ayrıntılı kural ve teslim biçimi duyuruyla gelecek, ama bugünden bilmeniz gereken tek bir cümle var: **uygulamanızın en az bir `if/else` ile karar vermesi gerekecek.** Not hesaplayıcı yazan biri harf notu merdivenini bugün yazabilir, bütçe takibi yazan biri "limit aşıldı mı?" sorusunu bugün sorabilir, kantin benzeri bir uygulama yazan biri "stokta mı?" elmasını bugün koda çevirebilir. Geçen hafta kağıda yazdığınız değişken listesine bu hafta bir satır ekleyin: uygulamanızın verdiği ilk karar hangisi, koşulu ne ve iki dalında ne oluyor. Takvim: KT1 5. hafta, KT2 8. hafta, KT3 11. hafta, KT4 14. hafta ([Ders Hakkında · Portfolyo](/ders-hakkinda)).
+
+## Laboratuvara Hazırlık
+
+Lab 4, A şubesi için **21 Ekim Çarşamba 13.15**, B şubesi için **22 Ekim Perşembe 15.15** ve yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Bu labın adı "Karar veren programlar", çünkü altı görevin altısı da klavyeden okuyor ve okuduğuna göre farklı bir dal seçiyor, yani geçen haftanın `Scanner`'ı ile bu haftanın `if`'i her dosyada birlikte.
+
+Lab'a gelirken:
+
+- **Lab 3'ün son teslimi bu akşam 23.59**, Lab 4 deposu açılmadan Lab 3'ü kapatın.
+- Bu sayfadaki `ArtikYil`, `EnBuyuk` ve `Taksi` programlarını okuyup her birinde "hangi girdi hangi dala düşer?" sorusuna cevap verebiliyor olun, çünkü lab görevlerinin üçü bu programların kendisi ve `izleme.md` dosyasında `Taksi`'yi kağıt üzerinde izleyeceksiniz.
+- Yaygın Hatalar bölümündeki altı kodu Playground'da bir kez çalıştırın, çünkü labda kendi kodunuzda bunlardan en az birini yapacaksınız ve daha önce görmüş olmak dakikalar kazandırır.
+- Sarkan else kutusunu süslü parantezle düzeltip tekrar çalıştırmış olun.
+- Ayrıntı ve görev listesi: [Lab 4](/laboratuvar/lab-04).
+
+## Tartışma Soruları
+
+1. Apollo 11'in yazılımı aşırı yüklenince "bazı işleri bırak" kararını verdi. Bırakılacak işin hangisi olduğuna kim karar verdi, uçuş sırasında bilgisayar mı, yıllar önce yazılımcı mı? Bir `if`'in "kararı" aslında kimin kararıdır?
+2. Java `if (puan = 85)` yazınca derleme hatası veriyor ama `if (ogrenci = true)` yazınca susuyor. Sizce Java ikincisinde de hata verseydi daha iyi olmaz mıydı? Bunun bir bedeli olur muydu?
+3. Harf notu merdivenini küçükten büyüğe yazmanın bir yolu var mı? Koşulları nasıl değiştirmeniz gerekir ve bu sürüm okunabilirlik açısından iyi mi kötü mü?
+4. `0.1 + 0.2 == 0.3` yanlış çıkıyor. Para hesabı yapan bir programda "bakiye sıfır mı?" sorusunu nasıl sorarsınız? Geçen haftanın "para kuruş cinsinden `int`" kararı bu soruyu nasıl etkiler?
+5. Süslü parantezi her zaman yazmak kodu uzatır ve Java buna izin vermez diye bir şey yok. Bu dersin "her zaman yaz" kuralı sizce bir alışkanlık dayatması mı, yoksa gerçek bir güvenlik önlemi mi? Sarkan else kutusu fikrinizi değiştirdi mi?
+
+## Haftanın Özeti
+
+Harf notu ağacını kağıda çizerek başladık ve ters çevirince 85 puanın D aldığını görüp karar yapılarının iki kuralını çıkardık: sorular sırayla sorulur ve ilk evette durulur. Apollo 11'in iniş anındaki alarmla iyi bir karar yapısının kriz anında ne yapacağını bilen yapı olduğunu konuştuk. Kantin kasasındaki "öğrenci misiniz?" sorusundan `boolean`'a, altı ilişkisel operatöre ve "hesap 50 mi?" ile "hesabı 50 yap" arasındaki tek karakterlik farka geçtik. Şemsiye sahnesiyle tek yönlü `if`'i, güneş gözlüğüyle `if/else`'i, harf notuyla merdiveni ve sinema bileti gişesiyle iç içe `if`'i yazdık, sarkan `else`'in girintiye değil paranteze baktığını Playground'da gözümüzle gördük. Artık yıl, en büyük sayı ve taksi ücreti programlarında `Scanner` ile `if` ilk kez aynı dosyada buluştu. Altı yaygın hatayı dörder satırlık kodlarla çalıştırdık ve hepsinin derlendiğini, çoğunun sessizce yanlış dalı seçtiğini öğrendik. Kantin uygulamasında dört kat iç içe kararın nasıl okunmaz hale geldiğini gördük ve gelecek hafta mantıksal operatörler ile `switch`'in o ağacı nasıl sadeleştireceğini merak ederek bitirdik. Gelecek hafta ayrıca KT1 var ve uygulamanız ilk kararını verecek.

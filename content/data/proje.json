@@ -1,0 +1,2438 @@
+{
+ "kt": [
+  {
+   "id": "KT1",
+   "week": 6,
+   "date": "2026-11-06"
+  },
+  {
+   "id": "KT2",
+   "week": 9,
+   "date": "2026-11-27"
+  },
+  {
+   "id": "KT3",
+   "week": 11,
+   "date": "2026-12-11"
+  },
+  {
+   "id": "KT4",
+   "week": 14,
+   "date": "2026-12-25"
+  }
+ ],
+ "konular": [
+  {
+   "kod": "K01",
+   "ad": "Kantin Sipariş",
+   "ozet": "Ürün listesi, sepet, stok kontrolü ve toplam tutar."
+  },
+  {
+   "kod": "K02",
+   "ad": "Kütüphane Ödünç",
+   "ozet": "Kitap listesi, ödünç alma, iade ve gecikme cezası."
+  },
+  {
+   "kod": "K03",
+   "ad": "Yurt Çamaşırhane Sırası",
+   "ozet": "Makine sayısı, sıra alma, süre ve bekleyen listesi."
+  },
+  {
+   "kod": "K04",
+   "ad": "Kampüs Ring Otobüsü",
+   "ozet": "Duraklar, sefer saatleri, kalan koltuk ve bilet."
+  },
+  {
+   "kod": "K05",
+   "ad": "Spor Salonu Üyeliği",
+   "ozet": "Üyelik türleri, giriş kaydı, aylık kullanım sayacı."
+  },
+  {
+   "kod": "K06",
+   "ad": "Etüt Odası Rezervasyonu",
+   "ozet": "Oda listesi, saat aralığı, çakışma kontrolü."
+  },
+  {
+   "kod": "K07",
+   "ad": "Burs Hesaplama",
+   "ozet": "Gelir, not ortalaması ve kriterlere göre burs kararı ve tutarı."
+  },
+  {
+   "kod": "K08",
+   "ad": "Not Ortalaması",
+   "ozet": "Ders notları, kredi, harf notu ve dönem ortalaması."
+  },
+  {
+   "kod": "K09",
+   "ad": "Ders Programı Çakışması",
+   "ozet": "Ders saatleri, çakışma bulma, boş saat önerisi."
+  },
+  {
+   "kod": "K10",
+   "ad": "Kafeterya Menüsü",
+   "ozet": "Günlük menü, kalori, bütçeye göre seçim."
+  },
+  {
+   "kod": "K11",
+   "ad": "Kitap Takası",
+   "ozet": "İlan listesi, eşleştirme, takas geçmişi."
+  },
+  {
+   "kod": "K12",
+   "ad": "Bisiklet Kiralama",
+   "ozet": "İstasyon stoku, süreye göre ücret, iade."
+  },
+  {
+   "kod": "K13",
+   "ad": "Etkinlik Bileti",
+   "ozet": "Etkinlik listesi, kontenjan, öğrenci indirimi, bilet numarası."
+  },
+  {
+   "kod": "K14",
+   "ad": "Laboratuvar Malzeme Stoku",
+   "ozet": "Malzeme listesi, ödünç verme, kritik stok uyarısı."
+  },
+  {
+   "kod": "K15",
+   "ad": "Kulüp Üyeliği",
+   "ozet": "Kulüp listesi, üye kaydı, aidat ve etkinlik katılımı."
+  },
+  {
+   "kod": "K16",
+   "ad": "Kampüs Otoparkı",
+   "ozet": "Park alanı kapasitesi, giriş çıkış, süreye göre ücret."
+  },
+  {
+   "kod": "K17",
+   "ad": "Fotokopi Merkezi",
+   "ozet": "Sayfa sayısı, renkli siyah beyaz, öğrenci kartı bakiyesi."
+  },
+  {
+   "kod": "K18",
+   "ad": "Yemekhane Kart Bakiyesi",
+   "ozet": "Yükleme, harcama, günlük limit ve ekstre."
+  },
+  {
+   "kod": "K19",
+   "ad": "Kampüs Kayıp Eşya",
+   "ozet": "Eşya kaydı, eşleştirme, teslim."
+  },
+  {
+   "kod": "K20",
+   "ad": "Revir Randevusu",
+   "ozet": "Doktor listesi, saat seçimi, sıra numarası ve iptal."
+  }
+ ],
+ "kurallar": [
+  {
+   "no": 1,
+   "metin": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": 2,
+   "metin": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": 3,
+   "metin": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": 4,
+   "metin": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": 5,
+   "metin": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": 6,
+   "metin": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": 7,
+   "metin": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": 8,
+   "metin": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": 9,
+   "metin": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": 10,
+   "metin": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  }
+ ],
+ "atama": [
+  {
+   "no": "200541051",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "220541023",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "220541040",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "220541042",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "220541124",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "220541612",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "225541086",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "230541025",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "230541031",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "230541078",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "230541089",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "230541109",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "235541051",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "235541058",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "235541091",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "235541097",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "235542011",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240541022",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "240541033",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "240541034",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "240541038",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "240541039",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "240541048",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "240541051",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240541075",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "240541081",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240541083",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "240541094",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "240541098",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "240541106",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "240541117",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "240541119",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "240541120",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "240541121",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240541125",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "240541142",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "240541166",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "240541605",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "240541607",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "240541608",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "240541611",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240541612",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "240542002",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "240542006",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "240542007",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "240542011",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "240542019",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "245541013",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541002",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541006",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541008",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541011",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541013",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541019",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541021",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541023",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541024",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541025",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250541026",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541028",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541032",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541035",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250541036",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541038",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541040",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541041",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541049",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541050",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541052",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541059",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541060",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541064",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541068",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541070",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541072",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541074",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541076",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541079",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541080",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541082",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541086",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541089",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541090",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541092",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541093",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541094",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541098",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541103",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541105",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250541108",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541111",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541124",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541126",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541131",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541602",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541605",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250541606",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541608",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541613",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541615",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250541618",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541620",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250541621",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250541622",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250541623",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "250541624",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "250541626",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "250541628",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250541629",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "250541632",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250542001",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "250542002",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250542005",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250542008",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "250542015",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "250542020",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "250542022",
+   "sube": "B",
+   "tip": "Alttan",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "250542025",
+   "sube": "A",
+   "tip": "Alttan",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541001",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541002",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541003",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541004",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541005",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541006",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541007",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541008",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541009",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541010",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541011",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541012",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541013",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541014",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541015",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541016",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541018",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541019",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541020",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541021",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541022",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541023",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541025",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541026",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541027",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541028",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541029",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541030",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541031",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541032",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541033",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541034",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541035",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541036",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541037",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541038",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541039",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541040",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541041",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541042",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541043",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541044",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541045",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541046",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541047",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541048",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541049",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541050",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541051",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541052",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541053",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541054",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541055",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541056",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541057",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541058",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541059",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541060",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541061",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541062",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541063",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541064",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541065",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541066",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541067",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541068",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541069",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541070",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541071",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541072",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541073",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541074",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541075",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541076",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541077",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541078",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541079",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541080",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541081",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541082",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541083",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541084",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541085",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541086",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541087",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541088",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541089",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541090",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541092",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541093",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541094",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541095",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541096",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541098",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260541099",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541100",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260541101",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260541103",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260541105",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541109",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260541115",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260541132",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260541306",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260541307",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260541324",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260541325",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260542001",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "260542002",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260542003",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260542004",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260542005",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260542006",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260542007",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K08",
+   "konu": "Not Ortalaması",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260542008",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K09",
+   "konu": "Ders Programı Çakışması",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260542009",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K10",
+   "konu": "Kafeterya Menüsü",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260542010",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260542012",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K13",
+   "konu": "Etkinlik Bileti",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260542013",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K14",
+   "konu": "Laboratuvar Malzeme Stoku",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260542014",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K15",
+   "konu": "Kulüp Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260542015",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K16",
+   "konu": "Kampüs Otoparkı",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  },
+  {
+   "no": "260542016",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K17",
+   "konu": "Fotokopi Merkezi",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "260542017",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K18",
+   "konu": "Yemekhane Kart Bakiyesi",
+   "kural_no": 8,
+   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+  },
+  {
+   "no": "260542018",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K19",
+   "konu": "Kampüs Kayıp Eşya",
+   "kural_no": 9,
+   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+  },
+  {
+   "no": "260542019",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K20",
+   "konu": "Revir Randevusu",
+   "kural_no": 10,
+   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+  },
+  {
+   "no": "260542020",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K01",
+   "konu": "Kantin Sipariş",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260542022",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K03",
+   "konu": "Yurt Çamaşırhane Sırası",
+   "kural_no": 3,
+   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+  },
+  {
+   "no": "260542023",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K04",
+   "konu": "Kampüs Ring Otobüsü",
+   "kural_no": 4,
+   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+  },
+  {
+   "no": "260542024",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "260542030",
+   "sube": "B",
+   "tip": "Zorunlu",
+   "konu_kodu": "K11",
+   "konu": "Kitap Takası",
+   "kural_no": 1,
+   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+  },
+  {
+   "no": "260542031",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K12",
+   "konu": "Bisiklet Kiralama",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "265541006",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K07",
+   "konu": "Burs Hesaplama",
+   "kural_no": 7,
+   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+  },
+  {
+   "no": "265541021",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K02",
+   "konu": "Kütüphane Ödünç",
+   "kural_no": 2,
+   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+  },
+  {
+   "no": "265541024",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K05",
+   "konu": "Spor Salonu Üyeliği",
+   "kural_no": 5,
+   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+  },
+  {
+   "no": "265541025",
+   "sube": "A",
+   "tip": "Zorunlu",
+   "konu_kodu": "K06",
+   "konu": "Etüt Odası Rezervasyonu",
+   "kural_no": 6,
+   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+  }
+ ]
+}

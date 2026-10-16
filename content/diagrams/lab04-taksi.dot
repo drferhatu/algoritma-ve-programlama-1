@@ -1,0 +1,21 @@
+// Lab 4, Görev 4: taksi ücreti akışı (öğrenci bundan Taksi.java yazar)
+digraph Taksi {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla [shape=ellipse, label="BAŞLA"];
+    oku   [shape=parallelogram, label="km (double) ve saat (int) oku"];
+    hesap [shape=box, label="ucret = 30 + 20 * km"];
+    gece  [shape=diamond, label="saat ≤ 5 mi?"];
+    zam   [shape=box, label="ucret = ucret * 1.5"];
+    yaz   [shape=parallelogram, label="\"Ucret: %.2f\" yaz"];
+    bitir [shape=ellipse, label="BİTİR"];
+
+    basla -> oku -> hesap -> gece;
+    gece -> zam [label="Evet (00-05 gece tarifesi)"];
+    gece -> yaz [label="Hayır"];
+    zam -> yaz;
+    yaz -> bitir;
+}

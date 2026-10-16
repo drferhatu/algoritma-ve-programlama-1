@@ -1,0 +1,176 @@
+---
+week: 4
+title: "Lab 4 · Karar Veren Programlar"
+description: "Scanner ile okuyup if/else, else-if merdiveni ve iç içe if ile karar veren altı program: harf notu, artık yıl, üç sayının en büyüğü, taksi ücreti, üç soruluk quiz ve bonus sinema bileti; Taksi programını kağıt üzerinde üç girdiyle izleme."
+status: hazir
+objectives:
+  - "Klavyeden okunan değere göre if/else ve else-if merdiveniyle karar veren tam Java dosyaları yazar, derler ve her dalını ayrı girdiyle test eder."
+  - "Mantıksal operatör kullanmadan üç koşullu bir kuralı (artık yıl) iç içe if ile doğru kurar."
+  - "Ardışık if ile sayaç tutar ve bunun else-if merdiveninden ne zaman farklı davrandığını açıklar."
+  - "Verilen bir karar programını üç farklı girdiyle kağıt üzerinde izler, hangi dalın çalıştığını ve çıktıyı tabloya yazar, sonra çalıştırıp doğrular."
+tools:
+  - "JDK 21 / Codespaces"
+  - "VS Code"
+  - "Scanner"
+  - "Git"
+deliverable: "Lab 4 deposu: NotHarfi2.java, ArtikYil.java, EnBuyuk.java, Taksi.java, Quiz.java, izleme.md ve bonus Bilet.java"
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 21 Ekim 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 22 Ekim 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [4. haftanın](/haftalar/hafta-04) teorisini uyguluyor: `boolean`, karşılaştırma operatörleri, `if/else`, else-if merdiveni ve iç içe `if`. Derste program ilk kez yol ayrımına geldi, bu labda ise altı program yazacaksınız ve altısı da klavyeden okuduğu değere göre farklı bir dal seçiyor. Geçen haftaki gibi hiçbiri Java Playground'da çalışmaz, çünkü hepsi `Scanner` kullanıyor; lab Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor.
+
+> [!not] Lab 4 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab04/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab04/accept)**
+> Deponuz `algo1-lab04-KULLANICIADI` adıyla oluşur ve boş gelir, dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
+> Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "else if ile iki ayrı if arasındaki fark nedir?", "Scanner ile tek harf nasıl okunur?", "sarkan else ne demek?" serbest. Ama "yıl okuyup artık yıl olup olmadığını yazan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**. Teslim ritüelinde lab sorumlu hocanız "üç dalı da nasıl test ettin?" diye soracak ve dalları siz yazdıysanız her biri için hangi girdiyi verdiğinizi bilirsiniz. Lab sorumlu hocanız istediğinde ekranınızı görebilir.
+
+## Adım 0 · Depo ve ortam (5 dk)
+
+1. Yukarıdaki kabul bağlantısından Lab 4 deponuzu oluşturun.
+2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab04-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**).
+3. Terminale `java -version` yazın ve 21 ya da üstünü gördüğünüzden emin olun.
+4. Lab 3'te geçmeyen testiniz varsa süre doldu (16 Ekim), bugün ona dönmeyin.
+
+Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+
+## Ortak iskelet ve bu labın kuralı
+
+İskelet geçen haftanın aynısı: en üstte `import java.util.Scanner;`, `main` içinde `new Scanner(System.in)`, sonra `nextInt()`, `nextDouble()` ya da `next()` ile okuma. Yeni olan şey okumadan sonra gelen `if`. Her görevde çıktı biçimi **birebir** verilmiştir, çünkü otomatik kontrol programınızı belirtilen girdiyle çalıştırıp çıktıda o satırı aynen arar. Soru metinleri (`Puan: ` gibi) serbesttir, kontrol yalnızca cevap satırına bakar.
+
+Bu labın kuralı tek cümle: **her dalı ayrı bir girdiyle test edin.** Bir karar programını yalnızca örnekteki girdiyle çalıştırmak, bir elmasın yalnızca Evet okunu denemek demektir. Her görevin sonunda "bu programın kaç dalı var ve her birine hangi girdiyle girdim?" diye kendinize sorun, çünkü ritüelde lab sorumlu hocanız tam bunu soracak ve gizli testler tam oraya bakıyor.
+
+> [!uyari] Türkçe karakter yok, süslü parantez var
+> Çıktılarda `Gecersiz`, `artik yil degil`, `Ucret`, `Dogru` gibi ASCII yazım kullanın, çünkü otomatik kontrol ASCII bekler. Derste anlatılan kural burada zorunlu: her `if`, `else if` ve `else` bloğunun, tek satırlık olsa bile, süslü parantezi olmalı. Lab sorumlu hocanız parantezsiz blok gördüğünde "İki puan, iki bakış" kısmında bunu not edecek.
+
+## Görev 1 · `NotHarfi2.java` (15 puan, 8 dk)
+
+Lab 2'de diyagramdan yazdığınız harf notu programının bir adım ilerisi. Program bir puan (`int`) okur. Puan 0'dan küçük ya da 100'den büyükse **yalnızca** `Gecersiz puan` yazar ve harf vermez. Puan geçerliyse 90 ve üstü A, 80 ve üstü B, 70 ve üstü C, 60 ve üstü D, altı F. 85 için çıktı tam olarak:
+
+```
+Harf: B
+```
+
+Geçersizlik kontrolü iki ayrı soru: 0'dan küçük mü, 100'den büyük mü. Bu hafta `||` yok, bu yüzden ya iki ayrı `if`'in içinde aynı mesajı yazarsınız ya da merdivenin ilk iki basamağını geçersizlik sorularına ayırırsınız; ikincisi daha temizdir. Derste bulmacada gördüğünüz sıra kuralı burada puan alıyor: basamakları büyükten küçüğe dizin, yoksa 85 puan D alır. `101`, `-5`, `60`, `59` ile de deneyin, çünkü sınır değerleri gizli testin en sevdiği girdilerdir.
+
+## Görev 2 · `ArtikYil.java` (15 puan, 10 dk)
+
+Bir yıl (`int`) okur ve artık yıl olup olmadığını yazar. Kural üç parçalı: 4'e bölünüyorsa artık yıldır, ama 100'e de bölünüyorsa değildir, ama 400'e de bölünüyorsa yine artık yıldır. 2024 için ve 1900 için çıktılar tam olarak:
+
+```
+2024 artik yil
+```
+
+```
+1900 artik yil degil
+```
+
+Bu hafta `&&` ve `||` kullanmıyoruz, derste anlatıldığı gibi **iç içe üç `if`** ile çözün: dışta `yil % 4 == 0`, onun içinde `yil % 100 == 0`, onun içinde `yil % 400 == 0`. Her `if`'in bir `else`'i var ve toplam dört çıkış noktası oluşuyor, dördünü de ayrı bir yılla test edin: 2023 (4'e bölünmez), 2024 (4'e bölünür, 100'e bölünmez), 1900 (100'e bölünür, 400'e bölünmez) ve 2000 (400'e bölünür). Gelecek hafta aynı programı tek satırlık bir koşulla yeniden yazacağız ve bugünkü sürümü yanına koyup karşılaştıracaksınız.
+
+## Görev 3 · `EnBuyuk.java` (15 puan, 8 dk)
+
+Üç tam sayı okur (aynı satırda boşlukla ya da ayrı satırlarda, `nextInt()` ikisini de kabul eder) ve en büyüğünü yazar. `3 42 7` için:
+
+```
+En buyuk: 42
+```
+
+Dersteki akıl yürütme: ilk sayıyı en büyük ilan edin, ikinciye bakın, daha büyükse unvanı ona verin, üçüncüye aynısını yapın. İki **ardışık** tek yönlü `if` yeter, merdiven gerekmez, çünkü iki karşılaştırma birbirinden bağımsız. Programınız negatif sayılarla da çalışmalı: `-5 -2 -9` için `En buyuk: -2`. `enBuyuk`'u 0'dan başlatırsanız bu girdi için `0` yazar ve gizli test tam da bunu deniyor. İki sayı eşitse (örneğin `7 7 3`) ne olduğuna da bakın, `>` ile `>=` arasında bu örnekte fark var mı?
+
+## Görev 4 · `Taksi.java` (20 puan, 12 dk)
+
+Dersteki taksi programı. Mesafeyi kilometre olarak (`double`) ve saati (`int`, 0-23) okur. Ücret açılış 30 TL artı kilometre başına 20 TL'dir ve saat 0 ile 5 arasındaysa (ikisi dahil) gece tarifesi olarak ücret yüzde 50 artar. `printf` ile iki ondalık basamak. 4 km ve saat 14 için, ardından 4 km ve saat 3 için çıktılar tam olarak:
+
+```
+Ucret: 110.00
+```
+
+```
+Ucret: 165.00
+```
+
+<Diagram name="lab04-taksi" caption="Taksi ücreti akışı. Karar ekrana yazmıyor, ücret değişkenini değiştiriyor; yazdırma tek bir printf ile en sonda." dot width="340px" />
+
+Ücreti önce normal tarifeyle hesaplayın, sonra `if` içinde gerekirse 1.5 ile çarpıp aynı değişkenin üstüne yazın ve en sonda tek bir `printf` satırıyla basın. Saatin iki sınırı var, hem 0'dan küçük olmamalı hem 5'ten büyük olmamalı, bu hafta `&&` olmadığı için iki soruyu iç içe sorun. Açılış ve kilometre ücretini `final` sabit olarak en üste yazın, geçen haftanın sihirli sayı dersi burada da geçerli. Saat 5 ve saat 6 ile de deneyin, çünkü sınır tam oradan geçiyor.
+
+## Görev 5 · `Quiz.java` (15 puan, 10 dk)
+
+Üç soruluk bir çoktan seçmeli quiz'in cevaplarını okur ve doğru sayısını yazar. Cevap anahtarı sırayla **B, D, A**. Kullanıcı üç cevabı A-D harfleri olarak, aralarında boşlukla girer (örneğin `B D A`) ve siz her birini `klavye.next()` ile okursunuz; `next()` tek kelime okur ve boşlukta durur, bu yüzden üç çağrı üç harfi sırayla alır. `B D A` için:
+
+```
+Dogru: 3 / 3
+```
+
+Bu görevde merdiven **yanlış** araçtır. Üç soru birbirinden bağımsızdır ve ikinci sorunun kontrolü birincinin sonucuna bağlı olmamalıdır, bu yüzden bir `int dogru = 0;` sayacı ve **ardışık üç `if`** kullanın, her doğru cevapta sayacı bir artırın. `else if` yazarsanız tam puan alan öğrenciye `1 / 3` yazarsınız ve gizli test bunu yakalar. `next()` size `String` verir; `String`'leri `==` ile karşılaştırmıyoruz, bunun yerine `cevap1.equals("B")` yazın ya da `cevap1.charAt(0)` ile ilk karakteri alıp `'B'` ile `==` karşılaştırın, ikisi de bu lab için kabul. Küçük harf girilirse ne olacağına siz karar verin ve `izleme.md`'nin sonuna bir cümleyle yazın.
+
+## Görev 6 · Bonus `Bilet.java` (20 puan, 12 dk)
+
+Dersteki sinema bileti örneğinin tam hali. Yaşı (`int`) ve öğrenci olup olmadığını (`e` ya da `h`, `next()` ile) okur ve şu kurala göre bilet fiyatını yazar: 0-6 yaş `Bilet: 0 TL`, 7-17 yaş **ya da** öğrenci `Bilet: 80 TL`, 65 ve üstü `Bilet: 60 TL`, diğer herkes `Bilet: 150 TL`. Üç örnek: 20 yaş ve `h` için `Bilet: 150 TL`, 20 yaş ve `e` için `Bilet: 80 TL`, 70 yaş ve `e` için `Bilet: 60 TL`.
+
+Sıra önemli ve derste gördüğünüz "önce kapı, sonra oda" kuralı burada: **önce yaş gruplarını** merdivenle ayırın (6 ve altı, 17 ve altı, 65 ve üstü), yaş gruplarının hiçbiri tutmadıysa son `else`'in **içinde** öğrenci olup olmadığını sorun. 70 yaşındaki öğrencinin 80 değil 60 ödemesinin sebebi bu sıra, çünkü 65 basamağı öğrenci sorusundan önce geliyor. Dört yaş grubu artı öğrenci dalıyla beş çıkış noktası var, beşini de ayrı girdiyle deneyin ve sınırları unutmayın: 6 ve 7, 17 ve 18, 64 ve 65.
+
+## `izleme.md` (puanlanmaz, lab sorumlu hocanız okur)
+
+Deponun kök dizinine `izleme.md` adında bir dosya açın ve Görev 4'teki `Taksi.java` programınızı **kağıt üzerinde** üç farklı girdiyle izleyin, yani programı çalıştırmadan, satırları gözünüzle takip ederek. Üç girdiyi öyle seçin ki `if`'in hem Evet hem Hayır dalından en az bir kez geçilsin ve biri tam sınırda (saat 5 ya da 0) olsun. Sonucu şu biçimde bir tabloya yazın, sonra programı aynı girdilerle gerçekten çalıştırıp tablonuzun doğru çıkıp çıkmadığını son sütuna işaretleyin:
+
+```
+| km  | saat | hangi dal (gece zammi var mi) | beklenen cikti | gercek cikti ayni mi |
+|-----|------|-------------------------------|----------------|----------------------|
+| 4   | 14   | Hayir                         | Ucret: 110.00  | evet                 |
+| ... | ...  | ...                           | ...            | ...                  |
+```
+
+Tablo otomatik kontrol edilmez, lab sorumlu hocanız okur. Amaç bir karar programını çalıştırmadan okuyabildiğinizi görmek, çünkü vizede kağıt üzerinde tam olarak bunu yapacaksınız ve "hangi dal çalışır?" sorusu sınavın en sık sorusudur.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 4: karar veren programlar"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 23 Ekim 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Deponuzda **Add file → Upload files** ile de yükleyebilirsiniz. Ricamız aynı: dosyaları teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır ve yedi dosyayı yedi kez yüklemek yedi ayrı kontrol demektir.
+
+Kontrol listesi: deponuzun kökünde `NotHarfi2.java`, `ArtikYil.java`, `EnBuyuk.java`, `Taksi.java`, `Quiz.java`, `izleme.md` ve bonusu yaptıysanız `Bilet.java` olmalı. Her dosyadaki sınıf adı dosya adıyla birebir aynı olmalı, aksi halde `javac` derlemez.
+
+### Otomatik kontrol (100 puan)
+
+Her görev için **iki test** çalışır. Birincisi aşağıdaki tabloda yazan girdiyi verir ve belirtilen satırı **birebir** arar. İkincisi aynı programı **başka değerlerle**, çoğunlukla örnekteki dalın tersini ya da bir sınır değerini seçerek çalıştırır; o değerleri önceden söylemiyoruz, çünkü programınızın her dal için doğru çalışması gerekiyor. Yalnızca örnek girdiyi test etmiş bir program ilk testi geçer, ikincisini çoğunlukla geçemez.
+
+| # | Test | Örnek girdi | Aranan çıktı | Puan (örnek + gizli) |
+|---|---|---|---|---|
+| 1 | `NotHarfi2` harf ve geçersiz puan | `85` | `Harf: B` | 8 + 7 |
+| 2 | `ArtikYil` dört çıkışın dördü | `2024` | `2024 artik yil` | 8 + 7 |
+| 3 | `EnBuyuk` negatiflerle de | `3 42 7` | `En buyuk: 42` | 8 + 7 |
+| 4 | `Taksi` gündüz ve gece | `4` ve `14` | `Ucret: 110.00` | 10 + 10 |
+| 5 | `Quiz` sayaç | `B D A` | `Dogru: 3 / 3` | 8 + 7 |
+| 6 | `Bilet` (bonus) beş çıkışın beşi | `20` ve `h` | `Bilet: 150 TL` | 10 + 10 |
+
+> [!uyari] Ondalık sayıyı nokta ile girin
+> Otomatik kontrol ve Codespaces İngilizce yerel ayarda çalışır, bu yüzden Görev 4'te `4.5` nokta ile girilir; `4,5` yazarsanız `InputMismatchException` alırsınız. Çıktıda `printf` Türkçe ayarlı bilgisayarda `110,00` yazabilir, kontrol ikisini de kabul eder.
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol yalnızca verilen girdiyle verilen çıktının çıkıp çıkmadığına bakar. Her bloğun süslü parantezinin olup olmadığı, merdiven ile ardışık `if`'i doğru yerde seçip seçmediğiniz, sabitlerin `final` olup olmadığı, `izleme.md`'deki tablo ve ritüelde verdiğiniz cevap lab sorumlu hocanızın değerlendirmesidir. Doğru çıktıyı veren ama her `if`'i parantezsiz yazan program otomatik kontrolden tam puan alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+
+> [!not] Teslim ritüeli: 30 saniyede "üç dalı da nasıl test ettin?"
+> Push ettikten sonra lab sorumlu hocanızı çağırın. Bu kez soru şu: "Programlarından birini seç, kaç dalı var ve her dala hangi girdiyle girdiğini söyle." `Taksi` ya da `Bilet`'i açıp her `if`'i parmağınızla gösterin ve o dal için verdiğiniz girdiyi söyleyin. Lab 1'de kodu, Lab 2'de diyagramı, Lab 3'te programın beklediği satırı anlattınız; bu labda anlatılan şey programın hangi yoldan gittiği.
+
+## Bitiremediyseniz
+
+Lab'da Adım 0 (depo açıldı, `java -version` çalıştı), Görev 1 ve Görev 2'nin derlenip push edilmiş olması yeterli. Kalanı **23 Ekim Cuma 23.59**'a kadar evde bitirip push edin; Codespaces evde de aynı şekilde çalışır. Cuma'dan sonra gelen push'lar puanlanmaz. Takıldığınız yer `next()` ile `nextLine()` farkı ya da sarkan else ise yapay zekaya sorabilirsiniz (sarı bölge); takıldığınız yer "bu kuralda hangi soru önce sorulmalı" ise ofis saatine gelin, çünkü o soru görevin kendisidir.

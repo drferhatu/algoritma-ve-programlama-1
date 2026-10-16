@@ -1,0 +1,20 @@
+// İç içe karar: sinema bileti (önce yaş kapısı, sonra öğrenci odası)
+digraph IcIceBilet {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    oku    [shape=box, label="yas ve ogrenci oku"];
+    kYas   [shape=diamond, label="yas < 18 mi?"];
+    kOgr   [shape=diamond, label="ogrenci == 'e' mi?"];
+    cocuk  [shape=parallelogram, label="\"Bilet: 80 TL\""];
+    ogrenc [shape=parallelogram, label="\"Bilet: 80 TL\""];
+    tam    [shape=parallelogram, label="\"Bilet: 150 TL\""];
+
+    oku -> kYas;
+    kYas -> cocuk [label="Evet"];
+    kYas -> kOgr  [label="Hayır (dış if'in else'i)"];
+    kOgr -> ogrenc [label="Evet"];
+    kOgr -> tam    [label="Hayır (iç if'in else'i)"];
+}

@@ -1,0 +1,19 @@
+// İki yönlü if/else: iki bloktan biri mutlaka çalışır, ikisi birden asla
+digraph IfElse {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    once  [shape=box, label="önceki satırlar"];
+    kosul [shape=diamond, label="koşul doğru mu?"];
+    evet  [shape=box, label="if bloğu"];
+    hayir [shape=box, label="else bloğu"];
+    sonra [shape=box, label="if/else'ten sonraki satır"];
+
+    once -> kosul;
+    kosul -> evet  [label="true"];
+    kosul -> hayir [label="false"];
+    evet -> sonra;
+    hayir -> sonra;
+}

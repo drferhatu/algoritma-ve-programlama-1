@@ -113,7 +113,13 @@ System.out.println("harf == 'B'   : " + (harf == 'B'));
 
 </CodeTry>
 
-Karşılaştırmaları `+` ile metne eklerken parantez içine aldığımıza dikkat edin, çünkü `"puan == 85 : " + puan == 85` yazarsanız Java önce soldan sağa metni `puan` ile birleştirir, sonra o metni 85 ile karşılaştırmaya kalkar ve derleme hatası verir. Geçen haftanın öncelik kuralı burada da geçerli: şüphe duyduğunuz yere parantez koyun. `char` kutuları da karşılaştırılabilir, çünkü bir `char` aslında bir sayıdır ve `'B'` ile `'B'` eşittir, ama `String` metinleri `==` ile **karşılaştırılmaz**; o hikayeyi 2. dönem sınıflarla birlikte anlatacağız, bu dönem yalnızca sayıları ve `char`'ları karşılaştırıyoruz.
+Karşılaştırmaları `+` ile metne eklerken parantez içine aldığımıza dikkat edin, çünkü parantezi kaldırıp `"puan == 85 : " + puan == 85` yazarsanız Java bu satırı sizin düşündüğünüz sırayla okumaz. Geçen hafta gördüğümüz öncelik kuralına göre `+` işareti `==` işaretinden önce gelir, bu yüzden Java işe en soldan başlar ve adım adım şöyle ilerler.
+
+1. **Birinci adım:** `+` önce çalışır. `"puan == 85 : "` metni ile `puan` değişkeninin değeri birleştirilir ve ortaya yeni bir `String` çıkar: `"puan == 85 : 85"`.
+2. **İkinci adım:** İfade artık şuna dönüşmüştür: `"puan == 85 : 85" == 85`. Yani sol tarafta bir metin, sağ tarafta bir tam sayı vardır.
+3. **Sonuç:** Java bir `String` ile bir `int` değerini `==` ile karşılaştıramaz, çünkü bu iki tip aynı dünyanın üyesi değildir. Program daha çalışmadan derleyici durur ve `incompatible operand types String and int` (uyumsuz işlenen tipleri) hatasını verir.
+
+Parantez tam da bu yüzden var: `(puan == 85)` yazdığınızda önce karşılaştırma yapılır, sonuç `true` ya da `false` olur ve `+` bu sonucu metne ekler. Kural geçen haftakiyle aynı: şüphe duyduğunuz yere parantez koyun, fazlası zarar vermez, eksiği derleme hatası verir. `char` kutuları da karşılaştırılabilir, çünkü bir `char` aslında bir sayıdır ve `'B'` ile `'B'` eşittir, ama `String` metinleri `==` ile **karşılaştırılmaz**; o hikayeyi 2. dönem sınıflarla birlikte anlatacağız, bu dönem yalnızca sayıları ve `char`'ları karşılaştırıyoruz.
 
 > [!tanim] boolean ifade
 > Sonucu `true` ya da `false` olan her şeye **boolean ifade** (boolean expression) denir. `puan >= 90` bir boolean ifadedir, `aktif` adlı bir `boolean` değişken tek başına bir boolean ifadedir, `true` kelimesinin kendisi de öyledir. `if`'in parantezine yalnızca boolean ifade yazılabilir.

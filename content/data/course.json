@@ -385,6 +385,7 @@
     ],
     "rules": [
       "Tek depo, tek uygulama; her kilometre taşı aynı deponun yeni sürümüdür (etiket veya klasör).",
+      "Ana sınıfın adı her zaman Uygulama kalır ve menüde 0 her zaman çıkıştır; otomatik kontrol programa yalnızca 0 verip hatasız bitmesini bekler.",
       "Konu ve ayırt edici kural öğrenci numaranıza göre verilmiştir (/proje sayfasındaki tablo); konu değiştirilmez, ayırt edici kural uygulamanın içinde çalışır halde bulunur.",
       "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü ve çalışan ayırt edici kural zorunludur.",
       "Her teslimde README.md ve AI-BEYANI.md bulunur (şablon: /rehber/ai-beyani); otomatik kontrol yalnızca iskelete bakar: derleniyor mu, bu iki dosya var mı.",

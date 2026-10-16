@@ -216,6 +216,8 @@ const sss = [
             ['Girdi doğrulayan bir metot', 'Kullanıcı geçerli bir değer girene kadar yeniden soran metot. Döngüsü KT2\'de, metot hali KT3\'te.'],
             ['Gözcü değerle biten bir döngü', 'Ana menü 0 ya da q girilene kadar döner. KT2 ile zorunlu.'],
             ['Çalışan ayırt edici kural', 'Tablodaki kuralınız uygulamanın içinde gerçekten karar veriyor. KT1\'den itibaren.'],
+            ['Ana sınıf Uygulama, menüde 0 çıkış', 'Programınız javac Uygulama.java ve java Uygulama ile çalışır; ilk soruya 0 girildiğinde hiçbir şey yapmadan düzgün biter. Otomatik kontrol her kilometre taşında programa yalnızca 0 verip hatasız bitmesini bekler; sonsuz döngü ve çöken program bu testte yakalanır.'],
+            ['Örnek projeyi izleyin', 'Kampüs Kırtasiyesi, derste birlikte büyüttüğümüz havuz dışı örnek. Her kilometre taşında onun nasıl büyüdüğünü görür, aynı deseni kendi konunuza uygularsınız. Deposu herkese açık.'],
           ].map(([t, d]) => (
             <li class="rounded-xl border border-line bg-white p-4">
               <p class="font-semibold text-ink">{t}</p>
@@ -223,6 +225,13 @@ const sss = [
             </li>
           ))}
         </ul>
+        <div class="mt-6 flex flex-wrap items-center gap-3 rounded-2xl border border-accent/40 bg-accent-soft/40 p-5">
+          <div class="min-w-0 flex-1">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent">Örnek proje</p>
+            <p class="mt-1 text-[15px] leading-relaxed text-ink-2"><strong class="text-ink">Kampüs Kırtasiyesi</strong>, havuzda olmayan örnek konu. KT1 sürümü hazır: üç ürün, bir seçim, adet, toplu alım indirimi ve 0 ile çıkış. Gelecek hafta switch ile menüye, sonra döngüye dönüşecek; her adımı derste birlikte yazacağız.</p>
+          </div>
+          <a href="https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-ornek-kirtasiye" target="_blank" rel="noopener" class="btn-primary shrink-0">Örnek depoyu aç ↗</a>
+        </div>
         <div class="mt-6 rounded-2xl border border-line bg-paper-2/60 p-5">
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-ink-3">Portfolyo kuralları</p>
           <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-ink-2">

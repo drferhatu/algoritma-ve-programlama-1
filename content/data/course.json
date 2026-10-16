@@ -356,39 +356,40 @@
     ]
   },
   "portfolio": {
-    "intro": "Her öğrencinin GitHub'da tek bir deposu olur ve dönem boyunca küçük bir uygulama bu depoda büyür. Konu serbesttir (not hesaplayıcı, sinema bileti, kütüphane, oyun, bütçe takibi...), ama her uygulama ortak sözleşmeye uyar. Dört kilometre taşında (KT) teslim alınır; vize ve final sorularının bir kısmı doğrudan sizin uygulamanızdan gelir. Proje konusu dağıtımı ilerleyen haftalarda duyurulacak.",
+    "intro": "Her öğrencinin GitHub'da tek bir deposu olur ve dönem boyunca küçük bir konsol uygulaması bu depoda büyür. Konunuz ve sizi aynı konudaki arkadaşlarınızdan ayıran kural öğrenci numaranıza göre dağıtılmıştır; ikisini de /proje sayfasında numaranızla bulursunuz. Her uygulama ortak sözleşmeye uyar, dört kilometre taşında (KT) teslim alınır ve vize ile final sorularının bir kısmı doğrudan sizin uygulamanızdan gelir. Dersi alttan alan arkadaşlar da projeyi yapar.",
     "milestones": [
       {
         "id": "KT1",
-        "week": 5,
-        "title": "Konu ve ilk sürüm: seçim yapıları",
-        "desc": "Depo açıldı, konu belirlendi. Uygulama kullanıcıdan girdi alır ve en az bir if/else veya switch ile karar verir. Vizedeki 10 puanlık soru bu sürümden gelir."
+        "week": 6,
+        "title": "Depo, konu ve ilk karar: seçim yapıları",
+        "desc": "6 Kasım Cuma 23.59. Depo açılmış, README'de konunuz ve ayırt edici kuralınız yazılı. Uygulama Scanner ile girdi alıyor, en az bir if/else ile karar veriyor ve ayırt edici kural en basit haliyle kodda. Vizedeki 10 puanlık soru bu sürümden gelir."
       },
       {
         "id": "KT2",
-        "week": 8,
+        "week": 9,
         "title": "Döngülü sürüm: gözcü değerle biten menü",
-        "desc": "Uygulamanın ana akışı gözcü değerle (ör. 0 veya 'q') biten bir döngüde çalışır; girdi doğrulama döngüsü vardır."
+        "desc": "27 Kasım Cuma 23.59. Ana akış gözcü değerle (ör. 0 veya 'q') biten bir menü döngüsünde çalışıyor; yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü var."
       },
       {
         "id": "KT3",
         "week": 11,
         "title": "Metotlu ve dizili sürüm",
-        "desc": "Kod metotlara bölünmüştür: girdi doğrulayan bir metot ve dizi alıp tek değer döndüren bir metot zorunludur. Veriler dizide tutulur."
+        "desc": "11 Aralık Cuma 23.59. Kod metotlara bölünmüş: dizi alıp tek değer döndüren bir metot ve girdi doğrulayan bir metot var; veriler dizide tutuluyor."
       },
       {
         "id": "KT4",
         "week": 14,
         "title": "Son teslim ve üç dil",
-        "desc": "README, AI beyanı, çalışan son sürüm. Ek: uygulamanın çekirdek algoritması yapay zeka yardımıyla Python ve C'ye çevrilmiş, farklar bir paragrafta anlatılmıştır. Finaldeki 15 puanlık soru bu sürümden gelir."
+        "desc": "25 Aralık Cuma 23.59. README tam, AI-BEYANI.md dolu, çalışan son sürüm. Çekirdek algoritma yapay zeka yardımıyla Python ve C'ye çevrilmiş, üç dil arasındaki farklar bir paragrafta anlatılmış. Finaldeki 15 puanlık soru bu sürümden gelir."
       }
     ],
     "rules": [
       "Tek depo, tek uygulama; her kilometre taşı aynı deponun yeni sürümüdür (etiket veya klasör).",
-      "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü zorunludur.",
-      "Her teslimde README.md ve kısa AI beyanı bulunur (şablon: /rehber/ai-beyani).",
+      "Konu ve ayırt edici kural öğrenci numaranıza göre verilmiştir (/proje sayfasındaki tablo); konu değiştirilmez, ayırt edici kural uygulamanın içinde çalışır halde bulunur.",
+      "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü ve çalışan ayırt edici kural zorunludur.",
+      "Her teslimde README.md ve AI-BEYANI.md bulunur (şablon: /rehber/ai-beyani); otomatik kontrol yalnızca iskelete bakar: derleniyor mu, bu iki dosya var mı.",
       "Kod yapay zeka ile yazılabilir (yeşil bölge) ama her satırını anlatabilmelisiniz; sınavda o kodu kağıda yazmanız istenir.",
-      "Lab ve kilometre taşı teslimleri, ilgili lab haftasının Cuma 23.59'una kadar GitHub'a push ile yapılır; geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
+      "Kilometre taşı teslimleri Cuma 23.59'da Classroom 50'nin o anda depoda ne varsa onu alması ile yapılır (KT1 6 Kasım, KT2 27 Kasım, KT3 11 Aralık, KT4 25 Aralık); ek bir işlem gerekmez, geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
       "Lab görevleri ve portfolyo, Classroom 50 üzerinden verilen bağlantılarla açılan depolarda yürütülür; depo adı değiştirilmez.",
       "Kopya bulunan iki depo için de kilometre taşı geçersiz sayılır."
     ]

@@ -14,7 +14,7 @@ Beyan **kısa** olmalı: 4 madde, en fazla 10 satır. Her kilometre taşı tesli
 ## Şablon
 
 ```markdown
-## AI Beyanı · KT2 (8. hafta)
+## AI Beyanı · KT2 (9. hafta)
 
 1. Hangi araç(lar): ChatGPT (ücretsiz), Claude
 2. Ne için kullandım: 

@@ -10,6 +10,8 @@ Kontroller:
   3. schedule.json: 14 satır, theory/lab tarihleri (A/B) geçerli mi, lab tarihi teori tarihinden
      SONRA mı (+1 hafta kuralı), status değerleri geçerli mi?
   4. course.json: sections (A/B), assistant, aiPolicy (kirmizi/sari/yesil), portfolio alanları var mı?
+     proje.json: 20 konu, 10 kural, atama boş değil, her atamanın konu_kodu/kural_no tanımlı mı,
+     kt id'leri course.json kilometre taşlarıyla eşleşiyor mu?
   5. Defter tanımlı haftalarda notebooks/*.ipynb ve public/notebooks/*.html var mı?
   6. Diyagramlar: content/diagrams/*.dot için public/diagrams/*.svg üretilmiş mi;
      içerikte <Diagram name="..."> ile anılan her ad için .dot var mı? (hata)
@@ -86,6 +88,43 @@ def check_course():
             errors.append(f"course.json: kilometre taşı {m.get('id')} haftası 1..{TOTAL_WEEKS} dışında")
     print(f"✓ course.json: {len(secs)} şube, {len(ids)} kilometre taşı ({', '.join(ids)})")
     return set(ids)
+
+
+def check_proje(milestones: set):
+    path = DATA / "proje.json"
+    if not path.exists():
+        errors.append("content/data/proje.json yok (proje sayfası bu dosyayı okur)")
+        return
+    d = load_json("proje.json")
+    konular = d.get("konular", [])
+    kurallar = d.get("kurallar", [])
+    atama = d.get("atama", [])
+    if len(konular) != 20:
+        errors.append(f"proje.json: 20 konu bekleniyor, {len(konular)} var")
+    if len(kurallar) != 10:
+        errors.append(f"proje.json: 10 kural bekleniyor, {len(kurallar)} var")
+    if not atama:
+        errors.append("proje.json: atama listesi boş")
+    kodlar = {k.get("kod") for k in konular}
+    if len(kodlar) != len(konular):
+        errors.append("proje.json: konu kodları tekil değil")
+    kural_nos = {k.get("no") for k in kurallar}
+    nos = [a.get("no") for a in atama]
+    if len(nos) != len(set(nos)):
+        errors.append("proje.json: aynı öğrenci numarası birden fazla atamada geçiyor")
+    for a in atama:
+        if a.get("konu_kodu") not in kodlar:
+            errors.append(f"proje.json: {a.get('no')} için konu_kodu '{a.get('konu_kodu')}' konular içinde yok")
+        if a.get("kural_no") not in kural_nos:
+            errors.append(f"proje.json: {a.get('no')} için kural_no '{a.get('kural_no')}' kurallar içinde yok")
+        if a.get("sube") not in SECTIONS:
+            errors.append(f"proje.json: {a.get('no')} için şube '{a.get('sube')}' A/B değil")
+    kt_ids = [k.get("id") for k in d.get("kt", [])]
+    if set(kt_ids) != milestones:
+        errors.append(f"proje.json: kt id'leri {kt_ids} course.json kilometre taşlarıyla {sorted(milestones)} eşleşmiyor")
+    for k in d.get("kt", []):
+        _iso(k.get("date", ""), f"proje.json kt {k.get('id')}")
+    print(f"✓ proje.json: {len(konular)} konu, {len(kurallar)} kural, {len(atama)} atama, {len(kt_ids)} KT")
 
 
 def check_weeks(milestones: set):
@@ -287,6 +326,7 @@ def check_dist():
 def main():
     strict = "--strict" in sys.argv
     milestones = check_course()
+    check_proje(milestones)
     check_weeks(milestones)
     check_labs(milestones)
     check_schedule()

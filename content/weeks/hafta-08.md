@@ -2,20 +2,18 @@
 week: 8
 title: "Metotlar I: Tanım, Parametre, return ve Math"
 topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon"
-description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak. KT2 teslim haftası."
+description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak."
 module: m3
 semester: 1
 exam: false
 status: taslak
 changeNote: ""
-milestone: "KT2"
 tags:
   - "metot"
   - "parametre"
   - "return"
   - "void"
   - "Math"
-  - "KT2"
 objectives:
   - "void ve değer döndüren metot tanımlar, çağırır; çalışma akışını izler."
   - "Parametre ile argüman farkını açıklar; çok parametreli metot yazar."
@@ -32,9 +30,6 @@ tools:
 
 Tarifin içindeki tarif: kağıttaki kek tarifinde "sosu hazırla" adımı üç yerde geçiyor. Sosu ayrı bir kağıda yazın, tarifte yalnızca adını çağırın. Şeker miktarını her seferinde farklı istiyorsanız? İşte parametre.
 
-> [!uyari] KT2 teslim haftası
-> Bu hafta portfolyo kilometre taşı **KT2** teslim edilir; son an, bu haftanın laboratuvar saatidir. Ayrıntı: [Ders Hakkında · Portfolyo](/ders-hakkinda).
-
 ## Ders Notları
 
 > [!not] Hazırlanıyor
@@ -50,7 +45,7 @@ Tarifin içindeki tarif: kağıttaki kek tarifinde "sosu hazırla" adımı üç 
 - Math sınıfı: pow, sqrt, abs, max, min, round, random
 - Kompozisyon: metot içinde metot çağırma; ifadelerin içinde çağrı
 - Metot imzası; aşırı yükleme (overloading) kısa bakış
-- KT2: gözcü değerle biten menü döngüsü, girdi doğrulama
+- Portfolyo: KT2 (menü döngüsü ve girdi doğrulama) gelecek hafta, 27 Kasım Cuma 23.59'da toplanır
 
 ## Temel Kavramlar
 

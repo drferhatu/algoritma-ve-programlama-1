@@ -64,7 +64,7 @@
         "B": "2026-10-29"
       },
       "status": "normal",
-      "note": "KT1 teslimi. A şubesi labı 28 Ekim arife (öğleden sonra tatil), B şubesi labı 29 Ekim Cumhuriyet Bayramı; telafi duyurulacak"
+      "note": "A şubesi labı 28 Ekim arife (öğleden sonra tatil), B şubesi labı 29 Ekim Cumhuriyet Bayramı; telafi duyurulacak"
     },
     {
       "week": 6,
@@ -77,7 +77,7 @@
         "B": "2026-11-05"
       },
       "status": "normal",
-      "note": ""
+      "note": "KT1 teslimi (6 Kasım Cuma 23.59)"
     },
     {
       "week": 7,
@@ -103,7 +103,7 @@
         "B": "2026-11-19"
       },
       "status": "normal",
-      "note": "KT2 teslimi"
+      "note": ""
     },
     {
       "week": 9,
@@ -116,7 +116,7 @@
         "B": "2026-11-26"
       },
       "status": "normal",
-      "note": "Ara sınav haftası; tarih bölümce ilan edilecek"
+      "note": "Ara sınav haftası; tarih bölümce ilan edilecek. KT2 teslimi (27 Kasım Cuma 23.59)"
     },
     {
       "week": 10,

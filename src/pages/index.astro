@@ -117,6 +117,21 @@ const how = [
     </div>
   </section>
 
+  <!-- PROJE ŞERİDİ -->
+  <section class="wrap pb-6" aria-label="Dönem projesi duyurusu">
+    <a href={href('/proje')} class="group flex flex-col gap-4 rounded-2xl border-2 border-accent bg-accent-soft/70 p-5 shadow-soft transition-colors hover:bg-accent-soft sm:flex-row sm:items-center sm:justify-between sm:p-6">
+      <div class="flex items-start gap-4">
+        <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-accent font-display text-lg font-bold text-white" aria-hidden="true">KT1</span>
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Dönem projesi</p>
+          <p class="mt-1 font-display text-xl font-semibold leading-tight text-ink md:text-2xl">Proje konuları dağıtıldı: numaranla konunu öğren</p>
+          <p class="mt-1 text-sm text-ink-2">Konunuz ve ayırt edici kuralınız öğrenci numaranıza göre verildi; dersi alttan alanlar dahil. İlk teslim <strong class="text-ink">KT1, 6 Kasım Cuma 23.59</strong>.</p>
+        </div>
+      </div>
+      <span class="btn-accent shrink-0 self-start sm:self-center">Konumu bul <span aria-hidden="true">→</span></span>
+    </a>
+  </section>
+
   <!-- BU DERS NASIL İŞLER -->
   <section class="wrap py-20 md:py-28">
     <SectionHeading eyebrow="Bu ders nasıl işler?" title="Önce düşün, sonra yaz; her hafta biraz daha büyük bir program."

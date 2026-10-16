@@ -5,6 +5,7 @@ const nav = [
   { label: 'Ders Hakkında', path: '/ders-hakkinda' },
   { label: 'Ders Akışı', path: '/ders-akisi' },
   { label: 'Haftalar', path: '/haftalar' },
+  { label: 'Proje', path: '/proje' },
   { label: 'Rehberler', path: '/rehberler' },
   { label: 'Kaynaklar', path: '/kaynaklar' },
   { label: 'Duyurular', path: '/duyurular' },
@@ -33,7 +34,7 @@ const isActive = (p: string) => current === href(p).replace(/\/$/, '') || curren
           href={href(n.path)}
           aria-current={isActive(n.path) ? 'page' : undefined}
           class:list={[
-            'rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
+            'rounded-full px-3 py-2 text-sm font-medium transition-colors',
             isActive(n.path) ? 'bg-ink text-paper' : 'text-ink-2 hover:bg-paper-2 hover:text-ink',
           ]}
         >{n.label}</a>

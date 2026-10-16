@@ -2,19 +2,18 @@
 week: 5
 title: "Seçim Yapıları II: switch, Ternary ve Mantıksal Operatörler"
 topic: "switch ifadesi, ternary (?:) operatörü, mantıksal operatörler (&&, ||, !, ^), kısa devre değerlendirme ve operatör önceliği"
-description: "Karar yapılarını tamamlıyoruz: çok yollu switch, tek satırlık ternary, koşulları birleştiren mantıksal operatörler ve kısa devrenin neden önemli olduğu. KT1 teslim haftası."
+description: "Karar yapılarını tamamlıyoruz: çok yollu switch, tek satırlık ternary, koşulları birleştiren mantıksal operatörler ve kısa devrenin neden önemli olduğu. Portfolyo deposu bu hafta açılır; KT1 teslimi 6 Kasım."
 module: m2
 semester: 1
 exam: false
 status: taslak
 changeNote: ""
-milestone: "KT1"
 tags:
   - "switch"
   - "ternary"
   - "mantıksal operatör"
   - "kısa devre"
-  - "KT1"
+  - "portfolyo"
 objectives:
   - "switch ile menü tarzı çok yollu seçim yazar; break'in rolünü açıklar."
   - "Ternary operatörü uygun yerde kullanır, kötüye kullanımını tanır."
@@ -31,8 +30,8 @@ tools:
 
 Kısa devre bulmacası: kağıtta beş bileşik koşul; her biri için "sağ taraf hiç değerlendirilir mi?" sorusuna cevap verin. Sonra Playground'da sağ tarafa bilerek sıfıra bölme koyup tahmini sınayın.
 
-> [!uyari] KT1 teslim haftası
-> Bu hafta portfolyo kilometre taşı **KT1** teslim edilir; son an, bu haftanın laboratuvar saatidir. Ayrıntı: [Ders Hakkında · Portfolyo](/ders-hakkinda).
+> [!not] Portfolyo başlıyor
+> Proje konuları dağıtıldı: konunuzu ve ayırt edici kuralınızı [Proje](/proje) sayfasında numaranızla bulun, Classroom 50 bağlantısıyla deponuzu açın. İlk kilometre taşı **KT1**, [6. haftanın](/haftalar/hafta-06) lab haftasında, **6 Kasım Cuma 23.59**'da toplanır; bu haftaki switch ve mantıksal operatörler o ilk sürümün karar kısmını yazmanız için tam zamanında geliyor.
 
 ## Ders Notları
 
@@ -48,7 +47,7 @@ Kısa devre bulmacası: kağıtta beş bileşik koşul; her biri için "sağ tar
 - Operatör önceliği tablosu; parantezle netleştirme
 - De Morgan kuralları: !(a && b)
 - Örnekler: loto, Çin zodyağı, artık yıl (mantıksal operatörlerle)
-- KT1: portfolyo deposu, konu ve seçim yapılı ilk sürüm
+- Portfolyo: depo açma, README'ye konu ve kuralı yazma; KT1'e doğru ilk seçim yapısı
 
 ## Temel Kavramlar
 

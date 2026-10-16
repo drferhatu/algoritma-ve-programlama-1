@@ -1,0 +1,392 @@
+---
+/** Dönem projesi (portfolyo): zaman çizelgesi, numaradan konu bulma, konu ve kural listeleri, teslim, değerlendirme, SSS.
+ *  Veri: content/data/proje.json (kt, konular, kurallar, atama) + course.json → portfolio */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Toc from '@/components/Toc.astro';
+import projeRaw from '@content/data/proje.json';
+import { href, weekHref, labHref, formatDayDate, portfolio, assistant } from '@/lib/site';
+
+interface Kt { id: string; week: number; date: string }
+interface Konu { kod: string; ad: string; ozet: string }
+interface Kural { no: number; metin: string }
+interface Atama { no: string; sube: 'A' | 'B'; tip: 'Zorunlu' | 'Alttan'; konu_kodu: string; konu: string; kural_no: number; kural: string }
+const proje = projeRaw as unknown as { kt: Kt[]; konular: Konu[]; kurallar: Kural[]; atama: Atama[] };
+
+const msOf = (id: string) => portfolio.milestones.find((m) => m.id === id);
+const kts = proje.kt.map((k) => ({ ...k, ms: msOf(k.id) }));
+const atama = [...proje.atama].sort((a, b) => a.no.localeCompare(b.no));
+const countA = atama.filter((a) => a.sube === 'A').length;
+const countB = atama.length - countA;
+const countAlttan = atama.filter((a) => a.tip === 'Alttan').length;
+
+// İstemci için sıkı JSON (sayfaya gömülür); </script> kaçışı için < işaretleri kodlanır
+const inlineData = JSON.stringify(
+  atama.map((a) => ({ n: a.no, s: a.sube, t: a.tip, k: a.konu_kodu, r: a.kural_no })),
+).replace(/</g, '\\u003c');
+const konuMap = JSON.stringify(Object.fromEntries(proje.konular.map((k) => [k.kod, { ad: k.ad, ozet: k.ozet }]))).replace(/</g, '\\u003c');
+const kuralMap = JSON.stringify(Object.fromEntries(proje.kurallar.map((k) => [String(k.no), k.metin]))).replace(/</g, '\\u003c');
+
+const ACCEPT = 'https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/portfolyo/accept';
+const kt1 = kts[0];
+const kt4 = kts[kts.length - 1];
+
+const toc = [
+  { slug: 'zaman-cizelgesi', text: 'Kilometre taşları' },
+  { slug: 'konunuzu-bulun', text: 'Konunuzu bulun' },
+  { slug: 'tam-liste', text: 'Tam liste' },
+  { slug: 'konular', text: '20 konu' },
+  { slug: 'kurallar', text: '10 ayırt edici kural' },
+  { slug: 'sozlesme', text: 'Ortak sözleşme' },
+  { slug: 'teslim', text: 'Nasıl teslim edilir?' },
+  { slug: 'degerlendirme', text: 'Değerlendirme ve sınav' },
+  { slug: 'yapay-zeka', text: 'Yapay zeka' },
+  { slug: 'sss', text: 'Sık sorulanlar' },
+];
+
+const sss = [
+  {
+    q: 'Konumu değiştirebilir miyim?',
+    a: 'Hayır. Konular öğrenci numarasına göre dağıtıldı ve yirmi konunun hepsi aynı büyüklükte: her biri bir liste, bir seçim, bir sayaç ve bir kural taşıyor. Konu size küçük ya da sıkıcı geliyorsa ayırt edici kuralınızı ve menünüzü zenginleştirin; değerlendirme konunun parlaklığına değil, sözleşmedeki yapıların çalışıp çalışmadığına ve sizin anlatabilmenize bakar.',
+  },
+  {
+    q: 'Dersi alttan alıyorum, projeyi yapacak mıyım?',
+    a: 'Evet. Dersi alttan alan arkadaşlar da projeyi yapar ve numaranız tabloda "Alttan" olarak var. Vize ve finaldeki portfolyo soruları herkese aynı şekilde sorulur; portfolyosu olmayan o soruları yapamaz.',
+  },
+  {
+    q: 'Grup olarak yapabilir miyiz?',
+    a: 'Hayır, proje bireyseldir: tek öğrenci, tek depo, tek uygulama. Birbirinize yardım etmeniz serbest ve güzel, ama her depo kendi sahibinin anlatabildiği koddan oluşmalı.',
+  },
+  {
+    q: 'Bir kilometre taşını kaçırırsam ne olur?',
+    a: 'Classroom 50 o tarihte Cuma 23.59\'da deponuzda ne varsa onu alır; depo boşsa o kilometre taşı boş sayılır ve ona bağlı sınav sorusu için ek süre verilmez. Ama proje bitmez: bir sonraki kilometre taşına kadar eksiğinizi kapatıp yola devam edersiniz. Erken push etmek, son gece push etmekten her zaman güvenlidir.',
+  },
+  {
+    q: 'Aynı konu bir arkadaşımda da var; kodlarımız benzerse sorun olur mu?',
+    a: 'Aynı konuyu on iki kişi aldı, bu yüzden menüleriniz birbirine benzeyecek; sorun bu değil. Ayırt edici kuralınız farklı, değişken adlarınız, metot bölüşümünüz ve README\'niz sizin. Satır satır aynı iki depo bulunursa ikisi için de o kilometre taşı geçersiz sayılır; ayrıca lab sorumlu hocanız her kilometre taşında 30 saniyede uygulamanızı anlattırır, anlatamadığınız kod sizin değildir.',
+  },
+];
+---
+<BaseLayout title="Dönem Projesi: Portfolyo" description="Algoritma ve Programlama I dönem projesi: öğrenci numaranıza göre konunuzu ve ayırt edici kuralınızı bulun, kilometre taşı tarihlerini ve teslim kurallarını görün.">
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Dönem projesi" title="Dönem Projesi: Portfolyo"
+      lede="Bu dönem her biriniz GitHub'da tek bir depo açacak ve o depoda küçük bir konsol uygulaması büyütecek. Konunuz ve sizi aynı konudaki arkadaşlarınızdan ayıran kural öğrenci numaranıza göre dağıtıldı; aşağıdaki kutuya numaranızı yazdığınızda ikisini de görürsünüz. Uygulama ilk haftalarda yalnızca bir soru sorup bir karar veren birkaç satırdan ibaret olacak, sonra menü döngüsü, girdi doğrulama, diziler ve metotlar eklenecek ve dönem sonunda çekirdek algoritması Python ve C'ye çevrilmiş halde teslim edilecek. Dersi alttan alan arkadaşlar da projeyi yapar; numaranız tabloda var." />
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#konunuzu-bulun" class="btn-accent">Numaranla konunu bul</a>
+      <a href={ACCEPT} target="_blank" rel="noopener" class="btn-primary">Classroom 50: depoyu aç ↗</a>
+      <a href="#zaman-cizelgesi" class="btn-ghost">Tarihler</a>
+    </div>
+  </div>
+
+  <div class="wrap grid gap-12 pb-24 lg:grid-cols-[220px_1fr]">
+    <aside class="hidden lg:block"><div class="sticky top-24"><Toc headings={[]} extra={toc} /></div></aside>
+
+    <div class="min-w-0 max-w-4xl">
+      <!-- KİLOMETRE TAŞLARI -->
+      <section aria-labelledby="zaman-cizelgesi">
+        <p class="eyebrow">Kilometre taşları</p>
+        <h2 id="zaman-cizelgesi" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Dört teslim, hepsi Cuma 23.59</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Her kilometre taşında Classroom 50 o saatte deponuzda ne varsa onu alır; ayrıca bir şey göndermeniz gerekmez. Yani teslim etmek demek, o Cuma akşamına kadar push etmiş olmak demektir.</p>
+        <ol class="mt-8 grid gap-4 sm:grid-cols-2">
+          {kts.map((k) => (
+            <li class="flex flex-col rounded-2xl border border-line bg-white p-5 shadow-soft">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">{k.id}</span>
+                <a href={weekHref(k.week)} class="text-xs font-semibold text-ink-3 hover:text-brand">Hafta {k.week}</a>
+                <a href={labHref(k.week)} class="text-xs font-semibold text-ink-3 hover:text-brand">· Lab {k.week}</a>
+              </div>
+              <p class="mt-3 font-display text-2xl font-semibold leading-none text-ink">{formatDayDate(k.date, true)}</p>
+              <p class="text-sm text-ink-3">23.59</p>
+              <h3 class="mt-3 text-base font-bold text-ink">{k.ms?.title ?? k.id}</h3>
+              <p class="mt-1.5 text-[14px] leading-relaxed text-ink-2">{k.ms?.desc?.replace(/^\d+ \S+ Cuma 23\.59\.\s*/, '') ?? ''}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- KONUNUZU BULUN -->
+      <section aria-labelledby="konunuzu-bulun" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Konunuzu bulun</p>
+        <h2 id="konunuzu-bulun" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Öğrenci numaranızı yazın</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Dağıtımın bir sırrı yok: konu, numaranızın 20'ye bölümünden kalana göre, ayırt edici kural ise son hanenize göre belirlendi. Bu yüzden aynı konuyu alan arkadaşlarınız bile farklı bir kuralla çalışacak.</p>
+
+        <div class="mt-6 rounded-2xl border-2 border-accent bg-white p-5 shadow-soft md:p-6">
+          <label for="ogr-no" class="text-xs font-bold uppercase tracking-[0.12em] text-ink-3">Öğrenci numarası</label>
+          <input id="ogr-no" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="örn. 250541023" maxlength="12"
+            class="mt-2 w-full rounded-xl border-2 border-line-2 bg-paper px-4 py-3 font-mono text-2xl tracking-wider text-ink outline-none placeholder:text-ink-3/60 focus:border-accent md:text-3xl" />
+          <p id="ogr-ipucu" class="mt-2 min-h-5 text-sm text-ink-3" aria-live="polite">Numaranızı yazmaya başlayın; eşleşen satır aşağıda görünür.</p>
+
+          <div id="ogr-sonuc" class="mt-5 hidden rounded-2xl border border-line bg-accent-soft/50 p-5 md:p-6" role="status" aria-live="polite">
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <span id="r-no" class="rounded-full bg-ink px-2.5 py-0.5 font-mono font-semibold text-paper"></span>
+              <span id="r-sube" class="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-brand"></span>
+              <span id="r-tip" class="rounded-full bg-paper-2 px-2.5 py-0.5 font-semibold text-ink-2"></span>
+            </div>
+            <p class="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Konunuz</p>
+            <p class="mt-1 font-display text-3xl font-semibold leading-tight text-ink md:text-4xl"><span id="r-kod" class="mr-2 font-mono text-lg text-ink-3"></span><span id="r-ad"></span></p>
+            <p id="r-ozet" class="mt-2 text-base leading-relaxed text-ink-2"></p>
+            <p class="mt-5 text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Ayırt edici kuralınız</p>
+            <p class="mt-1 text-lg font-semibold leading-snug text-ink"><span id="r-kno" class="mr-2 font-mono text-base text-ink-3"></span><span id="r-kural"></span></p>
+            <p class="mt-4 text-sm text-ink-2">Bu ikisini README'nizin en üstüne yazın; KT1'de ilk bakılan şey budur. Depo açmak için <a href={ACCEPT} target="_blank" rel="noopener" class="link">Classroom 50 kabul bağlantısı ↗</a>.</p>
+          </div>
+
+          <div id="ogr-adaylar" class="mt-4 hidden flex-wrap gap-2"></div>
+          <p id="ogr-yok" class="mt-4 hidden text-sm text-ink-2">Bu numara listede yok. Numaranızı kontrol edin; dersi bu dönem kayıtlı olduğunuz halde bulamıyorsanız lab sorumlu hocanıza ({assistant.name}) ya da öğretim üyesine yazın.</p>
+        </div>
+
+        <noscript>
+          <p class="mt-4 rounded-xl border border-line bg-paper-2 p-4 text-sm text-ink-2">Arama kutusu JavaScript ister; aşağıdaki tam listede numaranızı tarayıcınızın sayfa içi aramasıyla (Ctrl+F) bulabilirsiniz.</p>
+        </noscript>
+      </section>
+
+      <!-- TAM LİSTE -->
+      <section aria-labelledby="tam-liste" class="mt-14">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">Tam liste</p>
+            <h2 id="tam-liste" class="display mt-1 scroll-mt-28 text-2xl">Atama tablosu</h2>
+            <p class="mt-2 text-sm text-ink-2">{atama.length} öğrenci: A şubesi {countA}, B şubesi {countB}; {countAlttan} arkadaş dersi alttan alıyor ve projeye dahil.</p>
+          </div>
+          <div class="flex gap-1 rounded-full border border-line bg-white p-1" role="group" aria-label="Şube filtresi">
+            <button type="button" class="sube-btn rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-2 hover:bg-paper-2" data-sube="all" aria-pressed="true">Tümü</button>
+            <button type="button" class="sube-btn rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-2 hover:bg-paper-2" data-sube="A" aria-pressed="false">A</button>
+            <button type="button" class="sube-btn rounded-full px-3.5 py-1.5 text-xs font-semibold text-ink-2 hover:bg-paper-2" data-sube="B" aria-pressed="false">B</button>
+          </div>
+        </div>
+        <div class="mt-4 max-h-[36rem] overflow-auto rounded-2xl border border-line bg-white" data-pagefind-ignore>
+          <table id="atama-tablo" class="w-full text-xs">
+            <thead class="sticky top-0 bg-paper-2 text-left text-[11px] uppercase tracking-wider text-ink-3">
+              <tr><th class="px-3 py-2 font-semibold">No</th><th class="px-3 py-2 font-semibold">Şube</th><th class="px-3 py-2 font-semibold">Konu</th><th class="px-3 py-2 font-semibold">Kural</th></tr>
+            </thead>
+            <tbody>
+              {atama.map((a) => (
+                <tr class="border-t border-line" data-sube={a.sube} data-no={a.no}>
+                  <td class="whitespace-nowrap px-3 py-1.5 font-mono text-ink">{a.no}{a.tip === 'Alttan' && <span class="ml-1.5 rounded bg-paper-2 px-1 py-px text-[10px] font-semibold text-ink-3">alttan</span>}</td>
+                  <td class="px-3 py-1.5 font-semibold text-ink">{a.sube}</td>
+                  <td class="px-3 py-1.5 text-ink-2"><span class="font-mono text-ink-3">{a.konu_kodu}</span> {a.konu}</td>
+                  <td class="px-3 py-1.5 text-ink-2"><span class="font-mono text-ink-3">{a.kural_no}</span> {a.kural.split(':')[0]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 20 KONU -->
+      <section aria-labelledby="konular" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Konular</p>
+        <h2 id="konular" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Yirmi konu, hepsi kampüsten</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Konuların hepsi her gün karşılaştığınız küçük sistemler; her birinde bir liste, bir seçim, bir sayaç ve bir ücret ya da sıra hesabı var. Dönem ilerledikçe liste diziye, seçim menüye, hesap metoda dönüşecek.</p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {proje.konular.map((k) => (
+            <li class="flex gap-3 rounded-xl border border-line bg-white p-4" id={`konu-${k.kod}`}>
+              <span class="shrink-0 font-mono text-sm font-semibold text-accent">{k.kod}</span>
+              <div>
+                <h3 class="font-semibold text-ink">{k.ad}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-ink-2">{k.ozet}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- 10 KURAL -->
+      <section aria-labelledby="kurallar" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Ayırt edici kurallar</p>
+        <h2 id="kurallar" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">On kural, numaranızın son hanesi artı bir</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Ayırt edici kural, uygulamanızın içinde gerçekten çalışan bir koşuldur: KT1'de tek bir <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]">if</code> olarak başlar, KT3'te kendi metodunu kazanır. Aynı konuyu alan iki arkadaşı birbirinden ayıran şey budur.</p>
+        <ol class="mt-8 space-y-2">
+          {proje.kurallar.map((k) => (
+            <li class="flex gap-4 rounded-xl border border-line bg-white px-4 py-3" id={`kural-${k.no}`}>
+              <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-accent-soft font-mono text-sm font-bold text-accent">{k.no}</span>
+              <p class="text-[15px] leading-relaxed text-ink"><strong>{k.metin.split(':')[0]}:</strong>{k.metin.slice(k.metin.indexOf(':') + 1)}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- ORTAK SÖZLEŞME -->
+      <section aria-labelledby="sozlesme" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Ortak sözleşme</p>
+        <h2 id="sozlesme" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Her uygulamada bulunması gereken dört şey</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Konular farklı, ama her uygulama aynı iskeleti taşır; sınav soruları da bu iskeletten sorulur. KT4'e geldiğinizde deponuzda şunların dördü de çalışır halde olmalı:</p>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          {[
+            ['Dizi alıp tek değer döndüren bir metot', 'Örneğin fiyat dizisinin toplamı, en büyük stok, ortalama puan. KT3 ile zorunlu.'],
+            ['Girdi doğrulayan bir metot', 'Kullanıcı geçerli bir değer girene kadar yeniden soran metot. Döngüsü KT2\'de, metot hali KT3\'te.'],
+            ['Gözcü değerle biten bir döngü', 'Ana menü 0 ya da q girilene kadar döner. KT2 ile zorunlu.'],
+            ['Çalışan ayırt edici kural', 'Tablodaki kuralınız uygulamanın içinde gerçekten karar veriyor. KT1\'den itibaren.'],
+          ].map(([t, d]) => (
+            <li class="rounded-xl border border-line bg-white p-4">
+              <p class="font-semibold text-ink">{t}</p>
+              <p class="mt-1 text-sm leading-relaxed text-ink-2">{d}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-6 rounded-2xl border border-line bg-paper-2/60 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-ink-3">Portfolyo kuralları</p>
+          <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-ink-2">
+            {portfolio.rules.map((r) => (
+              <li class="flex gap-2.5"><span class="mt-[7px] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span><span>{r}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- NASIL TESLİM EDİLİR -->
+      <section aria-labelledby="teslim" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Classroom 50</p>
+        <h2 id="teslim" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Nasıl teslim edilir?</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Lablardan alışık olduğunuz yol. Tek fark, portfolyonun tek bir ödev olması: deponuzu bir kez açarsınız ve dönem boyunca aynı depoya push edersiniz.</p>
+        <ol class="mt-8 space-y-4">
+          {[
+            ['Kabul bağlantısına tıklayın', <>GitHub hesabınızla <a href={ACCEPT} target="_blank" rel="noopener" class="link">Classroom 50 kabul bağlantısına ↗</a> gidin ve ödevi kabul edin. <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]">algo1-portfolyo-KULLANICIADI</code> adlı deponuz kendiliğinden oluşur; içinde README ve AI-BEYANI.md şablonları hazırdır. Depo adını değiştirmeyin.</>],
+            ['README\'yi doldurun', <>Şablondaki başlıkların altına konunuzu (kod ve ad), ayırt edici kuralınızı ve uygulamanın ne yaptığını birkaç cümleyle yazın. Bu ilk commit'iniz olsun; kod daha sonra gelir.</>],
+            ['Kodu yazın ve push edin', <>Uygulamanızı Codespaces'te ya da kendi bilgisayarınızda yazın, çalıştığını görünce push edin. Her push'ta otomatik kontrol çalışır ve sonucu deponuzun Releases sayfasında görürsünüz; kontrol yalnızca iskelete bakar: derleniyor mu, README ve AI-BEYANI.md var mı.</>],
+            ['Kilometre taşı tarihlerinde bir şey yapmanız gerekmez', <>{formatDayDate(kt1.date, true)}, 27 Kasım ve 11 Aralık Cuma 23.59'da Classroom 50 deponuzun o anki halini "toplar"; o anda depoda ne varsa o KT sürümüdür. Son teslim <strong class="text-ink">{formatDayDate(kt4.date, true)} Cuma 23.59</strong>. Yardım için <a href={href('/rehber/classroom-50')} class="link">Classroom 50 rehberi</a> ve <a href={href('/rehber/github-ve-codespaces')} class="link">GitHub ve Codespaces rehberi</a>.</>],
+          ].map(([t, d], i) => (
+            <li class="flex gap-4 rounded-2xl border border-line bg-white p-5 shadow-soft">
+              <span class="grid size-9 shrink-0 place-items-center rounded-full bg-ink font-display text-base font-bold text-paper">{i + 1}</span>
+              <div>
+                <p class="font-semibold text-ink">{t}</p>
+                <p class="mt-1 text-[15px] leading-relaxed text-ink-2">{d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- DEĞERLENDİRME -->
+      <section aria-labelledby="degerlendirme" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Değerlendirme</p>
+        <h2 id="degerlendirme" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Not nereden gelir?</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Otomatik kontrol</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Yalnızca iskelete bakar: kod derleniyor mu, README ve AI-BEYANI.md yerinde mi. Uygulamanızın doğruluğunu bir robot değil, siz ve lab sorumlu hocanız konuşur.</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">30 saniyelik ritüel</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Her kilometre taşında lab sorumlu hocanız ({assistant.name}) uygulamanızı açtırır ve 30 saniyede anlattırır: ne yapıyor, kural nerede, döngü nerede bitiyor. Sunum yok, slayt yok; sadece kodunuzun başında konuşmak.</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Vize ve final</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Vizede 10 puanlık soru KT1 sürümünüzden ("ilk sürümündeki seçim yapısını yaz"), finalde 15 puanlık soru KT4 sürümünüzden ("dizi alan metodunu yaz ve şu girdiyle izle") gelir. Portfolyosunu teslim etmeyen bu soruları yapamaz.</p>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-ink-3">Ağırlıklar ve sınav biçimi için <a href={href('/ders-hakkinda#degerlendirme')} class="link">Ders Hakkında · Değerlendirme</a>.</p>
+      </section>
+
+      <!-- YAPAY ZEKA -->
+      <section aria-labelledby="yapay-zeka" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Yapay zeka</p>
+        <h2 id="yapay-zeka" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Yeşil bölge, ama beyanla</h2>
+        <div class="mt-6 rounded-2xl border-2 border-[var(--mod-emerald)] bg-white p-5 md:p-6">
+          <p class="text-[15px] leading-relaxed text-ink-2">Portfolyo <strong class="text-ink">yeşil bölgedir</strong>: yapay zekaya soru sorabilir, kod yazdırabilir, hata ayıklatabilirsiniz; meslekte de böyle çalışacaksınız. Karşılığında iki şey istiyoruz. Birincisi, her teslimde <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]">AI-BEYANI.md</code> dolu olsun: hangi araç, ne için, hangi kısmı kendiniz yazdınız, yapay zekanın hangi hatasını yakaladınız (şablon: <a href={href('/rehber/ai-beyani')} class="link">AI beyanı rehberi</a>). İkincisi, <strong class="text-ink">anlatamadığınız kod sizin değildir</strong>: lab sorumlu hocanız 30 saniyede sorduğunda cevap veremediğiniz satır, sınav kağıdında da yazılamaz. Vize ve final kırmızı bölge olduğu için portfolyonuzdan gelen soruyu o gün yalnızca kendi aklınızla yazacaksınız.</p>
+        </div>
+      </section>
+
+      <!-- SSS -->
+      <section aria-labelledby="sss" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Sık sorulanlar</p>
+        <h2 id="sss" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Aklınıza gelecek beş soru</h2>
+        <div class="mt-6 space-y-3">
+          {sss.map((s) => (
+            <details class="group rounded-2xl border border-line bg-white px-5 py-4">
+              <summary class="cursor-pointer list-none font-semibold text-ink marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-4">{s.q}<span class="text-ink-3 transition-transform group-open:rotate-45" aria-hidden="true">+</span></span>
+              </summary>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-2">{s.a}</p>
+            </details>
+          ))}
+        </div>
+        <p class="mt-8 text-sm text-ink-3">Cevabını bulamadığınız soru için lab saatinde lab sorumlu hocanıza sorun ya da <a href={href('/ders-hakkinda#kanallar')} class="link">iletişim kanallarını</a> kullanın.</p>
+      </section>
+    </div>
+  </div>
+
+  <script type="application/json" id="atama-data" set:html={inlineData}></script>
+  <script type="application/json" id="konu-data" set:html={konuMap}></script>
+  <script type="application/json" id="kural-data" set:html={kuralMap}></script>
+</BaseLayout>
+
+<script>
+  type Row = { n: string; s: 'A' | 'B'; t: 'Zorunlu' | 'Alttan'; k: string; r: number };
+  const parse = <T,>(id: string): T | null => {
+    try { return JSON.parse(document.getElementById(id)?.textContent || 'null') as T; } catch { return null; }
+  };
+  const rows = parse<Row[]>('atama-data') ?? [];
+  const konular = parse<Record<string, { ad: string; ozet: string }>>('konu-data') ?? {};
+  const kurallar = parse<Record<string, string>>('kural-data') ?? {};
+  const byNo = new Map(rows.map((r) => [r.n, r]));
+
+  const $ = <E extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as E | null;
+  const input = $<HTMLInputElement>('ogr-no');
+  const hint = $('ogr-ipucu');
+  const card = $('ogr-sonuc');
+  const cands = $('ogr-adaylar');
+  const none = $('ogr-yok');
+
+  const show = (el: HTMLElement | null, on: boolean) => { if (!el) return; el.classList.toggle('hidden', !on); if (el === cands) el.classList.toggle('flex', on); };
+  const text = (id: string, v: string) => { const el = $(id); if (el) el.textContent = v; };
+
+  function renderCard(r: Row) {
+    const konu = konular[r.k];
+    text('r-no', r.n);
+    text('r-sube', `${r.s} şubesi`);
+    text('r-tip', r.t === 'Alttan' ? 'Dersi alttan alıyor' : 'Zorunlu');
+    text('r-kod', r.k);
+    text('r-ad', konu?.ad ?? r.k);
+    text('r-ozet', konu?.ozet ?? '');
+    text('r-kno', `Kural ${r.r}`);
+    text('r-kural', kurallar[String(r.r)] ?? '');
+    show(card, true);
+    // Tabloda ilgili satırı vurgula
+    document.querySelectorAll<HTMLTableRowElement>('#atama-tablo tr[data-no]').forEach((tr) => tr.classList.toggle('bg-accent-soft/60', tr.dataset.no === r.n));
+  }
+
+  function update() {
+    if (!input) return;
+    const q = input.value.replace(/\D/g, '');
+    if (q !== input.value) input.value = q;
+    show(card, false); show(cands, false); show(none, false);
+    if (cands) cands.innerHTML = '';
+    if (q.length === 0) { if (hint) hint.textContent = 'Numaranızı yazmaya başlayın; eşleşen satır aşağıda görünür.'; return; }
+    const exact = byNo.get(q);
+    if (exact) { if (hint) hint.textContent = 'Bulundu.'; renderCard(exact); return; }
+    const matches = rows.filter((r) => r.n.startsWith(q));
+    if (matches.length === 0) { if (hint) hint.textContent = ''; show(none, true); return; }
+    if (hint) hint.textContent = `${matches.length} numara bu rakamlarla başlıyor${matches.length > 8 ? '; yazmaya devam edin' : ''}.`;
+    if (matches.length <= 8 && cands) {
+      for (const m of matches) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'rounded-full border border-line bg-white px-3 py-1 font-mono text-sm text-ink hover:border-accent';
+        b.textContent = m.n;
+        b.addEventListener('click', () => { input.value = m.n; update(); input.focus(); });
+        cands.appendChild(b);
+      }
+      show(cands, true);
+    }
+  }
+  input?.addEventListener('input', update);
+
+  // ?no=... ile doğrudan açılabilsin
+  try {
+    const pre = new URLSearchParams(location.search).get('no');
+    if (pre && input) { input.value = pre; update(); }
+  } catch {}
+
+  // Şube filtresi
+  const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('.sube-btn'));
+  const applyFilter = (sube: string) => {
+    document.querySelectorAll<HTMLTableRowElement>('#atama-tablo tr[data-sube]').forEach((tr) => tr.classList.toggle('hidden', sube !== 'all' && tr.dataset.sube !== sube));
+    btns.forEach((b) => {
+      const on = b.dataset.sube === sube;
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('bg-ink', on); b.classList.toggle('text-paper', on); b.classList.toggle('text-ink-2', !on);
+    });
+  };
+  btns.forEach((b) => b.addEventListener('click', () => applyFilter(b.dataset.sube || 'all')));
+  applyFilter('all');
+</script>

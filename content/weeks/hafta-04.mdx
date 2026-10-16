@@ -344,11 +344,25 @@ if (yas < 18) {
 
 </CodeTry>
 
+Bu kodu satır satır okuyalım, çünkü iç içe yapıyı ilk kez görenler "hangi parantez neyi kapatıyor" diye kaybolur. İlk iki satır iki kutu açıyor: `yas` kutusunda 20 var, `ogrenci` kutusunda ise `'e'` harfi duruyor. Burada `char` kullandık, çünkü gişedeki görevlinin sorusu "öğrenci misin" ve cevap tek harfle veriliyor, evet için `'e'`, hayır için `'h'`. Tek tırnak önemli, çünkü tek tırnak `char` demektir ve bir `char`'ı `==` ile karşılaştırabiliyoruz; çift tırnakla yazsaydık `String` olurdu ve `==` ile karşılaştıramazdık.
+
+Sonra birinci kapı geliyor: `if (yas < 18)`. Java 20 ile 18'i karşılaştırır, `20 < 18` yanlıştır, dolayısıyla ilk süslü parantezin içi hiç çalışmaz ve program doğrudan `else`'in süslü parantezine girer. İşte iç içe kısım o parantezin içinde başlıyor: ikinci kapı `if (ogrenci == 'e')` yalnızca buraya ulaşanlara, yani 18 yaş ve üstü olanlara soruluyor. `'e' == 'e'` doğru olduğu için ekrana `Bilet: 80 TL (ogrenci)` yazılır ve içteki `else` atlanır. Program sonra iç `if/else`'i kapatan paranteze, ardından dış `else`'i kapatan paranteze gelir ve biter. Dıştaki `}` ile içteki `}` farklı kapıları kapatır; girinti bunu gözünüze göstermek için var.
+
+Üç olası yolun üçünü de kağıda yazarsanız yapı oturur:
+
+| `yas` | `ogrenci` | Birinci kapı `yas < 18` | İkinci kapı sorulur mu? | Çıktı |
+|---|---|---|---|---|
+| 17 | `'e'` ya da `'h'` | doğru | hayır, içeri girilmez | `Bilet: 80 TL (cocuk)` |
+| 20 | `'e'` | yanlış | evet, `'e' == 'e'` doğru | `Bilet: 80 TL (ogrenci)` |
+| 20 | `'h'` | yanlış | evet, `'h' == 'e'` yanlış | `Bilet: 150 TL` |
+
+Tablonun ilk satırına dikkat edin: 17 yaşındaki kişi için `ogrenci` kutusunda ne yazdığının hiç önemi yok, çünkü ikinci kapıya hiç gelmiyor. İç içe `if`'in anlamı tam olarak bu: ikinci soru, birinci sorunun belirli bir cevabına bağlı olarak var ya da yok.
+
 İç içe `if`'te girintinin **yalnızca sizin için** olduğunu bilmeniz gerekiyor. Java boşlukları görmez, satırları hangi `if`'e bağlayacağına yalnızca süslü parantezlere bakarak karar verir ve girinti ne derse desin ona uymaz. Bu, süslü parantezi her zaman yazmanızın ikinci ve asıl sebebi, çünkü parantezsiz iç içe `if`'te bir `else`'in hangi `if`'e ait olduğu konusunda Java ile sizin fikriniz uyuşmayabilir ve bu uyuşmazlığa **sarkan else** (dangling else) denir.
 
 Kural şudur: süslü parantez yoksa `else`, kendisinden önceki **en yakın** `if`'e aittir ve girinti bu kuralı değiştirmez. Aşağıdaki kodda `else` girintisiyle dıştaki `if (yas >= 18)`'e aitmiş gibi görünüyor ve kodu yazan kişi de öyle niyetlenmiş, ama Java onu en yakın `if`'e, yani `if (ogrenci)`'ye bağlar. Sonucu önce kağıda yazın, sonra çalıştırın.
 
-<CodeTry title="Sarkan else: tahmin edin" hint="Önce çalıştırmadan tahmin edin: 20 yaşındaki öğrenci olmayan kişi için ne yazar? Sonra çalıştırın. Düzeltmek için iç if'i süslü parantez içine alın ve tekrar çalıştırın; bu kez hiçbir şey yazmaması gerekir, çünkü else artık dış if'eait.">
+<CodeTry title="Sarkan else: tahmin edin" hint="Önce çalıştırmadan tahmin edin: 20 yaşındaki öğrenci olmayan kişi için ne yazar? Sonra çalıştırın. Düzeltmek için iç if'i süslü parantez içine alın ve tekrar çalıştırın; bu kez hiçbir şey yazmaması gerekir, çünkü else artık dış if'e ait.">
 
 ```java
 int yas = 20;

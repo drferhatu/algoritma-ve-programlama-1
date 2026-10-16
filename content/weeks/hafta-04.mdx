@@ -377,7 +377,27 @@ else
 
 </CodeTry>
 
-Çıktı "Cocuk bileti", oysa kişi 20 yaşında. Olan şu: dıştaki `if (yas >= 18)` `true`, içeri girildi, `if (ogrenci)` `false` ve `else` o `if`'e ait olduğu için çalıştı. Yazan kişi `else`'i "18'den küçükse" diye düşünmüştü, Java ise "öğrenci değilse" diye okudu ve ikisi de haklı görünüyor, ama program yalnızca Java'yı dinler. Çözüm her zaman aynıdır: içteki `if`'i süslü parantez içine alırsınız, böylece `else` o parantezin dışında kalır ve ait olduğu `if` tartışmasız hale gelir.
+Çıktı "Cocuk bileti", oysa kişi 20 yaşında. Şaşırtıcı görünen bu sonucu adım adım izleyelim, çünkü kodun yazılış biçimiyle Java'nın okuyuş biçimi burada birbirinden ayrılıyor.
+
+Önce kodun nasıl **göründüğüne** bakalım. Yazan kişi girintiyle şunu anlatmak istemiş: 18 yaş ve üstüyse içeri gir ve öğrenciyse öğrenci bileti ver; 18'den küçükse çocuk bileti ver. Yani `else`'i, sola yaslayarak dıştaki `if (yas >= 18)` sorusunun "hayır" cevabı olarak düşünmüş. Girintiye bakınca bu niyet gayet açık okunuyor.
+
+Şimdi Java'nın nasıl **okuduğuna** bakalım. Bu kodda hiç süslü parantez yok ve parantez olmayınca Java'nın tek bir kuralı var: bir `else`, kendisinden önceki henüz `else`'i olmayan **en yakın** `if`'e bağlanır. Buradaki en yakın `if`, `if (ogrenci)`'dir. Java girintiyi ve boşlukları görmez, bu yüzden kodu zihninde şöyle yeniden yazar:
+
+```java
+if (yas >= 18) {
+    if (ogrenci) {
+        System.out.println("Ogrenci bileti");
+    } else {
+        System.out.println("Cocuk bileti");
+    }
+}
+```
+
+Bu haliyle program şöyle ilerliyor. `yas >= 18`, yani `20 >= 18` doğrudur ve dıştaki `if`'in içine girilir. İçeride `if (ogrenci)` sorulur; `ogrenci` kutusunda `false` var, dolayısıyla "Ogrenci bileti" satırı atlanır ve `else`'e geçilir. Bu `else` Java'ya göre `if (ogrenci)`'nin "hayır" dalı olduğu için ekrana "Cocuk bileti" yazılır. Yazan kişi `else`'i "18'den küçükse" diye düşünmüştü, Java ise "öğrenci değilse" diye okudu; ikisi de kendi içinde tutarlı görünüyor, ama program yalnızca Java'yı dinler.
+
+Dikkat ederseniz bu kodda 18 yaşından küçük biri için hiçbir şey yazılmıyor, çünkü dıştaki `if`'in gerçekte bir `else`'i yok; yazarın "çocuk bileti" sandığı dal aslında "öğrenci olmayan yetişkin" dalı. İşte **sarkan else** (dangling else) tam olarak bu: `else` sanki havada sarkıyor ve hangi `if`'e tutunacağını girintiden değil, Java'nın kuralından alıyor.
+
+Çözüm her zaman aynıdır: içteki `if`'i süslü parantez içine alırsınız. Parantez içteki `if`'i kapattığı anda `else` o parantezin dışında kalır ve artık yalnızca dıştaki `if`'e ait olabilir. Aynı kodun niyete uygun hali şöyle:
 
 ```java
 if (yas >= 18) {

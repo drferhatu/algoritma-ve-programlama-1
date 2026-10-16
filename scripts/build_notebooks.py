@@ -311,6 +311,7 @@ def to_html(path, nb=None):
       .jp-RenderedHTMLCommon{font-family:Manrope,system-ui,sans-serif;color:#10262e}
       .jp-RenderedHTMLCommon table{font-size:13px}
       .jp-OutputArea-output pre{white-space:pre-wrap}
+      pre, code, .cm-editor, .CodeMirror{font-variant-ligatures:none !important;font-feature-settings:"liga" 0,"calt" 0 !important}
     </style></head>""")
     out = OUT_DIR / f"{path.stem}.html"
     out.write_text(body, encoding="utf-8")

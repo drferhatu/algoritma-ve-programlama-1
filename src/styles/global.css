@@ -243,3 +243,10 @@ html[data-yansi="on"] #yansi-toggle { background: #000; color: #fff; border-colo
 /* YouTube gömme (16:9) */
 .video-embed { position: relative; width: 100%; max-width: 720px; margin: 1.25rem auto; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; border: 1px solid var(--color-line); box-shadow: var(--shadow-soft); background: #000; }
 .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Kod yazı tipinde bitişik harfleri (ligature) kapat: == != >= -> ayrı karakterler olarak görünsün.
+   İlk kez karşılaşan öğrenci "uzun eşittir" değil iki eşittir görmeli. */
+code, pre, kbd, samp, .astro-code, .font-mono, .jp-InputArea-editor, .cm-editor {
+  font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "calt" 0, "dlig" 0 !important;
+}

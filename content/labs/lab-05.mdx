@@ -1,0 +1,168 @@
+---
+week: 5
+title: "Lab 5 · Evde Lab: Gemini ile Çalışma Günlüğü ve switch"
+description: "Tatile denk gelen lab evde yapılıyor ve ilk kez yeşil bölgede: switch ile tek geçişlik kütüphane menüsü, mantıksal operatörle indirim kararı, beş başlıklı istemler.md çalışma günlüğü ve AI-BEYANI.md; yapay zeka serbest, günlük zorunlu."
+status: hazir
+objectives:
+  - "Scanner ile okunan seçime göre switch, case, break ve default ile tek geçişlik bir menü yazar; break unutulunca ne olduğunu kendi programında görür."
+  - "İç içe if kullanmadan, tek bir if ve mantıksal operatörle (||) iki koşullu bir kuralı kurar ve üç girdiyle test eder."
+  - "Bir yapay zeka asistanına dört parçalı istem yazar, Gem metni kurar, sorguya çekilir, hata protokolünü uygular ve kendi kodunu anlattırır; her adımı istemler.md günlüğüne cevabın özeti ve doğrulama satırıyla yazar."
+  - "Yeşil bölge teslimi için AI-BEYANI.md'nin dört satırını dürüstçe doldurur; asistanın en az bir hatasını ya da eksiğini yakalayıp yazar."
+tools:
+  - "Gemini (öğrenci planı, masaüstü uygulaması)"
+  - "JDK 21 / Codespaces"
+  - "VS Code"
+  - "Git"
+deliverable: "Lab 5 deposu: Menu.java, Mantik.java, istemler.md (beş başlık) ve AI-BEYANI.md; son teslim 30 Ekim Cuma 23.59"
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Durum |
+|---|---|---|---|
+| A | 28 Ekim 2026 Çarşamba | 13.15 | **Lab yapılmaz:** arife, öğleden sonra tatil |
+| B | 29 Ekim 2026 Perşembe | 15.15 | **Lab yapılmaz:** Cumhuriyet Bayramı |
+
+Bu hafta iki şubenin labı da tatile denk geliyor, bu yüzden Lab 5 **evde yapılıyor**. Lab sorumlu hocanız Arş. Gör. Ömer Miraç Kökçam bu hafta labda değil ama günlüğünüzü okuyacak ve 30 saniye ritüelini Lab 6'da yapacak. Lab, [5. haftanın](/haftalar/hafta-05) teorisini uyguluyor: dört parçalı istem, "Java Hocam" Gem'i, sorguya çekilme, hata protokolü, kodu anlattırma ve bu haftanın Java konusu olan `switch` ile mantıksal operatörler. İki Java dosyası `Scanner` kullandığı için Playground'da değil Codespaces ya da kendi terminalinizde çalışıyor; ama bu kez yanınızda bir asistan var ve ona nasıl soracağınız labın kendisi.
+
+> [!not] Lab 5 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab05/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab05/accept)**
+> Deponuz `algo1-lab05-KULLANICIADI` adıyla oluşur; içinde `AI-BEYANI.md` şablonu hazır gelir, kalan dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Yapay zeka: bu lab SARI değil, YEŞİL bölge
+> Dört labdır "kavram sor, kod kopyalama" kuralıyla çalıştınız. Bu lab evde yapıldığı ve konusu zaten yapay zekayla çalışmak olduğu için **yeşil bölge** kuralı geçerli: yapay zeka serbest, menü iskeletini asistana yaptırabilirsiniz. Karşılığında iki şey var. Birincisi `istemler.md` adında bir **çalışma günlüğü**: kime ne sordunuz, ne cevap aldınız, nasıl doğruladınız. İkincisi `AI-BEYANI.md`, dört satırı dolu. Ve her zamanki kural: anlatamadığınız kod sizin değildir; Lab 6'da lab sorumlu hocanız `Menu.java`'nızın bir `case`'ini gösterip "bu neden burada?" diye soracak.
+
+## Adım 0 · Depo, ortam ve klasör (10 dk)
+
+1. Yukarıdaki kabul bağlantısından Lab 5 deponuzu oluşturun.
+2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab05-KULLANICIADI.git`), **Yol B** Codespaces (**Code → Codespaces → Create codespace on main**).
+3. Terminale `java -version` yazın; 21 ya da üstünü görün.
+4. Gemini masaüstü uygulamasını açın. Yol A'daysanız görev modunda **doğrudan klon klasörünüzü** yetkilendirin, böylece asistan `Menu.java`'yı deponuzun içine yazar. Yol B'deyseniz (Codespaces tarayıcıda, dosyalar bilgisayarınızda değil) `Belgeler/algo1` klasörünü yetkilendirin, dosyaları orada oluşturup Codespaces'e **Upload** ile taşıyın ya da içeriğini kopyalayın.
+5. Lab 4'te geçmeyen testiniz varsa süre doldu (23 Ekim), ona dönmeyin.
+
+Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+
+> [!uyari] Klasöre yalnızca ders dosyası
+> Yetkilendirdiğiniz klasörde yalnızca bu dersin dosyaları olsun; kişisel belge, fotoğraf, başka ders ödevi koymayın ve "Belgeler" klasörünün tamamını yetkilendirmeyin. Asistan sizin yetkinizle okur ve yazar. Dosya yazma izni istediğinde hangi dosyaya ne yazacağını okuyup öyle onaylayın.
+
+## Ortak iskelet ve bu labın kuralı
+
+Java tarafında iskelet geçen haftanın aynısı: `import java.util.Scanner;`, `main` içinde `new Scanner(System.in)`, `nextInt()` ya da `next()` ile okuma, sonra karar. Çıktı biçimleri **birebir** verilmiştir, çünkü otomatik kontrol programınızı belirtilen girdiyle çalıştırıp çıktıda o satırı aynen arar; soru metinleri serbesttir.
+
+Bu labın kuralı iki cümle. Birincisi geçen haftadan: **her dalı ayrı girdiyle test edin.** İkincisi bu haftadan: **asistanın verdiği her şeyi doğrulayın ve nasıl doğruladığınızı yazın.** Günlükteki her başlığın altında "doğruladım mı, nasıl" diye bir satır var ve o satır boşsa başlık yazılmamış sayılır. "Çalıştırdım, `2` girdim, `Odunc al` yazdı" bir doğrulamadır; "Gemini doğru dedi" değildir.
+
+> [!uyari] Türkçe karakter yok, break var
+> Çıktılarda `Odunc al`, `Gecersiz secim`, `Indirimli` gibi ASCII yazım kullanın. `switch`'te her `case`'in sonunda `break` olmalı; unutursanız otomatik kontrol `2` için `Odunc al`'ın yanında `Iade et` ve `Cikis`'i de görür ve test düşer. Dersteki durmayan asansörün ta kendisi.
+
+## Görev 1 · `Menu.java` (25 puan, 15 dk)
+
+Tek geçişlik bir **kütüphane menüsü**. Program şu menüyü yazar, `Scanner` ile 0-3 arası bir tam sayı okur ve `switch` ile tek satır cevap verip biter (döngü yok, haftaya):
+
+```
+1) Kitap ara  2) Odunc al  3) Iade et  0) Cikis
+```
+
+Seçime göre çıktı tam olarak: `1` için `Kitap ara`, `2` için `Odunc al`, `3` için `Iade et`, `0` için `Cikis`, başka her sayı için `Gecersiz secim`. `2` için çıktının son satırı:
+
+```
+Odunc al
+```
+
+Dört `case` ve bir `default`, her `case`'in sonunda `break`. Menü satırını ve "Secim: " sorusunu istediğiniz gibi yazın; kontrol yalnızca cevap satırına bakar. `switch`'in parantezine okuduğunuz `int` girsin; `String`'e gerek yok.
+
+**Yeşil bölge burada başlıyor.** Derste gösterdiğimiz gibi iskeleti asistana yaptırabilirsiniz; istem hazır, kopyalayın:
+
+```text
+Bu klasörde Menu.java adında yeni bir dosya oluştur. İçinde: import java.util.Scanner; public class Menu; main içinde Scanner ile 0-3 arası bir tam sayı okuyan bir satır; sonra okunan sayı üstünde bir switch: case 1, case 2, case 3, case 0 ve default. Her case'in GÖVDESİNİ BOŞ BIRAK, yalnızca "// TODO" yorumu ve break koy; hangi case'in ne yapacağını yazma, onu ben dolduracağım. Kod derlenebilir olsun ve bittiğinde ne yaptığını üç cümleyle söyle.
+```
+
+Gövdeleri **siz** doldurun: her `case`'e bir `println`, `default`'a `Gecersiz secim`. Sonra `1`, `2`, `3`, `0` ve `7` ile beş kez çalıştırın; beş dal, beş girdi. Bir de bilerek bir `break`'i silip `2` girin ve kaç satır yazıldığını görün, sonra `break`'i geri koyun; günlüğün beşinci başlığına yazacak bir şeyiniz olur.
+
+## Görev 2 · `Mantik.java` (35 puan, 12 dk)
+
+Bir sinema gişesi için indirim kararı. Program yaşı (`int`, `nextInt()`) ve öğrenci olup olmadığını (`e` ya da `h`, `next()` ile okuyup `charAt(0)` ile `char`'a çevirin) okur. **18 yaşından küçükse ya da öğrenciyse** `Indirimli`, değilse `Tam` yazar. `17` ve `h` için:
+
+```
+Indirimli
+```
+
+Bu görevde **iç içe `if` yasak**: koşulun tamamı tek bir `if`'in parantezinde, `||` ile. Kural birebir derste gördüğünüz ifade: `yas < 18 || ogrenci == 'e'`. Geçen hafta aynı kararı sinema bileti kutusunda iki katlı yazmıştınız; bu hafta tek kat ve bu labın asıl sorusu şu: iki sürüm her girdi için aynı sonucu veriyor mu? Üç örnek girdi: `17 h` → `Indirimli`, `25 h` → `Tam`, `25 e` → `Indirimli`. Sınırı da deneyin: tam `18` ve `h` hangisine düşer?
+
+Kısa devreyi gözünüzle görmek isterseniz: `17 h` girdisinde sol taraf `true` olduğu an Java `ogrenci == 'e'` sorusuna hiç bakmaz. Bunu kanıtlamanın kısa bir yolu yok ama asistana sorabilirsiniz; cevabı ders notundaki "iki kapılı bina" bölümüyle karşılaştırın ve günlüğe yazın.
+
+## Görev 3 · `istemler.md` (25 puan, 25 dk)
+
+Deponun kök dizinine `istemler.md` adında bir çalışma günlüğü açın. Otomatik kontrol dosyanın var olduğuna ve aşağıdaki **beş başlığın birebir** yazılı olduğuna bakar (büyük-küçük harf, numara, nokta dahil); içeriği lab sorumlu hocanız okur. Her başlığın altında üç şey olacak: **kullandığınız istem** (kopyalayıp yapıştırın), **cevabın özeti** (üç-dört cümle, kopyala-yapıştır değil, kendi cümleleriniz) ve **"Doğruladım mı, nasıl:"** diye başlayan bir satır.
+
+```
+## 1. Zayıf ve güçlü istem
+## 2. Java Hocam Gem metni
+## 3. Sorguya çekilme
+## 4. Hata mesajı protokolü
+## 5. Kodumu anlattım
+```
+
+Başlıkların her biri dersteki bir sahnenin ev hali:
+
+**1. Zayıf ve güçlü istem.** `switch` ya da mantıksal operatörler konusunu önce üç kelimeyle ("kısa devre nedir?"), sonra dört parçalı istemle sorun; cep kartındaki birinci istem şablon. İki cevabın farkını iki cümleyle yazın: hangisinde bir sonraki adımda ne yapacağınız belliydi? Doğrulama: güçlü cevaptaki kodu Playground'da çalıştırdınız mı, açıklama ders notuyla uyuştu mu?
+
+**2. Java Hocam Gem metni.** Dersteki "Java Hocam" talimatını Gem olarak (ya da düz sohbetin ilk mesajı olarak) kurun; metni günlüğe yapıştırın, **en az bir kuralı kendinize göre değiştirin** ve neden değiştirdiğinizi yazın. Sonra ona bu haftadan bir soru sorun ("`default` zorunlu mu?") ve "kendini sına" sorusunu cevaplayın. Doğrulama: Gem'in cevabını ders notuyla ya da Java Tutorials'daki `switch` sayfasıyla karşılaştırdınız mı?
+
+**3. Sorguya çekilme.** Cep kartındaki üçüncü istemle kendinizi `switch` ya da mantıksal operatörler konusunda beş soruluk bir sorguya sokun. Beş soruyu ve kendi cevaplarınızı (doğru ya da yanlış, olduğu gibi) yazın; asistanın sonunda verdiği "en zayıf nokta" değerlendirmesini de ekleyin. Doğrulama: emin olmadığınız bir soruyu Playground'da denediniz mi, asistanın "doğru" dediği bir cevap gerçekten doğru muydu?
+
+**4. Hata mesajı protokolü.** `Menu.java` ya da `Mantik.java`'da **bilerek** bir hata yapın: bir `break` silin, `ogrenci == "e"` yazın (çift tırnak), ya da `nextInt()` yerine `next()` kullanın. Hatayı derleyin ya da çalıştırın, mesajı alın ve cep kartındaki dördüncü istemle, yani mesaj + ilgili on satır + ne denediğiniz biçiminde, asistana sorun; `beceri-java-hata.md` dosyanız varsa onu çağırın. Asistanın verdiği **ipucunu** (düzeltmeyi değil) yazın ve hatayı kendiniz düzeltin. Doğrulama: düzeltmeden sonra program derlendi ve doğru çıktıyı verdi mi?
+
+**5. Kodumu anlattım.** Bitmiş `Menu.java`'nızı cep kartındaki beşinci istemle asistana verin ve satır satır anlattırın; sonra anlatımın bir yerinde **yanlış ya da eksik** bir şey arayın (asistan sık sık `break`'in ne yaptığını geçiştirir ya da `default`'u atlar). Bulduğunuzu yazın; bulamadıysanız "bulamadım, şu satırları tek tek kontrol ettim" deyin. Doğrulama: asistanın "`2` için çıktı şu olur" dediği şeyi programı çalıştırarak karşılaştırdınız mı?
+
+Günlük uzun olmak zorunda değil; beş başlık, her birinde üç parça, toplam bir-iki sayfa yeter. Kopyala-yapıştır cevaplar değil, sizin cümleleriniz okunacak.
+
+## Görev 4 · `AI-BEYANI.md` (15 puan, 5 dk)
+
+Depoda hazır gelen şablonun dört satırını doldurun ([şablon ve örnekler](/rehber/ai-beyani)): hangi araç, ne için, hangi kısmı kendiniz yazdınız, asistanın hangi hatasını yakaladınız. Bu lab için dördüncü satır özellikle önemli, çünkü Görev 3'ün beşinci başlığında bir hata ya da eksik aradınız; bulduysanız buraya da yazın. Hiç hata bulamadıysanız bunu da yazabilirsiniz, ama "kodu satır satır okudum" cümlesini ekleyin, çünkü lab sorumlu hocanız Lab 6'da tam o satırları soracak. Dört satırın biri boşsa beyan eksik sayılır.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 5: Gemini ile calisma gunlugu ve switch"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 30 Ekim 2026 Cuma 23.59.** Lab tatile denk geldiği için bu hafta "lab saati" yok; ne zaman yaparsanız yapın, Cuma gece yarısına kadar push edilmiş olsun.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> **Add file → Upload files** ile de yükleyebilirsiniz; dört dosyayı teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır.
+
+Kontrol listesi: deponuzun kökünde `Menu.java`, `Mantik.java`, `istemler.md` ve `AI-BEYANI.md` olmalı. Sınıf adı dosya adıyla birebir aynı, `istemler.md`'de beş başlık birebir.
+
+### Otomatik kontrol (100 puan)
+
+Java görevlerinde iki test çalışır: birincisi tablodaki girdiyi verir ve satırı birebir arar, ikincisi başka bir dalı ya da bir sınır değerini dener ve girdiyi önceden söylemiyoruz. `istemler.md` için kontrol yalnızca dosyanın varlığına ve beş başlığa bakar, `AI-BEYANI.md` için dört satırın dolu olmasına.
+
+| # | Test | Örnek girdi | Aranan çıktı / koşul | Puan |
+|---|---|---|---|---|
+| 1 | `Menu` örnek dal | `2` | `Odunc al` | 15 |
+| 1 | `Menu` gizli dal (`default` ya da başka `case`) | gizli | gizli | 10 |
+| 2 | `Mantik` yaş dalı | `17` ve `h` | `Indirimli` | 15 |
+| 2 | `Mantik` tam ücret | `25` ve `h` | `Tam` | 10 |
+| 2 | `Mantik` gizli (öğrenci dalı ya da sınır) | gizli | gizli | 10 |
+| 3 | `istemler.md` var ve beş başlık birebir | – | `## 1.` … `## 5.` | 25 |
+| 4 | `AI-BEYANI.md` dört satır dolu | – | şablonun dört maddesi | 15 |
+
+> [!uyari] Girdi sırası ve biçimi
+> `Mantik` iki değeri sırayla okur: önce yaş, sonra `e`/`h`. Otomatik kontrol ikisini ayrı satırlarda ya da aynı satırda boşlukla verebilir; `nextInt()` ve `next()` ikisini de kabul eder. Küçük harf `e` bekleniyor; büyük `E` için ne yapacağınız size kalmış, günlüğe bir cümle yazın.
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol `Odunc al` satırını, beş başlığı ve dört beyan satırını görür; başlıkların altında ne yazdığını, cevap özetlerinin sizin cümleniz olup olmadığını, "doğruladım mı, nasıl" satırının gerçek bir doğrulama anlatıp anlatmadığını, her `case`'te `break` olup olmadığını ve `Mantik`'te tek `if` kuralına uyulup uyulmadığını lab sorumlu hocanız okur. Beş başlığı yazıp altını "Gemini doğru söyledi" diye dolduran günlük otomatik kontrolden 25 alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+
+> [!not] Teslim ritüeli bu kez Lab 6'da: "en işe yarayan istemi anlat"
+> Bu hafta lab olmadığı için 30 saniye ritüeli Lab 6'nın başında yapılacak. Soru şu: "`istemler.md`'deki beş istemden sana en çok işe yarayanı hangisi, neden ve cevabını nasıl doğruladın?" Günlüğünüzü açıp o başlığı gösterin. Lab 1'de kodu, Lab 2'de diyagramı, Lab 3'te beklenen satırı, Lab 4'te hangi dalın çalıştığını anlattınız; bu kez anlattığınız şey nasıl sorduğunuz.
+
+## Bitiremediyseniz
+
+Evde yapılan labda "lab saatinde bitiremedim" yok ama "zaman bulamadım" var; o yüzden sıralama şöyle: önce Adım 0 ve Görev 1 (`Menu.java` derlenip push edilmiş), sonra Görev 2, sonra günlüğün en az ilk üç başlığı, en son beyan. **30 Ekim Cuma 23.59**'dan sonra gelen push'lar puanlanmaz. Takıldığınız yer `switch` sözdizimi, `charAt(0)` ya da görev modunda klasör yetkilendirme ise asistana sorun, yeşil bölgedesiniz; takıldığınız yer "Gemini öğrenci planı açılmıyor" ise ücretsiz sohbet modu ve kopyala-yapıştır da labın tamamı için yeterli, görev modu şart değil. Takıldığınız yer "hangi istem daha iyi, neden" ise ofis saatine gelin, çünkü o soru görevin kendisidir.

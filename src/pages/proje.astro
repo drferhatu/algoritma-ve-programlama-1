@@ -9,7 +9,7 @@ import { href, weekHref, labHref, formatDayDate, portfolio, assistant } from '@/
 
 interface Kt { id: string; week: number; date: string }
 interface Konu { kod: string; ad: string; ozet: string }
-interface Kural { no: number; metin: string }
+interface Kural { no: number; ad: string; metin: string; ornek: string }
 interface Atama { no: string; sube: 'A' | 'B'; tip: 'Zorunlu' | 'Alttan'; konu_kodu: string; konu: string; kural_no: number; kural: string }
 const proje = projeRaw as unknown as { kt: Kt[]; konular: Konu[]; kurallar: Kural[]; atama: Atama[] };
 
@@ -25,7 +25,7 @@ const inlineData = JSON.stringify(
   atama.map((a) => ({ n: a.no, s: a.sube, t: a.tip, k: a.konu_kodu, r: a.kural_no })),
 ).replace(/</g, '\\u003c');
 const konuMap = JSON.stringify(Object.fromEntries(proje.konular.map((k) => [k.kod, { ad: k.ad, ozet: k.ozet }]))).replace(/</g, '\\u003c');
-const kuralMap = JSON.stringify(Object.fromEntries(proje.kurallar.map((k) => [String(k.no), k.metin]))).replace(/</g, '\\u003c');
+const kuralMap = JSON.stringify(Object.fromEntries(proje.kurallar.map((k) => [String(k.no), `${k.ad}. ${k.metin}`]))).replace(/</g, '\\u003c');
 
 const ACCEPT = 'https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/portfolyo/accept';
 const kt1 = kts[0];
@@ -194,12 +194,15 @@ const sss = [
       <section aria-labelledby="kurallar" class="mt-16 border-t border-line pt-10">
         <p class="eyebrow">Ayırt edici kurallar</p>
         <h2 id="kurallar" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">On kural, numaranızın son hanesi artı bir</h2>
-        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Ayırt edici kural, uygulamanızın içinde gerçekten çalışan bir koşuldur: KT1'de tek bir <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]">if</code> olarak başlar, KT3'te kendi metodunu kazanır. Aynı konuyu alan iki arkadaşı birbirinden ayıran şey budur.</p>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Kuralların hepsi her konuya uyacak biçimde yazıldı: bunlar bir fiyat ya da kampanya değil, uygulamanıza eklediğiniz bir <em>özellik</em>. Kuralı kendi konunuza siz çevirirsiniz, her kuralın altında iki konudan örnek var; README'de "benim konumda bu kural şu demek" diye tek cümleyle yazarsınız. Ayırt edici kural, uygulamanızın içinde gerçekten çalışan bir koşuldur: KT1'de tek bir <code class="rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]">if</code> olarak başlar, KT3'te kendi metodunu kazanır. Aynı konuyu alan iki arkadaşı birbirinden ayıran şey budur.</p>
         <ol class="mt-8 space-y-2">
           {proje.kurallar.map((k) => (
             <li class="flex gap-4 rounded-xl border border-line bg-white px-4 py-3" id={`kural-${k.no}`}>
               <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-accent-soft font-mono text-sm font-bold text-accent">{k.no}</span>
-              <p class="text-[15px] leading-relaxed text-ink"><strong>{k.metin.split(':')[0]}:</strong>{k.metin.slice(k.metin.indexOf(':') + 1)}</p>
+              <div>
+                <p class="text-[15px] leading-relaxed text-ink"><strong>{k.ad}.</strong> {k.metin}</p>
+                <p class="mt-1 text-[13px] leading-relaxed text-ink-3"><span class="font-semibold text-ink-2">İki konuda nasıl görünür:</span> {k.ornek}</p>
+              </div>
             </li>
           ))}
         </ol>

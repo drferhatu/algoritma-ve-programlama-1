@@ -1,7 +1,7 @@
 ---
 title: "Proje konuları dağıtıldı: KT1 6 Kasım"
 date: 2026-10-17
-pinned: true
+pinned: false
 kind: onemli
 ---
 

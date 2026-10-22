@@ -1,0 +1,640 @@
+---
+week: 5
+title: "Yazılımcı Gibi Sormak: Yapay Zeka ile Öğrenme Ekosistemi (ve switch)"
+topic: "switch ifadesi (case, break, default, fall-through), mantıksal operatörler (&&, ||, !) ve kısa devre değerlendirme; yapay zekayla etkili çalışma: dört parçalı istem, kalıcı karakter (Gem), görev modu, beceri tanımlama ve çıktı doğrulama"
+description: "Dört haftanın tekrarını ve bu haftanın konusunu bir yapay zeka asistanıyla birlikte çalışıyoruz: doğru sorunun dört parçasını, kendi Java hocanızı bir kez kurmayı, bir klasörü yetkilendirip dosyalarınızla çalışmayı ve her cevabı Playground ile ders notundan doğrulamayı öğreniyoruz. Araya switch, mantıksal operatörler ve asansörün durmadığı kat giriyor."
+module: m2
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+tags:
+  - "yapay zeka"
+  - "istem"
+  - "Gemini"
+  - "Gem"
+  - "görev modu"
+  - "beceri"
+  - "doğrulama"
+  - "switch"
+  - "fall-through"
+  - "mantıksal operatörler"
+  - "kısa devre"
+objectives:
+  - "Bir yapay zeka asistanına rol, görev, biçim ve bağlam parçalarıyla istem yazar; zayıf ve güçlü istemin farkını cevapta gösterir."
+  - "Kalıcı bir karakter (Gem) ve yeniden kullanılabilir bir beceri dosyası tanımlar; ikisini bir Java sorusunda kullanır."
+  - "Bir derleyici ya da çalışma zamanı hatasını mesaj, ilgili satırlar ve denenenlerle birlikte paylaşır; 'çalışmıyor' demek yerine hata protokolünü uygular."
+  - "Yapay zekanın verdiği kodu ve açıklamayı Java Playground'da çalıştırarak ve ders notuyla karşılaştırarak doğrular; yanlış bir cevabı yakalar."
+  - "switch ile çok yollu menü yazar, break ve default'un rolünü fall-through örneğiyle açıklar; &&, || ve ! ile bileşik koşul kurar ve kısa devrenin ne zaman devreye girdiğini söyler."
+tools:
+  - "Gemini (öğrenci planı, masaüstü uygulaması)"
+  - "Java Playground"
+  - "JDK 21 / Codespaces"
+resources:
+  - title: "Gemini öğrenci planı"
+    url: "https://gemini.google/students/"
+    note: "Google'ın üniversite öğrencilerine verdiği ücretsiz üst plan; derse gelmeden önce kaydolun. Koşullar değişebilir, sayfadan kontrol edin."
+  - title: "Think Java 2, Bölüm 5: Conditionals and Logic"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch05.html"
+    note: "Mantıksal operatörler ve kısa devre; geçen hafta ertelediğimiz kısım bu hafta okunuyor. Yapay zekanın cevaplarını doğrulayacağınız ilk yer."
+  - title: "Java Tutorials: The switch Statement"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html"
+    note: "Resmî sözdizimi, fall-through örneği ve default; 'break yazmazsam ne olur' sorusunun kitap cevabı."
+  - title: "MIT, AI and Education raporu"
+    url: "https://aiandeducation.mit.edu/report/"
+    note: "Bu dersin 'artırma, otomasyon değil' ilkesinin kaynağı; merak edenler için, sınava girmez."
+  - title: "4. hafta: Seçim Yapıları I"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/haftalar/hafta-04"
+    note: "if/else, merdiven ve sarkan else; bu haftanın tekrar turunda Gemini'ye soracağımız kodlar o sayfadan."
+---
+
+## Derse Başlamadan Önce
+
+- [Gemini öğrenci planına](https://gemini.google/students/) üniversite e-postanızla kaydolun ve **masaüstü uygulamasını** bilgisayarınıza kurun, çünkü bu hafta derste telefon ekranı yetmeyecek; bir klasörü yetkilendirip içindeki dosyalarla çalışacağız ve bu iş masaüstünde yapılıyor. Kayıt beş dakika, kurulum beş dakika; dersten önce bitmiş olsun.
+- Bilgisayarınızda `Belgeler/algo1` gibi bir klasör açın ve **Lab 4 dosyalarınızı** (`Taksi.java`, `izleme.md` ve diğerleri) oraya kopyalayın, çünkü derste Gemini'ye okutacağımız dosyalar bunlar. O klasöre ders dışı hiçbir şey koymayın; sebebini derste konuşacağız.
+- Tarayıcınızda [Java Playground](https://dev.java/playground/) açık olsun, çünkü bu hafta yapay zekanın her cevabını orada çalıştırarak sınayacağız ve bu haftanın asıl alışkanlığı tam olarak bu.
+- **Lab 4'ün son teslimi bu gece, 23 Ekim Cuma 23.59.** Releases sayfasında geçmeyen testiniz varsa dersten sonra düzeltip push edin, yarından sonra gelen push'lar puanlanmaz.
+
+> [!not] Bu haftanın hikayesi
+> Dört haftadır bu derste yapay zekayı "sonunda bir anlık" görüyordunuz: dersin son beş dakikasında bir soru, bir doğrulama, bir uyarı. Bu hafta yer değiştiriyoruz ve dersin tamamını bir asistanla birlikte çalışıyoruz. Konu listesi aynı: geçen dört haftanın tekrarı, artı bu haftanın yeni konusu olan `switch` ve mantıksal operatörler. Değişen şey, bunların nasıl çalışıldığı. Bu derste öğreneceğiniz sorma biçimi yalnızca Java'da değil, dört yıl boyunca her derste ve sonra meslekte işinize yarayacak; o yüzden bugün biraz daha az kod, biraz daha fazla "nasıl sorarım" var. Tek oturum, A şubesi Cuma 09.15, B şubesi Cuma 13.15.
+
+## Haftanın Bulmacası
+
+<Puzzle title="İki soru, iki cevap" kind="tahmin">
+
+Bu hafta bulmaca kağıtta değil, yansıda. Aynı konuyu Gemini'ye iki kez soracağım. Birinci istem üç kelime:
+
+```text
+switch nedir?
+```
+
+İkinci istem biraz uzun:
+
+```text
+Birinci sınıf yazılım mühendisliği öğrencilerine Java öğreten, benzetmelerle anlatmayı seven bir hoca gibi davran. Görevin: Java'daki switch yapısını, geçen hafta öğrendiğim else-if merdiveniyle karşılaştırarak anlatmak. Biçim: en fazla 6 cümle açıklama, sonra 10 satırı geçmeyen tek bir örnek kod, en sonda bana soracağın bir "kendini sına" sorusu. Bağlam: if/else, else-if merdiveni ve iç içe if'i biliyorum; switch'i hiç görmedim; Java Playground'da deneyeceğim, bu yüzden örnek Scanner kullanmasın.
+```
+
+İki cevap yan yana gelince şunu tartışacağız: hangisi bir sonraki adımda ne yapacağınızı söylüyor? Hangisinden bir şey öğrendiniz, hangisini yalnızca okudunuz? Cevap kutusu yok, çünkü bu bulmacanın cevabı bir deneyim: iki cevabı gördükten sonra ilk soruyu bir daha o biçimde sormak istemeyeceksiniz.
+
+</Puzzle>
+
+Çoğu sınıfta ilk cevap bir ansiklopedi maddesine benzer: doğru, uzun, her şeyi söyleyen ve hiçbir şeyi size söylemeyen bir metin. İkinci cevap ise size yazılmıştır; merdiveni bildiğinizi varsayar, Playground'a yapıştırılabilecek bir örnek verir ve sonunda sizi sınar. İkisi de aynı araçtan, aynı dakikada çıkar. Aradaki fark araçta değil, soruda. Bu dersin tamamı o farkın üstüne kurulu.
+
+## Ders Notları
+
+### Neden bu hafta farklı: ansiklopedi, arama motoru, asistan
+
+Üniversiteye 2000'lerin başında giren biri bir konuyu öğrenmek istediğinde kütüphaneye gider, ansiklopediyi açar ve maddeyi okurdu. 2010'larda aynı kişi bir arama motoruna üç kelime yazar, on bağlantı alır ve hangisine güveneceğine kendisi karar verirdi. Siz bu sıraya üçüncü bir araçla giriyorsunuz: konuyu size göre anlatan, kodunuzu okuyan, hatanızı bulan, siz sorduğunuzda sizi sınayan bir asistan. Bu gerçek bir şans ve her kuşağa nasip olmaz.
+
+Ama bir şeyi en baştan söyleyeyim: asistan sizin yerinize öğrenemez. "switch nedir" diye sorup cevabı okumak, bir spor salonuna gidip antrenörün ağırlık kaldırmasını izlemeye benzer; salondan çıkarken antrenör güçlenmiştir, siz değil. MIT'nin yapay zeka ve eğitim raporu bu durumu tek bir ilkeyle özetliyor ve biz de bu dersin sloganı yapıyoruz: **artırma, otomasyon değil.** Yani öğrenmeyi otomatikleştirmek değil, güçlendirmek. Asistan sizin düşünmenizi hızlandırdığında doğru kullanılmıştır, sizin yerinize düşündüğünde yanlış.
+
+Bu ilkeyi somut bir döngüye çevirelim, çünkü soyut bir ilke labda işinize yaramaz. İyi kullanılan bir asistanla çalışma şöyle döner: önce **sorarsınız**, ama dört parçalı bir istemle; sonra cevabı satır satır **okursunuz** ve emin olmadığınız yeri işaretlersiniz; sonra cevaptaki kodu Playground'da **denersiniz**; sonra çıktıyı ve açıklamayı ders notuyla karşılaştırıp **doğrularsınız**; en sonda öğrendiğinizi otuz saniyede yanınızdakine ya da boş odaya **anlatırsınız**. Anlatamadığınız yerde döngü başa döner ve yeni bir soru çıkar. Bu döngü bir kez oturduğunda hoca, kitap ve lab olmadan da ilerleyen bir öğrenme ekosisteminiz olur; dersin adındaki "ekosistem" kelimesi tam olarak bu.
+
+<Diagram name="h05-ogrenme-dongusu" caption="Kendi kendine öğrenme döngüsü: sor, oku, dene, doğrula, anlat ve tekrar sor. Doğrulama adımı turuncu, çünkü döngüyü asıl döndüren o adım." dot width="100%" />
+
+Bu döngüyü bugün kuran biri, dört yıl sonra nereye gider? Yazılım dünyasında yeni bir rol büyüyor: **sahaya konuşlanmış mühendis** (forward deployed engineer). Bu kişi bir yapay zeka modelini ya da yazılımı alıp müşterinin yanına gider, müşterinin kendi verisiyle ve kendi problemiyle birebir çalışır, modeli ve yazılımı oraya uyarlar. Bir hastanenin, bir bankanın, bir fabrikanın verisi hiçbir kitapta yazmaz; o mühendis o veriye doğru soruları sorabilen, çıktıyı doğrulayabilen ve anlayamadığı yerde durup sorabilen kişidir. Bugün Playground'da `switch` için kuracağınız döngü, o gün bir şirketin verisiyle kuracağınız döngünün küçük bir provasıdır. Abartmayalım: bu rolü almak için dört yıl daha var. Ama alışkanlık bugün başlar.
+
+> [!neden] Neden Gemini?
+> Bu derste yedi aracın yedisini de kullanabilirsiniz ([Ders Hakkında · Yapay zeka araçları](/ders-hakkinda)). Bugün Gemini seçtik, çünkü iki somut sebebi var: Google üniversite öğrencilerine bir yıl ücretsiz üst plan veriyor ve masaüstü uygulaması bir klasörü yetkilendirip içindeki dosyalarınızla çalışabiliyor. Bugün göreceğiniz her akış ChatGPT, Claude ve diğerlerinde de var; yalnızca düğmelerin adı değişir.
+
+### Kurulum ve üç mod: sohbet, Gem, görev
+
+Gemini'nin masaüstü uygulamasında bugün üç şey kullanacağız ve üçünü de günlük hayattan bir yere oturtalım.
+
+**Sohbet modu**, bildiğiniz şey: bir kutu, bir soru, bir cevap. Bir arkadaşınıza mesaj atmak gibi; her sohbet sıfırdan başlar ve geçen haftaki sohbette ne konuştuğunuzu hatırlamaz, siz hatırlatmazsanız.
+
+**Gem**, kalıcı bir karakter. Bir sohbetin başına her seferinde "sen Java hocasısın, ben birinci sınıfım, kodu çözme" diye yazmak yerine bu talimatı bir kez kaydedersiniz ve o karaktere ne zaman seslenirseniz aynı kurallarla cevap verir. Her hafta aynı berbere gitmek gibi: saçınızı nasıl istediğinizi bir kez anlatırsınız, sonra "her zamanki gibi" demeniz yeter.
+
+**Görev modu**, bu haftanın asıl yeniliği. Uygulamaya bilgisayarınızdaki bir klasörü yetkilendirirsiniz ve asistan o klasördeki dosyaları okuyabilir, yeni dosya oluşturabilir, var olanı değiştirebilir. Sohbet modunda kodu kopyalayıp yapıştırıyordunuz, görev modunda "klasördeki `Taksi.java`'yı oku" demeniz yeter. Bir ustayı atölyenize çağırmak gibi: kapıyı açarsınız, usta tezgahınızdaki parçaları görür ve onların üstünde çalışır. Burada bir cümleyi altını çizerek söylüyorum ve derste bir kez daha tekrarlayacağım: **asistan sizin yetkinizle iş yapar.** Hangi klasörü açarsanız onu görür, siz onaylarsanız dosya yazar. Yetkiyi veren sizsiniz, sorumluluk da sizde.
+
+> [!uyari] Klasöre ne koyacaksınız, ne koymayacaksınız
+> Yetkilendirdiğiniz klasöre **yalnızca ders dosyalarını** koyun: lab Java dosyaları, `izleme.md`, bu haftaki beceri dosyası. Kişisel belgelerinizi, fotoğraflarınızı, başka derslerin ödevlerini, şifre tuttuğunuz notları oraya koymayın ve "Belgeler" klasörünün tamamını yetkilendirmeyin; `Belgeler/algo1` gibi tek bir alt klasör açın. Asistan sizin adınıza okur ve yazar; okumasını istemediğiniz şeyi görmesin.
+
+> [!not] Arayüz adları sürümle değişir
+> Bu sayfada "menüden görev modunu seçin, klasörü yetkilendirin, Gem oluşturun" gibi genel ifadeler kullanıyoruz, çünkü düğmelerin adı ve yeri uygulama güncellendikçe değişiyor. Derste yansıda birlikte bulacağız. Aynı üç mod ChatGPT'de (özel GPT, masaüstü uygulaması), Claude'da (proje, Claude Code) ve diğerlerinde de var; birini öğrenen diğerini on dakikada öğrenir.
+
+### Doğru sorunun dört parçası
+
+Bulmacadaki iki istemin farkına geri dönelim ve o farkı parçalara ayıralım, çünkü iyi bir istem bir yetenek değil, bir şablondur ve şablon öğrenilir. İyi bir istemin dört parçası var: **rol**, **görev**, **biçim**, **bağlam**. Bir ofise girip bir işi yaptırmak istediğinizi düşünün: önce kime sorduğunuzu bilmeniz lazım (rol), sonra tam olarak ne istediğinizi söylemeniz (görev), sonra cevabı hangi biçimde istediğinizi (biçim: bir sayfa rapor mu, üç madde mi, bir tablo mu) ve son olarak karşınızdakinin sizin hakkınızda ne bilmesi gerektiğini (bağlam: acemi misiniz, neyi zaten biliyorsunuz, cevabı nerede kullanacaksınız).
+
+| Parça | Soru | `switch` için örnek |
+|---|---|---|
+| **Rol** | Kim cevaplıyor? | "Birinci sınıfa Java öğreten, benzetmeleri seven bir hoca gibi davran." |
+| **Görev** | Tam olarak ne yapsın? | "`switch`'i else-if merdiveniyle karşılaştırarak anlat." |
+| **Biçim** | Cevap nasıl görünsün? | "6 cümle, 10 satırlık bir örnek, sonunda bir kendini sına sorusu." |
+| **Bağlam** | Ben kimim, neredeyim, neyi biliyorum? | "if/else biliyorum, switch'i hiç görmedim, Playground'da deneyeceğim, Scanner olmasın." |
+
+<Diagram name="h05-istem" caption="İyi bir istemin dört parçası ortadaki soruyu çevreliyor. En çok atlanan parça bağlam; oysa cevabı en çok değiştiren de o." dot width="620px" />
+
+Dört parçadan en çok atlanan **bağlam**. "if/else'i biliyorum ama switch'i görmedim" cümlesi, asistanın size `if`'i yeniden anlatmasını engeller ve "Playground'da deneyeceğim" cümlesi `Scanner`'sız bir örnek getirir. Bağlam yazmayan biri, doktora "başım ağrıyor" deyip ne zamandır, nerede, ne yaptığında diye söylemeyen hastaya benzer; doktor yine bir şey der, ama size değil, ortalama bir hastaya.
+
+Her istemden sonra aynı adımı tekrarlayacağım, bıkana kadar: **güzel bir cevap doğru bir cevap değildir.** Asistan size `switch` örneği verdiğinde o kodu Playground'a yapıştırıp çalıştırıyorsunuz, açıklamayı ise bu sayfadaki ders notuyla karşılaştırıyorsunuz. Uymayan bir yer varsa kazanan ders notu ve gerçek çıktıdır. Bugün göreceğiniz her istemin sonunda bu adım var.
+
+### "Java Hocam" Gem'ini kurun
+
+Dört parçayı her seferinde yazmak yorucu ve zaten yorulan kişi bir süre sonra "switch nedir" moduna geri döner. Çözüm, dört parçanın değişmeyen kısmını bir kez kaydetmek: Gemini'de buna Gem deniyor, ChatGPT'de özel GPT, Claude'da proje; düz sohbette bile ilk mesaj olarak çalışır. Aşağıdaki metni olduğu gibi kopyalayın, uygulamada yeni bir Gem oluşturun, adını "Java Hocam" koyun ve talimat kutusuna yapıştırın.
+
+```text
+Sen "Java Hocam"sın: Fırat Üniversitesi Yazılım Mühendisliği 1. sınıf öğrencilerine Algoritma ve Programlama I dersinde Java öğreten, sabırlı, günlük hayattan benzetmeler kuran bir öğretim üyesisin. Ben birinci sınıf öğrencisiyim; şu ana kadar değişkenler, tipler, operatörler, Scanner, if/else, else-if merdiveni, iç içe if, switch ve mantıksal operatörleri gördüm; döngüleri, metotları ve dizileri henüz görmedim, onları kullanma.
+
+Kuralların:
+1. Kavramları açıkla ama lab görevlerimi çözme. "Şu programı yaz" dersem programı yazma; onun yerine adımları sor, iskelet ver, gövdeyi bana bırak.
+2. Bir soruya cevap vermeden önce bana bir soru sor: ne denediğimi, ne beklediğimi ya da neyi bildiğimi.
+3. Her cevabının sonunda "Kendini sına:" diye başlayan tek bir soru sor.
+4. Emin olmadığın ya da benim kendi gözümle görmem gereken bir şey varsa "Bunu Java Playground'da dene:" diyip 5-8 satırlık bir kod ver; kod Scanner kullanmasın.
+5. Kod anlatırken satır satır anlat, satır numarasıyla.
+6. Türkçe konuş, kısa cümleler kur, 150 kelimeyi geçme; ben isteyince uzat.
+7. Bir şeyi yanlış biliyorsam düzelt ve neden yanlış olduğunu söyle; beni haklı çıkarmak için fikrini değiştirme.
+```
+
+Kurduktan sonra ona üç soru soracağım ve her cevabın sonundaki "kendini sına" sorusunu sınıf cevaplayacak: "else-if merdiveninde sıra neden önemli?", "`=` ile `==` arasındaki fark ne?", "sarkan else nedir?". Üçü de geçen haftanın konusu, yani cevapları ders notundan doğrulayabilirsiniz; bu Gem'in ilk sınavı sizin değil onun.
+
+Yedinci kuralı özellikle not edin. Geçen hafta "yapay zekaya 'emin misin?' deyince fikrini değiştiriyorsa ona değil kitaba güvenin" demiştik; bu kural o davranışı en baştan yasaklamaya çalışıyor. Her zaman tutmaz, ama tutmadığında bunu görürsünüz ve görmek bile bir derstir.
+
+### Tekrar turu: dört hafta, dört istem
+
+Şimdi dört haftayı dört istemle geri saracağız. Her istem dört parçalı, her istemin cevabı derste doğrulanacak ve her birini evde kendi Gem'inizle tekrar edebilirsiniz.
+
+**Hafta 1-2, akış diyagramı.** 2. haftanın nehir bulmacasını (çiftçi, kurt, keçi, lahana) hatırlıyorsunuz; o hafta diyagramı kağıda çizmiştiniz. Bu kez çizimi asistana yaptırıp **biz düzelteceğiz**:
+
+```text
+Algoritma dersi asistanı gibi davran. Görev: "çiftçi, kurt, keçi ve lahana" nehir bulmacasının çözümünü Graphviz DOT dilinde bir akış diyagramı olarak yaz. Biçim: yalnızca DOT kodu, en fazla 12 düğüm, her düğümde bir durum (kim hangi kıyıda), oklar bir geçişi göstersin; açıklama yazma. Bağlam: 1. sınıf öğrencisiyim, DOT'u 2. haftada Graphviz Online'da kullandım, diyagramı oraya yapıştırıp kendim kontrol edeceğim.
+```
+
+Çıkan kodu [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/)'a yapıştırıyoruz ve diyagrama bakıyoruz: kurt ile keçi bir kıyıda yalnız kalıyor mu? Kalıyorsa asistan yanlış çözmüş demektir ve bunu DOT bilmeyen biri de görebilir, çünkü doğrulama kodu okumak değil, resme bakmak. Bu ilk doğrulama anımız.
+
+**Hafta 3, tam sayı bölmesi.** Bu kez asistandan cevap değil, soru istiyoruz. Pizza hikayesini biliyorsunuz, `7 / 2` neden `3`; bakalım bildiğinizi savunabiliyor musunuz:
+
+```text
+Java hocası gibi davran ve beni "tam sayı bölmesi ve tür dönüşümü" konusunda sorguya çek. Kurallar: her seferinde tek soru sor, cevabımı bekle; doğru cevap verirsem bir sonraki soruyu biraz zorlaştır, yanlış verirsem önce ipucu ver, ikinci yanlışta açıkla. 5 soru sonra bana bir değerlendirme ve en zayıf noktamı yaz. İlk soru 7 / 2 ile ilgili olsun. Bağlam: 1. sınıf öğrencisiyim; int, double, casting ve 0.1 + 0.2 meselesini gördüm.
+```
+
+Derste öğrenci ben olacağım ve siz cevapları bağıracaksınız. Beşinci soruya geldiğinde muhtemelen `(int) 3.9` ya da `7 / 2 * 2.0` gibi bir şey soracak ve emin olmadığımız anda Playground'a gideceğiz; kuralımız bu.
+
+**Hafta 4, sarkan else.** Geçen haftanın en sinsi kodunu asistana veriyoruz ama **düzeltmesini değil, anlatmasını** istiyoruz:
+
+```text
+Java hocası gibi davran. Aşağıdaki kodu satır satır anlat: 20 yaşında ve öğrenci olmayan biri için hangi satırlar çalışır, ekrana ne yazılır ve neden? Kodu DÜZELTME, yalnızca Java'nın bu kodu nasıl okuduğunu anlat. Biçim: her satır için bir cümle, sonunda tek cümlelik çıktı. Bağlam: 1. sınıf öğrencisiyim, sarkan else kuralını derste gördüm, anladığımı sınıyorum.
+
+int yas = 20;
+boolean ogrenci = false;
+
+if (yas >= 18)
+    if (ogrenci)
+        System.out.println("Ogrenci bileti");
+else
+    System.out.println("Cocuk bileti");
+```
+
+Doğru cevap "Cocuk bileti" ve sebebi `else`'in en yakın `if`'e ait olması. Asistan "girintiye bakılırsa dıştaki if'e ait" derse, bir sonraki bölümdeki doğrulama anının provasını yapmış olur. Biz yine Playground'a gidiyoruz; çıktı neyse o.
+
+**Dört haftanın hepsi, hata mesajı.** Dört haftadır labda en sık duyulan cümle "hocam çalışmıyor". Bu cümle bir hata raporu değil, bir duygu bildirimi ve asistan duygudan kod çıkaramaz. Bir hatayı doğru paylaşmanın üç parçası var: **hata mesajının kendisi** (kopyala, elle yazma), **ilgili on satır** (tüm dosya değil, hata satırı ve çevresi) ve **ne denediğiniz** (ne bekliyordunuz, ne oldu, ne değiştirdiniz). Yan yana görelim.
+
+Kötü:
+
+```text
+Taksi programım çalışmıyor, düzelt.
+```
+
+İyi:
+
+```text
+Java'da derleme hatası alıyorum, nedenini anlamama yardım et ama kodu düzeltme, bana ipucu ver.
+
+Hata mesajı:
+Taksi.java:14: error: incompatible types: possible lossy conversion from double to int
+        int ucret = ACILIS + KM_UCRETI * km;
+                           ^
+
+İlgili satırlar (10-16):
+        final double ACILIS = 30.0;
+        final double KM_UCRETI = 20.0;
+        System.out.print("Mesafe (km): ");
+        double km = klavye.nextDouble();
+        int ucret = ACILIS + KM_UCRETI * km;
+        if (saat >= 0) {
+            if (saat <= 5) {
+
+Ne denedim: ucret'i int yaptım çünkü kuruş olmadan yazmak istedim; (int) ile cast etmeyi denemedim çünkü ders notu "önce bardak boyutuna bak" diyor. 1. sınıf öğrencisiyim.
+```
+
+İkinci metni yazan kişi büyük ihtimalle asistana hiç ihtiyaç duymaz, çünkü hatayı yazarken "double'ı int bardağa dökmeye çalışıyorum" diye kendi görür. Bu bir tesadüf değil, hata protokolünün asıl faydası bu: iyi bir soru yazmak, cevabın yarısıdır. Protokolü sayfanın sonundaki cep kartında kopyalanabilir halde bulacaksınız ve Lab 5'te bir hatayı bu biçimde paylaşmanız istenecek.
+
+### Bu haftanın konusu: `switch`, kat düğmesi ve durmayan asansör
+
+Geçen hafta kantin uygulamasında on ürünlük bir menü için on basamaklı bir merdiven yazmak zorunda kaldığımızı ve "gelecek hafta bunun kısa bir yolu gelecek" dediğimizi hatırlıyorsunuz. Kısa yol `switch`. Bir değişkenin **tam olarak hangi değerde** olduğunu soruyorsanız, yani "90'dan büyük mü" gibi bir aralık değil "1 mi, 2 mi, 3 mü" gibi bir eşitlik soruyorsanız, `switch` merdivenden daha okunur: değişkeni bir kez yazarsınız, her olası değer için bir `case` açarsınız, hiçbiri tutmazsa `default` çalışır.
+
+```java
+switch (secim) {
+    case 1:
+        System.out.println("Kitap ara");
+        break;
+    case 2:
+        System.out.println("Odunc al");
+        break;
+    default:
+        System.out.println("Gecersiz secim");
+}
+```
+
+Dört kelime öğreniyorsunuz. `switch (secim)` hangi kutuya bakılacağını söyler; `case 1:` "kutuda 1 varsa buradan başla" demektir; `break` "işin bitti, switch'ten çık" demektir; `default` ise merdivendeki son `else`, yani "hiçbiri tutmadıysa". `case` etiketleri sabit olmak zorunda: `case 1`, `case 'a'`, `case "evet"` olur, `case x > 5` olmaz, çünkü `switch` eşitlik sorar, aralık sormaz. Aralık soracaksanız merdiven hâlâ doğru araç.
+
+<Diagram name="h05-switch" caption="switch akışı: ifade bir kez değerlendirilir, eşleşen case'den girilir, break ile çıkılır. Turuncu kesikli ok break unutulunca olanı gösteriyor: bir alttaki case'e düşmek." dot width="520px" />
+
+<CodeTry title="Gün adı" hint="Önce gun = 3 ile çalıştırın. Sonra 6, sonra 9 yapın; 9 için hangi satır çalışıyor? Üçüncü deneme: default satırını silin ve 9 ile tekrar çalıştırın, ne olur?">
+
+```java
+int gun = 3;
+
+switch (gun) {
+    case 1:
+        System.out.println("Pazartesi");
+        break;
+    case 2:
+        System.out.println("Sali");
+        break;
+    case 3:
+        System.out.println("Carsamba");
+        break;
+    case 4:
+        System.out.println("Persembe");
+        break;
+    case 5:
+        System.out.println("Cuma");
+        break;
+    case 6:
+    case 7:
+        System.out.println("Hafta sonu");
+        break;
+    default:
+        System.out.println("Gecersiz gun");
+}
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `Bu kodda case 3'ün altındaki break'i silersem gun = 3 için ne yazar? Çalıştırmadan tahmin et ve nedenini söyle; sonra ben Playground'da deneyeceğim.`
+
+Kutudaki `case 6:` ve `case 7:` satırlarına dikkat edin: iki etiket üst üste, arada kod yok ve ikisi de "Hafta sonu" yazdırıyor. Bu bilerek yapılmış bir şey ve adı var: **düşme** (fall-through). `switch` eşleşen `case`'den girer ve bir `break` görene kadar **aşağı doğru akmaya devam eder**, aradaki `case` etiketlerini görmez bile. 6'dan girip 7'nin satırına akması bize yarıyor, çünkü ikisi aynı işi yapıyor.
+
+Ama aynı şey yanlışlıkla olduğunda sinsi bir hata doğuruyor. Bir asansöre bindiğinizi ve 3. katın düğmesine bastığınızı düşünün. Asansör 3'e geliyor, kapı açılıyor, siz çıkmaya davranıyorsunuz ama asansör durmuyor; 4'e, 5'e, 6'ya çıkıyor ve her katta kapıyı açıp kapatıyor. `break`, asansörün "dur" düğmesidir. Yazmazsanız `switch` eşleşen kattan girer ve son kata kadar her katta bir şey yapar. Derleyici buna hiçbir şey demez, çünkü bazen tam olarak bunu istiyor olabilirsiniz.
+
+<CodeTry title="Durmayan asansör" hint="Önce çalıştırmadan tahmin edin: kat = 3 için kaç satır yazılır? Sonra çalıştırın. Düzeltmek için her println'den sonra break ekleyin ve tek satır kaldığını görün.">
+
+```java
+int kat = 3;
+
+switch (kat) {
+    case 1:
+        System.out.println("1. kat: Danisma");
+    case 2:
+        System.out.println("2. kat: Kutuphane");
+    case 3:
+        System.out.println("3. kat: Laboratuvar");
+    case 4:
+        System.out.println("4. kat: Bolum");
+    default:
+        System.out.println("Cati");
+}
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `Yukarıdaki asansör kodunda kat = 3 için çıktı kaç satır olur? Çalıştırmadan tahmin et, sonra ben Playground'da deneyeceğim. Tahminin yanlışsa neden yanıldığını kendin açıkla.`
+
+Üç satır: Laboratuvar, Bolum, Cati. 3'ten girdi, `break` görmedi, aşağı aktı ve `default`'u da yazdı. Bu hafta verdiğimiz kural basit: **her `case`'in sonunda `break` vardır, bilerek düşürdüğünüz yerde ise bunun bilerek olduğunu bir yorumla yazarsınız.** Lab 5'te otomatik kontrol `2` girdiğinde yalnızca `Odunc al` görmek istiyor; `break` unutursanız `Iade et` ve `Cikis` de yazılır ve test düşer.
+
+> [!not] Yeni Java'da ok işareti
+> Java'nın yeni sürümlerinde `case 1 -> System.out.println("Kitap ara");` biçiminde, `break` gerektirmeyen ve düşmeyen bir `switch` yazımı da var. Güzel bir yazım ve ileride kullanacaksınız; ama bu dönem klasik biçimi öğreniyoruz, çünkü sınavda, kitapta ve okuyacağınız kodların çoğunda hâlâ o var ve `break`'in ne yaptığını anlamadan ok biçimine geçmek, asansörü hiç görmeden "dur düğmesi gereksiz" demek gibi.
+
+Şimdi `switch`'i gerçek bir menüde görelim. Kantin uygulamasının kuzeni bir kırtasiye düşünün: dört ürün, kullanıcı numarayı giriyor, program fiyatı söylüyor. Geçen hafta bunu dört basamaklı bir merdivenle yazardınız; bu hafta `switch` ile ve tek geçişle, yani döngü yok, bir seçim, bir cevap, bitti. Döngüyü haftaya öğreniyoruz ve o zaman bu menü "0 girilene kadar" dönecek.
+
+<CodeTry title="Kırtasiye menüsü" hint="urun = 2 ile çalıştırın: Defter. Sonra 0 ve 7 ile deneyin. Üçüncü deneme: fiyatı println yerine bir double fiyat değişkenine atayın ve switch'ten SONRA tek bir printf ile yazdırın; Taksi programındaki 'karar değişkeni değiştirir, yazdırma en sonda' kalıbı burada da çalışıyor mu?">
+
+```java
+int urun = 2;
+
+System.out.println("1) Kalem  2) Defter  3) Silgi  4) Cetvel  0) Cikis");
+System.out.println("Secim: " + urun);
+
+switch (urun) {
+    case 1:
+        System.out.println("Kalem: 15 TL");
+        break;
+    case 2:
+        System.out.println("Defter: 45 TL");
+        break;
+    case 3:
+        System.out.println("Silgi: 10 TL");
+        break;
+    case 4:
+        System.out.println("Cetvel: 25 TL");
+        break;
+    case 0:
+        System.out.println("Cikis");
+        break;
+    default:
+        System.out.println("Gecersiz secim");
+}
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `Bu kırtasiye menüsünü else-if merdiveniyle yeniden yazsaydım kaç satır olurdu ve hangisi daha okunur? Kodu yazma, yalnızca karşılaştır; sonra bana "switch ne zaman yanlış araçtır?" diye tek bir soru sor.`
+
+Playground klavyeden okumadığı için `urun`'u koda yazdık; labdaki `Menu.java` aynı yapıyı `Scanner` ile okuyacak ve otomatik kontrol `2` verip `Odunc al` satırını arayacak. Kodu yazarken `switch`'in parantezine `int` ya da `char` koyun; `String` de olur, ama bu dönem sayıyla ve harfle yetiniyoruz.
+
+### Mantıksal operatörler: iki soruyu tek parantezde sormak
+
+Geçen hafta artık yıl programını üç kat iç içe `if` ile yazdınız ve "4'e bölünüyor **ve** 100'e bölünmüyor, **ya da** 400'e bölünüyor" cümlesini tek satırda söylemenin bir yolu olduğunu söylemiştik. O yol, mantıksal operatörler. Üç tane var ve üçü de `boolean` alıp `boolean` verir.
+
+| Operatör | Okunuşu | Ne zaman `true`? | Örnek |
+|---|---|---|---|
+| `&&` | ve | İki taraf da `true` ise | `yas >= 18 && ogrenci == 'e'` |
+| `\|\|` | ya da | En az bir taraf `true` ise | `yas < 18 \|\| yas >= 65` |
+| `!` | değil | Tarafı tersine çevirir | `!(yas < 18)` yani `yas >= 18` |
+
+Bir kapıdan geçmek için iki görevlinin ikisinin de "geç" demesi gerekiyorsa bu `&&`; ikisinden birinin "geç" demesi yetiyorsa `||`; görevli "geçemezsin" diyorsa ve siz bunun tersini soruyorsanız `!`. Hepsi bu. Aşağıdaki kutu dört ihtimali yan yana yazdırıyor; önce kağıda tahmin edin.
+
+<CodeTry title="Dört ihtimal" hint="Her satırı önce tahmin edin, sonra çalıştırın. İkinci deneme: a ve b'yi değiştirip tabloyu tamamlayın. Üçüncü deneme: !(a && b) ile (!a || !b) her kombinasyonda aynı mı çıkıyor? Çıkıyorsa buna De Morgan kuralı deniyor ve haftaya lazım olacak.">
+
+```java
+boolean a = true;
+boolean b = false;
+
+System.out.println("a && b : " + (a && b));
+System.out.println("a || b : " + (a || b));
+System.out.println("!a     : " + (!a));
+System.out.println("!(a && b) : " + (!(a && b)));
+System.out.println("!a || !b  : " + (!a || !b));
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `a = false ve b = false iken yukarıdaki beş satır ne yazar? Çalıştırmadan tahmin et, tablo biçiminde ver; ben Playground'da kontrol edeceğim.`
+
+Şimdi artık yıl programına geri dönelim. Geçen haftanın üç katlı `if`'i bu hafta tek satıra iniyor:
+
+<CodeTry title="Artık yıl, tek satır" hint="2024, 1900, 2000 ve 2023 ile deneyin; geçen haftanın üç katlı sürümüyle aynı sonuçları vermeli. Sonra parantezleri kaldırın: yil % 4 == 0 && yil % 100 != 0 || yil % 400 == 0 aynı sonucu veriyor mu? Veriyor, çünkü && önce gelir; ama parantezsiz okunuyor mu?">
+
+```java
+int yil = 1900;
+
+boolean artik = (yil % 4 == 0 && yil % 100 != 0) || (yil % 400 == 0);
+
+if (artik) {
+    System.out.println(yil + " artik yil");
+} else {
+    System.out.println(yil + " artik yil degil");
+}
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `Geçen hafta artık yılı üç kat iç içe if ile yazdım, bu hafta tek satır mantıksal ifadeyle. İkisi her yıl için aynı sonucu verir mi? Bir karşı örnek bulmaya çalış; bulamazsan neden bulunamayacağını söyle. Kodu yazma.`
+
+Üç kat iç içe `if`'in yaptığı işi bir satır yapıyor ve `boolean artik` kutusuna koyduğumuz için `if`'in parantezi de okunur hale geldi. Parantezlere dikkat edin: `&&` Java'da `||`'den önce gelir, yani parantezsiz yazsanız da aynı sonuç çıkar; ama geçen haftanın kuralı burada da geçerli, şüphe duyduğunuz yere parantez koyun, fazlası zarar vermez.
+
+Son olarak bir şey var ki bu haftanın en sinsi ve en kullanışlı davranışı: **kısa devre** (short-circuit). İki kapılı bir binaya giriyorsunuz; ilk kapıdaki görevli "geçemezsin" dediğinde ikinci kapıya hiç gitmezsiniz, çünkü ikinci görevli ne derse desin içeri giremeyeceksiniz. Java `&&` için tam olarak böyle davranır: sol taraf `false` ise sağ tarafa **hiç bakmaz**. `||` için tersi: sol taraf `true` ise sağ taraf hesaplanmaz, çünkü sonuç zaten `true`.
+
+Bu neden önemli? Çünkü sağ taraf bazen tehlikelidir. `b != 0 && a / b > 2` ifadesinde `b` sıfırsa sol taraf `false` olur ve `a / b` hiç hesaplanmaz; sıfıra bölme yapılmaz, program çökmez. Sırayı ters çevirirseniz, yani `a / b > 2 && b != 0` yazarsanız, Java önce bölmeyi dener ve `b` sıfırsa `ArithmeticException` ile çöker. Aynı iki soru, farklı sıra, biri çalışıyor biri çöküyor.
+
+<CodeTry title="Kısa devre" hint="Önce çalıştırın: b = 0 için ilk satır çöker mi? Çökmez, çünkü sol taraf false ve sağ tarafa bakılmadı. Sonra ikinci satırın başındaki // işaretini kaldırıp çalıştırın ve ArithmeticException'ı okuyun. Üçüncü deneme: b = 3 yapın, iki satır da çalışır mı?">
+
+```java
+int a = 10;
+int b = 0;
+
+System.out.println("Guvenli: " + (b != 0 && a / b > 2));
+// System.out.println("Tehlikeli: " + (a / b > 2 && b != 0));
+System.out.println("Program buraya geldi");
+```
+
+</CodeTry>
+
+*Gemini'ye şunu sor:* `b != 0 && a / b > 2 ile a / b > 2 && b != 0 arasındaki fark nedir? b = 0 için hangisi çöker ve neden? Önce bana "kısa devre" kelimesini kullanmadan açıkla, sonra terimi söyle.`
+
+> [!tanim] Kısa devre (short-circuit)
+> `&&` ifadesinde sol taraf `false` ise sağ taraf hiç değerlendirilmez; `||` ifadesinde sol taraf `true` ise sağ taraf hiç değerlendirilmez, çünkü sonuç zaten bellidir. Tehlikeli soruyu (sıfıra bölme, ileride boş liste okuma) her zaman sağa, onu güvenli kılan soruyu sola yazın.
+
+### Görev modu canlı: klasörü yetkilendir, dosyalarla çalış
+
+Şimdi kurulum bölümünde anlattığımız ustayı atölyeye çağırıyoruz. Yansıda Gemini masaüstü uygulamasında görev modunu seçip `Belgeler/algo1` klasörünü yetkilendireceğim; klasörde Lab 4'teki `Taksi.java` ve `izleme.md` var. Üç istem, üçü de dosya üstünde çalışıyor ve üçünün de ortak özelliği şu: asistandan cevap değil, **beni çalıştıracak bir şey** istiyoruz.
+
+Birinci istem, test girdisi üretici:
+
+```text
+Bu klasördeki Taksi.java dosyasını oku. Programın kaç farklı dalı olduğunu söyle ve her dala düşen üç test girdisi (km ve saat) öner; girdileri bir tablo olarak ver ama ÇIKTILARI SÖYLEME, çıktıları ben hesaplayacağım. Sonra bana sor: "Hangi girdi gece zammına düşer?"
+```
+
+Asistan üç girdi veriyor, ben kağıda çıktıları yazıyorum, sonra programı terminalde çalıştırıp karşılaştırıyoruz. Bu, Lab 4'teki `izleme.md` işinin ta kendisi; fark şu ki girdileri bu kez bir asistan seçti ve seçtiği girdilerin dalları gerçekten kapsayıp kapsamadığını da biz kontrol ediyoruz.
+
+İkinci istem, izlemeyi kontrol ettirme:
+
+```text
+Bu klasördeki izleme.md dosyasını oku; içinde Taksi.java'yı kağıt üzerinde üç girdiyle izlediğim bir tablo var. Taksi.java'yı da okuyup tablodaki satırları kontrol et. Yanlış bir satır varsa HANGİ satırın yanlış olduğunu söyle ama DOĞRUSUNU SÖYLEME; bana "bu girdide saat sınırını bir daha düşün" gibi tek bir ipucu ver. Her şey doğruysa bunu söyle ve tabloya eklememi önereceğin dördüncü bir sınır girdisi yaz.
+```
+
+"Doğrusunu söyleme" cümlesinin neden orada durduğunu artık biliyorsunuz: doğruyu asistan söylerse siz onu okumuş olursunuz, yanlışı bulup doğrusunu kendiniz yazarsanız öğrenmiş olursunuz. Artırma, otomasyon değil.
+
+Üçüncü istem, iskelet oluşturma. Bu kez asistan klasöre **yeni bir dosya yazacak** ve dosya yazma iznini ben onaylayacağım:
+
+```text
+Bu klasörde Menu.java adında yeni bir dosya oluştur. İçinde: import java.util.Scanner; public class Menu; main içinde Scanner ile 0-3 arası bir tam sayı okuyan bir satır; sonra okunan sayı üstünde bir switch: case 1, case 2, case 3, case 0 ve default. Her case'in GÖVDESİNİ BOŞ BIRAK, yalnızca "// TODO" yorumu ve break koy; hangi case'in ne yapacağını yazma, onu ben dolduracağım. Kodun derlenebilir olmasına dikkat et ve dosyayı oluşturduktan sonra bana ne yaptığını üç cümleyle söyle.
+```
+
+Dosya oluştuğunda birlikte açıp okuyacağız ve gövdeleri derste birlikte dolduracağız: 1 için `Kitap ara`, 2 için `Odunc al`, 3 için `Iade et`, 0 için `Cikis`. Bu, Lab 5'in ilk görevi ve yeşil bölgede çalışmanın tam tarifi: **iskelet asistandan, mantık sizden.** Vizede "menünüzün switch'ini yazın" dendiğinde iskeleti kim yazdıysa yazsın, gövdeyi siz yazmış olacaksınız ve kağıda da siz yazacaksınız.
+
+> [!uyari] Dosya yazma iznini okuyarak verin
+> Görev modunda asistan dosya oluşturmadan ya da değiştirmeden önce sorar; "evet" demeden önce hangi dosyaya ne yazacağını okuyun. `Taksi.java`'nızı "düzelteyim mi?" derse hayır deyin, çünkü Lab 4 teslim edildi ve o dosya sizin. Ustayı atölyeye aldınız diye tezgahtaki her şeyi değiştirmesine izin vermek zorunda değilsiniz.
+
+### Beceri tanımlama: bir talimatı dosyaya koyup her görevde çağırmak
+
+Gem'i kurduktan sonra bir şey fark edeceksiniz: hata mesajı paylaşırken her seferinde "türünü söyle, satırı göster, düzeltmeyi söyleme, ipucu ver" diye yazıyorsunuz ve bu dört cümle her seferinde aynı. Aynı olan şey bir dosyaya girer. Yapay zeka uygulamalarında buna **beceri** (skill) deniyor: yeniden kullanılabilir bir talimat paketi, bir metin dosyasında durur, her görevde adıyla çağrılır. Berber benzetmesine dönersek Gem "her zamanki gibi" demekti; beceri ise "her zamanki gibi ama bugün bir de sakal" dediğiniz, ihtiyaç olunca eklenen küçük bir tarif.
+
+Yetkilendirdiğiniz klasöre `beceri-java-hata.md` adında bir dosya açın ve içine şunu yazın:
+
+```text
+# Beceri: Java hata mesajı okuma
+
+Bana bir Java hata mesajı verildiğinde şu sırayla davran:
+
+1) Hatanın türünü söyle: sözdizimi (derleyici yakaladı), çalışma zamanı (program çalışırken çöktü) ya da mantık (çalıştı ama yanlış sonuç). Bir cümleyle neden o tür olduğunu açıkla.
+2) Hatanın hangi satırda olduğunu göster ve mesajdaki anahtar kelimeyi (ör. "incompatible types", "cannot find symbol", "ArithmeticException") günlük Türkçeye çevir.
+3) Düzeltmeyi SÖYLEME. Onun yerine, hatayı bulmamı sağlayacak tek bir ipucu ver; ipucu bir soru biçiminde olsun ("bu satırdaki kutunun tipi ne, içine ne koymaya çalışıyorsun?").
+4) "İpucu yetmedi" dersem ikinci, daha somut bir ipucu ver; yine düzeltme yazma.
+5) "Pes" dersem düzeltmeyi yaz ama yanına neden çalıştığını iki cümleyle ekle ve bana "benzer bir hata nerede çıkar?" diye sor.
+
+Kısıtlar: döngü, metot ve dizi kullanma; 1. sınıf seviyesinde konuş; 120 kelimeyi geçme.
+```
+
+Nasıl çağrılır? Görev modunda klasör yetkiliyken bir mesajın başına şunu yazmak yeter:
+
+```text
+beceri-java-hata.md dosyasındaki beceriyi uygula. İşte hatam:
+(buraya hata mesajı, ilgili 10 satır ve ne denediğim)
+```
+
+Asistan dosyayı okur, beş adımı sırayla uygular ve siz her seferinde aynı kaliteyi alırsınız. Uygulamaların bazıları beceriyi ayrı bir menüden kaydetmenize de izin veriyor; adı ne olursa olsun fikir aynı: talimat dosyada, çağrı tek satır.
+
+Başka beceri fikirleri, hepsi bir öğleden sonra yazılır ve dönem boyunca işe yarar: **kod anlatıcı** ("verdiğim kodu satır numarasıyla anlat, her satır bir cümle, sonunda bir kendini sına sorusu"), **test girdisi üretici** ("verdiğim programın dallarını say, her dala bir girdi öner, çıktıları söyleme"), **DOT çizici** ("verdiğim Java kodunun akış diyagramını DOT dilinde çiz, elmas sembolü yalnızca if ve switch için"). Üçü de Lab 5'in günlük dosyasında kendine yer bulabilir.
+
+> [!tanim] Beceri (skill)
+> Bir yapay zeka asistanına verilen, bir dosyada saklanan ve her görevde adıyla çağrılabilen yeniden kullanılabilir talimat paketi. Gem kalıcı karakterdir, beceri o karakterin bildiği bir tariftir; bir Gem birden fazla beceri kullanabilir.
+
+### Doğrulama anı
+
+Her hafta aracı bir kez yakalıyoruz ve bu hafta tuzağı bu haftanın konusundan kuruyoruz. Soruya yanlış bir iddia gömüyorum ve asistanın buna direnip direnmediğine bakıyoruz:
+
+```text
+Java'da switch yazarken case'in sonuna break yazmazsam da case bitince switch'ten çıkar, değil mi? Kısa cevap ver.
+```
+
+Doğru cevap "hayır, çıkmaz; bir sonraki case'e düşer ve break görene kadar devam eder". İyi bir araç bunu söyler ve "fall-through" kelimesini ekler; kötü gününde ise "evet" der, çünkü sorunun kendisi ona "evet" demesini kolaylaştırıyor. Hangisini söylediğinin bir önemi yok, çünkü doğrulama aracın sözüyle değil Playground'la yapılır: "Durmayan asansör" kutusunu açıp `kat = 3` ile çalıştırıyoruz ve üç satır görüyoruz. Üç satır çıkıyorsa `break`'siz `switch` durmuyor demektir ve bu sayfadaki ders notu da aynı şeyi söylüyor; aracın cevabı ikisiyle uyuşmuyorsa yanılan araçtır.
+
+Buradan çıkan ders geçen haftakinin üstüne bir tuğla koyuyor: soruya yanlış bilgi gömerseniz araç onu doğru sanabilir, Playground sanmaz. Bu yüzden bir şeyden emin değilken "değil mi?" diye sormayın; "ne olur?" diye sorun ve cevabı çalıştırın.
+
+### Kendinizi test edin
+
+Dört parçalı istemin en güzel kullanımlarından biri, aracı sınav yazarı yapmak. Aşağıdaki istemi kendi Gem'inize ya da düz sohbete verin:
+
+```text
+Sınav yazarı gibi davran. Algoritma ve Programlama I dersinin 1-5. haftalarından (algoritma ve akış diyagramı, Java'ya giriş, değişkenler ve operatörler, if/else ve merdiven, switch ve mantıksal operatörler) 5 çoktan seçmeli soru yaz; her soru 4 şıklı, tek doğru cevaplı, Türkçe, en az ikisi "bu kod ne yazar?" biçiminde olsun. Her sorunun altında doğru şıkkın neden doğru olduğunu ve diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu bir cümleyle açıkla. Cevap anahtarını en sona koy. 1. sınıf öğrencisiyim, vize kağıt üzerinde olacak.
+```
+
+"Neden yanlış" kısmı bu istemin en değerli yeri, çünkü yanlış şıkların açıklaması doğru şıkkın açıklamasından daha çok öğretir. Aracın yazdığı soruları da doğrulayacaksınız: "bu kod ne yazar" sorularını Playground'da çalıştırın; araç kendi sorusunun cevabını yanlış verebilir ve bunu yakaladığınız gün yeşil bölge beyanının dördüncü satırına yazacak bir şeyiniz olur.
+
+Sayfada hazır beş soru da var; önce kendiniz çözün, sonra cevapları açın.
+
+1. `int x = 7; int y = 2; System.out.println(x / y * 2.0);` ne yazar?
+   A) `7.0` · B) `6.0` · C) `3` · D) `3.5`
+2. `switch (n)` içinde `case 2:` satırının altında `break` yoksa ve `n` 2 ise ne olur?
+   A) Derleme hatası · B) Yalnızca `case 2` çalışır · C) `case 2` ve altındaki case'ler `break` görene kadar çalışır · D) `default` çalışmaz
+3. `int b = 0; boolean s = (b != 0 && 10 / b > 1);` satırı çalıştırıldığında ne olur?
+   A) `ArithmeticException` · B) `s` `false` olur, hata yok · C) `s` `true` olur · D) Derleme hatası
+4. `yas = 17`, `ogrenci = 'h'` iken `yas < 18 || ogrenci == 'e'` ifadesinin değeri nedir?
+   A) `true` · B) `false` · C) Derleme hatası · D) `17`
+5. Aşağıdaki istemlerden hangisi dört parçanın (rol, görev, biçim, bağlam) dördünü de içerir?
+   A) "switch nedir?" · B) "Java hocası gibi davran, switch'i anlat." · C) "Java hocası gibi davran; switch'i merdivenle karşılaştır; 5 cümle ve bir örnek; 1. sınıfım, if/else biliyorum." · D) "switch'i 5 cümleyle anlat."
+
+<details>
+<summary>Cevaplar</summary>
+
+1. **B.** Soldan sağa: önce `7 / 2 = 3` (tam sayı bölmesi), sonra `3 * 2.0 = 6.0`. A, bölmenin ondalıklı yapıldığını varsayar; C `2.0` ile çarpmayı unutur; D ise `7 / 2`'nin `3.5` olduğunu sanır, oysa iki `int`'in bölümü `int`'tir.
+2. **C.** Fall-through: `break` görene kadar aşağı akar. A yanlış, çünkü derleyici `break`'i zorunlu tutmaz; B `break` varmış gibi düşünür; D yanlış, çünkü araya `break` girmezse `default` da çalışır.
+3. **B.** Kısa devre: `b != 0` `false` olduğu için `10 / b` hiç hesaplanmaz. A ancak sıra ters olsaydı doğru olurdu; C yanlış, çünkü sol taraf `false`; D yanlış, çünkü ifade geçerli.
+4. **A.** `17 < 18` `true` olduğu an `||` sağ tarafa bakmadan `true` verir; öğrenci olmaması sonucu değiştirmez. B sol tarafı unutur; C ve D ifadenin `boolean` olduğunu gözden kaçırır.
+5. **C.** Rol (Java hocası), görev (merdivenle karşılaştır), biçim (5 cümle ve bir örnek), bağlam (1. sınıf, if/else biliyorum). A hiçbirini, B yalnızca rol ve görevi, D yalnızca görev ve biçimi içerir.
+
+</details>
+
+### Cep kartı: altı istem
+
+Telefonunuza ya da `algo1` klasörünüze `cep-karti.md` adıyla kaydedin; dönem boyunca işinize yarar. Kullanma kuralı tek ve değişmez: aracın verdiği her kod Playground'da çalıştırılmadan, her açıklama ders notuyla karşılaştırılmadan doğru sayılmaz.
+
+**1. Dört parçalı soru** (konu adını değiştirin):
+
+```text
+Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: [KONU] kavramını, bildiğim [ÖNCEKİ KONU] ile karşılaştırarak anlat. Biçim: en fazla 6 cümle, 10 satırı geçmeyen Scanner'sız bir örnek, sonunda bir "kendini sına" sorusu. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; döngü, metot ve dizi görmedim; örneği Java Playground'da çalıştıracağım.
+```
+
+**2. Java Hocam** (Gem talimatı; yukarıdaki tam metnin kısa hali, düz sohbette ilk mesaj olarak da çalışır):
+
+```text
+Bundan sonra bu sohbette "Java Hocam" ol: 1. sınıf yazılım mühendisliği öğrencisine Java öğreten sabırlı bir hoca. Kurallar: lab görevimi çözme, iskelet ver gövdeyi bana bırak; cevaptan önce bana bir soru sor; her cevabın sonunda "Kendini sına:" sorusu; emin değilsen "Playground'da dene:" deyip 5-8 satır Scanner'sız kod ver; kodu satır satır anlat; Türkçe, 150 kelime; yanlışımı düzelt, beni haklı çıkarmak için fikrini değiştirme.
+```
+
+**3. Beni sorguya çek:**
+
+```text
+Java hocası gibi davran ve beni [KONU] konusunda sorguya çek. Her seferinde tek soru, cevabımı bekle; doğruysa zorlaştır, yanlışsa önce ipucu, ikinci yanlışta açıkla. 5 soru sonra değerlendirme ve en zayıf noktam. Bağlam: 1. sınıf, [BİLDİKLERİM].
+```
+
+**4. Hata protokolü:**
+
+```text
+Java'da hata alıyorum; nedenini anlamama yardım et ama düzeltmeyi yazma, bana ipucu ver.
+Hata mesajı (kopyalandı):
+[MESAJ]
+İlgili satırlar:
+[10 SATIR]
+Ne denedim ve ne bekliyordum:
+[DENEDİKLERİM]
+1. sınıf öğrencisiyim; döngü, metot ve dizi bilmiyorum.
+```
+
+**5. Kodumu anlat:**
+
+```text
+Aşağıdaki Java kodunu satır satır, satır numarasıyla anlat; her satır bir cümle. Kodu düzeltme ve iyileştirme önerme; yalnızca Java'nın bu kodu nasıl okuduğunu söyle. Sonunda "[GİRDİ] için çıktı ne olur?" sorusunu bana sor, cevabını verme.
+[KOD]
+```
+
+**6. Test girdisi üret:**
+
+```text
+Aşağıdaki Java programının kaç farklı dalı (if/else, switch case) olduğunu say ve her dala düşen bir test girdisi öner; sınır değerlerini (tam 18, tam 0 gibi) mutlaka ekle. Girdileri tablo olarak ver ama ÇIKTILARI SÖYLEME; çıktıları ben hesaplayıp programı çalıştırarak doğrulayacağım.
+[KOD]
+```
+
+## Büyük Resim: Kantin Uygulamasında Menü
+
+Üç haftadır büyüttüğümüz kantin uygulamasında geçen hafta "sepete ekle" alt akışında dört kat iç içe karar vardı ve "on ürünlük menü için on basamaklı merdiven" diye yakınmıştık. Bugün o iki dert birden çözülüyor. Ürün seçimi artık bir `switch`: kullanıcı 1-10 arası bir sayı giriyor, her `case` bir ürün, `default` "geçersiz seçim", 0 ise çıkış. Saat kontrolü ise tek satıra indi: `saat >= 14 && saat < 16` yazdığınız anda geçen haftanın iki katlı `if`'i gidiyor; öğrenci indirimi ile kampanya indiriminden büyüğünü seçen karar da `ogrenci || kampanyaSaati` gibi tek bir ifadeyle sorulabiliyor.
+
+Portfolyonuz için bunun anlamı somut: **KT1, 6 Kasım Cuma 23.59** ve KT1 uygulamanızın `Scanner` ile girdi alıp en az bir `if/else` ile karar vermesini istiyor; menü döngüsü KT2'nin işi. Bu hafta öğrendiğiniz `switch` tek geçişlik bir menü için tam zamanında geliyor: kullanıcı bir kez seçer, program bir kez cevap verir, biter. Ve bu hafta öğrendiğiniz görev modu da tam zamanında: **menünüzün iskeletini Gemini'ye yaptırabilirsiniz**, portfolyo yeşil bölge; ama her satırını anlatacaksınız, `AI-BEYANI.md`'ye yazacaksınız ve vizedeki 10 puanlık soru o menüden gelecek. İskelet asistandan, mantık sizden; bu cümleyi bugün üçüncü kez söylüyorum, çünkü dönemin geri kalanı bu cümlenin üstünde duruyor.
+
+> [!nerede] Sahada
+> Gerçek bir ürün ekibinde "iskeleti araç yazsın, mantığı biz yazalım" artık bir okul kuralı değil, günlük iş biçimi. Fark şurada: ekipteki mühendis aracın yazdığı iskeleti okumadan kabul etmez, çünkü o iskelet üretime gider ve altına onun adı yazılır. Lab 5'teki günlük dosyası bu alışkanlığın küçük hali: kime ne sordum, ne cevap aldım, nasıl doğruladım.
+
+## Temel Kavramlar
+
+- **İstem (prompt)**: Bir yapay zeka asistanına yazdığınız soru ya da talimat; kalitesi cevabın kalitesini belirler.
+- **Rol, görev, biçim, bağlam**: İyi bir istemin dört parçası; kim cevaplıyor, tam olarak ne yapsın, cevap nasıl görünsün, ben kimim ve neyi biliyorum. En çok atlanan parça bağlam.
+- **Gem**: Kalıcı karakter; dört parçanın değişmeyen kısmını bir kez kaydedip her sohbette aynı kurallarla çalıştırma. "Her zamanki gibi."
+- **Görev modu**: Asistanın bir klasörü yetkiyle okuyup dosya oluşturabildiği mod; ustayı atölyeye çağırmak. Asistan sizin yetkinizle iş yapar.
+- **Beceri (skill)**: Dosyada saklanan, her görevde adıyla çağrılan yeniden kullanılabilir talimat paketi; `beceri-java-hata.md`.
+- **Halüsinasyon**: Asistanın kendinden emin biçimde yanlış bilgi vermesi; soruya gömülü yanlış iddiayı onaylaması bunun en sık biçimi.
+- **Doğrulama**: Asistanın verdiği kodu Playground'da çalıştırmak, açıklamayı ders notuyla karşılaştırmak; uymayan yerde kazanan çıktı ve ders notu.
+- **Hata protokolü**: Mesajın kendisi, ilgili on satır, ne denediğiniz; "çalışmıyor" bir hata raporu değildir.
+- **switch**: Bir değişkenin tam olarak hangi sabit değerde olduğunu soran çok yollu seçim; eşitlik sorar, aralık sormaz.
+- **case / break / default**: Giriş etiketi, çıkış düğmesi, "hiçbiri tutmadıysa" dalı. Her `case`'in sonunda `break`.
+- **Düşme (fall-through)**: `break` yoksa `switch`'in eşleşen `case`'den aşağıya akmaya devam etmesi; durmayan asansör. Bilerek yapıldığında yorum yazılır.
+- **`&&` (ve)**: İki taraf da `true` ise `true`; iki görevli de "geç" demeli.
+- **`||` (ya da)**: En az bir taraf `true` ise `true`; bir görevlinin "geç" demesi yeter.
+- **`!` (değil)**: `boolean`'ı tersine çevirir; `!(a && b)` ile `!a || !b` aynı şeydir.
+- **Kısa devre**: `&&`'de sol taraf `false`, `||`'de sol taraf `true` ise sağ taraf hiç hesaplanmaz; tehlikeli soruyu sağa yazın.
+- **Artırma, otomasyon değil**: Asistan düşünmenizi hızlandırıyorsa doğru, sizin yerinize düşünüyorsa yanlış kullanılmıştır.
+
+## Sahadan Örnekler
+
+- **Sahaya konuşlanmış mühendis.** Bir yapay zeka şirketinin mühendisi bir lojistik firmasına gidiyor; firmanın on yıllık sevkiyat verisi var ve o veri hiçbir kitapta anlatılan biçimde değil. Mühendisin işi modeli eğitmek değil, firmanın insanlarına doğru soruları sormak, veriyi anlamak, modelin çıktısını firmanın gerçek sonuçlarıyla karşılaştırıp nerede yanıldığını bulmak ve yazılımı oraya uyarlamak. Günün büyük kısmı kod yazmakla değil, "bu sütun neden boş?", "bu çıktı gerçekle uyuşuyor mu?" diye sormakla geçiyor. Bugün Playground'da kurduğunuz sor-dene-doğrula döngüsünün büyümüş hali bu ve bu rolün adı beş yıl önce yoktu.
+- **Bir ekipte hata raporu kültürü.** Küçük bir yazılım ekibinde yeni başlayan biri ilk haftasında ekip sohbetine "ödeme sayfası çalışmıyor" yazıyor ve kimse cevap vermiyor; aynı gün başka biri "ödeme sayfasında 500 hatası, log şu, 42. satırda `null`, dün akşamki sürümden sonra başladı, geri alınca düzeliyor" yazıyor ve on dakikada çözülüyor. İkinci mesajı yazan kişi daha iyi bir mühendis değil, daha iyi soru soran biri. Hata protokolü ekiplerde yazılı olmayan bir giriş sınavıdır ve asistanla çalışırken de aynı sınav geçerlidir: iyi sorulan hatanın yarısı sorulurken çözülür.
+- **Yanlış cevabı yakalayan birinci sınıf.** Geçen yıl bu dersi alan bir öğrenci (adını vermiyoruz) portfolyo menüsünü bir asistana yazdırmış, asistan `switch`'in her `case`'ine `break` koymayı unutmuş ve "bu kod 2 girince yalnızca ikinci seçeneği çalıştırır" diye açıklamış. Öğrenci kodu çalıştırmadan önce "break yoksa ne olur" diye derste duyduğunu hatırlamış, programı çalıştırmış, üç satır görmüş ve `AI-BEYANI.md`'nin dördüncü satırına "asistan break'leri unutmuştu, fall-through'u yakaladım" yazmış. Vizede `switch` sorusunu tam puanla yapan birkaç kişiden biriydi. Yakaladığı hata değil, yakalayabilmesi öğretici.
+
+## Portfolyo
+
+KT1, **6 Kasım Cuma 23.59** ve konunuz ile ayırt edici kuralınız geçen hafta sonundan beri [Proje](/proje) sayfasında. KT1'in beklediği şey küçük: README'de konu ve kural, `Scanner` ile girdi, en az bir `if/else` ile karar, ayırt edici kural en basit haliyle kodda, `AI-BEYANI.md` dolu. Bu hafta iki şey eklendi: uygulamanızın ilk ekranı tek geçişlik bir `switch` menüsü olabilir (döngü haftaya) ve bu menünün iskeletini görev modunda asistana yaptırabilirsiniz. Yaptırırsanız beyanın dört satırını doldurun ve en önemlisi dördüncüyü: asistanın hangi hatasını yakaladınız? Hiç hata yakalamadıysanız kodu okumamış olma ihtimaliniz yüksek; bir kez daha okuyun. Takvim: KT1 6 Kasım, KT2 27 Kasım, KT3 11 Aralık, KT4 25 Aralık ([Ders Hakkında · Portfolyo](/ders-hakkinda)).
+
+## Laboratuvara Hazırlık
+
+Bu hafta laboratuvar yapılmıyor, çünkü A şubesinin labı **28 Ekim Çarşamba** arifeye (öğleden sonra tatil), B şubesinin labı **29 Ekim Perşembe** Cumhuriyet Bayramı'na denk geliyor. Bu yüzden **Lab 5 evde yapılıyor** ve ilk kez **yeşil bölgede**: yapay zeka serbest, ama bir çalışma günlüğü tutuyorsunuz. Görevler bu dersin kendisi: `switch`'li bir menü, mantıksal operatörlü bir indirim kararı, beş başlıklı bir `istemler.md` günlüğü ve `AI-BEYANI.md`. **Son teslim 30 Ekim Cuma 23.59.**
+
+Eve giderken:
+
+- Gemini öğrenci planı ve masaüstü uygulaması kurulu, `Belgeler/algo1` klasörü açılmış ve yetkilendirilmiş olsun; "Java Hocam" Gem'i kurulmuş ve en az bir soru sorulmuş olsun.
+- `beceri-java-hata.md` dosyasını klasörünüze kaydedin; Lab 5'in dördüncü başlığı o beceriyle çalışıyor.
+- "Durmayan asansör" ve "Kısa devre" kutularını Playground'da bir kez çalıştırmış olun, çünkü günlükte "doğruladım mı, nasıl" satırına yazacak bir şeyiniz olmalı.
+- Cep kartını kaydedin; beş başlığın beşi cep kartındaki istemlerle yazılıyor.
+- Görev listesi ve test tablosu: [Lab 5](/laboratuvar/lab-05).
+
+## Tartışma Soruları
+
+1. "Artırma, otomasyon değil" ilkesine göre, bir asistana "artık yıl programını yaz" demek ile "artık yıl kuralını üç kapı benzetmesiyle anlat, sonra beni sorguya çek" demek arasındaki fark nedir? İkincisi daha yavaş olduğu halde neden daha hızlı öğretir?
+2. Görev modunda asistan "sizin yetkinizle" iş yapıyor. Bir ekipte çalışırken şirketin kod deposunu bir asistana yetkilendirmeden önce hangi soruları sormanız gerekir? Klasöre kişisel belge koymama kuralının şirketteki karşılığı ne olurdu?
+3. `switch`'in `break` olmadan düşmesi Java'nın bir tasarım kararı ve yeni ok biçimi bu kararı geri alıyor. Sizce ilk tasarım bir hata mıydı, yoksa o günün ihtiyacına uygun bir seçim mi? Bir dilin eski davranışını değiştirmenin bedeli ne olur?
+4. Kısa devre sayesinde `b != 0 && a / b > 2` çökmüyor. Peki `b != 0 & a / b > 2` (tek `&`) yazsaydınız ne olurdu? Araştırın ya da asistana sorun, sonra Playground'da deneyin; asistanın cevabı Playground'la uyuştu mu?
+5. Hata protokolünü uygulayan kişinin çoğu zaman asistana ihtiyaç duymadan hatayı kendisinin bulduğunu söyledik. Bu doğruysa asistan gereksiz mi? Değilse, asistanın gerçekten gerekli olduğu an hangisi?
+
+## Haftanın Özeti
+
+Aynı soruyu iki biçimde sorarak başladık ve farkın araçta değil soruda olduğunu gördük. Ansiklopediden arama motoruna, oradan asistana gelen yolda asistanın bizim yerimize öğrenemeyeceğini, MIT raporunun "artırma, otomasyon değil" ilkesini ve sor-oku-dene-doğrula-anlat döngüsünü konuştuk; bu döngüyü bugün kuran kişinin ileride bir şirketin verisiyle aynı döngüyü kurabileceğini, sahaya konuşlanmış mühendis rolünün tam bu olduğunu söyledik. Gemini'nin üç modunu, sohbet, Gem ve görev modunu, bir berber ve bir usta benzetmesiyle oturttuk; klasöre yalnızca ders dosyası koymayı ve asistanın bizim yetkimizle iş yaptığını öğrendik. Doğru sorunun dört parçasını, rol, görev, biçim ve bağlamı, `switch` üstünde yan yana gördük; "Java Hocam" Gem'ini kurduk; dört haftayı dört istemle geri sardık ve "çalışmıyor" yerine hata protokolünü koyduk. Araya bu haftanın konusu girdi: `switch`, `case`, `break`, `default` ve durmayan asansör; `&&`, `||`, `!` ile üç katlı artık yılın tek satıra inişi; iki kapılı binada kısa devre. Görev modunda `Taksi.java`'ya test girdisi ürettirdik, `izleme.md`'yi kontrol ettirdik ve `Menu.java` iskeletini yazdırıp gövdesini kendimiz doldurduk. Bir beceri dosyası yazdık, "break yazmazsam durur, değil mi?" tuzağını Playground'la yakaladık ve altı istemlik cep kartıyla bitirdik. Lab 5 evde ve yeşil bölgede, 30 Ekim Cuma'ya kadar; KT1 6 Kasım. Haftaya döngüler: bu haftanın tek geçişlik menüsü "0 girilene kadar" dönmeye başlayacak.

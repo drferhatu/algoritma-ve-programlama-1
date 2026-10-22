@@ -1,0 +1,26 @@
+// Hafta 5: switch akışı; ifade değerlendirilir, eşleşen case çalışır, break ile çıkılır
+digraph Switch {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    oku    [shape=box, label="secim oku"];
+    ifade  [shape=diamond, label="switch (secim)\nhangi case ile eşit?"];
+    c1     [shape=box, label="case 1:\nKitap ara"];
+    c2     [shape=box, label="case 2:\nOdunc al"];
+    c3     [shape=box, label="case 3:\nIade et"];
+    def    [shape=box, label="default:\nGecersiz secim"];
+    cikis  [shape=box, style="rounded", label="switch'ten sonraki satır"];
+
+    oku -> ifade;
+    ifade -> c1  [label="1"];
+    ifade -> c2  [label="2"];
+    ifade -> c3  [label="3"];
+    ifade -> def [label="hiçbiri"];
+    c1 -> cikis [label="break"];
+    c2 -> cikis [label="break"];
+    c3 -> cikis [label="break"];
+    def -> cikis;
+    c1 -> c2 [label="break yoksa\ndüşer", style=dashed, color="#b5541c", fontcolor="#b5541c", constraint=false];
+}

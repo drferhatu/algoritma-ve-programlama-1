@@ -1,0 +1,17 @@
+// Hafta 5: yapay zeka asistanıyla kendi kendine öğrenme döngüsü
+digraph OgrenmeDongusu {
+    charset="UTF-8";
+    rankdir=LR;
+    node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", fillcolor="#f4f1fb", color="#5b4b8a"];
+    edge [fontname="Helvetica", fontsize=10, color="#5b4b8a"];
+
+    sor     [label="SOR\ndört parçalı istem\n(rol, görev, biçim, bağlam)"];
+    oku     [label="OKU\ncevabı satır satır,\nemin olmadığın yeri işaretle"];
+    dene    [label="DENE\nJava Playground'da\nçalıştır"];
+    dogrula [label="DOĞRULA\nders notu + gerçek çıktı\nile karşılaştır", fillcolor="#fde9d9", color="#b5541c"];
+    anlat   [label="ANLAT\n30 saniyede\nyanındakine ya da kendine"];
+
+    sor -> oku -> dene -> dogrula -> anlat;
+    anlat -> sor [label="yeni soru", constraint=false];
+    dogrula -> sor [label="uymadı: tekrar sor", style=dashed, constraint=false];
+}

@@ -126,43 +126,63 @@
  "kurallar": [
   {
    "no": 1,
-   "metin": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "ad": "Eşik uyarısı",
+   "metin": "Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır.",
+   "ornek": "Kütüphanede ödünç kitap sayısı 3'e ulaşınca uyarı; not ortalamasında ortalama 2.00'nin altına inince uyarı."
   },
   {
    "no": 2,
-   "metin": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "ad": "Zaman kuralı",
+   "metin": "Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural.",
+   "ornek": "Otoparkta gece saatlerinde farklı ücret; burs hesabında başvuru tarihi geçmişse başvuru reddi."
   },
   {
    "no": 3,
-   "metin": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "ad": "İşlem limiti",
+   "metin": "Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler.",
+   "ornek": "Yemekhane kartında günde en fazla iki yükleme; ders programında bir güne en fazla dört ders."
   },
   {
    "no": 4,
-   "metin": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "ad": "Puan biriktirme",
+   "metin": "Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak.",
+   "ornek": "Bisiklet kiralamada her kiralama 10 puan, 100 puanda bir saat ücretsiz; kulüp üyeliğinde beş etkinlikte rozet."
   },
   {
    "no": 5,
-   "metin": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "ad": "Gecikme bedeli",
+   "metin": "Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir.",
+   "ornek": "Kütüphanede iade gecikmesinde gün başına ceza; etüt odasında süre aşımında sonraki rezervasyon hakkının düşmesi."
   },
   {
    "no": 6,
-   "metin": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "ad": "Bekleme listesi",
+   "metin": "Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir.",
+   "ornek": "Çamaşırhanede makineler doluysa sıra numarası; etkinlik biletinde kontenjan dolunca yedek listesi."
   },
   {
    "no": 7,
-   "metin": "Kapasite: dolu olunca bekleme listesine alınır."
+   "ad": "Kullanıcı türü",
+   "metin": "Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular.",
+   "ornek": "Kantinde öğrenci kartına indirim; spor salonunda personel üyeliğine ek saat."
   },
   {
    "no": 8,
-   "metin": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "ad": "Özet raporu",
+   "metin": "Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur.",
+   "ornek": "Yemekhane kartında harcama ekstresi; not ortalamasında ders bazlı döküm ve en düşük not."
   },
   {
    "no": 9,
-   "metin": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "ad": "Üç ihlal kuralı",
+   "metin": "Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler.",
+   "ornek": "Revir randevusunda üç kez gelmeyen kullanıcıya randevu kapatma; fotokopide üç yanlış şifrede kartı kilitleme."
   },
   {
    "no": 10,
-   "metin": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "ad": "Geri alma",
+   "metin": "Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir.",
+   "ornek": "Kitap takasında yanlış eşleştirmeyi geri alma; kafeterya menüsünde son seçimi iptal."
   }
  ],
  "atama": [
@@ -173,7 +193,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "220541023",
@@ -182,7 +202,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "220541040",
@@ -191,7 +211,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "220541042",
@@ -200,7 +220,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "220541124",
@@ -209,7 +229,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "220541612",
@@ -218,7 +238,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "225541086",
@@ -227,7 +247,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "230541025",
@@ -236,7 +256,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "230541031",
@@ -245,7 +265,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "230541078",
@@ -254,7 +274,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "230541089",
@@ -263,7 +283,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "230541109",
@@ -272,7 +292,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "235541051",
@@ -281,7 +301,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "235541058",
@@ -290,7 +310,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "235541091",
@@ -299,7 +319,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "235541097",
@@ -308,7 +328,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "235542011",
@@ -317,7 +337,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240541022",
@@ -326,7 +346,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "240541033",
@@ -335,7 +355,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "240541034",
@@ -344,7 +364,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "240541038",
@@ -353,7 +373,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "240541039",
@@ -362,7 +382,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "240541048",
@@ -371,7 +391,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "240541051",
@@ -380,7 +400,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240541075",
@@ -389,7 +409,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "240541081",
@@ -398,7 +418,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240541083",
@@ -407,7 +427,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "240541094",
@@ -416,7 +436,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "240541098",
@@ -425,7 +445,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "240541106",
@@ -434,7 +454,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "240541117",
@@ -443,7 +463,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "240541119",
@@ -452,7 +472,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "240541120",
@@ -461,7 +481,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "240541121",
@@ -470,7 +490,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240541125",
@@ -479,7 +499,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "240541142",
@@ -488,7 +508,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "240541166",
@@ -497,7 +517,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "240541605",
@@ -506,7 +526,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "240541607",
@@ -515,7 +535,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "240541608",
@@ -524,7 +544,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "240541611",
@@ -533,7 +553,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240541612",
@@ -542,7 +562,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "240542002",
@@ -551,7 +571,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "240542006",
@@ -560,7 +580,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "240542007",
@@ -569,7 +589,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "240542011",
@@ -578,7 +598,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "240542019",
@@ -587,7 +607,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "245541013",
@@ -596,7 +616,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541002",
@@ -605,7 +625,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541006",
@@ -614,7 +634,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541008",
@@ -623,7 +643,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541011",
@@ -632,7 +652,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541013",
@@ -641,7 +661,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541019",
@@ -650,7 +670,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541021",
@@ -659,7 +679,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541023",
@@ -668,7 +688,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541024",
@@ -677,7 +697,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541025",
@@ -686,7 +706,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250541026",
@@ -695,7 +715,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541028",
@@ -704,7 +724,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541032",
@@ -713,7 +733,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541035",
@@ -722,7 +742,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250541036",
@@ -731,7 +751,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541038",
@@ -740,7 +760,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541040",
@@ -749,7 +769,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541041",
@@ -758,7 +778,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541049",
@@ -767,7 +787,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541050",
@@ -776,7 +796,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541052",
@@ -785,7 +805,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541059",
@@ -794,7 +814,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541060",
@@ -803,7 +823,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541064",
@@ -812,7 +832,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541068",
@@ -821,7 +841,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541070",
@@ -830,7 +850,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541072",
@@ -839,7 +859,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541074",
@@ -848,7 +868,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541076",
@@ -857,7 +877,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541079",
@@ -866,7 +886,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541080",
@@ -875,7 +895,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541082",
@@ -884,7 +904,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541086",
@@ -893,7 +913,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541089",
@@ -902,7 +922,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541090",
@@ -911,7 +931,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541092",
@@ -920,7 +940,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541093",
@@ -929,7 +949,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541094",
@@ -938,7 +958,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541098",
@@ -947,7 +967,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541103",
@@ -956,7 +976,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541105",
@@ -965,7 +985,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250541108",
@@ -974,7 +994,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541111",
@@ -983,7 +1003,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541124",
@@ -992,7 +1012,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541126",
@@ -1001,7 +1021,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541131",
@@ -1010,7 +1030,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541602",
@@ -1019,7 +1039,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541605",
@@ -1028,7 +1048,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250541606",
@@ -1037,7 +1057,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541608",
@@ -1046,7 +1066,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541613",
@@ -1055,7 +1075,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541615",
@@ -1064,7 +1084,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250541618",
@@ -1073,7 +1093,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541620",
@@ -1082,7 +1102,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250541621",
@@ -1091,7 +1111,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250541622",
@@ -1100,7 +1120,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250541623",
@@ -1109,7 +1129,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "250541624",
@@ -1118,7 +1138,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "250541626",
@@ -1127,7 +1147,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "250541628",
@@ -1136,7 +1156,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250541629",
@@ -1145,7 +1165,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "250541632",
@@ -1154,7 +1174,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250542001",
@@ -1163,7 +1183,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "250542002",
@@ -1172,7 +1192,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250542005",
@@ -1181,7 +1201,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250542008",
@@ -1190,7 +1210,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "250542015",
@@ -1199,7 +1219,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "250542020",
@@ -1208,7 +1228,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "250542022",
@@ -1217,7 +1237,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "250542025",
@@ -1226,7 +1246,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541001",
@@ -1235,7 +1255,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541002",
@@ -1244,7 +1264,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541003",
@@ -1253,7 +1273,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541004",
@@ -1262,7 +1282,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541005",
@@ -1271,7 +1291,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541006",
@@ -1280,7 +1300,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541007",
@@ -1289,7 +1309,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541008",
@@ -1298,7 +1318,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541009",
@@ -1307,7 +1327,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541010",
@@ -1316,7 +1336,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541011",
@@ -1325,7 +1345,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541012",
@@ -1334,7 +1354,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541013",
@@ -1343,7 +1363,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541014",
@@ -1352,7 +1372,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541015",
@@ -1361,7 +1381,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541016",
@@ -1370,7 +1390,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541018",
@@ -1379,7 +1399,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541019",
@@ -1388,7 +1408,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541020",
@@ -1397,7 +1417,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541021",
@@ -1406,7 +1426,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541022",
@@ -1415,7 +1435,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541023",
@@ -1424,7 +1444,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541025",
@@ -1433,7 +1453,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541026",
@@ -1442,7 +1462,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541027",
@@ -1451,7 +1471,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541028",
@@ -1460,7 +1480,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541029",
@@ -1469,7 +1489,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541030",
@@ -1478,7 +1498,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541031",
@@ -1487,7 +1507,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541032",
@@ -1496,7 +1516,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541033",
@@ -1505,7 +1525,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541034",
@@ -1514,7 +1534,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541035",
@@ -1523,7 +1543,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541036",
@@ -1532,7 +1552,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541037",
@@ -1541,7 +1561,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541038",
@@ -1550,7 +1570,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541039",
@@ -1559,7 +1579,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541040",
@@ -1568,7 +1588,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541041",
@@ -1577,7 +1597,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541042",
@@ -1586,7 +1606,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541043",
@@ -1595,7 +1615,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541044",
@@ -1604,7 +1624,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541045",
@@ -1613,7 +1633,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541046",
@@ -1622,7 +1642,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541047",
@@ -1631,7 +1651,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541048",
@@ -1640,7 +1660,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541049",
@@ -1649,7 +1669,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541050",
@@ -1658,7 +1678,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541051",
@@ -1667,7 +1687,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541052",
@@ -1676,7 +1696,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541053",
@@ -1685,7 +1705,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541054",
@@ -1694,7 +1714,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541055",
@@ -1703,7 +1723,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541056",
@@ -1712,7 +1732,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541057",
@@ -1721,7 +1741,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541058",
@@ -1730,7 +1750,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541059",
@@ -1739,7 +1759,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541060",
@@ -1748,7 +1768,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541061",
@@ -1757,7 +1777,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541062",
@@ -1766,7 +1786,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541063",
@@ -1775,7 +1795,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541064",
@@ -1784,7 +1804,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541065",
@@ -1793,7 +1813,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541066",
@@ -1802,7 +1822,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541067",
@@ -1811,7 +1831,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541068",
@@ -1820,7 +1840,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541069",
@@ -1829,7 +1849,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541070",
@@ -1838,7 +1858,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541071",
@@ -1847,7 +1867,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541072",
@@ -1856,7 +1876,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541073",
@@ -1865,7 +1885,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541074",
@@ -1874,7 +1894,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541075",
@@ -1883,7 +1903,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541076",
@@ -1892,7 +1912,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541077",
@@ -1901,7 +1921,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541078",
@@ -1910,7 +1930,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541079",
@@ -1919,7 +1939,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541080",
@@ -1928,7 +1948,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541081",
@@ -1937,7 +1957,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541082",
@@ -1946,7 +1966,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541083",
@@ -1955,7 +1975,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541084",
@@ -1964,7 +1984,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541085",
@@ -1973,7 +1993,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541086",
@@ -1982,7 +2002,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541087",
@@ -1991,7 +2011,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541088",
@@ -2000,7 +2020,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541089",
@@ -2009,7 +2029,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541090",
@@ -2018,7 +2038,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541092",
@@ -2027,7 +2047,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541093",
@@ -2036,7 +2056,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541094",
@@ -2045,7 +2065,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541095",
@@ -2054,7 +2074,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541096",
@@ -2063,7 +2083,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541098",
@@ -2072,7 +2092,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260541099",
@@ -2081,7 +2101,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541100",
@@ -2090,7 +2110,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260541101",
@@ -2099,7 +2119,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260541103",
@@ -2108,7 +2128,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260541105",
@@ -2117,7 +2137,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541109",
@@ -2126,7 +2146,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260541115",
@@ -2135,7 +2155,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260541132",
@@ -2144,7 +2164,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260541306",
@@ -2153,7 +2173,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260541307",
@@ -2162,7 +2182,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260541324",
@@ -2171,7 +2191,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260541325",
@@ -2180,7 +2200,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260542001",
@@ -2189,7 +2209,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "260542002",
@@ -2198,7 +2218,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260542003",
@@ -2207,7 +2227,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260542004",
@@ -2216,7 +2236,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260542005",
@@ -2225,7 +2245,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260542006",
@@ -2234,7 +2254,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260542007",
@@ -2243,7 +2263,7 @@
    "konu_kodu": "K08",
    "konu": "Not Ortalaması",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260542008",
@@ -2252,7 +2272,7 @@
    "konu_kodu": "K09",
    "konu": "Ders Programı Çakışması",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260542009",
@@ -2261,7 +2281,7 @@
    "konu_kodu": "K10",
    "konu": "Kafeterya Menüsü",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260542010",
@@ -2270,7 +2290,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260542012",
@@ -2279,7 +2299,7 @@
    "konu_kodu": "K13",
    "konu": "Etkinlik Bileti",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260542013",
@@ -2288,7 +2308,7 @@
    "konu_kodu": "K14",
    "konu": "Laboratuvar Malzeme Stoku",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260542014",
@@ -2297,7 +2317,7 @@
    "konu_kodu": "K15",
    "konu": "Kulüp Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260542015",
@@ -2306,7 +2326,7 @@
    "konu_kodu": "K16",
    "konu": "Kampüs Otoparkı",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   },
   {
    "no": "260542016",
@@ -2315,7 +2335,7 @@
    "konu_kodu": "K17",
    "konu": "Fotokopi Merkezi",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "260542017",
@@ -2324,7 +2344,7 @@
    "konu_kodu": "K18",
    "konu": "Yemekhane Kart Bakiyesi",
    "kural_no": 8,
-   "kural": "Kampanya: belirli bir adedin üstünde indirim uygulanır."
+   "kural": "Özet raporu: Uygulama yapılan işlemleri kaydeder ve istendiğinde dökümünü basar: işlem sayısı, toplam, ortalama, en büyük ve en küçük değer. KT3'te dizi ile tutulur."
   },
   {
    "no": "260542018",
@@ -2333,7 +2353,7 @@
    "konu_kodu": "K19",
    "konu": "Kampüs Kayıp Eşya",
    "kural_no": 9,
-   "kural": "Yaş kuralı: yaşa göre farklı fiyat ya da izin."
+   "kural": "Üç ihlal kuralı: Belirli bir hatalı davranış (geçersiz giriş, geç iade, kural dışı talep) üç kez tekrarlanınca uygulama o kullanıcıyı geçici olarak engeller ve nedenini söyler."
   },
   {
    "no": "260542019",
@@ -2342,7 +2362,7 @@
    "konu_kodu": "K20",
    "konu": "Revir Randevusu",
    "kural_no": 10,
-   "kural": "Kara liste: üç ihlalden sonra kullanıcı engellenir."
+   "kural": "Geri alma: Kullanıcı son işlemini geri alabilir; uygulama geri almadan önce onay ister ve geri alınan işlemin etkisini (bakiye, stok, sayaç) düzeltir."
   },
   {
    "no": "260542020",
@@ -2351,7 +2371,7 @@
    "konu_kodu": "K01",
    "konu": "Kantin Sipariş",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260542022",
@@ -2360,7 +2380,7 @@
    "konu_kodu": "K03",
    "konu": "Yurt Çamaşırhane Sırası",
    "kural_no": 3,
-   "kural": "Kritik uyarı: bir sayaç eşiğin altına inince uyarı mesajı verilir."
+   "kural": "İşlem limiti: Bir kullanıcı ya da kayıt için belirli bir işlem türü en fazla N kez yapılabilir; sınır dolunca uygulama işlemi reddeder ve kalan hakkı söyler."
   },
   {
    "no": "260542023",
@@ -2369,7 +2389,7 @@
    "konu_kodu": "K04",
    "konu": "Kampüs Ring Otobüsü",
    "kural_no": 4,
-   "kural": "Günlük limit: bir kullanıcı günde en fazla N işlem yapabilir."
+   "kural": "Puan biriktirme: Her işlemde bir puan ya da sayaç birikir ve belirli bir değere ulaşınca bir ayrıcalık açılır: indirim, öncelik, ek hak."
   },
   {
    "no": "260542024",
@@ -2378,7 +2398,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "260542030",
@@ -2387,7 +2407,7 @@
    "konu_kodu": "K11",
    "konu": "Kitap Takası",
    "kural_no": 1,
-   "kural": "Öğrenci indirimi: kullanıcı öğrenci ise tutar yüzde 20 düşer."
+   "kural": "Eşik uyarısı: Uygulamanızdaki bir sayısal değer (stok, bakiye, ortalama, kapasite, kalan süre) belirlediğiniz eşiği aşınca ya da altına inince kullanıcıya açık bir uyarı verilir ve ana akış bu uyarıya göre davranır."
   },
   {
    "no": "260542031",
@@ -2396,7 +2416,7 @@
    "konu_kodu": "K12",
    "konu": "Bisiklet Kiralama",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "265541006",
@@ -2405,7 +2425,7 @@
    "konu_kodu": "K07",
    "konu": "Burs Hesaplama",
    "kural_no": 7,
-   "kural": "Kapasite: dolu olunca bekleme listesine alınır."
+   "kural": "Kullanıcı türü: Uygulama kullanıcının türünü sorar (öğrenci, personel, misafir gibi) ve en az iki tür için farklı fiyat, farklı hak ya da farklı akış uygular."
   },
   {
    "no": "265541021",
@@ -2414,7 +2434,7 @@
    "konu_kodu": "K02",
    "konu": "Kütüphane Ödünç",
    "kural_no": 2,
-   "kural": "Zaman kuralı: belirli saat aralığında farklı fiyat ya da farklı kural uygulanır."
+   "kural": "Zaman kuralı: Uygulama bir saat, gün ya da tarih bilgisi alır ve davranışını ona göre değiştirir: belirli saatlerde farklı ücret, hafta sonu kapalı işlem, dönem sonunda farklı kural."
   },
   {
    "no": "265541024",
@@ -2423,7 +2443,7 @@
    "konu_kodu": "K05",
    "konu": "Spor Salonu Üyeliği",
    "kural_no": 5,
-   "kural": "Sadakat puanı: her işlemde puan birikir, puanla ödeme yapılabilir."
+   "kural": "Gecikme bedeli: Bir süre ya da sınır aşıldığında uygulama hesaplanan bir ek bedel, kesinti ya da puan cezası uygular ve nasıl hesaplandığını gösterir."
   },
   {
    "no": "265541025",
@@ -2432,7 +2452,7 @@
    "konu_kodu": "K06",
    "konu": "Etüt Odası Rezervasyonu",
    "kural_no": 6,
-   "kural": "Ceza: süre aşılınca gecikme bedeli hesaplanır."
+   "kural": "Bekleme listesi: Kapasite dolduğunda yeni talep reddedilmek yerine sıraya alınır, sıradaki kişiye yeri geldiğinde geçiş verilir ve sıradaki konumu gösterilir."
   }
  ]
 }

@@ -1,7 +1,7 @@
 ---
 week: 5
 title: "Yazılımcı Gibi Sormak: Yapay Zeka ile Öğrenme Ekosistemi (ve switch)"
-topic: "switch ifadesi (case, break, default, fall-through), mantıksal operatörler (&&, ||, !) ve kısa devre değerlendirme; yapay zekayla etkili çalışma: dört parçalı istem, kalıcı karakter (Gem), görev modu, beceri tanımlama ve çıktı doğrulama"
+topic: "switch ifadesi (case, break, default, fall-through), mantıksal operatörler (&&, ||, !) ve kısa devre değerlendirme; yapay zekayla etkili çalışma: dört parçalı istem, kalıcı beceri (Java Hocam), görev modu, hata becerisi tanımlama ve çıktı doğrulama"
 description: "Dört haftanın tekrarını ve bu haftanın konusunu bir yapay zeka asistanıyla birlikte çalışıyoruz: doğru sorunun dört parçasını, kendi Java hocanızı bir kez kurmayı, bir klasörü yetkilendirip dosyalarınızla çalışmayı ve her cevabı Playground ile ders notundan doğrulamayı öğreniyoruz. Araya switch, mantıksal operatörler ve asansörün durmadığı kat giriyor."
 module: m2
 semester: 1
@@ -12,9 +12,8 @@ tags:
   - "yapay zeka"
   - "istem"
   - "Gemini"
-  - "Gem"
-  - "görev modu"
   - "beceri"
+  - "görev modu"
   - "doğrulama"
   - "switch"
   - "fall-through"
@@ -22,7 +21,7 @@ tags:
   - "kısa devre"
 objectives:
   - "Bir yapay zeka asistanına rol, görev, biçim ve bağlam parçalarıyla istem yazar; zayıf ve güçlü istemin farkını cevapta gösterir."
-  - "Kalıcı bir karakter (Gem) ve yeniden kullanılabilir bir beceri dosyası tanımlar; ikisini bir Java sorusunda kullanır."
+  - "Kalıcı bir beceri (Java Hocam) ve bir hata becerisi tanımlar; ikisini bir Java sorusunda kullanır."
   - "Bir derleyici ya da çalışma zamanı hatasını mesaj, ilgili satırlar ve denenenlerle birlikte paylaşır; 'çalışmıyor' demek yerine hata protokolünü uygular."
   - "Yapay zekanın verdiği kodu ve açıklamayı Java Playground'da çalıştırarak ve ders notuyla karşılaştırarak doğrular; yanlış bir cevabı yakalar."
   - "switch ile çok yollu menü yazar, break ve default'un rolünü fall-through örneğiyle açıklar; &&, || ve ! ile bileşik koşul kurar ve kısa devrenin ne zaman devreye girdiğini söyler."
@@ -97,13 +96,13 @@ Bu döngüyü bugün kuran biri, dört yıl sonra nereye gider? Yazılım dünya
 > [!neden] Neden Gemini?
 > Bu derste yedi aracın yedisini de kullanabilirsiniz ([Ders Hakkında · Yapay zeka araçları](/ders-hakkinda)). Bugün Gemini seçtik, çünkü iki somut sebebi var: Google üniversite öğrencilerine bir yıl ücretsiz üst plan veriyor ve masaüstü uygulaması bir klasörü yetkilendirip içindeki dosyalarınızla çalışabiliyor. Bugün göreceğiniz her akış ChatGPT, Claude ve diğerlerinde de var; yalnızca düğmelerin adı değişir.
 
-### Kurulum ve üç mod: sohbet, Gem, görev
+### Kurulum ve üç yüz: sohbet, beceriler, görev modu
 
-Gemini'nin masaüstü uygulamasında bugün üç şey kullanacağız ve üçünü de günlük hayattan bir yere oturtalım.
+Gemini'nin masaüstü uygulamasının bugün üç yüzünü kullanacağız ve üçünü de günlük hayattan bir yere oturtalım.
 
 **Sohbet modu**, bildiğiniz şey: bir kutu, bir soru, bir cevap. Bir arkadaşınıza mesaj atmak gibi; her sohbet sıfırdan başlar ve geçen haftaki sohbette ne konuştuğunuzu hatırlamaz, siz hatırlatmazsanız.
 
-**Gem**, kalıcı bir karakter. Bir sohbetin başına her seferinde "sen Java hocasısın, ben birinci sınıfım, kodu çözme" diye yazmak yerine bu talimatı bir kez kaydedersiniz ve o karaktere ne zaman seslenirseniz aynı kurallarla cevap verir. Her hafta aynı berbere gitmek gibi: saçınızı nasıl istediğinizi bir kez anlatırsınız, sonra "her zamanki gibi" demeniz yeter.
+**Beceriler**, kalıcı talimatlar. Bir sohbetin başına her seferinde "sen Java hocasısın, ben birinci sınıfım, kodu çözme" diye yazmak yerine bu talimatı Beceriler menüsünden bir kez, bir adla kaydedersiniz ve o beceriyi hangi sohbette ya da görevde adıyla çağırırsanız aynı kurallarla cevap alırsınız. Her hafta aynı berbere gitmek gibi: saçınızı nasıl istediğinizi bir kez anlatırsınız, sonra "her zamanki gibi" demeniz yeter.
 
 **Görev modu**, bu haftanın asıl yeniliği. Uygulamaya bilgisayarınızdaki bir klasörü yetkilendirirsiniz ve asistan o klasördeki dosyaları okuyabilir, yeni dosya oluşturabilir, var olanı değiştirebilir. Sohbet modunda kodu kopyalayıp yapıştırıyordunuz, görev modunda "klasördeki `Taksi.java`'yı oku" demeniz yeter. Bir ustayı atölyenize çağırmak gibi: kapıyı açarsınız, usta tezgahınızdaki parçaları görür ve onların üstünde çalışır. Burada bir cümleyi altını çizerek söylüyorum ve derste bir kez daha tekrarlayacağım: **asistan sizin yetkinizle iş yapar.** Hangi klasörü açarsanız onu görür, siz onaylarsanız dosya yazar. Yetkiyi veren sizsiniz, sorumluluk da sizde.
 
@@ -111,7 +110,7 @@ Gemini'nin masaüstü uygulamasında bugün üç şey kullanacağız ve üçün�
 > Yetkilendirdiğiniz klasöre **yalnızca ders dosyalarını** koyun: lab Java dosyaları, `izleme.md`, bu haftaki beceri dosyası. Kişisel belgelerinizi, fotoğraflarınızı, başka derslerin ödevlerini, şifre tuttuğunuz notları oraya koymayın ve "Belgeler" klasörünün tamamını yetkilendirmeyin; `Belgeler/algo1` gibi tek bir alt klasör açın. Asistan sizin adınıza okur ve yazar; okumasını istemediğiniz şeyi görmesin.
 
 > [!not] Arayüz adları sürümle değişir
-> Bu sayfada "menüden görev modunu seçin, klasörü yetkilendirin, Gem oluşturun" gibi genel ifadeler kullanıyoruz, çünkü düğmelerin adı ve yeri uygulama güncellendikçe değişiyor. Derste yansıda birlikte bulacağız. Aynı üç mod ChatGPT'de (özel GPT, masaüstü uygulaması), Claude'da (proje, Claude Code) ve diğerlerinde de var; birini öğrenen diğerini on dakikada öğrenir.
+> Bu sayfada "menüden görev modunu seçin, klasörü yetkilendirin, Beceriler menüsünden yeni beceri oluşturun" gibi genel ifadeler kullanıyoruz, çünkü düğmelerin adı ve yeri uygulama güncellendikçe değişiyor; nitekim bu menünün adı kısa süre önce değişti. Derste yansıda birlikte bulacağız. Aynı üç yüz ChatGPT'de (özel GPT, masaüstü uygulaması), Claude'da (proje ve beceriler, Claude Code) ve diğerlerinde de var; birini öğrenen diğerini on dakikada öğrenir.
 
 ### Doğru sorunun dört parçası
 
@@ -130,9 +129,9 @@ Dört parçadan en çok atlanan **bağlam**. "if/else'i biliyorum ama switch'i g
 
 Her istemden sonra aynı adımı tekrarlayacağım, bıkana kadar: **güzel bir cevap doğru bir cevap değildir.** Asistan size `switch` örneği verdiğinde o kodu Playground'a yapıştırıp çalıştırıyorsunuz, açıklamayı ise bu sayfadaki ders notuyla karşılaştırıyorsunuz. Uymayan bir yer varsa kazanan ders notu ve gerçek çıktıdır. Bugün göreceğiniz her istemin sonunda bu adım var.
 
-### "Java Hocam" Gem'ini kurun
+### "Java Hocam" becerisini kurun
 
-Dört parçayı her seferinde yazmak yorucu ve zaten yorulan kişi bir süre sonra "switch nedir" moduna geri döner. Çözüm, dört parçanın değişmeyen kısmını bir kez kaydetmek: Gemini'de buna Gem deniyor, ChatGPT'de özel GPT, Claude'da proje; düz sohbette bile ilk mesaj olarak çalışır. Aşağıdaki metni olduğu gibi kopyalayın, uygulamada yeni bir Gem oluşturun, adını "Java Hocam" koyun ve talimat kutusuna yapıştırın.
+Dört parçayı her seferinde yazmak yorucu ve zaten yorulan kişi bir süre sonra "switch nedir" moduna geri döner. Çözüm, dört parçanın değişmeyen kısmını bir kez kaydetmek: Gemini'de bunun yeri Beceriler menüsü, ChatGPT'de özel GPT, Claude'da proje ya da beceri; düz sohbette bile ilk mesaj olarak çalışır. Aşağıdaki metni olduğu gibi kopyalayın, Beceriler menüsünden "Java Hocam" adıyla yeni bir beceri oluşturun ve talimat kutusuna yapıştırın.
 
 ```text
 Sen "Java Hocam"sın: Fırat Üniversitesi Yazılım Mühendisliği 1. sınıf öğrencilerine Algoritma ve Programlama I dersinde Java öğreten, sabırlı, günlük hayattan benzetmeler kuran bir öğretim üyesisin. Ben birinci sınıf öğrencisiyim; şu ana kadar değişkenler, tipler, operatörler, Scanner, if/else, else-if merdiveni, iç içe if, switch ve mantıksal operatörleri gördüm; döngüleri, metotları ve dizileri henüz görmedim, onları kullanma.
@@ -147,13 +146,13 @@ Kuralların:
 7. Bir şeyi yanlış biliyorsam düzelt ve neden yanlış olduğunu söyle; beni haklı çıkarmak için fikrini değiştirme.
 ```
 
-Kurduktan sonra ona üç soru soracağım ve her cevabın sonundaki "kendini sına" sorusunu sınıf cevaplayacak: "else-if merdiveninde sıra neden önemli?", "`=` ile `==` arasındaki fark ne?", "sarkan else nedir?". Üçü de geçen haftanın konusu, yani cevapları ders notundan doğrulayabilirsiniz; bu Gem'in ilk sınavı sizin değil onun.
+Kurduktan sonra ona üç soru soracağım ve her cevabın sonundaki "kendini sına" sorusunu sınıf cevaplayacak: "else-if merdiveninde sıra neden önemli?", "`=` ile `==` arasındaki fark ne?", "sarkan else nedir?". Üçü de geçen haftanın konusu, yani cevapları ders notundan doğrulayabilirsiniz; bu becerinin ilk sınavı sizin değil onun.
 
 Yedinci kuralı özellikle not edin. Geçen hafta "yapay zekaya 'emin misin?' deyince fikrini değiştiriyorsa ona değil kitaba güvenin" demiştik; bu kural o davranışı en baştan yasaklamaya çalışıyor. Her zaman tutmaz, ama tutmadığında bunu görürsünüz ve görmek bile bir derstir.
 
 ### Tekrar turu: dört hafta, dört istem
 
-Şimdi dört haftayı dört istemle geri saracağız. Her istem dört parçalı, her istemin cevabı derste doğrulanacak ve her birini evde kendi Gem'inizle tekrar edebilirsiniz.
+Şimdi dört haftayı dört istemle geri saracağız. Her istem dört parçalı, her istemin cevabı derste doğrulanacak ve her birini evde kendi Java Hocam becerinizle tekrar edebilirsiniz.
 
 **Hafta 1-2, akış diyagramı.** 2. haftanın nehir bulmacasını (çiftçi, kurt, keçi, lahana) hatırlıyorsunuz; o hafta diyagramı kağıda çizmiştiniz. Bu kez çizimi asistana yaptırıp **biz düzelteceğiz**:
 
@@ -448,11 +447,11 @@ Dosya oluştuğunda birlikte açıp okuyacağız ve gövdeleri derste birlikte d
 > [!uyari] Dosya yazma iznini okuyarak verin
 > Görev modunda asistan dosya oluşturmadan ya da değiştirmeden önce sorar; "evet" demeden önce hangi dosyaya ne yazacağını okuyun. `Taksi.java`'nızı "düzelteyim mi?" derse hayır deyin, çünkü Lab 4 teslim edildi ve o dosya sizin. Ustayı atölyeye aldınız diye tezgahtaki her şeyi değiştirmesine izin vermek zorunda değilsiniz.
 
-### Beceri tanımlama: bir talimatı dosyaya koyup her görevde çağırmak
+### İkinci beceri: hata mesajı okuma tarifi
 
-Gem'i kurduktan sonra bir şey fark edeceksiniz: hata mesajı paylaşırken her seferinde "türünü söyle, satırı göster, düzeltmeyi söyleme, ipucu ver" diye yazıyorsunuz ve bu dört cümle her seferinde aynı. Aynı olan şey bir dosyaya girer. Yapay zeka uygulamalarında buna **beceri** (skill) deniyor: yeniden kullanılabilir bir talimat paketi, bir metin dosyasında durur, her görevde adıyla çağrılır. Berber benzetmesine dönersek Gem "her zamanki gibi" demekti; beceri ise "her zamanki gibi ama bugün bir de sakal" dediğiniz, ihtiyaç olunca eklenen küçük bir tarif.
+Java Hocam'ı kurduktan sonra bir şey fark edeceksiniz: hata mesajı paylaşırken her seferinde "türünü söyle, satırı göster, düzeltmeyi söyleme, ipucu ver" diye yazıyorsunuz ve bu dört cümle her seferinde aynı. Aynı olan şey bir beceriye girer. Java Hocam genel bir karakterdi; bu ise tek bir iş için küçük bir tarif ve aynı mekanizmayla, yani Beceriler menüsünden adıyla kaydedilir. Berber benzetmesine dönersek Java Hocam becerisi "her zamanki gibi" demekti; hata becerisi ise "her zamanki gibi ama bugün bir de sakal" dediğiniz, ihtiyaç olunca eklenen küçük bir tarif.
 
-Yetkilendirdiğiniz klasöre `beceri-java-hata.md` adında bir dosya açın ve içine şunu yazın:
+Aynı talimatın iki evi var. Önerilen yol, Beceriler menüsünden "Java hata" adıyla yeni bir beceri açıp aşağıdaki metni yapıştırmak. İkinci yol, görev modunda yetkilendirdiğiniz klasöre `beceri-java-hata.md` adında bir dosya açıp aynı metni oraya yazmak; dosya hali, becerilerinizi depoyla birlikte taşımanızı ve lab sorumlu hocanıza göstermenizi sağlar. İkisini birden yapın, metin aynı:
 
 ```text
 # Beceri: Java hata mesajı okuma
@@ -468,19 +467,19 @@ Bana bir Java hata mesajı verildiğinde şu sırayla davran:
 Kısıtlar: döngü, metot ve dizi kullanma; 1. sınıf seviyesinde konuş; 120 kelimeyi geçme.
 ```
 
-Nasıl çağrılır? Görev modunda klasör yetkiliyken bir mesajın başına şunu yazmak yeter:
+Nasıl çağrılır? Menüye kaydettiyseniz sohbette ya da görevde beceriyi adıyla seçmeniz yeter; dosya halini kullanıyorsanız görev modunda klasör yetkiliyken bir mesajın başına şunu yazın:
 
 ```text
 beceri-java-hata.md dosyasındaki beceriyi uygula. İşte hatam:
 (buraya hata mesajı, ilgili 10 satır ve ne denediğim)
 ```
 
-Asistan dosyayı okur, beş adımı sırayla uygular ve siz her seferinde aynı kaliteyi alırsınız. Uygulamaların bazıları beceriyi ayrı bir menüden kaydetmenize de izin veriyor; adı ne olursa olsun fikir aynı: talimat dosyada, çağrı tek satır.
+Asistan talimatı okur, beş adımı sırayla uygular ve siz her seferinde aynı kaliteyi alırsınız. Menüden mi dosyadan mı geldiğinin bir önemi yok, fikir aynı: talimat bir kez yazılır, çağrı tek satırdır.
 
 Başka beceri fikirleri, hepsi bir öğleden sonra yazılır ve dönem boyunca işe yarar: **kod anlatıcı** ("verdiğim kodu satır numarasıyla anlat, her satır bir cümle, sonunda bir kendini sına sorusu"), **test girdisi üretici** ("verdiğim programın dallarını say, her dala bir girdi öner, çıktıları söyleme"), **DOT çizici** ("verdiğim Java kodunun akış diyagramını DOT dilinde çiz, elmas sembolü yalnızca if ve switch için"). Üçü de Lab 5'in günlük dosyasında kendine yer bulabilir.
 
 > [!tanim] Beceri (skill)
-> Bir yapay zeka asistanına verilen, bir dosyada saklanan ve her görevde adıyla çağrılabilen yeniden kullanılabilir talimat paketi. Gem kalıcı karakterdir, beceri o karakterin bildiği bir tariftir; bir Gem birden fazla beceri kullanabilir.
+> Bir yapay zeka asistanına verilen, kalıcı, adlandırılmış ve yeniden kullanılabilir talimat paketi; Beceriler menüsünden oluşturulur, bir sohbette ya da görevde adıyla çağrılır. Geniş bir karakter de olabilir (Java Hocam), tek işlik bir tarif de (Java hata); aynı metin görev modunda klasördeki bir `.md` dosyasında da tutulabilir.
 
 ### Doğrulama anı
 
@@ -496,7 +495,7 @@ Buradan çıkan ders geçen haftakinin üstüne bir tuğla koyuyor: soruya yanl�
 
 ### Kendinizi test edin
 
-Dört parçalı istemin en güzel kullanımlarından biri, aracı sınav yazarı yapmak. Aşağıdaki istemi kendi Gem'inize ya da düz sohbete verin:
+Dört parçalı istemin en güzel kullanımlarından biri, aracı sınav yazarı yapmak. Aşağıdaki istemi kendi Java Hocam becerinize ya da düz sohbete verin:
 
 ```text
 Sınav yazarı gibi davran. Algoritma ve Programlama I dersinin 1-5. haftalarından (algoritma ve akış diyagramı, Java'ya giriş, değişkenler ve operatörler, if/else ve merdiven, switch ve mantıksal operatörler) 5 çoktan seçmeli soru yaz; her soru 4 şıklı, tek doğru cevaplı, Türkçe, en az ikisi "bu kod ne yazar?" biçiminde olsun. Her sorunun altında doğru şıkkın neden doğru olduğunu ve diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu bir cümleyle açıkla. Cevap anahtarını en sona koy. 1. sınıf öğrencisiyim, vize kağıt üzerinde olacak.
@@ -538,7 +537,7 @@ Telefonunuza ya da `algo1` klasörünüze `cep-karti.md` adıyla kaydedin; döne
 Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: [KONU] kavramını, bildiğim [ÖNCEKİ KONU] ile karşılaştırarak anlat. Biçim: en fazla 6 cümle, 10 satırı geçmeyen Scanner'sız bir örnek, sonunda bir "kendini sına" sorusu. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; döngü, metot ve dizi görmedim; örneği Java Playground'da çalıştıracağım.
 ```
 
-**2. Java Hocam** (Gem talimatı; yukarıdaki tam metnin kısa hali, düz sohbette ilk mesaj olarak da çalışır):
+**2. Java Hocam** (beceri talimatı; yukarıdaki tam metnin kısa hali, düz sohbette ilk mesaj olarak da çalışır):
 
 ```text
 Bundan sonra bu sohbette "Java Hocam" ol: 1. sınıf yazılım mühendisliği öğrencisine Java öğreten sabırlı bir hoca. Kurallar: lab görevimi çözme, iskelet ver gövdeyi bana bırak; cevaptan önce bana bir soru sor; her cevabın sonunda "Kendini sına:" sorusu; emin değilsen "Playground'da dene:" deyip 5-8 satır Scanner'sız kod ver; kodu satır satır anlat; Türkçe, 150 kelime; yanlışımı düzelt, beni haklı çıkarmak için fikrini değiştirme.
@@ -590,9 +589,8 @@ Portfolyonuz için bunun anlamı somut: **KT1, 6 Kasım Cuma 23.59** ve KT1 uygu
 
 - **İstem (prompt)**: Bir yapay zeka asistanına yazdığınız soru ya da talimat; kalitesi cevabın kalitesini belirler.
 - **Rol, görev, biçim, bağlam**: İyi bir istemin dört parçası; kim cevaplıyor, tam olarak ne yapsın, cevap nasıl görünsün, ben kimim ve neyi biliyorum. En çok atlanan parça bağlam.
-- **Gem**: Kalıcı karakter; dört parçanın değişmeyen kısmını bir kez kaydedip her sohbette aynı kurallarla çalıştırma. "Her zamanki gibi."
+- **Beceri (skill)**: Beceriler menüsünden adıyla kaydedilen, her sohbette ve görevde aynı kurallarla çağrılan kalıcı talimat paketi; dört parçanın değişmeyen kısmı bir kez yazılır. "Her zamanki gibi." Java Hocam geniş bir beceri, `beceri-java-hata.md` tek işlik bir beceri; ikincisi dosya olarak da taşınır.
 - **Görev modu**: Asistanın bir klasörü yetkiyle okuyup dosya oluşturabildiği mod; ustayı atölyeye çağırmak. Asistan sizin yetkinizle iş yapar.
-- **Beceri (skill)**: Dosyada saklanan, her görevde adıyla çağrılan yeniden kullanılabilir talimat paketi; `beceri-java-hata.md`.
 - **Halüsinasyon**: Asistanın kendinden emin biçimde yanlış bilgi vermesi; soruya gömülü yanlış iddiayı onaylaması bunun en sık biçimi.
 - **Doğrulama**: Asistanın verdiği kodu Playground'da çalıştırmak, açıklamayı ders notuyla karşılaştırmak; uymayan yerde kazanan çıktı ve ders notu.
 - **Hata protokolü**: Mesajın kendisi, ilgili on satır, ne denediğiniz; "çalışmıyor" bir hata raporu değildir.
@@ -621,8 +619,8 @@ Bu hafta laboratuvar yapılmıyor, çünkü A şubesinin labı **28 Ekim Çarşa
 
 Eve giderken:
 
-- Gemini öğrenci planı ve masaüstü uygulaması kurulu, `Belgeler/algo1` klasörü açılmış ve yetkilendirilmiş olsun; "Java Hocam" Gem'i kurulmuş ve en az bir soru sorulmuş olsun.
-- `beceri-java-hata.md` dosyasını klasörünüze kaydedin; Lab 5'in dördüncü başlığı o beceriyle çalışıyor.
+- Gemini öğrenci planı ve masaüstü uygulaması kurulu, `Belgeler/algo1` klasörü açılmış ve yetkilendirilmiş olsun; "Java Hocam" becerisi Beceriler menüsünde kurulmuş ve en az bir soru sorulmuş olsun.
+- Hata becerisini Beceriler menüsüne kaydedin ve aynı metni `beceri-java-hata.md` olarak klasörünüze koyun; Lab 5'in dördüncü başlığı o beceriyle çalışıyor.
 - "Durmayan asansör" ve "Kısa devre" kutularını Playground'da bir kez çalıştırmış olun, çünkü günlükte "doğruladım mı, nasıl" satırına yazacak bir şeyiniz olmalı.
 - Cep kartını kaydedin; beş başlığın beşi cep kartındaki istemlerle yazılıyor.
 - Görev listesi ve test tablosu: [Lab 5](/laboratuvar/lab-05).
@@ -637,4 +635,4 @@ Eve giderken:
 
 ## Haftanın Özeti
 
-Aynı soruyu iki biçimde sorarak başladık ve farkın araçta değil soruda olduğunu gördük. Ansiklopediden arama motoruna, oradan asistana gelen yolda asistanın bizim yerimize öğrenemeyeceğini, MIT raporunun "artırma, otomasyon değil" ilkesini ve sor-oku-dene-doğrula-anlat döngüsünü konuştuk; bu döngüyü bugün kuran kişinin ileride bir şirketin verisiyle aynı döngüyü kurabileceğini, sahaya konuşlanmış mühendis rolünün tam bu olduğunu söyledik. Gemini'nin üç modunu, sohbet, Gem ve görev modunu, bir berber ve bir usta benzetmesiyle oturttuk; klasöre yalnızca ders dosyası koymayı ve asistanın bizim yetkimizle iş yaptığını öğrendik. Doğru sorunun dört parçasını, rol, görev, biçim ve bağlamı, `switch` üstünde yan yana gördük; "Java Hocam" Gem'ini kurduk; dört haftayı dört istemle geri sardık ve "çalışmıyor" yerine hata protokolünü koyduk. Araya bu haftanın konusu girdi: `switch`, `case`, `break`, `default` ve durmayan asansör; `&&`, `||`, `!` ile üç katlı artık yılın tek satıra inişi; iki kapılı binada kısa devre. Görev modunda `Taksi.java`'ya test girdisi ürettirdik, `izleme.md`'yi kontrol ettirdik ve `Menu.java` iskeletini yazdırıp gövdesini kendimiz doldurduk. Bir beceri dosyası yazdık, "break yazmazsam durur, değil mi?" tuzağını Playground'la yakaladık ve altı istemlik cep kartıyla bitirdik. Lab 5 evde ve yeşil bölgede, 30 Ekim Cuma'ya kadar; KT1 6 Kasım. Haftaya döngüler: bu haftanın tek geçişlik menüsü "0 girilene kadar" dönmeye başlayacak.
+Aynı soruyu iki biçimde sorarak başladık ve farkın araçta değil soruda olduğunu gördük. Ansiklopediden arama motoruna, oradan asistana gelen yolda asistanın bizim yerimize öğrenemeyeceğini, MIT raporunun "artırma, otomasyon değil" ilkesini ve sor-oku-dene-doğrula-anlat döngüsünü konuştuk; bu döngüyü bugün kuran kişinin ileride bir şirketin verisiyle aynı döngüyü kurabileceğini, sahaya konuşlanmış mühendis rolünün tam bu olduğunu söyledik. Gemini'nin üç yüzünü, sohbeti, becerileri ve görev modunu, bir berber ve bir usta benzetmesiyle oturttuk; klasöre yalnızca ders dosyası koymayı ve asistanın bizim yetkimizle iş yaptığını öğrendik. Doğru sorunun dört parçasını, rol, görev, biçim ve bağlamı, `switch` üstünde yan yana gördük; "Java Hocam" becerisini kurduk; dört haftayı dört istemle geri sardık ve "çalışmıyor" yerine hata protokolünü koyduk. Araya bu haftanın konusu girdi: `switch`, `case`, `break`, `default` ve durmayan asansör; `&&`, `||`, `!` ile üç katlı artık yılın tek satıra inişi; iki kapılı binada kısa devre. Görev modunda `Taksi.java`'ya test girdisi ürettirdik, `izleme.md`'yi kontrol ettirdik ve `Menu.java` iskeletini yazdırıp gövdesini kendimiz doldurduk. Hata okuma tarifini ikinci bir beceri olarak hem menüye hem dosyaya yazdık, "break yazmazsam durur, değil mi?" tuzağını Playground'la yakaladık ve altı istemlik cep kartıyla bitirdik. Lab 5 evde ve yeşil bölgede, 30 Ekim Cuma'ya kadar; KT1 6 Kasım. Haftaya döngüler: bu haftanın tek geçişlik menüsü "0 girilene kadar" dönmeye başlayacak.

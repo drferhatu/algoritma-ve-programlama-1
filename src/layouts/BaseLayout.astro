@@ -72,21 +72,22 @@ const ogImage = new URL(href('/og.png'), Astro.site);
       });
     </script>
     <script is:inline>
-      // Her kod/istem bloğunun sağ üstüne "Kopyala" düğmesi (CodeTry ve istem kartları kendi düğmesine sahip, onlar atlanır).
+      // Her kod/istem bloğunun sağ üstüne kopyalama simgesi (CodeTry ve istem kartları kendi düğmesine sahip, onlar atlanır).
       window.addEventListener('DOMContentLoaded', function () {
         if (!navigator.clipboard) return;
+        var COPY = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+        var DONE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>';
         document.querySelectorAll('pre').forEach(function (pre) {
           if (pre.closest('[data-codetry], [data-istem], .diagram-dot, [data-no-copy]')) return;
           if (pre.querySelector('[data-pre-copy]')) return;
           var btn = document.createElement('button');
-          btn.type = 'button'; btn.className = 'pre-copy'; btn.setAttribute('data-pre-copy', ''); btn.setAttribute('aria-live', 'polite');
-          btn.textContent = 'Kopyala';
+          btn.type = 'button'; btn.className = 'pre-copy'; btn.setAttribute('data-pre-copy', '');
+          btn.setAttribute('aria-label', 'Kopyala'); btn.title = 'Kopyala'; btn.innerHTML = COPY;
           btn.addEventListener('click', function () {
             var code = pre.querySelector('code') || pre;
-            var text = code.innerText.replace(/\n$/, '');
-            navigator.clipboard.writeText(text).then(function () {
-              btn.textContent = 'Kopyalandı'; btn.setAttribute('data-copied', '');
-              setTimeout(function () { btn.textContent = 'Kopyala'; btn.removeAttribute('data-copied'); }, 1800);
+            navigator.clipboard.writeText(code.innerText.replace(/\n$/, '')).then(function () {
+              btn.innerHTML = DONE; btn.setAttribute('data-copied', ''); btn.title = 'Kopyalandı'; btn.setAttribute('aria-label', 'Kopyalandı');
+              setTimeout(function () { btn.innerHTML = COPY; btn.removeAttribute('data-copied'); btn.title = 'Kopyala'; btn.setAttribute('aria-label', 'Kopyala'); }, 1600);
             });
           });
           pre.classList.add('has-copy');

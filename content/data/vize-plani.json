@@ -1,0 +1,729 @@
+{
+  "_aciklama": "Vize çalışma planı (/vize-plani sayfası bu dosyayı okur). 30 Ekim - 15 Kasım arası 17 gün; hafta içi tek blok (25 dk), hafta sonu iki blok. Her blokta konu, yapılacaklar, kopyalanabilir bot istemi (dört parçalı: rol, görev, biçim, bağlam; her birinde doğrulama adımı), varsa ajan istemi ve 3 soruluk kendini sınama. 'kodlar' alanı isteğe bağlı: kağıtta izlenecek ya da hatası avlanacak kodlar. Tarih formatı YYYY-AA-GG. Hoca sınava benzer soru yayımlamaz; deneme sınavını öğrenci kendi üretir (16. gün).",
+  "sinav": {
+    "hafta": 9,
+    "aralik": "16-20 Kasım 2026",
+    "not": "gün bölümce ilan edilecek",
+    "kapsamNotu": "Sınav kapsamı 1-7. haftadır; 8. haftanın konusu olan metotlar, hoca aksini duyurmadıkça kapsam dışıdır.",
+    "kapsam": [
+      "Hafta 1-2: algoritma, akış diyagramı, sözde kod; Java program yapısı, derleme zinciri, üç hata türü",
+      "Hafta 3: değişkenler, tipler, operatörler, tam sayı bölmesi, tür dönüşümü, Scanner",
+      "Hafta 4: boolean, if/else, else-if merdiveni, iç içe if, sarkan else",
+      "Hafta 5: switch, case/break/default, mantıksal operatörler, kısa devre",
+      "Hafta 6 (30 Ekim): while, do-while, for, gözcü değer, girdi doğrulama",
+      "Hafta 7 (6 Kasım): iç içe döngü, break/continue, desenler, EBOB"
+    ],
+    "format": [
+      { "tur": "Kod izleme ve çıktı yazma", "aciklama": "10-15 satırlık bir program verilir, ekrana ne yazıldığını satır satır yazarsınız." },
+      { "tur": "Boşluk doldurma", "aciklama": "Programdaki 3-4 boşluğa doğru anahtar kelimeyi, operatörü ya da metodu yazarsınız." },
+      { "tur": "Hata sayma ve bulma", "aciklama": "Bozuk bir programda kaç hata olduğunu, her birinin satırını ve türünü (sözdizimi, çalışma zamanı, mantık) yazarsınız." },
+      { "tur": "Kısa program tamamlama", "aciklama": "Verilen iskeletin eksik bölümünü (bir döngü, bir seçim) tamamlarsınız." },
+      { "tur": "Portfolyo sorusu (10 puan)", "aciklama": "KT1 sürümünüzdeki seçim yapısını kağıda yazarsınız. Portfolyosunu teslim etmeyen bu soruyu yapamaz." }
+    ]
+  },
+  "ilke": [
+    {
+      "ad": "Aralıklı tekrar",
+      "en": "spaced repetition",
+      "aciklama": "Bir konuyu bir oturumda üç saat çalışmak yerine üç ayrı günde birer saat çalışmak daha çok kalır; unutmaya başladığınız anda geri dönmek belleği güçlendirir. Bu planda her konu üç kez geri gelir: ilk tur, iki üç gün sonra ilk tekrar, altı yedi gün sonra ikinci tekrar."
+    },
+    {
+      "ad": "Hatırlama alıştırması",
+      "en": "retrieval practice",
+      "aciklama": "Ders notunu yeniden okumak size 'biliyorum' hissi verir ama sınavda not yoktur. Kitabı kapatıp kağıda yazmaya çalışmak, flash kart cevaplamak, bir programın çıktısını tahmin etmek: öğrenme, bilgiyi içeri koyarken değil dışarı çıkarmaya çalışırken olur."
+    },
+    {
+      "ad": "Karıştırarak çalışma",
+      "en": "interleaving",
+      "aciklama": "Sınav kağıdı 'bu soru if sorusu, şu soru döngü sorusu' demez; hangi aracın gerektiğine siz karar verirsiniz. Bu yüzden planda tipler, seçim ve döngünün bir arada geçtiği karışık izleme günleri var. Karışık çalışmak o an daha zor gelir, sınavda daha kolay gelir."
+    },
+    {
+      "ad": "Önce tahmin, sonra çalıştır",
+      "en": "predict then run",
+      "aciklama": "Playground'daki her kodu çalıştırmadan önce çıktıyı kağıda yazın, sonra Run'a basın. Tahminin tuttuğu yer bilginiz, tutmadığı yer o günkü ödeviniz. Sınavda Run düğmesi olmayacak; kafanızdaki Java'yı şimdiden çalıştırmaya alışın."
+    },
+    {
+      "ad": "Hata avı",
+      "en": "bug hunting",
+      "aciklama": "Bozuk bir programda hatayı bulmak, doğru bir programı okumaktan daha çok öğretir, çünkü her hata size kuralın sınırını gösterir. Planda hem asistana 'hataları gömdür, söyleme' dediğiniz bloklar hem de kağıtta üç bozuk program var."
+    }
+  ],
+  "kaynak": "Bu beş ilkenin dayanağı öğrenme bilimi; derli toplu bir anlatımı Brown, Roediger ve McDaniel'in Make It Stick kitabında var.",
+  "gunler": [
+    {
+      "gun": 1,
+      "tarih": "2026-10-30",
+      "baslik": "Başlangıç: algoritma, akış diyagramı, program yapısı, hata türleri",
+      "yogunluk": "hafif",
+      "ozet": "Bugün 6. hafta dersi var (döngüler). Akşam tek bir hafif blokla en eski konuları, yani 1. ve 2. haftayı hatırlıyorsunuz; bu konular en çok unutulan ama vizede en kolay puan getiren kısım.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 1-2: algoritma, akış diyagramı, Java dosyasının anatomisi, üç hata türü",
+          "yap": [
+            "Kağıda, ders notuna bakmadan, altı akış diyagramı sembolünü ve her birinin anlamını çizin; sonra bir Java dosyasının iskeletini (class, main, süslü parantezler, bir println) ve 'javac → .class → java' zincirini yazın. 2. hafta sayfasını açıp kırmızı kalemle düzeltin.",
+            "Playground'da 'çift mi tek mi' programını sıfırdan yazın; sonra bilerek üç kez bozun: bir noktalı virgül silin (sözdizimi), bir sayıyı sıfıra bölün (çalışma zamanı), ortalamayı int ile hesaplayın (mantık). Her seferinde ne olduğunu ve hangi aşamada yakalandığını bir cümleyle yazın.",
+            "Aşağıdaki istemle 10 flash kart alın ve sesli cevaplayın; takıldığınız kartı ayırın, 3. günde ona döneceksiniz."
+          ],
+          "istem": "Birinci sınıfa Java öğreten bir hoca gibi davran. Görev: Algoritma ve Programlama I dersinin 1. ve 2. haftasından (algoritma tanımı, akış diyagramı sembolleri, sıra/seçim/tekrar, sözde kod, Java dosyasının anatomisi, derleme zinciri, üç hata türü) hatırlama gerektiren 10 flash kart hazırla. Biçim: her kartın ön yüzünde tek bir soru olsun, cevapları başta verme; ben kart kart cevaplayıp 'arkasını çevir' dediğimde yalnızca o kartın cevabını yaz. En az 3 kart 'bu küçük kod hangi hata türünü verir?' biçiminde olsun. Bağlam: 1. sınıf öğrencisiyim, 9. haftada kağıt üzerinde vizem var, bu kartlarla hatırlama alıştırması yapıyorum. Verdiğin her cevabı ders notuyla karşılaştıracağım; uymayan yerde ders notu kazanır.",
+          "ajan": null,
+          "sina": [
+            "Akış diyagramında elmas, paralelkenar ve elips neyi gösterir?",
+            "Derleyici hangi hata türünü yakalar, hangisini hiç göremez?",
+            "Bir programın hiç hata vermeden yanlış sonuç üretmesine ne denir ve nasıl yakalanır?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 1-2.",
+        "Geri gelecek: 1 Kasım (3. gün) ilk tekrar, 8 Kasım (10. gün) ikinci tekrar."
+      ]
+    },
+    {
+      "gun": 2,
+      "tarih": "2026-10-31",
+      "baslik": "Tipler, operatörler, 7/2 ve Scanner",
+      "yogunluk": "yogun",
+      "ozet": "Cumartesi, iki blok. Vizedeki çıktı yazma sorularının yarısı 3. haftanın tuzaklarından beslenir: tam sayı bölmesi, kalan, casting, öncelik. Bugün o tuzakları tek tek elinizle kurup içine düşmeyi öğreniyorsunuz.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 3: tipler, operatörler, tam sayı bölmesi, kalan, öncelik, taşma",
+          "yap": [
+            "Kağıda şu sekiz ifadenin değerini ve tipini yazın, sonra Playground'da kontrol edin: 7 / 2, 7 % 2, 7 / 2.0, (double) 7 / 2, (double) (7 / 2), 1 + 2 * 3, 10 % 3 * 2, (int) 3.9 + 0.5.",
+            "Playground'da 'double sonuc = 7 / 2;' yazıp yazdırın; neden 3.0 çıktığını bir cümleyle yazın.",
+            "7384 saniyeyi saat, dakika, saniyeye çeviren üç satırı bakmadan yazın; / ve % kullanın."
+          ],
+          "istem": "Java hocası gibi davran ve beni 'tam sayı bölmesi, kalan, operatör önceliği ve tür dönüşümü' konusunda sorguya çek. Kurallar: her seferinde tek soru sor ve cevabımı bekle; doğru cevaplarsam bir sonrakini zorlaştır, yanlışsa önce ipucu ver, ikinci yanlışta açıkla. Sorular 'bu ifadenin değeri ve tipi ne?' biçiminde olsun. 6 soru sonra bana bir değerlendirme ve en zayıf noktamı yaz. Bağlam: 1. sınıf öğrencisiyim; int, double, casting, % ve 0.1 + 0.2 meselesini gördüm. Emin olmadığım her cevabı Playground'da çalıştırıp senin dediğinle karşılaştıracağım; uymazsa kazanan Playground.",
+          "ajan": null,
+          "sina": [
+            "7 / 2 * 2.0 neden 6.0 çıkar, 7.0 değil?",
+            "(int) 3.9 kaçtır; casting yuvarlar mı keser mi?",
+            "int'in en büyük değerine 1 eklenince ne olur ve Java hata verir mi?"
+          ]
+        },
+        {
+          "sure": 25,
+          "konu": "Hafta 3: tür dönüşümü, Scanner, printf, Enter tuzağı",
+          "yap": [
+            "Bilgisayarda (ya da Playground'da sabit değerlerle) VKİ hesaplayıcıyı bakmadan yazın: iki double okuyun, sonucu printf ile iki ondalıkla yazdırın.",
+            "Kağıtta 'int → double' ve 'double → int' geçişlerini bardak benzetmesiyle anlatın; hangisi otomatik, hangisi (tip) ister?",
+            "nextInt() sonrası nextLine() boş döner; neden? Bir cümle yazın ve çözümünü (araya bir nextLine()) ezbere söyleyin."
+          ],
+          "istem": "Java hocası gibi davran. Görev: değişkenler, tam sayı bölmesi, casting ve String birleştirme içeren, Scanner kullanmayan, 12 satırlık bir Java programı yaz; en az üç println olsun ve en az bir satırda 'sayı + metin' birleştirmesi bulunsun. Biçim: yalnızca kodu ver, satır numaralı; ÇIKTIYI SÖYLEME, önce ben tahmin edeceğim. Ben tahminimi yazınca satır satır kontrol et: doğru satırlara 'doğru', yanlış satırlara doğrusunu söylemeden 'bu satırda tipe bir daha bak' gibi tek bir ipucu ver. Bağlam: 1. sınıf öğrencisiyim; vizede kağıt üzerinde kod izleme sorusu gelecek. Kodu en sonda Playground'da çalıştırıp hem kendimi hem seni doğrulayacağım.",
+          "ajan": null,
+          "sina": [
+            "double x = 5; satırı derlenir mi; int y = 5.0; derlenir mi? Neden?",
+            "printf(\"%.2f\", 3.14159) ne yazar; %d ve %s ne için kullanılır?",
+            "\"Toplam: \" + 3 + 4 ne yazar; 3 + 4 + \" toplam\" ne yazar?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 3.",
+        "Geri gelecek: 2 Kasım ısınma (4. gün), 7 Kasım karışık izleme (9. gün), 8 ve 11 Kasım (10. ve 13. gün)."
+      ]
+    },
+    {
+      "gun": 3,
+      "tarih": "2026-11-01",
+      "baslik": "Seçim yapıları ve ilk tekrar",
+      "yogunluk": "yogun",
+      "ozet": "Pazar, iki blok. İlk blokta 4. hafta (if/else, merdiven, iç içe if, sarkan else), ikinci blokta iki gün önce çalıştığınız 1. ve 2. haftanın ilk tekrarı; kitap kapalı, kağıt açık.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 4: boolean, if/else, else-if merdiveni, iç içe if, sarkan else",
+          "yap": [
+            "Playground'da harf notu merdivenini yazın; sonra basamakların sırasını bozup (önce >= 60, sonra >= 85) 85 girin. Neden D çıktığını bir cümleyle yazın.",
+            "Sarkan else kodunu (4. hafta, 'yaş 20, öğrenci değil') kağıda çıktısıyla birlikte yazın, sonra Playground'da çalıştırın; parantez ekleyip sonucun nasıl değiştiğini görün.",
+            "Sinema bileti programı (önce yaş, sonra öğrenci) için üç girdilik bir izleme tablosu tutun: girdi, hangi dallar çalışır, çıktı. Sınır değeri (tam 18) mutlaka tabloya girsin."
+          ],
+          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: else-if merdiveni ile ardışık (bağımsız) if'ler arasındaki farkı ve sarkan else kuralını, bildiğim 'önce kapı sonra oda' iç içe if fikriyle karşılaştırarak anlat. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 12 satırı geçmeyen iki küçük örnek ver (biri merdiven, biri sarkan else) ama örneklerin çıktısını yazma, 'bunun çıktısı ne?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; if/else, switch ve döngüleri gördüm, metot ve dizi görmedim; iki örneği de Playground'da çalıştırıp senin anlatımını ders notuyla karşılaştıracağım.",
+          "ajan": null,
+          "sina": [
+            "Merdivende 85 puan neden D alabilir; sıra kuralı nedir?",
+            "Parantezsiz iç içe if'te else hangi if'e aittir: girintideki mi, en yakındaki mi?",
+            "if (x = 5) neden derlenmez; if (x == 5) ile farkı ne?"
+          ]
+        },
+        {
+          "sure": 25,
+          "konu": "İlk tekrar: Hafta 1-2 (kitap kapalı)",
+          "yap": [
+            "Ders notunu açmadan kağıda yazın: üç hata türü birer örnekle, akış diyagramının altı sembolü, bir Java dosyasının iskeleti. Sonra açıp kırmızı kalemle düzeltin; düzelttiğiniz yerler bugünkü zayıf noktalarınız.",
+            "2. haftanın 'bilerek bozulmuş program'ını yeniden açın ve çalıştırmadan üç hatayı kağıda yazın; sonra çalıştırıp kontrol edin.",
+            "1. gün ayırdığınız flash kartları bu kez sesli ve bakmadan cevaplayın; hâlâ takılıyorsanız ders notunun yalnızca o bölümünü okuyun."
+          ],
+          "istem": "Sınav yazarı gibi davran. Görev: Algoritma ve Programlama I dersinin 1. ve 2. haftasından (algoritma, akış diyagramı, sözde kod, Java program yapısı, derleme, üç hata türü) 5 çoktan seçmeli soru yaz; her soru 4 şıklı ve tek doğru cevaplı olsun, en az ikisi 'bu kodda hangi tür hata var?' biçiminde olsun. Biçim: önce yalnızca soruları ver; ben cevaplarımı yazınca her soru için doğru şıkkın neden doğru, diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu birer cümleyle açıkla. Bağlam: 1. sınıf öğrencisiyim, vize kağıt üzerinde olacak; kodlu soruların cevabını Playground'da çalıştırıp doğrulayacağım, senin anahtarınla uyuşmazsa kazanan Playground.",
+          "ajan": null,
+          "sina": [
+            "Bytecode nedir ve Java'nın taşınabilirliğiyle ilgisi ne?",
+            "main satırını eksiksiz ezbere yazabiliyor musunuz?",
+            "Bir programda hem sözdizimi hem mantık hatası varsa önce hangisi görünür? Neden?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 4. İlk tekrar: Hafta 1-2 (iki gün sonra).",
+        "Hafta 4 geri gelecek: 5 Kasım (7. gün), 10 Kasım (12. gün)."
+      ]
+    },
+    {
+      "gun": 4,
+      "tarih": "2026-11-02",
+      "baslik": "switch ve mantıksal operatörler",
+      "yogunluk": "hafif",
+      "ozet": "Pazartesi, okul günü; tek blok. Beş dakikalık bir tipler ısınmasından sonra 5. hafta: switch, fall-through, &&, ||, ! ve kısa devre.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 5: switch, case/break/default, fall-through, && || !, kısa devre (+ 5 dk Hafta 3 ısınması)",
+          "yap": [
+            "Isınma (5 dk, kitap kapalı): 2. günün sekiz ifadesini farklı sayılarla (9 / 4, 9 % 4, 9 / 4.0, (int) 2.7 ...) kağıda yazın, Playground'da kontrol edin; yanlış olanı yıldızlayın.",
+            "Playground'da 'durmayan asansör'ü yazın: üç case, break yok; kat = 2 ile çalıştırmadan önce kaç satır çıkacağını kağıda yazın, sonra break'leri ekleyip tekrar.",
+            "Kağıda dört ifadenin değerini yazın, sonra çalıştırın: (b != 0 && 10 / b > 1) b = 0 iken; (yas < 18 || ogrenci) yas = 17 iken; !(a && b) ile (!a || !b) a = true, b = false iken."
+          ],
+          "istem": "Sınav yazarı gibi davran. Görev: switch (case, break, default, fall-through) ve mantıksal operatörler (&&, ||, !, kısa devre) konusundan 5 çoktan seçmeli soru yaz; her soru 4 şıklı, tek doğru cevaplı ve en az üçü 'bu kod ne yazar?' biçiminde olsun; kodlar Scanner kullanmasın ve 10 satırı geçmesin. Biçim: önce yalnızca soruları ver; ben cevapladıktan sonra her soru için doğru şıkkın neden doğru, diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu birer cümleyle açıkla. Bağlam: 1. sınıf öğrencisiyim, 9. haftada kağıt üzerinde vizem var; her kodlu soruyu Playground'da çalıştırıp senin anahtarınla karşılaştıracağım.",
+          "ajan": null,
+          "sina": [
+            "case 2 satırının altında break yoksa ve n 2 ise tam olarak ne olur?",
+            "b = 0 iken (b != 0 && 10 / b > 1) neden çökmez?",
+            "switch eşitlik mi sorar aralık mı; 'not >= 85' bir case olabilir mi?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 5. Isınma: Hafta 3 (iki gün sonra).",
+        "Hafta 5 geri gelecek: 5 Kasım (7. gün), 10 Kasım (12. gün)."
+      ]
+    },
+    {
+      "gun": 5,
+      "tarih": "2026-11-03",
+      "baslik": "Döngüler: while, do-while, for, gözcü değer",
+      "yogunluk": "hafif",
+      "ozet": "Salı, tek blok. Cuma günü işlenen 6. hafta konusu, yarınki Lab 6'dan önce bir kez elinizden geçsin: üç döngü, gözcü değer ve girdi doğrulama.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 6: while, do-while, for, gözcü değer, girdi doğrulama",
+          "yap": [
+            "1'den 10'a toplamı üç döngüyle (while, do-while, for) ayrı ayrı yazın; üçünde de sayaç, koşul ve artış satırını işaretleyin.",
+            "Kağıda 'int i = 1, toplam = 0; while (i <= 5) { toplam += i; i += 2; }' için bir izleme tablosu tutun: her turda i ve toplam; döngü bitince i kaçtır?",
+            "do-while ile 1-5 arası girdi isteyen doğrulama döngüsünü bakmadan yazın; sonra bilerek sonsuz döngü kurun (i-- yazın) ve neden bitmediğini bir cümleyle yazın."
+          ],
+          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: while, do-while ve for arasındaki farkı 'hangi durumda hangisi' sorusuna cevap vererek anlat; gözcü değerle biten döngü ile girdi doğrulama döngüsünün neden do-while'a yakıştığını söyle. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir örnek ver ama çıktısını yazma, 'bu döngü kaç tur döner ve sonunda sayaç kaçtır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; if/else ve switch biliyorum, döngüleri geçen hafta gördüm, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
+          "ajan": null,
+          "sina": [
+            "do-while en az kaç kez çalışır; while en az kaç kez?",
+            "Gözcü değer nedir; menüde 0'ın çıkış olması hangi döngü biçimidir?",
+            "for (int i = 0; i < 5; i++) döngüsünde i kaç kez 5 olur ve o anda gövde çalışır mı?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 6.",
+        "Geri gelecek: 4 Kasım lab (6. gün), 7 Kasım karışık izleme (9. gün), 9 ve 12 Kasım (11. ve 14. gün)."
+      ]
+    },
+    {
+      "gun": 6,
+      "tarih": "2026-11-04",
+      "baslik": "Lab 6 günü ve KT1 son kontrol",
+      "yogunluk": "hafif",
+      "ozet": "Çarşamba, A şubesinin Lab 6 günü (B şubesi Perşembe). Bugün asıl çalışma labın kendisi; akşam tek blokla labda yazdığınızı kapalı kitap yeniden yazıyor ve KT1 deponuzu Cuma'dan önce kontrol ediyorsunuz.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Lab 6'yı hatırlama ve KT1 depo kontrolü",
+          "yap": [
+            "Labda yazdığınız döngülü programı (dosyaya bakmadan) kağıda yeniden yazın; sonra dosyayı açıp satır satır karşılaştırın. Unuttuğunuz satır, sınavda da unutacağınız satırdır.",
+            "Labda takıldığınız bir hatayı hatırlayın; hata mesajını, ilgili on satırı ve ne denediğinizi hata protokolüyle (aşağıdaki istem) yazın.",
+            "Depoyu açın: README'de konunuz ve ayırt edici kuralınız yazıyor mu, Uygulama.java derleniyor mu, ilk soruya 0 girince program hatasız bitiyor mu, AI-BEYANI.md dolu mu? Eksik varsa Cuma'ya kadar iki gününüz var."
+          ],
+          "istem": "Java'da hata alıyorum; nedenini anlamama yardım et ama düzeltmeyi yazma, bana ipucu ver.\nHata mesajı (kopyalandı):\n[MESAJ]\nİlgili satırlar:\n[10 SATIR]\nNe denedim ve ne bekliyordum:\n[DENEDİKLERİM]\n1. sınıf öğrencisiyim; döngüleri yeni gördüm, metot ve dizi bilmiyorum. Verdiğin ipucuyla düzeltmeyi kendim yapıp programı çalıştırarak doğrulayacağım; ikinci ipucu istersem 'ipucu yetmedi' diyeceğim.",
+          "ajan": "Bu klasördeki Uygulama.java ve README.md dosyalarını oku. Bana üç şeyi söyle: (1) README'de konu ve ayırt edici kural yazılı mı; (2) Uygulama.java derleniyor mu, programa yalnızca 0 girilince hatasız bitiyor mu (derleyip çalıştır, çıktıyı getir); (3) ayırt edici kural kodda hangi satırlarda karar veriyor? Hiçbir dosyayı DEĞİŞTİRME, düzeltme önerme; eksik varsa yalnızca eksiğin adını söyle, kapatmayı ben yapacağım.",
+          "sina": [
+            "Labdaki döngünüz while mı, do-while mı, for mu; neden o seçildi?",
+            "Girdi doğrulama döngüsünde koşul 'geçerli olduğu sürece' mi, 'geçersiz olduğu sürece' mi yazılır?",
+            "KT1'de hangi üç şey bulunmalı ve otomatik kontrol programa ne verip ne bekler?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tekrar: Hafta 6 (lab ile, bir gün sonra).",
+        "KT1 teslimi: 6 Kasım Cuma 23.59."
+      ]
+    },
+    {
+      "gun": 7,
+      "tarih": "2026-11-05",
+      "baslik": "Seçim yapıları tekrarı: sorguya çekilme",
+      "yogunluk": "hafif",
+      "ozet": "Perşembe (B şubesinin lab günü), tek blok. 3. ve 4. günde çalıştığınız seçim yapılarının (hafta 4-5) ilk tekrarı; bu kez okumak yok, sorguya çekilmek var.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "İlk tekrar: Hafta 4-5 (if/else, sarkan else, switch, mantıksal operatörler)",
+          "yap": [
+            "Kapalı kitap, kağıda: sarkan else kuralı bir cümle; fall-through bir cümle; kısa devre iki örnek; else-if ile switch'in farkı bir cümle.",
+            "Playground'da 'kat = 3, break'siz switch' ve 'yaş 20, öğrenci değil, sarkan else'i bir kez daha çalıştırmadan önce tahmin edin; iki tahmin de tutuyorsa bu konu tamam.",
+            "Aşağıdaki istemle sorguya çekilin; yanlış cevapladığınız her soruyu kağıda not edin, 12. günde o notla devam edeceksiniz."
+          ],
+          "istem": "Java hocası gibi davran ve beni 'if/else, else-if merdiveni, iç içe if, sarkan else, switch ve mantıksal operatörler' konusunda sorguya çek. Kurallar: her seferinde tek soru sor ve cevabımı bekle; soruların yarısı 'bu küçük kod ne yazar?' (Scanner'sız, 8 satırı geçmeyen) biçiminde olsun; doğru cevaplarsam zorlaştır, yanlışsa önce ipucu ver, ikinci yanlışta açıkla. 6 soru sonra bana bir değerlendirme ve en zayıf iki noktamı yaz. Bağlam: 1. sınıf öğrencisiyim, 9. haftada kağıt üzerinde vizem var; kodlu soruları Playground'da çalıştırıp senin cevabınla karşılaştıracağım, uymayan yerde kazanan Playground.",
+          "ajan": null,
+          "sina": [
+            "yas = 17, ogrenci = false iken (yas >= 18 || ogrenci) ve (yas >= 18 && ogrenci) ne verir?",
+            "switch'te default zorunlu mu; default en üstte yazılırsa ne olur?",
+            "İç içe if'i && ile tek if'e çevirmek her zaman mümkün müdür? Bir karşı örnek verin."
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tekrar: Hafta 4-5 (iki ve dört gün sonra).",
+        "Geri gelecek: 10 Kasım (12. gün) ikinci tekrar."
+      ]
+    },
+    {
+      "gun": 8,
+      "tarih": "2026-11-06",
+      "baslik": "7. hafta dersi, KT1 teslimi ve ilk portfolyo provası",
+      "yogunluk": "hafif",
+      "ozet": "Cuma: 7. hafta dersi (iç içe döngü, break/continue) ve 23.59'da KT1 teslimi. Akşam yalnızca kısa bir blok: push, portfolyo sorusunun ilk provası ve cep kartı. Bugün yorulmayın; hafta sonu iki yoğun gün var.",
+      "bloklar": [
+        {
+          "sure": 20,
+          "konu": "KT1 push, portfolyo provası (birinci) ve cep kartı",
+          "yap": [
+            "23.59'dan önce depoya push edin; Classroom 50 o anda ne varsa onu alır. Son kez: Uygulama.java derleniyor mu, README ve AI-BEYANI.md yerinde mi?",
+            "Bilgisayarı kapatıp KT1 sürümünüzdeki if/else bölümünü kağıda ezbere yazın: Scanner satırı, okunan değişken, karşılaştırma, iki dal. Sonra depoyla karşılaştırın; vizedeki 10 puanlık soru tam olarak budur.",
+            "Sayfanın sonundaki cep kartını bir kez okuyun; bu akşam yalnızca aşağıdaki istemi çalıştırın ve kodunuzu anlattırın."
+          ],
+          "istem": "Java hocası gibi davran. Görev: aşağıya yapıştıracağım KT1 sürümümdeki if/else bölümünü satır satır, satır numarasıyla anlat ve her dal için bana bir test girdisi öner; sınır değerini (kuralın tam eşiği) mutlaka ekle. Kodu DÜZELTME ve iyileştirme önerme; yalnızca Java'nın bu kodu nasıl okuduğunu söyle. Biçim: her satır bir cümle, sonunda 'şu girdi için çıktı ne?' diye bana sor, cevabını verme. Bağlam: 1. sınıf öğrencisiyim, bu kod benim portfolyom ve vizede kağıda yazmam istenecek; her girdiyi programımı çalıştırarak doğrulayacağım.\n[KOD]",
+          "ajan": null,
+          "sina": [
+            "KT1'de teslim etmek tam olarak ne demek: bir düğmeye basmak mı, push etmiş olmak mı?",
+            "Ayırt edici kuralınız kodda hangi satırda, hangi karşılaştırmayla karar veriyor?",
+            "Ezberden yazdığınız if/else'te kaç satır eksikti?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "Portfolyo provası 1/2; ikincisi 15 Kasım (17. gün).",
+        "Hafta 7 ilk turu yarın (9. gün)."
+      ]
+    },
+    {
+      "gun": 9,
+      "tarih": "2026-11-07",
+      "baslik": "İç içe döngüler ve ilk karışık izleme",
+      "yogunluk": "yogun",
+      "ozet": "Cumartesi, iki blok. İlk blokta dünkü dersin konusu (iç içe döngü, break/continue, EBOB), ikinci blokta planın ilk karışık günü: tipler, seçim ve döngünün bir arada geçtiği üç programı kağıtta izliyorsunuz. Karışık çalışmak o an zordur, sınavda kolaydır.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hafta 7: iç içe döngü, break/continue, desenler, EBOB",
+          "yap": [
+            "Playground'da 3x3 çarpım tablosunu iç içe for ile yazın; kağıda (i, j) çiftlerini sırayla yazın: (1,1), (1,2), ... ve hangi anda satır atlandığını işaretleyin.",
+            "Üç satırlık yıldız desenini (1, 2, 3 yıldız) yazın; iç döngünün sınırının dış döngünün sayacına bağlı olduğunu görün.",
+            "1'den 50'ye kadar sayarken 7'ye bölünen ilk sayıda break ile duran döngüyü yazın; sonra break'i continue yapıp çıktının nasıl değiştiğini önce tahmin edin, sonra çalıştırın. EBOB döngüsünü (kalan sıfır olana kadar) 48 ve 18 için kağıtta izleyin."
+          ],
+          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: iç içe döngüde dış ve iç döngünün nasıl döndüğünü (saatin akrebi ve yelkovanı gibi) ve break ile continue arasındaki farkı anlat. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir iç içe döngü örneği ver ama çıktısını yazma, 'iç döngü toplam kaç kez çalışır ve ekrana ne yazılır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; tek döngüyü biliyorum, iç içe döngüyü dün gördüm, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
+          "ajan": null,
+          "sina": [
+            "Dış döngü 3, iç döngü 4 tur dönüyorsa iç gövde toplam kaç kez çalışır?",
+            "İç döngüdeki break hangi döngüden çıkar: içtekinden mi, ikisinden mi?",
+            "continue satırından sonra döngünün hangi kısmı çalışır?"
+          ]
+        },
+        {
+          "sure": 25,
+          "konu": "Karışık kod izleme: tipler + seçim + döngü",
+          "yap": [
+            "Aşağıdaki üç programı sırayla, çalıştırmadan, kağıda izleyin; her biri için değişken tablosu tutun ve çıktıyı yazın. Sonra Playground'da üçünü de çalıştırıp kırmızı kalemle düzeltin.",
+            "Yanlış çıkan programın hangi konudan (tip mi, seçim mi, döngü mü) olduğunu not edin; 17. günde bu notu kullanacaksınız.",
+            "Doğru çıkan programları da bir kez daha, bu kez başlangıç değerini değiştirerek izleyin: sınır değer deneyin."
+          ],
+          "kodlar": [
+            {
+              "baslik": "İzleme 1: tipler ve seçim",
+              "kod": "int puan = 85;\ndouble ort = puan / 2;\nchar harf;\nif (puan >= 90) {\n    harf = 'A';\n} else if (puan >= 80) {\n    harf = 'B';\n} else {\n    harf = 'C';\n}\nSystem.out.println(harf + \" \" + ort + \" \" + puan % 7);",
+              "cevap": "B 42.0 1. Açıklama: 85 / 2 tam sayı bölmesiyle 42, sonra double kutusuna 42.0 olarak girer; 85 >= 90 yanlış, 85 >= 80 doğru, harf B; 85 % 7 = 1."
+            },
+            {
+              "baslik": "İzleme 2: döngü ve seçim",
+              "kod": "int i = 1;\nint cift = 0, tek = 0;\nwhile (i <= 6) {\n    if (i % 2 == 0) {\n        cift += i;\n    } else {\n        tek += i;\n    }\n    i++;\n}\nSystem.out.println(cift + \" \" + tek + \" \" + i);",
+              "cevap": "12 9 7. Açıklama: çiftler 2 + 4 + 6 = 12, tekler 1 + 3 + 5 = 9; döngü i 7 olunca biter, i'nin son değeri 7."
+            },
+            {
+              "baslik": "İzleme 3: for, switch ve tip",
+              "kod": "int toplam = 0;\nfor (int k = 3; k > 0; k--) {\n    switch (k) {\n        case 3: toplam += 10;\n        case 2: toplam += 5; break;\n        default: toplam += 1;\n    }\n}\nSystem.out.println(toplam + \" \" + toplam / 4 + \" \" + toplam / 4.0);",
+              "cevap": "21 5 5.25. Açıklama: k = 3 iken case 3 çalışır, break yok, case 2'ye düşer (10 + 5 = 15), break; k = 2 iken case 2 (15 + 5 = 20); k = 1 iken default (21). 21 / 4 tam sayı bölmesi 5, 21 / 4.0 ise 5.25."
+            }
+          ],
+          "istem": "Java hocası gibi davran. Görev: tam sayı bölmesi, bir if/else ya da switch ve bir döngünün bir arada geçtiği, Scanner kullanmayan, 12-15 satırlık bir Java programı yaz; döngü en fazla 5 tur dönsün. Biçim: yalnızca kod, satır numaralı; ÇIKTIYI SÖYLEME. Ben her tur için değişkenlerin değerini ve sonunda çıktıyı yazacağım; sen tablomu kontrol et, yanlış turda doğrusunu söylemeden 'bu turda koşula bir daha bak' gibi tek bir ipucu ver. Bağlam: 1. sınıf öğrencisiyim, vizede karışık konulu kod izleme sorusu gelecek; kodu en sonda Playground'da çalıştırıp doğrulayacağım.",
+          "ajan": null,
+          "sina": [
+            "Bir döngünün içindeki if'i izlerken tabloya hangi sütunları koyarsınız?",
+            "Döngü değişkeni döngü bittikten sonra hangi değerde kalır; bu neden sık sorulur?",
+            "İzleme 3'te break'siz case 3 satırı toplamı nasıl etkiledi?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tur: Hafta 7. Karışık izleme: Hafta 3, 4, 5, 6 bir arada (Hafta 6 ikinci tekrar).",
+        "Hafta 7 geri gelecek: 9 Kasım (11. gün), 12 Kasım (14. gün)."
+      ]
+    },
+    {
+      "gun": 10,
+      "tarih": "2026-11-08",
+      "baslik": "Hata avı günü ve eski konuların ikinci tekrarı",
+      "yogunluk": "yogun",
+      "ozet": "Pazar, iki blok. İlk blok üç bozuk program: vizedeki hata sayma sorusunun provası. İkinci blok en eski konuların (hafta 1-3) ikinci tekrarı; bir hafta önce çalıştınız, şimdi ne kaldığına bakıyorsunuz.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hata avı: üç bozuk program (sözdizimi, çalışma zamanı, mantık)",
+          "yap": [
+            "Aşağıdaki üç programı çalıştırmadan okuyun; her birinde hata sayısını, satırını ve türünü (sözdizimi / çalışma zamanı / mantık) yazın. Sonra Playground'da çalıştırıp kendinizi kontrol edin.",
+            "Her hata için 'derleyici bunu görür mü?' sorusunu cevaplayın; derleyicinin görmediği hatalar sınavda en çok puan kaybettiren hatalardır.",
+            "Üç programı düzeltip çalıştırın; düzeltilmiş halin çıktısını da kağıda yazın."
+          ],
+          "kodlar": [
+            {
+              "baslik": "Bozuk 1: ortalama",
+              "kod": "int vize = 65;\nint final = 80;\ndouble ort = (vize + final) / 2;\nSystem.out.println(\"Ortalama: \" + ort)",
+              "cevap": "3 hata. Satır 2: 'final' ayrılmış kelime, değişken adı olamaz (sözdizimi). Satır 4: noktalı virgül eksik (sözdizimi). Satır 3: iki int'in bölümü int olduğundan 145 / 2 = 72, ort 72.0 olur, 72.5 beklenirken (mantık; derleyici görmez). Çalışma zamanı hatası yok."
+            },
+            {
+              "baslik": "Bozuk 2: bölüşme",
+              "kod": "int toplam = 100;\nint kisi = 0;\nSystem.out.print(\"Kişi sayısı: \");\n// kisi klavyeden okunacaktı, unutuldu\nint pay = toplam / kisi;\nif (pay > 50)\n    System.out.println(\"Bol\");\n    System.out.println(\"Kişi başı: \" + pay);",
+              "cevap": "2 hata. Satır 5: kisi 0 olduğu için ArithmeticException: / by zero (çalışma zamanı; derlenir ama çöker). Satır 6-8: if parantezsiz olduğu için yalnızca 'Bol' satırı koşula bağlı, girintili ikinci println her zaman çalışır (mantık). Sözdizimi hatası yok; program derlenir."
+            },
+            {
+              "baslik": "Bozuk 3: sayaç",
+              "kod": "int i = 10;\nint sayac = 0;\nwhile (i > 0) {\n    if (i % 3 == 0) {\n        sayac++;\n    }\n    i++;\n}\nSystem.out.println(\"3'e bölünen: \" + sayac);\nString ad = 'Ali';",
+              "cevap": "2 hata. Satır 10: String tek tırnakla yazılmış, 'Ali' char değil (sözdizimi; derleyici yakalar). Satır 7: i++ yerine i-- olmalı; i hep büyüdüğü için koşul hiç yanlış olmaz, sonsuz döngü (mantık; derleyici görmez). Sözdizimi hatası düzeltilince sonsuz döngü ortaya çıkar; i-- yapılınca çıktı '3'e bölünen: 3' (9, 6, 3)."
+            }
+          ],
+          "istem": "Java hocası gibi davran. Görev: 1. sınıf seviyesinde, Scanner kullanmayan, bir döngü ve bir if içeren 15 satırlık bir Java programı yaz ve içine üç hata göm: bir sözdizimi, bir çalışma zamanı, bir mantık hatası; hataları yorumla işaretleme. Biçim: yalnızca kod, satır numaralı; hataların yerini ve türünü SÖYLEME. Ben üçünü de satır ve türüyle yazdığımda kontrol et: doğru bulduklarıma 'doğru' de, kaçırdıklarım için doğrusunu söylemeden 'bir satırda tip, bir satırda koşul' gibi tek bir ipucu ver. Bağlam: değişken, tip, if/else, switch, while/for biliyorum; metot ve dizi görmedim. Her hatayı Playground'da çalıştırarak doğrulayacağım; derleyicinin hangisini yakaladığını kendi gözümle göreceğim.",
+          "ajan": null,
+          "sina": [
+            "Derleyici kaç hata bildirir, siz kaç hata saydınız; fark neden?",
+            "Sonsuz döngüyü kağıtta nasıl fark edersiniz?",
+            "Parantezsiz if'in altındaki ikinci satır neden koşula bağlı değildir?"
+          ]
+        },
+        {
+          "sure": 25,
+          "konu": "İkinci tekrar: Hafta 1-3 (algoritma, program yapısı, tipler), kitap kapalı",
+          "yap": [
+            "Kapalı kitap, kağıda: üç hata türü birer örnekle; akış diyagramının altı sembolü; main satırı; Scanner'lı bir programın beş satırlık iskeleti (import, new Scanner, nextInt, nextLine, close).",
+            "1. ve 4. günde yıldızladığınız flash kartları ve ifadeleri son kez sesli cevaplayın; hâlâ takılan varsa 17. günün zayıf konu listesine yazın.",
+            "Bir arkadaşınıza ya da boş odaya otuz saniyede anlatın: 'double sonuc = 7 / 2 neden 3.0?' ve 'mantık hatasını derleyici neden görmez?'. Anlatamadığınız yerde ders notuna dönün."
+          ],
+          "istem": "Java hocası gibi davran. Görev: değişken tanımı, tam sayı bölmesi, kalan, casting, bileşik atama (+=, ++) ve printf içeren, Scanner kullanmayan 12 satırlık bir program yaz. Biçim: yalnızca kod, satır numaralı; ÇIKTIYI SÖYLEME, ben her println için tahminimi yazacağım. Tahminimi aldıktan sonra yalnızca 'doğru' ya da 'bu satırda önceliğe/tipe bir daha bak' de; doğrusunu ben Playground'da çalıştırarak bulacağım. Bağlam: 1. sınıf öğrencisiyim, vizede kağıt üzerinde çıktı yazma sorusu gelecek, bu yüzden Run'a basmadan önce tahmin etmeye alışıyorum.",
+          "ajan": null,
+          "sina": [
+            "x += 5 ile x = x + 5 aynı mı; x++ ile ++x arasında fark var mı?",
+            "0.1 + 0.2 == 0.3 neden false olabilir; para için ne önerilir?",
+            "Bir programda hem sözdizimi hem mantık hatası varsa önce hangisi görünür? Neden?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İkinci tekrar: Hafta 1-2 (yedi gün sonra) ve Hafta 3 (altı gün sonra).",
+        "Hata avı provası 1/2; ikincisi 12 Kasım (14. gün)."
+      ]
+    },
+    {
+      "gun": 11,
+      "tarih": "2026-11-09",
+      "baslik": "Döngü izleme: while, for ve iç içe döngü",
+      "yogunluk": "hafif",
+      "ozet": "Pazartesi, tek blok. 6. ve 7. haftanın döngüleri bir arada: kağıtta izleme tablosu, Playground'da kontrol. Bu haftanın hafta içi blokları yalnızca tekrar; yeni konu yok.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Tekrar: Hafta 6-7 (döngüler ve iç içe döngü), kod izleme",
+          "yap": [
+            "Kağıda, bakmadan: 1'den n'e kadar 3'e bölünen sayıların toplamını ve sayısını bulan for döngüsünü yazın (n = 10 için çıktı ne?). Sonra Playground'da çalıştırın.",
+            "İç içe iki for ile (i 1..3, j 1..i) yazılan 'i*j' değerlerini kağıda sırayla yazın; iç gövde toplam kaç kez çalıştı?",
+            "Aşağıdaki istemle 12 satırlık bir döngü programı alın; her tur için tablo tutun, sonra çalıştırıp karşılaştırın."
+          ],
+          "istem": "Java hocası gibi davran. Görev: bir while ve içinde bir if, ardından bir iç içe for döngüsü içeren, Scanner kullanmayan, 12 satırlık bir Java programı yaz; döngüler toplam 12 turdan fazla dönmesin ve en az bir break ya da continue olsun. Biçim: yalnızca kod, satır numaralı; ÇIKTIYI SÖYLEME. Ben her tur için değişkenlerin değerini ve çıktıyı yazınca tablomu kontrol et; yanlış turda doğrusunu söylemeden tek bir ipucu ver. Bağlam: 1. sınıf öğrencisiyim, 9. haftada kağıt üzerinde vizem var, döngü izleme sorusu kesin gelecek; kodu en sonda Playground'da çalıştırıp doğrulayacağım.",
+          "ajan": null,
+          "sina": [
+            "Döngü bittiğinde sayaç hangi değerde; neden koşulun 'ilk yanlış olduğu' değer?",
+            "İç döngünün sınırı dış sayaca bağlıysa toplam tur sayısı nasıl hesaplanır?",
+            "continue bir while döngüsünde artış satırını atlatırsa ne olur?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İlk tekrar: Hafta 7 (iki gün sonra). Hafta 6 ile birlikte.",
+        "Geri gelecek: 12 Kasım (14. gün) ikinci tekrar."
+      ]
+    },
+    {
+      "gun": 12,
+      "tarih": "2026-11-10",
+      "baslik": "Seçim yapıları: ikinci tekrar, neden yanlış",
+      "yogunluk": "hafif",
+      "ozet": "Salı, tek blok. Hafta 4-5'in ikinci tekrarı; 7. günde not ettiğiniz yanlış sorularla başlayın, sonra 'neden yanlış' açıklamalı çoktan seçmeli.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "İkinci tekrar: Hafta 4-5 (seçim yapıları, switch, mantıksal operatörler)",
+          "yap": [
+            "7. günde kağıda yazdığınız yanlış soruları önce kendiniz yeniden cevaplayın; hâlâ yanlışsa ders notunun yalnızca o bölümünü açın.",
+            "Playground'da iki küçük kod: üç basamaklı merdiveni switch'e çevirmeye çalışın (neden olmuyor?); kısa devreyle sıfıra bölmeyi engelleyen tek satırlık if yazın.",
+            "Aşağıdaki istemle beş çoktan seçmeli alın; her yanlış şıkkın 'neden yanlış' açıklamasını okuyun, kodluları çalıştırın."
+          ],
+          "istem": "Sınav yazarı gibi davran. Görev: if/else, else-if merdiveni, iç içe if, sarkan else, switch ve mantıksal operatörler konusundan 5 çoktan seçmeli soru yaz; 4 şık, tek doğru, en az üçü 'bu kod ne yazar?' biçiminde (Scanner'sız, 10 satırı geçmeyen) ve biri sarkan else içersin. Biçim: önce yalnızca soruları ver; ben cevapladıktan sonra her soru için doğru şıkkın neden doğru, diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu birer cümleyle açıkla. Bağlam: 1. sınıf öğrencisiyim, bir hafta sonra kağıt üzerinde vizem var; kodlu soruları Playground'da çalıştırıp anahtarınla karşılaştıracağım, uymazsa kazanan Playground.",
+          "ajan": null,
+          "sina": [
+            "Sarkan else'i parantezle nasıl 'dıştaki if'e' bağlarsınız?",
+            "switch'in sorabildiği tek soru türü nedir?",
+            "'!(yas >= 18)' ifadesinin parantezsiz eşdeğeri nedir?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İkinci tekrar: Hafta 4-5 (beş gün sonra).",
+        "Bu konular 14 Kasım deneme kağıdınızda yeniden gelecek."
+      ]
+    },
+    {
+      "gun": 13,
+      "tarih": "2026-11-11",
+      "baslik": "Karışık izleme, ikinci tur",
+      "yogunluk": "hafif",
+      "ozet": "Çarşamba, tek blok. 9. gündeki karışık izlemenin ikinci turu: bu kez kodu asistan üretiyor, siz izliyorsunuz. Tipler, seçim ve döngü aynı programda.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Karışık kod izleme: Hafta 3 + 4 + 6 bir arada (ikinci tur)",
+          "yap": [
+            "9. günün üç izleme programını, cevaplara bakmadan, bir kez daha kağıda izleyin; bu kez 10 dakikada bitirmeye çalışın.",
+            "Aşağıdaki istemle yeni bir karışık program alın; tablo tutun, çıktıyı yazın, Playground'da doğrulayın.",
+            "Yanlış çıkan satırın konusunu 17. günün zayıf konu listesine ekleyin."
+          ],
+          "istem": "Java hocası gibi davran. Görev: tam sayı bölmesi ve casting, bir else-if merdiveni, bir do-while ya da for döngüsü içeren, Scanner kullanmayan, 14 satırlık bir Java programı yaz; döngü en fazla 4 tur dönsün, en az bir satırda 'sayı + metin' birleştirmesi olsun. Biçim: yalnızca kod, satır numaralı; ÇIKTIYI SÖYLEME. Ben tablomu ve çıktımı yazınca kontrol et; yanlış satırda doğrusunu söylemeden tek bir ipucu ver. Bağlam: 1. sınıf öğrencisiyim, vizede karışık konulu kod izleme sorusu var; en sonda Playground'da çalıştırıp doğrulayacağım.",
+          "ajan": null,
+          "sina": [
+            "Kağıtta tablo tutarken int ve double sütunlarını ayırmak neden işe yarar?",
+            "Döngü içindeki merdivende ilk tutan basamaktan sonra diğerleri sorulur mu?",
+            "9. günün üç programı bu kez kaç dakikada ve kaç hatayla bitti?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İkinci tekrar: Hafta 3 (karışık). Hafta 4 ve 6 üçüncü kez.",
+        "Kalan iki hafta içi günü: hata avı (14. gün) ve cep kartı (15. gün)."
+      ]
+    },
+    {
+      "gun": 14,
+      "tarih": "2026-11-12",
+      "baslik": "Hata avı, ikinci tur ve döngülerin ikinci tekrarı",
+      "yogunluk": "hafif",
+      "ozet": "Perşembe, tek blok. 10. gündeki hata avının ikinci turu, bu kez döngülü programda ve asistanın gömdüğü hatalarla. Hafta 6-7'nin ikinci tekrarı da burada.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Hata avı 2 (döngülü program) ve ikinci tekrar: Hafta 6-7",
+          "yap": [
+            "10. günün 'Bozuk 3' programını (sonsuz döngü) cevaba bakmadan yeniden okuyun; hatayı bulmanız bu kez bir dakikadan az sürmeli.",
+            "Aşağıdaki istemle üç hata gömülü döngülü bir program alın; satır ve türüyle yazın, Playground'da doğrulayın.",
+            "Kağıda, bakmadan: while, do-while ve for'un birer satırlık tanımı; break ile continue'nun farkı; gözcü değer nedir."
+          ],
+          "istem": "Java hocası gibi davran. Görev: 1. sınıf seviyesinde, Scanner kullanmayan, bir iç içe döngü ve bir if içeren 15 satırlık bir Java programı yaz ve içine üç hata göm: bir sözdizimi, bir çalışma zamanı, bir mantık hatası (mantık hatası döngü sınırı ya da sayaçla ilgili olsun); hataları yorumla işaretleme. Biçim: yalnızca kod, satır numaralı; hataların yerini ve türünü SÖYLEME. Ben satır ve türüyle yazınca kontrol et; kaçırdıklarım için doğrusunu söylemeden tek bir ipucu ver. Bağlam: döngüleri, iç içe döngüyü, break/continue'yu biliyorum; metot ve dizi görmedim. Her hatayı Playground'da çalıştırarak doğrulayacağım.",
+          "ajan": null,
+          "sina": [
+            "Döngü sınırındaki '<' ile '<=' farkı hangi hata türüne girer?",
+            "İç döngüde sayaç adı dış döngüyle aynıysa ne olur?",
+            "Sonsuz döngü derlenir mi; bu hangi tür hatadır?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "İkinci tekrar: Hafta 6-7 (döngüler). Hata avı provası 2/2.",
+        "Yarın 8. hafta dersi (metotlar, kapsam dışı); akşam yalnızca cep kartı."
+      ]
+    },
+    {
+      "gun": 15,
+      "tarih": "2026-11-13",
+      "baslik": "8. hafta dersi, akşam yalnızca cep kartı",
+      "yogunluk": "hafif",
+      "ozet": "Cuma: 8. hafta dersi (Metotlar I). Metotlar, hoca aksini duyurmadıkça vize kapsamı dışında; derse gidin, yeni konuyu dinleyin, ama akşam vize için yalnızca kısa bir flash kart turu yapın. Yarın kendi deneme sınavınızı yazacaksınız.",
+      "bloklar": [
+        {
+          "sure": 15,
+          "konu": "Cep kartı: 1-7. hafta flash kart turu (kısa blok)",
+          "yap": [
+            "Sayfanın sonundaki cep kartını okuyun; altı istemden yalnızca flash kart istemini çalıştırın ve 10 kartı sesli cevaplayın.",
+            "Takıldığınız kartları 17. günün zayıf konu listesine ekleyin.",
+            "Yarın için kağıt, kalem ve 60 dakikalık sessiz bir yer ayarlayın; deneme kağıdını telefonsuz çözeceksiniz."
+          ],
+          "istem": "Birinci sınıfa Java öğreten bir hoca gibi davran. Görev: Algoritma ve Programlama I dersinin 1-7. haftasından (algoritma ve akış diyagramı, program yapısı ve hata türleri, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü, iç içe döngü ve break/continue) hatırlama gerektiren 10 flash kart hazırla; her haftadan en az bir kart olsun, metot ve dizi içermesin. Biçim: ön yüzde tek soru, cevapları başta verme; ben 'arkasını çevir' dediğimde yalnızca o kartın cevabını yaz. Bağlam: 1. sınıf öğrencisiyim, yarın kendi deneme sınavımı çözeceğim, gelecek hafta kağıt üzerinde vizem var. Her cevabı ders notuyla karşılaştıracağım; uymayan yerde ders notu kazanır.",
+          "ajan": null,
+          "sina": [
+            "Cep kartındaki altı istemin ortak kuralı nedir?",
+            "Metotlar vize kapsamında mı? Bunu kim değiştirebilir?",
+            "Yarın deneme kağıdında hangi iki şey masada olmayacak?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "Üçüncü tur (flash kart): Hafta 1-7'nin tamamı.",
+        "Yarın: kendi deneme sınavınız."
+      ]
+    },
+    {
+      "gun": 16,
+      "tarih": "2026-11-14",
+      "baslik": "Kendi deneme sınavını kendin yaz",
+      "yogunluk": "yogun",
+      "ozet": "Cumartesi, iki blok. Sınavın kendisi öğrenmenin parçasıdır; hoca sınava benzer soru yayımlamaz, bu yüzden provanızı kendiniz üretirsiniz: Java Hocam becerinize hocanın formatında altı soruluk bir kağıt yazdırır, cevapları söyletmez, 60 dakikada kağıt ve kalemle çözer, sonra puanlatır ve her soruyu Playground'da doğrularsınız.",
+      "bloklar": [
+        {
+          "sure": 30,
+          "konu": "Deneme kağıdını ürettir ve çöz (ilk 30 dakika)",
+          "yap": [
+            "Aşağıdaki istemi Java Hocam becerinize (ya da düz sohbete) verin; yalnızca soruları alın, cevap anahtarını İSTEMEYİN. Soruları kağıda yazdırın ya da ekranı kağıtla kapatın.",
+            "Telefon kapalı, 60 dakika: kod izleme sorularında her değişken için sütun açın; boşluk doldurmada boşluğun türüne (anahtar kelime, operatör, metot) karar verin; hata sayarken 'derleyici görür mü?' diye sorun.",
+            "Emin olmadığınız soruya soru işareti koyup geçin; süre bitmeden geri dönün. Bu blok bitince beş dakika mola, sonra ikinci blokta devam."
+          ],
+          "istem": "Sınav yazarı ve Java hocası gibi davran. Görev: Algoritma ve Programlama I dersinin 1-7. haftasını (algoritma ve akış diyagramı, program yapısı ve üç hata türü, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü değer, iç içe döngü ve break/continue) kapsayan, 60 dakikalık, kağıt üzerinde çözülecek 6 soruluk bir deneme kağıdı yaz: 2 kod izleme ve çıktı yazma (12-15 satırlık, Scanner'sız; biri tipler + seçim, biri döngü + switch), 1 boşluk doldurma (4 boşluk, girdi doğrulama döngüsü), 1 hata sayma (bir sözdizimi, bir çalışma zamanı, bir mantık hatası gömülü 10 satır), 1 kısa program tamamlama (iskelet verilsin, döngü gövdesi boş), 1 portfolyo benzeri soru (bir değer okuyup bir kurala göre karar veren if/else). Biçim: yalnızca soruları ver, her soruya puan yaz; CEVAPLARI SÖYLEME. 60 dakika sonra ben cevaplarımı yazınca puanla ve her yanlışın nedenini anlat; doğru cevapların da gerekçesini ver. Bağlam: 1. sınıf öğrencisiyim, metot ve dizi görmedim, sorularda kullanma; gelecek hafta kağıt üzerinde vizem var. Kodlu her sorunun çıktısını Playground'da çalıştırıp senin anahtarınla karşılaştıracağım; uymazsa kazanan Playground.",
+          "ajan": null,
+          "sina": [
+            "7 / 2 geçen bir satırı tabloya ne olarak yazdınız: 3 mü, 3.5 mi, 3.0 mı?",
+            "switch sorusunda kaç satır çıktı geldi; break'ler nerede?",
+            "Boşluk doldurmada döngü koşulunu 'geçersizken dön' biçiminde yazabildiniz mi?"
+          ]
+        },
+        {
+          "sure": 30,
+          "konu": "Kağıdı bitir, puanlat, Playground'da doğrula",
+          "yap": [
+            "Kalan soruları bitirin. Süre dolunca cevaplarınızı asistana yazın ve puanlatın; her yanlışın nedenini okuyun ama ona hemen inanmayın.",
+            "Kodlu her soruyu Playground'da çalıştırın: asistanın anahtarı ile gerçek çıktı farklıysa kazanan Playground; bu farkı yakalamak da puandır ve AI beyanının dördüncü satırına yazılır.",
+            "Yanlış yaptığınız her soru için konu adını kağıda yazın: bu liste yarının programı."
+          ],
+          "istem": "Deneme kağıdındaki cevaplarım aşağıda. Görev: her soruyu puanla, yanlışların nedenini ve doğru cevapların gerekçesini anlat; sonra yanlış yaptığım konuları bir listede topla ve her konu için yarın çalışmam gereken tek bir kuralı bir cümleyle yaz. Biçim: soru soru, kısa; sonunda konu listesi. Bağlam: 1. sınıf öğrencisiyim; kodlu sorularda senin anahtarınla Playground çıktısı farklıysa Playground'a güveneceğim, bu yüzden her çıktı için 'Playground'da şunu çalıştır' satırı ekle.\n[SORULAR VE CEVAPLARIM]",
+          "ajan": null,
+          "sina": [
+            "Altı sorudan kaçı tam doğru; yanlışlar hangi haftalarda yoğunlaşıyor?",
+            "Asistanın anahtarında Playground'un yalanladığı bir cevap var mıydı?",
+            "60 dakika yetti mi; en çok hangi soru türü zaman aldı?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "Üçüncü tur: Hafta 1-7'nin tamamı (kendi deneme kağıdınızla).",
+        "Yanlış listesi yarının (17. gün) programını belirler."
+      ]
+    },
+    {
+      "gun": 17,
+      "tarih": "2026-11-15",
+      "baslik": "Zayıf konular ve ikinci portfolyo provası",
+      "yogunluk": "orta",
+      "ozet": "Pazar, son gün. Yeni konu yok; dünkü yanlış listesine göre hedefli tekrar, sonra portfolyo sorusunun ikinci provası ve cep kartıyla kapanış. Akşam erken bitirin; sınav haftası yorgun değil dinlenmiş başlar.",
+      "bloklar": [
+        {
+          "sure": 25,
+          "konu": "Yanlışlarımı sorguya çek: dünkü listeye göre hedefli tekrar",
+          "yap": [
+            "Dünkü yanlış listesindeki her konu için ders notunun yalnızca o bölümünü açın (tüm haftayı değil), 'Temel Kavramlar' maddesini sesli okuyun ve kapatın.",
+            "Her zayıf konu için Playground'da iki küçük alıştırma: biri 'önce tahmin sonra çalıştır', biri 'bilerek boz ve düzelt'.",
+            "Aşağıdaki istemle asistana yanlışlarınızı verin ve sizi yalnızca o konularda sorguya çekmesini isteyin; cevapları Playground'da doğrulayın. Klasör yetkili çalışıyorsanız ajan istemi lab dosyalarınızdan da zayıf konuyu çıkarır."
+          ],
+          "istem": "Java hocası gibi davran. Görev: aşağıda dünkü deneme kağıdımda yanlış yaptığım konuların listesi ve her biri için benim yanlış cevabım var. Beni yalnızca bu konularda sorguya çek: her seferinde tek soru, soruların çoğu 'bu kod ne yazar?' biçiminde (Scanner'sız, 10 satırı geçmeyen), doğru cevaplarsam aynı konuda bir zorlaştır, yanlışsa ipucu ver, ikinci yanlışta açıkla ve o konuyu listede tut. 8 soru sonra bana hangi konunun artık tamam, hangisinin hâlâ zayıf olduğunu yaz. Bağlam: 1. sınıf öğrencisiyim, bu hafta kağıt üzerinde vizem var; her kodu Playground'da çalıştırıp senin cevabınla karşılaştıracağım, uymayan yerde kazanan Playground ve ders notu.\n[KONU LİSTESİ VE YANLIŞ CEVAPLARIM]",
+          "ajan": "Bu klasördeki Lab dosyalarımı (Lab1'den Lab6'ya kadar .java dosyaları ve varsa izleme.md) oku. Dosyalara bakarak hangi konuda en çok takıldığımı söyle: tip ve tür dönüşümü mü, seçim yapıları mı, döngüler mi? Gerekçeni dosyalardan satır göstererek ver (dosya adı ve satır numarası). Hiçbir dosyayı DEĞİŞTİRME ve düzeltme yazma; sonunda bana o konuda sorguya çekilmem için üç soru öner, cevaplarını yazma.",
+          "sina": [
+            "Dünkü yanlış listenizdeki en kalabalık konu hangisi ve o konunun 'Temel Kavramlar' maddesini bakmadan söyleyebiliyor musunuz?",
+            "Zayıf konudaki alıştırmada 'önce tahmin' tuttu mu?",
+            "Asistanın sorularından birinde Playground farklı bir sonuç verdi mi? Verdiyse kim haklıydı?"
+          ]
+        },
+        {
+          "sure": 25,
+          "konu": "Portfolyo provası (ikinci) ve kapanış",
+          "yap": [
+            "KT1 sürümünüzdeki if/else'i kağıda ezbere yazın: Scanner satırı, okunan değişken, karşılaştırma, iki dal, ekrana yazılan metin. Sonra depoyla satır satır karşılaştırın; 8. günden daha az eksik olmalı.",
+            "Cep kartındaki altı istemi bir kez daha okuyun ve sınavda yanınızda olmayacak tek şeyin bunlar olduğunu hatırlayın: antrenör salonda kalır, siz tek başınıza çıkarsınız.",
+            "Sınav günü kutusunu okuyun; kağıt, kalem ve izleme tablosu alışkanlığı. Bu akşam yeni bir şey çalışmayın."
+          ],
+          "istem": "Java hocası gibi davran. Görev: aşağıya KT1 sürümümdeki seçim yapısını (if/else) ezbere kağıda yazıp bilgisayara geçirdiğim halini, altına da depodaki gerçek halini yapıştıracağım. İkisini satır satır karşılaştır: ezberden yazdığımda eksik ya da farklı olan satırları söyle, ama doğrusunu yazma; her fark için 'bu satırda neyi unuttun?' biçiminde bir soru sor. Sonunda sarkan else, sınır değeri ve noktalı virgül açısından ezber halimi kontrol et. Bağlam: 1. sınıf öğrencisiyim, vizede bu kodu kağıda yazmam istenecek; farkları kendim düzeltip programı çalıştırarak doğrulayacağım.\n[EZBERDEN YAZDIĞIM]\n[DEPODAKİ]",
+          "ajan": null,
+          "sina": [
+            "KT1 if/else'inizi ezbere yazdığınızda kaç satır eksikti?",
+            "Sınavda kod izlerken ilk yapacağınız şey ne?",
+            "On yedi günde hangi konu 'bilmiyordum, artık biliyorum' oldu?"
+          ]
+        }
+      ],
+      "tekrar": [
+        "Hedefli tekrar: yalnızca dünkü yanlış listesi. Portfolyo provası 2/2.",
+        "Sınav haftası: 16-20 Kasım, gün bölümce ilan edilecek."
+      ]
+    }
+  ],
+  "cepkarti": [
+    {
+      "ad": "Dört parçalı soru",
+      "metin": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: [KONU] kavramını, bildiğim [ÖNCEKİ KONU] ile karşılaştırarak anlat. Biçim: en fazla 6 cümle, 10 satırı geçmeyen Scanner'sız bir örnek, sonunda bir 'kendini sına' sorusu; örneğin çıktısını yazma. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; metot ve dizi görmedim; örneği Java Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım."
+    },
+    {
+      "ad": "Beni sorguya çek",
+      "metin": "Java hocası gibi davran ve beni [KONU] konusunda sorguya çek. Her seferinde tek soru, cevabımı bekle; doğruysa zorlaştır, yanlışsa önce ipucu, ikinci yanlışta açıkla; soruların yarısı 'bu kod ne yazar?' biçiminde, Scanner'sız ve 8 satırı geçmeyen olsun. 6 soru sonra değerlendirme ve en zayıf noktam. Bağlam: 1. sınıf, [BİLDİKLERİM]; her kodu Playground'da çalıştırıp senin cevabınla karşılaştıracağım, uymazsa kazanan Playground."
+    },
+    {
+      "ad": "Flash kart",
+      "metin": "Birinci sınıfa Java öğreten bir hoca gibi davran. Görev: [KONU] için hatırlama gerektiren 10 flash kart hazırla. Biçim: ön yüzde tek soru, cevapları başta verme; ben 'arkasını çevir' dediğimde yalnızca o kartın cevabını yaz; en az 3 kart küçük bir kod parçası içersin. Bağlam: 1. sınıf öğrencisiyim, kağıt üzerinde vizeye hazırlanıyorum; her cevabı ders notuyla karşılaştıracağım, uymayan yerde ders notu kazanır."
+    },
+    {
+      "ad": "Çoktan seçmeli, neden yanlış",
+      "metin": "Sınav yazarı gibi davran. Görev: [KONU] konusundan 5 çoktan seçmeli soru yaz; 4 şık, tek doğru, en az üçü 'bu kod ne yazar?' (Scanner'sız, 10 satırı geçmeyen). Biçim: önce yalnızca soruları ver; ben cevapladıktan sonra her soru için doğru şıkkın neden doğru, diğer üç şıkkın her birinin NEDEN YANLIŞ olduğunu birer cümleyle açıkla. Bağlam: 1. sınıf, vize kağıt üzerinde; kodlu soruları Playground'da çalıştırıp anahtarınla karşılaştıracağım."
+    },
+    {
+      "ad": "Kod izleme, çıktıyı söyleme",
+      "metin": "Java hocası gibi davran. Görev: [KONULAR] içeren, Scanner kullanmayan, 12 satırlık bir Java programı yaz. Biçim: yalnızca kod, satır numaralı; ÇIKTIYI SÖYLEME, önce ben tahmin edeceğim. Tahminimi yazınca satır satır kontrol et: doğruya 'doğru', yanlışa doğrusunu söylemeden tek bir ipucu. Bağlam: 1. sınıf, vizede kağıt üzerinde kod izleme var; kodu en sonda Playground'da çalıştırıp hem kendimi hem seni doğrulayacağım."
+    },
+    {
+      "ad": "Hata avı, hataları söyleme",
+      "metin": "Java hocası gibi davran. Görev: 1. sınıf seviyesinde, Scanner kullanmayan 15 satırlık bir program yaz ve içine üç hata göm: bir sözdizimi, bir çalışma zamanı, bir mantık; yorumla işaretleme. Biçim: yalnızca kod, satır numaralı; hataların yerini ve türünü SÖYLEME. Ben satır ve türüyle yazınca kontrol et, kaçırdıklarım için doğrusunu söylemeden bir ipucu ver. Bağlam: değişken, tip, if/else, switch, döngü biliyorum; metot ve dizi görmedim; her hatayı Playground'da çalıştırarak doğrulayacağım."
+    }
+  ],
+  "sinavGunu": [
+    "Kağıt ve kalem: sınav kağıt üzerinde, telefon ve bilgisayar kapalı (kırmızı bölge). Silgili kalem ve müsvedde için boş bir yüz ayırın.",
+    "Önce tahmin: kodlu her soruda çıktıyı yazmadan önce programı satır satır kafanızda çalıştırın; bu on yedi gündür Playground'da yaptığınız şeyin Run'sız hali.",
+    "Kod izlemede tablo tutun: her değişken için bir sütun, her tur için bir satır; döngü değişkeninin bittikten sonraki değerini de yazın.",
+    "Hata sayarken üç türü sırayla sorun: derleyici görür mü (sözdizimi), çalışırken çöker mi (çalışma zamanı), çalışır ama yanlış mı (mantık).",
+    "Portfolyo sorusu sizin kodunuz: KT1'deki if/else'i iki kez prova ettiniz; Scanner satırı, karşılaştırma, iki dal, noktalı virgüller.",
+    "Takıldığınız soruya soru işareti koyup geçin; süre bitmeden geri dönün. Boş bırakılan çıktı satırı sıfır, yanlış tahmin kısmi puan alabilir."
+  ],
+  "sss": [
+    {
+      "q": "On yedi günün hepsini yapamazsam?",
+      "a": "Planı bir reçete gibi değil bir harita gibi okuyun. Bir gün kaçırdıysanız o günü yetiştirmeye çalışmayın; ertesi günün bloğunu yapın ve kaçırdığınız konuyu en yakın tekrar bloğuna sıkıştırın. En vazgeçilmez üç gün: 9. gün (karışık izleme), 16. gün (kendi deneme kağıdınız) ve 17. gün (zayıf konular)."
+    },
+    {
+      "q": "Yapay zekam yok ya da kullanmak istemiyorum; plan çalışır mı?",
+      "a": "Çalışır. Her bloğun 'yap' listesi asistansız tamamlanır: Playground, kağıt ve ders notu yeter. İstemler, sizi sorguya çekecek bir arkadaş yerine geçer; o arkadaş bir sınıf arkadaşınız da olabilir. Sorguya çekme istemini bir arkadaşınıza okutun, sorular ona ait olsun; deneme kağıdını da birbiriniz için yazabilirsiniz."
+    },
+    {
+      "q": "Asistan yanlış cevap verirse ne olacak?",
+      "a": "Verecek; bu yüzden her istemde 'Playground'da doğrulayacağım' cümlesi var. Kodlu her cevabı çalıştırın, açıklamaları ders notuyla karşılaştırın; uymayan yerde kazanan çıktı ve ders notudur. Yakaladığınız hatayı not edin: hem öğrendiğinizin kanıtı hem de AI beyanının dördüncü satırı."
+    },
+    {
+      "q": "Hoca deneme sınavı ya da geçmiş yıl sorusu paylaşacak mı?",
+      "a": "Hayır. Sınavın kendisi öğrenmenin parçasıdır; hoca sınava benzer soru yayımlamaz, bu yüzden provanızı kendiniz üretirsiniz. Soru türleri ve kapsam bu sayfada açık: kod izleme, boşluk doldurma, hata sayma, program tamamlama ve portfolyo sorusu. 16. günün istemi bu formatta bir kağıt ürettirir; önemli olan cevapları ezberlemek değil, izleme tablosu tutma, hata türünü ayırt etme ve koşulu Türkçeye çevirme alışkanlıkları."
+    }
+  ]
+}

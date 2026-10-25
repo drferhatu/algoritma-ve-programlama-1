@@ -1,0 +1,348 @@
+---
+/** Vize çalışma planı: 30 Ekim - 15 Kasım arası 17 gün, hafta içi tek blok, hafta sonu iki blok.
+ *  Veri: content/data/vize-plani.json (sinav, ilke, gunler, cepkarti, sinavGunu, sss).
+ *  "Bugün" vurgusu istemci JS ile: tarih plan aralığındaysa o günün kartı açılır ve işaretlenir. */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import Toc from '@/components/Toc.astro';
+import planRaw from '@content/data/vize-plani.json';
+import { href, weekHref, formatDayDate, JAVA_PLAYGROUND, aiPolicy } from '@/lib/site';
+
+interface Kod { baslik: string; kod: string; cevap: string }
+interface Blok { sure: number; konu: string; yap: string[]; istem: string; ajan: string | null; sina: string[]; kodlar?: Kod[] }
+interface Gun { gun: number; tarih: string; baslik: string; yogunluk: 'hafif' | 'orta' | 'yogun'; ozet: string; bloklar: Blok[]; tekrar: string[] }
+interface Plan {
+  sinav: { hafta: number; aralik: string; not: string; kapsamNotu: string; kapsam: string[]; format: { tur: string; aciklama: string }[] };
+  ilke: { ad: string; en: string; aciklama: string }[];
+  kaynak: string;
+  gunler: Gun[];
+  cepkarti: { ad: string; metin: string }[];
+  sinavGunu: string[];
+  sss: { q: string; a: string }[];
+}
+const plan = planRaw as unknown as Plan;
+
+const gunler = [...plan.gunler].sort((a, b) => a.gun - b.gun);
+const gunSayisi = gunler.length;
+const blokSayisi = gunler.reduce((n, g) => n + g.bloklar.length, 0);
+const ilkTarih = gunler[0]?.tarih;
+const sonTarih = gunler[gunler.length - 1]?.tarih;
+
+const SAYI: Record<number, string> = { 10: 'On', 11: 'On Bir', 12: 'On İki', 13: 'On Üç', 14: 'On Dört', 15: 'On Beş', 16: 'On Altı', 17: 'On Yedi', 18: 'On Sekiz', 19: 'On Dokuz', 20: 'Yirmi', 21: 'Yirmi Bir', 22: 'Yirmi İki', 23: 'Yirmi Üç', 24: 'Yirmi Dört', 25: 'Yirmi Beş', 26: 'Yirmi Altı' };
+const sayiAdi = (n: number) => SAYI[n] ?? String(n);
+const baslik = `Vize Çalışma Planı: ${sayiAdi(gunSayisi)} Gün, ${sayiAdi(blokSayisi)} Blok`;
+
+const YOGUNLUK: Record<Gun['yogunluk'], { label: string; cls: string }> = {
+  hafif: { label: 'Hafif', cls: 'bg-[var(--mod-emerald)]/15 text-[var(--mod-emerald)]' },
+  orta: { label: 'Orta', cls: 'bg-[var(--mod-amber)]/20 text-[var(--mod-amber)]' },
+  yogun: { label: 'Yoğun', cls: 'bg-accent-soft text-accent' },
+};
+
+const kirmizi = aiPolicy.levels.find((l) => l.id === 'kirmizi');
+
+const toc = [
+  { slug: 'sinav', text: 'Sınav: ne zaman, ne kapsar' },
+  { slug: 'nasil', text: 'Nasıl çalışılır' },
+  { slug: 'plan', text: `${gunSayisi} günlük plan` },
+  { slug: 'cep-karti', text: 'Cep kartı: altı istem' },
+  { slug: 'sinav-gunu', text: 'Sınav günü' },
+  { slug: 'sss', text: 'Sık sorulanlar' },
+];
+
+const codeCls = 'rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.9em]';
+---
+<BaseLayout title={baslik} description={`Algoritma ve Programlama I ara sınavı için ${gunSayisi} günlük çalışma planı: aralıklı tekrar, hatırlama alıştırması, karışık kod izleme, hata avı ve yapay zekayı antrenör gibi kullanan kopyalanabilir istemler.`}>
+  <div class="wrap py-14 md:py-20">
+    <SectionHeading eyebrow="Vize hazırlığı" title={baslik}
+      lede={`Ara sınav ${plan.sinav.hafta}. haftada, ${plan.sinav.aralik} arasında; ${plan.sinav.not}. Kağıt üzerinde ve yapay zekasız: kırmızı bölge. Bu yüzden çalışırken yapay zekayı bir antrenör gibi kullanıyor, sınava tek başınıza giriyorsunuz. Aşağıdaki plan ${formatDayDate(ilkTarih, true)} ile ${formatDayDate(sonTarih, true)} arasını ${gunSayisi} güne böler: hafta içi günleri 25 dakikalık tek bir blok, hafta sonları iki blok. Her blokta ne yapacağınız, kopyalayıp asistana vereceğiniz istem ve üç soruluk küçük bir kendini sınama var.`} />
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a id="bugun-btn" href="#plan" class="btn-accent">Bugünün kartı</a>
+      <a href="#cep-karti" class="btn-primary">Cep kartı</a>
+      <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="btn-ghost">Java Playground ↗</a>
+    </div>
+  </div>
+
+  <div class="wrap grid gap-12 pb-24 lg:grid-cols-[220px_1fr]">
+    <aside class="hidden lg:block"><div class="sticky top-24"><Toc headings={[]} extra={toc} /></div></aside>
+
+    <div class="min-w-0 max-w-4xl">
+      <!-- SINAV -->
+      <section aria-labelledby="sinav">
+        <p class="eyebrow">Sınav</p>
+        <h2 id="sinav" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">{plan.sinav.hafta}. hafta, {plan.sinav.aralik}: kağıt, kalem, yapay zeka yok</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Sınav kağıt üzerindedir, telefon ve bilgisayar kapalıdır; günü bölüm ilan edecek. Soru türleri aşağıda ve kapsam 1-7. haftadır. {plan.sinav.kapsamNotu}</p>
+
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          <div class="rounded-2xl border border-line bg-white p-5 shadow-soft">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Kapsam: 1-7. hafta</p>
+            <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-ink-2">
+              {plan.sinav.kapsam.map((k, i) => (
+                <li class="flex gap-2"><span class="shrink-0 font-mono text-xs text-ink-3">{String(i + 1).padStart(2, '0')}</span><span>{k}</span></li>
+              ))}
+            </ul>
+            <p class="mt-3 text-xs text-ink-3">Hafta sayfaları: {[1, 2, 3, 4, 5, 6, 7].map((n, i) => (<><a href={weekHref(n)} class="link">{n}</a>{i < 6 ? ' · ' : ''}</>))}</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5 shadow-soft">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Soru türleri</p>
+            <ul class="mt-3 space-y-2.5 text-[14px] leading-relaxed text-ink-2">
+              {plan.sinav.format.map((f) => (
+                <li><strong class="text-ink">{f.tur}.</strong> {f.aciklama}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {kirmizi && (
+          <div class="mt-5 rounded-2xl border-2 border-[#b42318] bg-[#fff5f4] p-5 md:p-6">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-[#b42318]">Kırmızı bölge: {kirmizi.where}</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink">{kirmizi.rule} {kirmizi.why}</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-ink-2">Bu yüzden plandaki her istem sizi çalıştırmak için yazıldı, sizin yerinize çalışmak için değil: asistan soru sorar, sizi sorguya çeker, hataları gömer ve cevabı söylemez. Sınav günü antrenör salonda kalır, siz tek başınıza çıkarsınız. Sınavın kendisi öğrenmenin parçasıdır; hoca sınava benzer soru yayımlamaz, bu yüzden provanızı 16. günde kendiniz üretirsiniz.</p>
+          </div>
+        )}
+      </section>
+
+      <!-- NASIL ÇALIŞILIR -->
+      <section aria-labelledby="nasil" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Nasıl çalışılır</p>
+        <h2 id="nasil" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Beş ilke, hepsi planın içine gömülü</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Çok çalışmak ile iyi çalışmak aynı şey değil. Aşağıdaki beş ilke öğrenme biliminin en sağlam bulguları; planın her günü bunlardan en az ikisini kullanır. {plan.kaynak}</p>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          {plan.ilke.map((p, i) => (
+            <li class:list={['rounded-2xl border border-line bg-white p-5 shadow-soft', i === plan.ilke.length - 1 && 'sm:col-span-2']}>
+              <div class="flex items-center gap-3">
+                <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-accent-soft font-mono text-sm font-bold text-accent">{i + 1}</span>
+                <h3 class="font-semibold text-ink">{p.ad} <span class="font-normal text-ink-3">({p.en})</span></h3>
+              </div>
+              <p class="mt-3 text-[14px] leading-relaxed text-ink-2">{p.aciklama}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- PLAN -->
+      <section aria-labelledby="plan" class="mt-16 border-t border-line pt-10">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">Plan</p>
+            <h2 id="plan" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">{sayiAdi(gunSayisi)} gün, {blokSayisi} blok</h2>
+            <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Her blok 25 dakika; arada beş dakika ayağa kalkın. Blokların sırası önemli, çünkü tekrarlar birbirine göre yerleştirildi: her konu ilk turdan iki üç gün sonra ve altı yedi gün sonra geri gelir. Bugünün kartı otomatik açılır; diğerlerini başlığına tıklayarak açın.</p>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" id="hepsini-ac" class="rounded-full border border-line-2 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink-2 hover:border-ink hover:text-ink">Tümünü aç</button>
+            <button type="button" id="hepsini-kapat" class="rounded-full border border-line-2 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink-2 hover:border-ink hover:text-ink">Tümünü kapat</button>
+          </div>
+        </div>
+
+        <ol class="mt-8 space-y-4" id="gun-listesi">
+          {gunler.map((g) => (
+            <li>
+              <details class="gun-karti group rounded-2xl border border-line bg-white shadow-soft open:border-line-2" data-tarih={g.tarih} id={`gun-${g.gun}`}>
+                <summary class="cursor-pointer list-none px-5 py-4 marker:content-none [&::-webkit-details-marker]:hidden md:px-6">
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-ink font-display text-lg font-semibold text-paper group-[.bugun]:bg-accent">{g.gun}</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="flex flex-wrap items-center gap-2 text-xs font-semibold text-ink-3">
+                        <span>{formatDayDate(g.tarih, true)}</span>
+                        <span class={`rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.1em] ${YOGUNLUK[g.yogunluk].cls}`}>{YOGUNLUK[g.yogunluk].label}</span>
+                        <span class="rounded-full bg-paper-2 px-2 py-0.5 text-[11px] font-bold text-ink-2">{g.bloklar.length} blok · {g.bloklar.reduce((n, b) => n + b.sure, 0)} dk</span>
+                        <span class="bugun-rozet hidden rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white">Bugün</span>
+                      </p>
+                      <h3 class="mt-1 text-base font-bold leading-snug text-ink md:text-lg">{g.baslik}</h3>
+                    </div>
+                    <span class="text-ink-3 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </div>
+                </summary>
+
+                <div class="border-t border-line px-5 pb-5 pt-4 md:px-6">
+                  <p class="text-[15px] leading-relaxed text-ink-2">{g.ozet}</p>
+
+                  <div class="mt-5 space-y-5">
+                    {g.bloklar.map((b, bi) => (
+                      <article class="rounded-xl border border-line bg-paper-2/40 p-4 md:p-5">
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span class="rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">Blok {bi + 1}</span>
+                          <span class="text-xs font-semibold text-ink-3">{b.sure} dk</span>
+                        </div>
+                        <h4 class="mt-2 font-semibold leading-snug text-ink">{b.konu}</h4>
+
+                        <p class="mt-3 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-3">Ne yapacaksınız</p>
+                        <ol class="mt-1.5 space-y-1.5 text-[14px] leading-relaxed text-ink-2">
+                          {b.yap.map((y, yi) => (
+                            <li class="flex gap-2"><span class="shrink-0 font-mono text-xs text-accent">{yi + 1}.</span><span>{y}</span></li>
+                          ))}
+                        </ol>
+
+                        {b.kodlar && b.kodlar.length > 0 && (
+                          <div class="mt-4 space-y-3">
+                            {b.kodlar.map((k) => (
+                              <div class="overflow-hidden rounded-xl border border-line bg-white">
+                                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2/60 px-3 py-2">
+                                  <span class="text-sm font-bold text-ink">{k.baslik}</span>
+                                  <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="codetry-btn">Playground'da dene ↗</a>
+                                </div>
+                                <pre class="overflow-x-auto px-4 py-3 font-mono text-[13px] leading-relaxed text-ink"><code>{k.kod}</code></pre>
+                                <details class="border-t border-line px-4 py-2.5">
+                                  <summary class="cursor-pointer text-xs font-semibold text-ink-2 hover:text-ink">Cevabı göster (önce kağıda yazın)</summary>
+                                  <p class="mt-2 text-[13px] leading-relaxed text-ink-2">{k.cevap}</p>
+                                </details>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <p class="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-3">Bot istemi <span class="font-normal normal-case tracking-normal">(Java Hocam becerinize ya da düz sohbete)</span></p>
+                        <figure class="istem mt-1.5 overflow-hidden rounded-xl border border-line bg-white" data-istem>
+                          <figcaption class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2/60 px-3 py-2">
+                            <span class="text-xs font-semibold text-ink-2">text</span>
+                            <button type="button" class="codetry-btn" data-copy aria-live="polite">
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                              <span data-copy-label>Kopyala</span>
+                            </button>
+                          </figcaption>
+                          <pre class="whitespace-pre-wrap px-4 py-3 font-mono text-[13px] leading-relaxed text-ink" data-istem-metin>{b.istem}</pre>
+                        </figure>
+
+                        {b.ajan && (
+                          <>
+                            <p class="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-3">Ajan istemi <span class="font-normal normal-case tracking-normal">(görev modu, klasör yetkili)</span></p>
+                            <figure class="istem mt-1.5 overflow-hidden rounded-xl border border-[var(--mod-violet)]/40 bg-white" data-istem>
+                              <figcaption class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2/60 px-3 py-2">
+                                <span class="text-xs font-semibold text-ink-2">text</span>
+                                <button type="button" class="codetry-btn" data-copy aria-live="polite">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                  <span data-copy-label>Kopyala</span>
+                                </button>
+                              </figcaption>
+                              <pre class="whitespace-pre-wrap px-4 py-3 font-mono text-[13px] leading-relaxed text-ink" data-istem-metin>{b.ajan}</pre>
+                            </figure>
+                          </>
+                        )}
+
+                        <p class="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-3">Kendinizi sınayın <span class="font-normal normal-case tracking-normal">(bakmadan, sesli)</span></p>
+                        <ol class="mt-1.5 space-y-1 text-[14px] leading-relaxed text-ink-2">
+                          {b.sina.map((s, si) => (
+                            <li class="flex gap-2"><span class="shrink-0 font-mono text-xs text-ink-3">{si + 1}.</span><span>{s}</span></li>
+                          ))}
+                        </ol>
+                      </article>
+                    ))}
+                  </div>
+
+                  <div class="mt-4 rounded-xl border border-dashed border-line-2 px-4 py-3 text-[13px] leading-relaxed text-ink-2">
+                    <span class="font-semibold text-ink">Tekrar haritası:</span> {g.tekrar.join(' ')}
+                  </div>
+                </div>
+              </details>
+            </li>
+          ))}
+        </ol>
+        <noscript>
+          <p class="mt-4 rounded-xl border border-line bg-paper-2 p-4 text-sm text-ink-2">Bugünün kartı JavaScript ile otomatik açılır; JavaScript kapalıysa kartları başlığına tıklayarak açın.</p>
+        </noscript>
+      </section>
+
+      <!-- CEP KARTI -->
+      <section aria-labelledby="cep-karti" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Cep kartı</p>
+        <h2 id="cep-karti" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Altı istem, tek kural</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Plandaki istemlerin hepsi bu altı kalıbın birer uyarlaması. Telefonunuza ya da <code class={codeCls}>algo1</code> klasörünüze <code class={codeCls}>vize-cep-karti.md</code> adıyla kaydedin; köşeli parantezleri o günün konusuyla doldurun. Kural değişmez: asistanın verdiği her kod Playground'da çalıştırılmadan, her açıklama ders notuyla karşılaştırılmadan doğru sayılmaz. 5. haftanın <a href={`${weekHref(5)}#cep-kartı-altı-istem`} class="link">Java Hocam becerisi ve cep kartı</a> bunların büyük ağabeyi.</p>
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          {plan.cepkarti.map((c, i) => (
+            <figure class="istem flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-soft" data-istem>
+              <figcaption class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2/60 px-4 py-2.5">
+                <span class="flex items-center gap-2 text-sm font-bold text-ink"><span class="grid size-6 place-items-center rounded-md bg-accent-soft font-mono text-[11px] font-bold text-accent">{i + 1}</span>{c.ad}</span>
+                <button type="button" class="codetry-btn" data-copy aria-live="polite">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                  <span data-copy-label>Kopyala</span>
+                </button>
+              </figcaption>
+              <pre class="flex-1 whitespace-pre-wrap px-4 py-3 font-mono text-[12.5px] leading-relaxed text-ink" data-istem-metin>{c.metin}</pre>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <!-- SINAV GÜNÜ -->
+      <section aria-labelledby="sinav-gunu" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Sınav günü</p>
+        <h2 id="sinav-gunu" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Kağıt, kalem, tablo</h2>
+        <div class="mt-6 rounded-2xl border-2 border-ink bg-white p-5 md:p-6">
+          <ul class="space-y-3 text-[15px] leading-relaxed text-ink-2">
+            {plan.sinavGunu.map((s, i) => (
+              <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-lg bg-ink font-mono text-xs font-bold text-paper">{i + 1}</span><span>{s}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- SSS -->
+      <section aria-labelledby="sss" class="mt-16 border-t border-line pt-10">
+        <p class="eyebrow">Sık sorulanlar</p>
+        <h2 id="sss" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">Aklınıza gelecek dört soru</h2>
+        <div class="mt-6 space-y-3">
+          {plan.sss.map((s) => (
+            <details class="group rounded-2xl border border-line bg-white px-5 py-4">
+              <summary class="cursor-pointer list-none font-semibold text-ink marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-4">{s.q}<span class="text-ink-3 transition-transform group-open:rotate-45" aria-hidden="true">+</span></span>
+              </summary>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-2">{s.a}</p>
+            </details>
+          ))}
+        </div>
+        <p class="mt-8 text-sm text-ink-3">Cevabını bulamadığınız soru için lab saatinde lab sorumlu hocanıza sorun ya da <a href={href('/ders-hakkinda#kanallar')} class="link">iletişim kanallarını</a> kullanın. Portfolyo sorusu için <a href={href('/proje')} class="link">proje sayfası</a>.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Yansı modu: kart metinleri siyah, istem kutuları kalın çerçeveli */
+  :global(html[data-yansi="on"]) .istem pre { font-weight: 600; color: #000; }
+  :global(html[data-yansi="on"]) .gun-karti { border-width: 2px; border-color: #000; }
+  :global(html[data-yansi="on"]) .gun-karti p, :global(html[data-yansi="on"]) .gun-karti li { color: #000; }
+</style>
+
+<script>
+  // Kopyala düğmeleri (CodeTry ile aynı mantık)
+  document.querySelectorAll<HTMLElement>('[data-istem]').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('[data-copy]');
+    const label = box.querySelector<HTMLElement>('[data-copy-label]');
+    const pre = box.querySelector<HTMLElement>('[data-istem-metin]');
+    if (!btn || !pre) return;
+    if (!navigator.clipboard) { btn.hidden = true; return; }
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.innerText.replace(/\n$/, ''));
+        btn.setAttribute('data-copied', '');
+        if (label) label.textContent = 'Kopyalandı';
+        setTimeout(() => { btn.removeAttribute('data-copied'); if (label) label.textContent = 'Kopyala'; }, 1800);
+      } catch {
+        if (label) label.textContent = 'Kopyalanamadı';
+      }
+    });
+  });
+
+  // Tümünü aç / kapat
+  const kartlar = Array.from(document.querySelectorAll<HTMLDetailsElement>('details.gun-karti'));
+  document.getElementById('hepsini-ac')?.addEventListener('click', () => kartlar.forEach((d) => { d.open = true; }));
+  document.getElementById('hepsini-kapat')?.addEventListener('click', () => kartlar.forEach((d) => { d.open = false; }));
+
+  // Bugün vurgusu: yerel tarih plan aralığındaysa ilgili kart açılır ve işaretlenir
+  const now = new Date();
+  const bugun = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const bugunKart = kartlar.find((d) => d.dataset.tarih === bugun);
+  const btn = document.getElementById('bugun-btn') as HTMLAnchorElement | null;
+  if (bugunKart) {
+    bugunKart.open = true;
+    bugunKart.classList.add('bugun', 'border-accent', 'ring-2', 'ring-accent/30');
+    bugunKart.querySelector('.bugun-rozet')?.classList.remove('hidden');
+    if (btn) btn.href = `#${bugunKart.id}`;
+  } else {
+    // Plan dışındaysa: ilk kartı aç, düğme plana gitsin
+    if (kartlar[0] && !location.hash) kartlar[0].open = true;
+    if (btn) { btn.textContent = 'Plana git'; btn.href = '#plan'; }
+  }
+  // Bağlantıyla gelen kart (#gun-7 gibi) açılsın
+  const hedef = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+  if (hedef instanceof HTMLDetailsElement) hedef.open = true;
+</script>

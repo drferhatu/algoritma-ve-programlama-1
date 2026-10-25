@@ -1,0 +1,31 @@
+// Lab 6, Görev 3: sayı tahmin oyunu akışı (öğrenci bundan Tahmin.java yazar)
+digraph Tahmin {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla  [shape=ellipse, label="BAŞLA"];
+    ilk    [shape=box, label="HEDEF = 42\ntahmin = -1, deneme = 0"];
+    kosul  [shape=diamond, label="tahmin ≠ HEDEF mi?"];
+    oku    [shape=parallelogram, label="tahmin oku"];
+    say    [shape=box, label="deneme = deneme + 1"];
+    kucuk  [shape=diamond, label="tahmin < HEDEF mi?"];
+    buyuk  [shape=diamond, label="tahmin > HEDEF mi?"];
+    yazB   [shape=parallelogram, label="\"Daha buyuk\" yaz"];
+    yazK   [shape=parallelogram, label="\"Daha kucuk\" yaz"];
+    son    [shape=parallelogram, label="\"Bildin! Deneme: N\" yaz"];
+    bitir  [shape=ellipse, label="BİTİR"];
+
+    basla -> ilk -> kosul;
+    kosul -> oku [label="Evet"];
+    oku -> say -> kucuk;
+    kucuk -> yazB [label="Evet"];
+    kucuk -> buyuk [label="Hayır"];
+    buyuk -> yazK [label="Evet"];
+    buyuk -> kosul [label="Hayır (eşit)"];
+    yazB -> kosul;
+    yazK -> kosul;
+    kosul -> son [label="Hayır"];
+    son -> bitir;
+}

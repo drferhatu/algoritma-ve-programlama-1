@@ -1,0 +1,684 @@
+---
+week: 6
+title: "Döngüler I: while, do-while, for, Gözcü Değer ve KT1 Teslimi"
+topic: "Tekrar yapıları: while, do-while ve for döngüleri; sayaç kontrollü ve gözcü değer (sentinel) kontrollü döngüler; girdi doğrulama döngüsü"
+description: "Bilgisayarın asıl gücü tekrar: üç döngü türü, hangi durumda hangisi, gözcü değerle biten döngü ve kullanıcıyı doğru girdiye zorlayan döngü. KT1 teslim haftası: 6 Kasım Cuma 23.59."
+module: m2
+semester: 1
+exam: false
+status: hazir
+changeNote: ""
+milestone: "KT1"
+tags:
+  - "while"
+  - "do-while"
+  - "for"
+  - "gözcü değer"
+  - "sentinel"
+  - "döngü"
+  - "KT1"
+objectives:
+  - "while, do-while ve for döngülerini yazar; aralarındaki farkı bir cümleyle söyler."
+  - "Sayaç kontrollü ve gözcü değer kontrollü döngü tasarlar."
+  - "Girdi doğrulama döngüsü (geçerli sayı girene kadar sor) yazar."
+  - "Sonsuz döngü ve bir eksik/bir fazla (off-by-one) hatalarını tanır ve düzeltir."
+  - "KT1: depo açılmış, README'de konu ve ayırt edici kural yazılı, Scanner ile girdi alıp en az bir if/else ile karar veren ilk sürümü 6 Kasım Cuma 23.59'a kadar push eder."
+tools:
+  - "Java Playground"
+  - "Gemini (sohbet ve görev modu)"
+  - "JDK 21 / Codespaces"
+resources:
+  - title: "Think Java 2, Bölüm 7: Loops and Strings"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch07.html"
+    note: "while, for, sayaç ve gözcü değer; bu haftanın kitap karşılığı. String kısmı bu dönem değil, döngü kısmını okuyun."
+  - title: "Java Tutorials: The while and do-while Statements"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/while.html"
+    note: "Resmî sözdizimi ve 'do-while en az bir kez çalışır' cümlesinin kitap hali; bot cevaplarını doğrulayacağınız yer."
+  - title: "Java Tutorials: The for Statement"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html"
+    note: "Üç parça tek satırda; sayacın döngü bitince neden yaşamadığı burada yazıyor."
+  - title: "Örnek proje: algo1-ornek-kirtasiye"
+    url: "https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-ornek-kirtasiye"
+    note: "Hocanın kırtasiye uygulaması; bu hafta menüsü do-while ile döngüye giriyor. Kopyalamak için değil, kendi KT1'inizi karşılaştırmak için."
+  - title: "Vize çalışma planı"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/vize-plani"
+    note: "9. haftadaki (16-20 Kasım) ara sınav için 30 Ekim'den 15 Kasım'a gün gün plan; bu hafta planın 1. günü."
+---
+
+## Derse Başlamadan Önce
+
+- **Lab 4 ve Lab 5'in son teslimi bu gece, 30 Ekim Cuma 23.59.** Lab 4 kabul bağlantısındaki sorun çözüldüğü için iki labın süresi bugüne uzatıldı; Releases sayfasında geçmeyen testiniz varsa dersten sonra düzeltip push edin, yarından sonra gelen push'lar puanlanmaz.
+- Portfolyo deponuzu (`algo1-portfolyo-KULLANICIADI`) henüz açmadıysanız [Proje](/proje) sayfasındaki kabul bağlantısından açın, çünkü **KT1 bir hafta sonra, 6 Kasım Cuma 23.59** ve bugün dersin sonunda o depoyu birlikte kontrol edeceğiz.
+- Tarayıcınızda [Java Playground](https://dev.java/playground/) açık olsun, çünkü bu hafta yedi kod kutusu ve dört tam dosya var ve her birini önce tahmin edip sonra çalıştıracağız.
+- Gemini masaüstü uygulaması açık ve geçen haftaki `Belgeler/algo1` klasörü yetkili olsun; "Java Hocam" becerisi kurulu olsun. Bu hafta asistan dersin sonunda değil, her kavramın yanında.
+
+> [!not] Bu haftanın hikayesi
+> Beş haftadır yazdığınız her program yukarıdan aşağı bir kez aktı ve bitti; geçen hafta yol ayrımı geldi ama her yoldan yine bir kez geçildi. Bugün program ilk kez **geri dönüyor**: bir satırı yüz kez, bin kez, kullanıcı "yeter" diyene kadar çalıştırıyor. Bu, bilgisayarın insana karşı tek gerçek üstünlüğünün Java'daki adı: yorulmamak. Üç döngü türü öğreneceğiz, ama asıl öğreneceğimiz şey "ne zaman durur?" sorusunu her döngüye sormak. Geçen hafta kurduğunuz asistan bu hafta ders boyunca yanımızda: her kavramdan sonra ona ne soracağınızı, nasıl doğrulayacağınızı ve bir yerde de klasörünüzde bir işi ona nasıl yaptıracağınızı göreceksiniz. Tek oturum, A şubesi Cuma 09.15, B şubesi Cuma 13.15.
+
+## Haftanın Bulmacası
+
+<Puzzle title="Yüz kere" kind="insan-bilgisayar">
+
+Bir gönüllü tahtaya çıkar ve 1. haftadaki gibi bilgisayar olur: yalnızca söyleneni yapar, yorum yapmaz. Görev basit: tahtaya **yüz kez** "Merhaba" yazdırmak.
+
+İlk çözüm bellidir, sınıf yüz kez "Merhaba yaz" der ve gönüllü yazar; on beşinci "Merhaba"da herkes sıkılır. Kural şu: gönüllüye en fazla **dört cümle** söyleyebilirsiniz ve bu dört cümle yüz "Merhaba" üretmeli. Gönüllünün bildiği şeyler: bir sayıyı aklında tutmak, iki sayıyı karşılaştırmak, bir sayıyı bir artırmak, bir cümleyi bir kez yazmak ve "şu adıma dön" demek.
+
+Sınıfın bulması gereken tarif kabaca şu:
+
+1. Aklında bir sayaç tut, sıfırdan başla.
+2. Sayaç 100'den küçükse "Merhaba" yaz, değilse dur.
+3. Sayacı bir artır.
+4. 2. adıma dön.
+
+Bitince zor soru: "Merhaba"yı kaç kez yazacağımızı **bilmiyorsak**, mesela "ben 'dur' diyene kadar yaz" dersek, tarif nasıl değişir? Sayaç hâlâ gerekli mi?
+
+</Puzzle>
+
+Dört cümleyle yüz satır. Bu dört cümlenin üçü bugün tek tek ad alacak: sayacı sıfırdan başlatmak **başlangıç**, "100'den küçük mü?" diye sormak **koşul**, sayacı bir artırmak **adım**. Gönüllünün her seferinde 2. adıma dönmesi ise döngünün kendisi. Zor sorunun cevabı da ikinci bir döngü türünü doğuruyor: kaç kez olduğunu bilmiyorsak sayaç saymaz, "dur" kelimesini bekleriz; o kelimeye bugün **gözcü değer** diyeceğiz. Yüz kere ile "dur diyene kadar" arasındaki fark, bu dersin iki yarısı.
+
+## Ders Notları
+
+### Neden tekrar: bilgisayarın tek üstünlüğü
+
+Bir hesabı sizden daha iyi yapan bir makine değil bilgisayar. Toplama yapmayı siz de biliyorsunuz, karşılaştırma yapmayı da; geçen hafta `if` yazarken bilgisayarın yapamadığı hiçbir şeyi yapmadınız, yalnızca sizin dakikada yaptığınızı o saniyede yaptı. Bilgisayarın insana karşı tek gerçek üstünlüğü **yorulmaması**dır. Bir kasiyer sekiz saatlik vardiyanın sonunda fişi yanlış toplar, bir öğrenci beş yüzüncü soruda dikkatini kaybeder, ama bir program beş yüzüncü tekrarda birinciyle aynı dikkatle çalışır. Programlamada bu üstünlüğü kullanmanın yolu, aynı satırları yüz kez yazmak değil, **bir kez yazıp yüz kez çalıştırmak**tır ve bunu yapan yapıya **döngü** (loop) denir.
+
+Bulmacadaki dört cümleye geri dönelim, çünkü her döngü, hangi türden olursa olsun, o dört cümleden yapılmıştır. Bir **başlangıç** vardır: sayaç sıfırdan başlar. Bir **koşul** vardır: "100'den küçük mü?"; koşul doğru olduğu sürece döngü döner, yanlış olduğu an biter. Bir **gövde** vardır: her turda yapılan iş, yani "Merhaba" yazmak. Bir de **adım** vardır: sayacı bir artırmak, yani her turda koşulu bitişe bir adım yaklaştıran şey. Bu dördünden birini unutursanız döngü ya hiç dönmez ya da hiç durmaz ve bugünkü hataların hemen hepsi bu dört parçadan birinin eksik ya da yanlış olmasıdır.
+
+<Diagram name="h06-dongu" caption="Bir döngünün üç parçası: başlangıç, koşul, adım. Gövde koşul doğru olduğu sürece tekrar eder; turuncu ok 'tekrar sor' demek ve 2. haftadaki geri sayım diyagramında da aynı ok vardı." dot width="380px" />
+
+Bu diyagram size tanıdık gelmeli, çünkü 2. haftada Lab 2'nin geri sayım diyagramını çizdiniz ve orada `i = 10` ile başlayıp "i ≥ 1 mi?" diye sorup `i = i - 1` yapıp geri dönen bir ok vardı. O gün bu yapının Java'daki adını söylememiştik; bugün söylüyoruz. Şimdi diyagramdaki üç parçanın Java'da nasıl yazıldığına bakalım ve ilk döngü türüyle başlayalım.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Playground:** Bulmacadaki dört cümleyi, henüz sözdizimini bilmeden, yorum satırı olarak alt alta yazın; dersin sonunda bu dört yorumun altına gerçek kodu koyacaksınız. **İstem (bot ile):** Java Hocam becerinize `Bir döngünün başlangıç, koşul ve adım parçalarını, kasiyer fişi kapatana kadar ürün okutuyor benzetmesiyle anlat; kod verme, sadece dört cümle.` **Doğrulama:** Cevaptaki üç parçayı diyagramdaki üç kutuyla eşleştirin; eşleşmeyen bir parça varsa botun hangi parçayı atladığını not edin.
+
+### while: koşul doğru olduğu sürece
+
+`while` kelimesi İngilizcede "... olduğu sürece" demek ve Java'daki döngü de tam olarak böyle okunur: `while (sayac < 100)` "sayaç 100'den küçük olduğu sürece" diye okunur ve parantezden sonra gelen süslü parantezli blok, o koşul doğru kaldıkça tekrar tekrar çalışır. Yazımı `if`'e çok benzer ve bu benzerlik tesadüf değil: ikisi de bir `boolean` ifadeye bakar. Fark şu ki `if` bloğu bir kez çalıştırıp geçer, `while` ise bloğun sonuna gelince **başa döner ve koşulu bir daha sorar**.
+
+```java
+int sayac = 0;                 // başlangıç
+while (sayac < 100) {          // koşul
+    System.out.println("Merhaba");
+    sayac++;                   // adım
+}
+```
+
+Dört satır, yüz "Merhaba". Satır satır okuyalım, çünkü bu dört satırı bir kez tam anlayan kişi bugünün geri kalanını kolay geçirir. Birinci satır sayacı sıfırla başlatır; döngüden **önce** yazılır, çünkü döngü koşulu sormadan önce sayacın bir değeri olmalı. İkinci satır sorar: sıfır 100'den küçük mü? Evet. Üçüncü satır "Merhaba" yazar. Dördüncü satır sayacı 1 yapar. Süslü parantez kapanınca Java ikinci satıra geri döner ve bir daha sorar: 1 100'den küçük mü? Evet. Bu böyle 99'a kadar gider; 99 için de "Merhaba" yazılır, sayaç 100 olur, soru bir daha sorulur: 100 100'den küçük mü? Hayır. Döngü biter, program süslü parantezden sonraki satıra geçer. Sayaç 0'dan başladığı ve `<` kullandığımız için tam yüz kez döndü; bu "0'dan başla, `<` ile sor" kalıbını aklınızda tutun, çünkü biraz sonra `<=` ile arasındaki farkın başımıza iş açtığını göreceğiz.
+
+Şimdi bu kalıpla gerçek bir hesap yapalım. 3. haftada `1 + 2 + ... + 10` toplamını elle `55` diye yazmıştınız; bugün bilgisayar yapsın. Toplamı tutan bir kutu, sayan bir kutu ve her turda toplama bir sayı ekleyen bir gövde:
+
+<CodeTry title="1'den 10'a toplam" hint="Önce çalıştırmadan tahmin edin: kaç tur döner, toplam ne olur? Sonra çalıştırın. İkinci deneme: 10'u 100 yapın; Gauss'un çocukken bulduğu 5050'yi görmelisiniz. Üçüncü deneme: i = 1 yerine i = 0 ile başlatın; sonuç değişiyor mu, neden?">
+
+```java
+int toplam = 0;
+int i = 1;
+
+while (i <= 10) {
+    toplam = toplam + i;
+    i++;
+}
+
+System.out.println("Toplam: " + toplam);
+System.out.println("i dongu bitince: " + i);
+```
+
+</CodeTry>
+
+İkinci `println` satırına dikkat edin: döngü bitince `i` kaç? `10` değil, `11`; çünkü döngü `i` 11 olduğunda "11 ≤ 10 mu?" sorusuna hayır deyip bitti. Sayaç her zaman koşulu bozan ilk değerde kalır ve vizede "döngü bitince `i` kaçtır?" sorusu tam bunu sorar.
+
+Şimdi dördüncü satırı, yani `i++` satırını silin. Yapmayın, kağıtta düşünün: `i` hep 1 kalır, "1 ≤ 10 mu?" sorusu hep evet alır, toplam 1, 2, 3 diye sonsuza kadar büyür ve program hiç bitmez. Buna **sonsuz döngü** (infinite loop) denir ve her programcının başına en az bir kez gelir. Playground'da denerseniz sayfa donar ve sekmeyi kapatmanız gerekir; terminalde çalışan bir programı ise `Ctrl+C` ile öldürürsünüz. Sonsuz döngünün üç klasik sebebi var ve üçü de dört parçadan birinin bozulması: adım unutulmuş (`i++` yok), adım ters yönde (`i--` yazılmış, sayaç 10'dan uzaklaşıyor) ya da koşul hiç yanlış olamıyor (`while (i > 0)` ve `i` artıyor). Bir döngü yazdığınızda kendinize soracağınız tek soru şu: **koşulu yanlış yapan satır hangisi?** O satırı gösteremiyorsanız döngünüz sonsuzdur.
+
+> [!uyari] Sonsuz döngü kasıtsızsa hata, kasıtlıysa tasarımdır
+> Bu dersteki her döngü bitmeli. Ama ileride bir sensörü sürekli okuyan cihazın ya da bir oyunun ana döngüsünün bilerek sonsuz yazıldığını göreceksiniz (sayfanın sonunda Sahadan Örnekler'e bakın); orada döngüyü bitiren şey koşul değil, dış dünyadan gelen bir olaydır. Bugün için kural: koşulu yanlış yapan satırı parmağınızla gösterebilmelisiniz.
+
+**Bot ile:** döngüleri öğrenirken asistanın en işe yarar kullanımı, kodu çalıştırmadan **tur saydırmak** ve sonra Playground'la karşılaştırmaktır. Yukarıdaki kutuyu Java Hocam becerinize şu istemle verin:
+
+```text
+Aşağıdaki while döngüsü kaç kez döner? Çalıştırmadan söyle; her tur için i ve toplam değerlerini bir tabloya yaz, en son satıra döngü bittiğinde i'nin kaç olduğunu ekle. Kodu düzeltme ya da iyileştirme önerme. Sonra bana sor: "i = 0 ile başlasaydı tablo nasıl değişirdi?"
+[KOD]
+```
+
+Tablonun son satırında `i = 11` görmüyorsanız bot yanılmıştır ve bunu Playground'daki ikinci `println` kanıtlar. Burada "bot" kelimesini bilerek kullanıyoruz: sohbet modundaki asistan sorar ve cevaplar, kodunuza dokunmaz, çalıştıramaz. Çalıştıran siz, karşılaştıran siz.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Playground:** "1'den 10'a toplam" kutusunu `i <= 10` yerine `i < 10` ile çalıştırın ve 45 görün; sonra `i = i + 2` ile yalnızca tek sayıları toplayın (25 çıkmalı). **İstem (bot ile):** Her sürümü yukarıdaki "kaç kez döner" istemiyle bota verin, tabloyu alın. **Doğrulama:** Botun tablosundaki son `i` ile Playground'daki `i dongu bitince` satırı aynı mı? Değilse hangisi yanılıyor, Playground'a bakın; bot yanılıyorsa bunu `AI-BEYANI.md`'nin dördüncü satırı için saklayın.
+
+### do-while: önce yap, sonra sor
+
+Bir otomatın karşısına geçtiğinizi düşünün. Para atmadan otomat size hiçbir şey sormaz; önce parayı atarsınız, sonra otomat "yeterli mi?" diye bakar, yetmiyorsa bir daha atmanızı bekler. Yani iş bir kez **kesinlikle** yapılır, soru ondan sonra sorulur. `while` böyle çalışmaz: `while` önce sorar, koşul daha ilk turda yanlışsa gövdeye hiç girmez. Bazı işlerde ise "önce bir kez yap, sonra devam edip etmeyeceğine bak" doğru sıradır ve Java bunun için ikinci bir döngü verir: `do-while`.
+
+```java
+int para = 0;
+do {
+    para = para + 5;          // önce yap: bir jeton at
+    System.out.println("Atilan: " + para);
+} while (para < 20);          // sonra sor: yetti mi?
+```
+
+Yazıma dikkat edin: `do` ile başlar, süslü parantez içinde gövde gelir, kapanan parantezden sonra `while (koşul)` ve en sonda bir **noktalı virgül**. O noktalı virgül `while` döngüsünde yoktu ve geçen haftanın "`if` sonrası noktalı virgül" tuzağının tersi gibi: `do-while`'da noktalı virgülü **unutursanız** derleme hatası alırsınız. Gövde en az bir kez çalışır, çünkü koşul gövdenin altındadır; Java oraya gelene kadar gövdeyi zaten bir kez geçmiştir.
+
+<Diagram name="h06-while-dowhile" caption="while önce sorar, do-while önce yapar. Soldaki akışta koşul yanlışsa gövde hiç çalışmaz; sağdaki akışta gövdeye koşuldan önce girilir, bu yüzden en az bir tur garantidir." dot width="560px" />
+
+<CodeTry title="Hiç mi, en az bir mi?" hint="Önce tahmin: iki döngü de para = 50 ile başlıyor ve koşul para < 20. Hangisi 'Atilan' satırı yazar? Sonra çalıştırın. İkinci deneme: para'yı 0 yapın; iki döngü aynı sayıda mı döner?">
+
+```java
+int para = 50;
+
+while (para < 20) {
+    System.out.println("while: Atilan " + para);
+    para = para + 5;
+}
+
+para = 50;
+
+do {
+    System.out.println("do-while: Atilan " + para);
+    para = para + 5;
+} while (para < 20);
+```
+
+</CodeTry>
+
+`while` hiçbir şey yazmaz, çünkü 50 zaten 20'den küçük değil ve soru ilk turda hayır alır. `do-while` bir satır yazar, çünkü soru sorulmadan gövde bir kez çalışmıştır. Aradaki fark tek satır ama önemli bir yerde işe yarar: **kullanıcıya soru sormak**. Kullanıcıdan bir değer isteyecekseniz en az bir kez sormanız gerekir; bu "en az bir kez" cümlesi `do-while`'ın ta kendisidir.
+
+Şimdi bunun en çok kullanılan halini yazalım: **girdi doğrulama döngüsü**. Program 1 ile 5 arasında bir not istiyor; kullanıcı 9 girerse "geçersiz, tekrar" deyip bir daha soruyor, 0 girerse yine, geçerli bir sayı girene kadar. Bu tam dosyadır ve `Scanner` kullandığı için Playground'da değil terminalde çalışır:
+
+```java
+import java.util.Scanner;
+
+public class NotAl {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        int not;
+
+        do {
+            System.out.print("Not (1-5): ");
+            not = klavye.nextInt();
+            if (not < 1 || not > 5) {
+                System.out.println("Gecersiz, tekrar:");
+            }
+        } while (not < 1 || not > 5);
+
+        System.out.println("Gecerli not: " + not);
+    }
+}
+```
+
+Okuyalım. `not` kutusu döngüden önce tanımlanmış ama değer verilmemiş, çünkü ilk değeri döngünün içinde klavyeden gelecek. Gövde sorar ve okur; okunan değer 1'den küçük **ya da** 5'ten büyükse (geçen haftanın `||` operatörü, iki ucu tek parantezde) "Gecersiz" yazar. Sonra koşul aynı soruyu bir daha sorar: hâlâ geçersiz mi? Evetse başa döner ve yeniden sorar; hayırsa döngüden çıkar ve geçerli notu yazar. `9`, `0`, `4` girdisi için ekranda iki kez "Gecersiz, tekrar:" ve sonunda `Gecerli not: 4` görürsünüz.
+
+Burada bir an durun, çünkü bu on satır portfolyonuzun bir parçası: proje sözleşmesindeki "**yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü**" maddesi tam olarak bu `do-while`'dır. KT2'de (27 Kasım) uygulamanızda bu döngü olacak; bugün öğreniyorsunuz, Lab 6'da `Dogrula.java` olarak yazıyorsunuz, KT2'de kendi konunuza uyarlıyorsunuz: bütçe uygulaması "pozitif tutar girene kadar", kütüphane "1-3 arası seçim girene kadar" sorar.
+
+> [!tanim] Girdi doğrulama döngüsü
+> Kullanıcının girdiği değer kabul edilebilir aralıkta değilse uyarıp yeniden soran, geçerli bir değer gelene kadar dönen döngü. Hemen her zaman `do-while` ile yazılır, çünkü soru en az bir kez sorulmalıdır; koşul "girdi hâlâ geçersiz mi?" sorusudur.
+
+**Bot ile:** bu kez asistana kod değil, **test girdisi** ürettiriyoruz; cep kartındaki altıncı istemin döngü hali:
+
+```text
+Aşağıdaki do-while girdi doğrulama döngüsünü test etmek istiyorum. Bana beş girdi dizisi öner (her dizi, kullanıcının art arda gireceği sayılar); dizilerden biri ilk denemede geçerli olsun, biri sınır değerleri (tam 1 ve tam 5) denesin, biri üç kez geçersiz girsin. Her dizi için programın kaç kez "Gecersiz" yazacağını SÖYLEME, onu ben hesaplayacağım.
+[KOD]
+```
+
+Beş diziyi kağıda alıp her biri için "Gecersiz" sayısını siz yazın, sonra programı terminalde o dizilerle çalıştırıp karşılaştırın. Sınır değerlerinde bir sürpriz olmamalı: 1 ve 5 geçerlidir, 0 ve 6 değildir; bot "5 geçersiz" derse `>` ile `>=` farkını karıştırmıştır ve bunu kod söylüyor, bot değil.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Playground:** "Hiç mi, en az bir mi?" kutusunu `para = 0`, `para = 15`, `para = 20` ile üç kez çalıştırın ve her seferinde iki döngünün kaç satır yazdığını tabloya alın. **İstem (bot ile):** `do-while ile while arasındaki farkı, önce para atılan otomat benzetmesiyle, sonra tek cümleyle söyle; sonra bana "hangi durumda do-while yanlış tercih olur?" diye sor.` **Doğrulama:** Botun tek cümlesini bu sayfadaki tanım kutusuyla karşılaştırın; "en az bir kez" ifadesi yoksa cevap eksiktir.
+
+### for: sayaç kontrollü döngünün kısa yazımı
+
+`while` ile yazdığımız sayaçlı döngülerin üçünde de aynı üç şey vardı: döngüden önce bir başlangıç (`int i = 1;`), parantezde bir koşul (`i <= 10`) ve gövdenin sonunda bir adım (`i++`). Üçü birbirinden ayrı satırlarda durunca, özellikle gövde uzayınca, adımı unutmak kolaylaşıyor; geçen bölümdeki sonsuz döngünün sebebi tam buydu. Java bu üç parçayı **tek satıra** toplayan bir yazım verir ve adı `for`:
+
+```java
+for (int i = 1; i <= 10; i++) {
+    System.out.println(i);
+}
+```
+
+Parantezin içinde noktalı virgülle ayrılmış üç parça var ve sırası sabittir: önce **başlangıç** (`int i = 1`), sonra **koşul** (`i <= 10`), sonra **adım** (`i++`). Java bu satırı aynen `while` gibi işler: başlangıç bir kez çalışır, koşul sorulur, doğruysa gövde çalışır, sonra adım çalışır, koşul bir daha sorulur. Yani `for` yeni bir şey yapmaz; `while`'ın dağınık üç satırını bir araya getirir ve "bu döngü kaç kez döner?" sorusunun cevabını tek satırda okunur kılar. Bu yüzden tekrar sayısı **baştan belli** olan her döngüde `for` tercih edilir.
+
+İlk örnek, 3. haftada söz verdiğimiz çarpım tablosu. Lab 2'de geri sayımı diyagramdan yazmıştınız; onun da `for` hali burada:
+
+<CodeTry title="Çarpım tablosu ve geri sayım" hint="Önce tahmin: ilk döngü kaç satır yazar, ikinci döngü hangi sayıyla biter? Çalıştırın. İkinci deneme: sayi'yi 7 yapın. Üçüncü deneme: geri sayımdaki i-- yerine i++ yazın ve ÇALIŞTIRMAYIN; kağıtta neden bitmeyeceğini söyleyin, sonra geri alın.">
+
+```java
+int sayi = 3;
+
+for (int i = 1; i <= 10; i++) {
+    System.out.println(sayi + " x " + i + " = " + (sayi * i));
+}
+
+System.out.println("---");
+
+for (int i = 10; i >= 1; i--) {
+    System.out.println(i);
+}
+System.out.println("Basla!");
+```
+
+</CodeTry>
+
+İkinci döngüde başlangıç 10, koşul `i >= 1`, adım `i--`; yani sayaç büyümek zorunda değil, küçülebilir de. Üç parça birbirine uyumlu olduğu sürece `for` her yöne sayar. Dikkat edin, iki döngü de `int i` tanımlıyor ve Java buna itiraz etmiyor; sebebini "Yaygın hatalar" bölümünde göreceğiz ve bugünün doğrulama anı da oradan çıkacak.
+
+İkinci örnek, bugünün ilk kutusunun `for` hali. Aynı toplam, bu kez üst sınırı bir `N` kutusundan okuyoruz:
+
+<CodeTry title="1'den N'e toplam, for ile" hint="N = 10 için 55, N = 100 için 5050 görmelisiniz. Sonra N = 0 yapın: döngü kaç kez döner, toplam ne olur? Son deneme: koşulu i < N yapın ve N = 10 için 45'i görün; bir eksik.">
+
+```java
+int N = 10;
+int toplam = 0;
+
+for (int i = 1; i <= N; i++) {
+    toplam = toplam + i;
+}
+
+System.out.println("1'den " + N + "'e toplam: " + toplam);
+```
+
+</CodeTry>
+
+Peki ne zaman `for`, ne zaman `while`? Karar kuralı tek cümle: **kaç kez döneceğini baştan biliyorsanız `for`, bilmiyorsanız `while`, en az bir kez mutlaka çalışması gerekiyorsa `do-while`.** Çarpım tablosu on satır, geri sayım on adım, 1'den N'e toplam N tur: hepsi `for`. "Kullanıcı 0 girene kadar" ya da "doğru tahmin edene kadar": kaç tur süreceğini kimse bilmiyor, bunlar `while`. "Geçerli not girene kadar sor": en az bir soru şart, `do-while`. Üçü de birbirine çevrilebilir ve bir sınav sorusu "bu `for`'u `while` ile yaz" diyebilir; ama günlük yazımda bu kural sizi doğru araca götürür.
+
+| Soru | Cevap evetse |
+|---|---|
+| Kaç tur döneceği baştan belli mi? | `for` |
+| Belli değil, bir koşul bozulana kadar mı? | `while` |
+| Gövde en az bir kez mutlaka çalışmalı mı? | `do-while` |
+
+**Bot ile:** üç döngünün birbirine çevrilebildiğini en iyi, çevirmeyi asistana yaptırıp sonucu Playground'da sınayarak görürsünüz:
+
+```text
+Aşağıdaki for döngüsünü önce while ile, sonra do-while ile yeniden yaz; üç sürüm de aynı çıktıyı vermeli. Her sürümün altına "bu sürüm hangi durumda daha doğal olurdu?" diye tek cümle yaz. Sonra bana sor: "N = 0 için üç sürüm aynı çıktıyı verir mi?"
+for (int i = 1; i <= N; i++) { toplam = toplam + i; }
+```
+
+Son soru tuzaklıdır ve cevabı sizden bekliyoruz: `N = 0` için `for` ve `while` hiç dönmez, `do-while` bir kez döner ve toplama 1 ekler. Botun üç sürümünü Playground'da `N = 0` ile çalıştırın; `do-while` sürümü `1` yazıyorsa bot doğru çevirmiş ama "aynı çıktıyı verir" demişse yanılmıştır.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Playground:** Çarpım tablosunu `for` yerine `while` ile yeniden yazın; sonra 1'den 20'ye yalnızca çift sayıları yazdıran bir `for` yazın (başlangıç 2, adım `i = i + 2`). **İstem (bot ile):** Yukarıdaki çevirme istemini kendi `while` sürümünüzle ters yönde kullanın: "bu while'ı for'a çevir". **Doğrulama:** Botun `for`'unu ve sizin `while`'ınızı aynı girdiyle çalıştırın; çıktı birebir aynı değilse farkı bulun ve hangi parçada (başlangıç, koşul, adım) olduğunu yazın.
+
+### Gözcü değer: kasiyer fişi kapatana kadar
+
+Bulmacanın zor sorusuna geri dönüyoruz: kaç kez olduğunu bilmiyorsak? Bir market kasasını düşünün. Kasiyer ürün okutur, okutur, okutur; kaç ürün olduğunu baştan bilmez ve sizden "kaç ürün aldınız?" diye sormaz. Bunun yerine siz bütün ürünleri koyarsınız ve en sonda kasiyer **fişi kapatır**; "toplam" tuşuna basmak, "ürün bitti" demektir. Programlamada bu tuşun adı **gözcü değer** (sentinel value): girdinin bittiğini bildiren, normal girdilerden ayırt edilebilen özel bir değerdir. Fiyat okuyan bir program için `0` iyi bir gözcüdür, çünkü sıfır liralık ürün yoktur; yaş okuyan bir program için `-1`, çünkü negatif yaş yoktur. Gözcüyü seçerken tek kural: gerçek bir girdiyle karışmasın.
+
+Gözcü değerle biten döngünün kalıbı dört adım: gözcüden **önce** ilk değeri oku, "gözcü değil mi?" diye sor, gözcü değilse işle ve **bir sonrakini oku**, başa dön. Tam dosya olarak, fişin toplamı, ürün adedi ve ortalaması:
+
+```java
+import java.util.Scanner;
+
+public class Kasa {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        int toplam = 0;
+        int adet = 0;
+
+        System.out.print("Fiyat (0 = fisi kapat): ");
+        int fiyat = klavye.nextInt();
+
+        while (fiyat != 0) {
+            toplam = toplam + fiyat;
+            adet++;
+            System.out.print("Fiyat (0 = fisi kapat): ");
+            fiyat = klavye.nextInt();
+        }
+
+        System.out.println("Toplam: " + toplam);
+        System.out.println("Adet: " + adet);
+        if (adet > 0) {
+            System.out.println("Ortalama: " + (double) toplam / adet);
+        }
+    }
+}
+```
+
+`5`, `7`, `3`, `0` girdisi için `Toplam: 15`, `Adet: 3`, `Ortalama: 5.0`. Okumanın sırasına dikkat edin: ilk okuma döngüden **önce**, sonraki okumalar gövdenin **sonunda**. Bu sıra bilerek böyle, çünkü okunan değer koşula gitmeden önce işlenmemeli; `0` okunduğunda döngü koşula döner, "0 sıfırdan farklı mı?" sorusu hayır alır ve `0` toplama **hiç eklenmez**. Gövdenin başında okuyup hemen toplasaydınız gözcü de toplanırdı; `0` için fark etmez ama gözcü `-1` olsaydı toplam bir eksik çıkardı ve adet bir fazla sayılırdı. Bu, gözcü döngülerinin klasik tuzağı: **gözcü işlenmez, yalnızca döngüyü bitirir.** Hata avında bu tuzak var.
+
+Bir de `(double) toplam / adet` satırı var: 3. haftanın tam sayı bölmesi burada da pusuda. `15 / 3` sorun çıkarmaz ama `16 / 3` `5` verir; `double`'a çevirip bölünce `5.333...`. Ortalamayı yalnızca `adet > 0` iken yazıyoruz, çünkü kullanıcı ilk girdide `0` verirse hiç ürün yoktur ve sıfıra bölmek 3. haftadan beri yasak.
+
+> [!tanim] Gözcü değer (sentinel)
+> Girdinin bittiğini bildiren, geçerli girdilerle karışmayan özel değer; kasiyerin "toplam" tuşu. Gözcüyle biten döngüde tekrar sayısı baştan bilinmez, bu yüzden `while` kullanılır; ilk okuma döngüden önce, sonrakiler gövdenin sonunda yapılır ve gözcü asla işlenmez.
+
+Portfolyonuz için bir cümle daha: KT2'nin "**ana akış gözcü değerle biten bir menü döngüsünde çalışıyor**" maddesi bu döngüdür. Menüde gözcü `0`, çünkü sözleşme "0 her zaman çıkıştır" diyor; otomatik kontrol uygulamanıza yalnızca `0` verip hatasız bitmesini bekler. Bugünün Büyük Resim bölümünde kırtasiye menüsünü tam bu döngüye alacağız.
+
+**Bot ile:** gözcü tuzağını asistana **bilerek yanlış** bir kodla yakalatmayı deneyin; bu, cep kartındaki "kodumu anlat" isteminin sınama hali:
+
+```text
+Aşağıdaki programda girdi -1 gelene kadar sayılar toplanıyor. 4, 6, -1 girdisi için programın ne yazacağını çalıştırmadan söyle; satır satır izle. Kodu DÜZELTME, yalnızca ne yazacağını söyle.
+int toplam = 0;
+int sayi;
+do {
+    sayi = klavye.nextInt();
+    toplam = toplam + sayi;
+} while (sayi != -1);
+System.out.println("Toplam: " + toplam);
+```
+
+Doğru cevap `Toplam: 9`, çünkü `-1` de toplandı; `10` diyen bot gözcünün toplandığını görmemiştir. Siz görmüştünüz, çünkü bu paragrafı okudunuz; terminalde çalıştırıp 9'u gördüğünüzde kazanan kod olur.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Terminal:** `Kasa.java`'yı yazın, `5 7 3 0` ile çalıştırın; sonra ilk girdide `0` verin ve ortalama satırının yazılmadığını görün. **İstem (bot ile):** Yukarıdaki tuzaklı istemi verin; botun cevabını not edin. **Doğrulama:** Kodu `-1` gözcüsüyle düzeltip (`do-while` yerine "önce oku, sonra sor" kalıbı) `4 6 -1` ile çalıştırın; `Toplam: 10` görmelisiniz. Bot 9 yerine 10 dediyse, nerede yanıldığını ona bir cümleyle siz anlatın; anlatabiliyorsanız konuyu öğrendiniz.
+
+### Sayı tahmin oyunu ve ajanın ilk işi
+
+Şimdi üç döngünün en eğlencelisini yazalım ve bu vesileyle asistanın ikinci yüzünü, geçen haftanın **görev modunu**, bu hafta ilk kez bir döngü programı üstünde kullanalım. Oyun klasik: program aklında bir sayı tutuyor, siz tahmin ediyorsunuz, program "daha büyük" ya da "daha küçük" diyor, bulana kadar sürüyor ve bulduğunuzda kaçıncı denemede bulduğunuzu söylüyor. Sayıyı rastgele seçmek bu dönem değil, `42` sabit; çünkü otomatik kontrol ve siz, çıktıyı önceden bilmelisiniz.
+
+```java
+import java.util.Scanner;
+
+public class Tahmin {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        final int HEDEF = 42;
+        int tahmin = -1;
+        int deneme = 0;
+
+        while (tahmin != HEDEF) {
+            System.out.print("Tahmin (1-100): ");
+            tahmin = klavye.nextInt();
+            deneme++;
+            if (tahmin < HEDEF) {
+                System.out.println("Daha buyuk");
+            } else if (tahmin > HEDEF) {
+                System.out.println("Daha kucuk");
+            }
+        }
+
+        System.out.println("Bildin! Deneme: " + deneme);
+    }
+}
+```
+
+Dört parçayı bulun. Başlangıç: `tahmin = -1`, bilerek hedefe eşit olmayan bir değer, yoksa koşul ilk turda yanlış olur ve oyun oynanmadan biter. Koşul: `tahmin != HEDEF`, yani "bulana kadar". Adım: `tahmin = klavye.nextInt()`, bu döngüde adım sayaç artırmak değil, **yeni bir tahmin okumak**; koşulu bozacak şey kullanıcının 42 girmesi. Gövdedeki `deneme++` ise döngüyü sürdürmez, yalnızca sayar. `50`, `40`, `42` girdisi için ekranda `Daha kucuk`, `Daha buyuk`, `Bildin! Deneme: 3`. Son girdi 42 olduğunda iki `if` de yanlış kalır, hiçbir şey yazılmaz, döngü koşula döner ve biter.
+
+Buraya kadar her şeyi **bot** ile yaptık: sorduk, cevap aldık, Playground'da sınadık. Şimdi farklı bir şey istiyoruz: bu programı üç farklı girdi dizisiyle **çalıştırsın** ve çıktıları bir tabloya yazsın. Sohbet modundaki bot bunu yapamaz, çünkü dosyanızı göremez ve hiçbir şeyi çalıştıramaz; en fazla "şöyle çıkar sanırım" der. Görev modundaki **ajan** ise yetkilendirdiğiniz klasörde `Tahmin.java`'yı açar, derler, çalıştırır, girdileri verir ve gerçek çıktıyı getirir. Bot ile ajan arasındaki fark tam burada somutlaşıyor: **bot sorar ve cevaplar; ajan klasörde dosya açar, çalıştırır, sonucu getirir.**
+
+**Ajan ile:** Gemini masaüstü uygulamasında görev modunu seçin, `Belgeler/algo1` klasörü yetkili olsun ve `Tahmin.java` o klasörde dursun:
+
+```text
+Bu klasördeki Tahmin.java dosyasını derle ve üç kez çalıştır. Birinci çalıştırmada sırayla 50, 40, 42 gir; ikincide 42; üçüncüde 1, 100, 42. Her çalıştırma için programın yazdığı satırları olduğu gibi bir tabloya koy (sütunlar: girdi dizisi, çıktı satırları, deneme sayısı). Kodu değiştirme, yalnızca çalıştır ve sonucu getir. Bittiğinde hangi komutları çalıştırdığını da yaz.
+```
+
+Ajan `javac Tahmin.java` ve `java Tahmin` komutlarını kendisi çalıştırır, girdileri kendisi verir ve tabloyu getirir. Tabloda ikinci satırda `Deneme: 1`, üçüncü satırda `Deneme: 3` görmelisiniz; görmüyorsanız ya ajan yanlış girdi vermiştir ya da kodda bir şey vardır ve ikisini de kendiniz terminalde çalıştırarak ayırt edersiniz. Dikkat edeceğiniz iki şey: ajan "kodu şöyle iyileştireyim mi?" derse **hayır** deyin, görev çalıştırmaktı; ve "hangi komutları çalıştırdın" satırını okuyun, çünkü geçen haftanın cümlesi hâlâ geçerli: asistan sizin yetkinizle iş yapar.
+
+> [!neden] Neden bu işi ajana veriyoruz da toplamı vermiyoruz?
+> Programı üç girdi dizisiyle çalıştırıp sonucu tabloya yazmak **mekanik** bir iş: düşünme gerektirmez, zaman alır, yanlış yapılırsa fark edilir. Böyle işler ajana verilir. Toplamı 55 bulmak ya da gözcünün toplanıp toplanmadığını görmek ise **öğrenme** işi; o size kalır. Artırma, otomasyon değil: ajan sizin test etmenizi hızlandırır, sizin yerinize anlamaz.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Terminal:** `Tahmin.java`'yı yazın, `50 40 42` ile elle çalıştırın ve üç satırı görün. **İstem (ajan ile):** Yukarıdaki görev modunu kendi klasörünüzde verin; ajanın tablosunu alın. **Doğrulama:** Ajanın tablosundaki `Deneme` sayıları elle çalıştırdığınız sonuçla aynı mı? Bir de ajana `HEDEF = 42` satırını göstermeden "hedef sayı kaç?" diye sorun; dosyayı okuyup 42 diyorsa klasörü gerçekten görüyor demektir.
+
+### Yaygın hatalar: dört tuzak, dört küçük kod
+
+Döngüler, geçen haftanın `if`'i gibi, derleyicinin yakalayamadığı hataların yuvasıdır; fark şu ki `if`'teki hata yanlış dalı seçer, döngüdeki hata ya hiç durmaz ya da bir eksik, bir fazla döner. Dört tuzak, dört küçük kod.
+
+**1. Koşul sonrası noktalı virgül.** Geçen haftanın `if (x > 0);` tuzağı `while` ve `for`'da daha kötüdür: `while (i < 3);` yazarsanız döngünün gövdesi o boş noktalı virgüldür, `i` hiç artmaz ve program **sonsuz döngüye** girer; `for (int i = 0; i < 3; i++);` yazarsanız döngü üç kez boş döner ve altındaki blok bir kez çalışır. Playground'da denemeyin, kağıtta görün:
+
+```java
+int i = 0;
+while (i < 3);        // gövde bu noktalı virgül: sonsuz döngü
+{
+    System.out.println(i);
+    i++;
+}
+```
+
+**2. Sayacı artırmayı unutmak.** Bugünün ilk sonsuz döngüsü; `while` ile yazarken adım gövdenin sonunda ayrı bir satır olduğu için unutulur. `for` bu hatayı zorlaştırır, çünkü adım parantezin içindedir ve gözünüzün önündedir. Kural: `while` yazdığınızda ilk işiniz adım satırını yazmak, gövdeyi sonra doldurun.
+
+**3. `<=` ile `<` farkı: kapı hikayesi.** On kapılı bir koridor düşünün, kapılar 1'den 10'a numaralı. "1'den başla, kapı numarası 10'dan **küçükken** gir" derseniz dokuz kapıdan girersiniz, onuncuya giremezsiniz. "10'dan **küçük ya da eşitken**" derseniz on. Tek karakter, bir kapı farkı; adı **bir eksik, bir fazla hatası** (off-by-one) ve programlama tarihinin en sık hatasıdır. Sayaç 0'dan başlıyorsa `<` ile N tur, 1'den başlıyorsa `<=` ile N tur döner. Aşağıdaki kutuda ikisini yan yana görün.
+
+<CodeTry title="Kaç kapı?" hint="Önce tahmin: iki döngü kaçar satır yazar? Çalıştırın ve sayın. Sonra ilk döngüyü i = 0'dan başlatın; şimdi kaç satır? '0'dan başla < ile, 1'den başla <= ile' kuralını kendi cümlenizle yazın.">
+
+```java
+System.out.println("i <= 10:");
+for (int i = 1; i <= 10; i++) {
+    System.out.print(i + " ");
+}
+System.out.println();
+
+System.out.println("i < 10:");
+for (int i = 1; i < 10; i++) {
+    System.out.print(i + " ");
+}
+System.out.println();
+```
+
+</CodeTry>
+
+**4. `double` sayaç.** 3. haftada `0.1 + 0.2`'nin `0.3` olmadığını görmüştünüz. Bir sayacı `0.1`'er artırıp `1.0`'a eşit olunca durmasını beklerseniz hiç durmaz, çünkü on tane `0.1` toplanınca `1.0` değil `0.9999999999999999` çıkar ve eşitlik hiç sağlanmaz. Döngü sayaçları her zaman `int` olur; ondalıklı bir değere ihtiyacınız varsa `int` sayaçla dönüp gövdede `i * 0.1` hesaplarsınız.
+
+<CodeTry title="On kere 0.1" hint="Önce tahmin: toplam tam olarak 1.0 mı? Çalıştırın. İkinci satır false yazıyorsa double ile == karşılaştırmanın neden yasak olduğunu kendi gözünüzle gördünüz. Sonra toplam yerine i * 0.1'i yazdırın: i = 10 için ne çıkıyor?">
+
+```java
+double toplam = 0.0;
+for (int i = 0; i < 10; i++) {
+    toplam = toplam + 0.1;
+}
+System.out.println("Toplam: " + toplam);
+System.out.println("1.0'a esit mi: " + (toplam == 1.0));
+```
+
+</CodeTry>
+
+> [!not] Ortak nokta
+> Dört hatanın üçü derlenir ve ikisi program hiç durmadığı için "çalışıyor" bile görünmez. Hepsinin ilacı aynı iki soru: **koşulu yanlış yapan satır hangisi** ve **döngü kaç kez dönüyor, bir eksik mi bir fazla mı?** İkinci soruyu cevaplamanın en kısa yolu sayacı döngüden sonra yazdırmaktır.
+
+**Bot ile:** bu dört tuzak, "beni sorguya çek" isteminin en verimli konusudur:
+
+```text
+Java hocası gibi davran ve beni "döngülerde yaygın hatalar" konusunda sorguya çek: sonsuz döngü, bir eksik/bir fazla, koşul sonrası noktalı virgül, double sayaç. Her seferinde 4-6 satırlık bir kod göster ve "kaç kez döner / ne yazar / durur mu?" diye sor; cevabımı bekle. Doğruysa zorlaştır, yanlışsa önce ipucu, ikinci yanlışta açıkla. 5 soru sonra değerlendirme ve en zayıf noktam. Bağlam: 1. sınıf, while/do-while/for ve gözcü değeri bugün gördüm.
+```
+
+Botun "doğru" dediği her cevabı Playground'da çalıştırın; yalnızca sonsuz döngü sorularını çalıştırmayın, onları kağıtta çözün ve "koşulu yanlış yapan satır yok" diye gerekçelendirin.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Playground:** "Kaç kapı?" ve "On kere 0.1" kutularını çalıştırın; sonra 1'den 10'a toplamı `i < 10` ile yazıp 45'i görün ve nedenini bir cümleyle yazın. **İstem (bot ile):** Yukarıdaki sorgu istemini verin, beş soruyu cevaplayın. **Doğrulama:** Beş sorudan en az ikisini Playground'da çalıştırın; botun "doğru" dediği bir cevap yanlış çıkarsa bu, `AI-BEYANI.md`'nin dördüncü satırıdır.
+
+<Puzzle title="Hata avı, dördüncü tur" kind="tahmin">
+
+Aşağıdaki program **üç hata** içeriyor ve üçü de bugünün konusu: biri derleyici tarafından yakalanır, biri program hiç bitmediği için fark edilir, biri ise program bitip yanlış sonuç verdiği için ancak elle hesaplayınca görülür. Üç dakikanız var; her hata için satır numarası ve türünü yazın, düzeltmeyin.
+
+```java
+import java.util.Scanner;
+
+public class Avci {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        int i = 1;
+        while (i <= 3) {
+            System.out.println("Hos geldiniz " + i);
+        }
+        int toplam = 0;
+        int sayi;
+        do {
+            sayi = klavye.nextInt();
+            toplam = toplam + sayi;
+        } while (sayi != -1)
+        System.out.println("Toplam: " + toplam);
+    }
+}
+```
+
+<details>
+<summary>Cevap (üç dakika dolmadan açmayın)</summary>
+
+- **Satır 15, `do-while` noktalı virgülü:** `} while (sayi != -1)` satırının sonunda noktalı virgül yok; derleyici `';' expected` der ve program hiç derlenmez. Bu, üç hatanın tek "iyi" olanı, çünkü derleyici yakalar.
+- **Satır 7-9, sonsuz döngü:** `while (i <= 3)` gövdesinde `i++` yok; `i` hep 1 kalır, "Hos geldiniz 1" sonsuza kadar yazılır. Koşulu yanlış yapan satır yok.
+- **Satır 12-15, gözcü toplanıyor:** Gövde önce okuyup hemen topluyor, koşul sonra soruluyor; `-1` okunduğunda da toplanıyor. `4 6 -1` için `Toplam: 9` yazar, oysa 10 olmalı. Düzeltmesi "önce oku, sonra sor" kalıbı: ilk okuma döngüden önce, `while (sayi != -1)` ile sor, gövdede topla ve bir sonrakini oku.
+
+Üç hatanın üçü de bugünün üç kuralına karşılık geliyor: `do-while` noktalı virgülle biter; her döngünün koşulu bozan bir satırı olmalı; gözcü işlenmez, yalnızca döngüyü bitirir.
+
+</details>
+
+</Puzzle>
+
+## Büyük Resim: Kırtasiye Uygulamasında Döngülü Menü
+
+Geçen hafta kırtasiye menüsünü `switch` ile ve tek geçişle yazmıştık: kullanıcı bir kez seçer, program bir kez cevap verir, biter. "Haftaya bu menü 0 girilene kadar dönecek" demiştik; işte o hafta. Menüyü bir `do-while`'ın içine alıyoruz, çünkü menü **en az bir kez** gösterilmeli, ve gözcü `0`, çünkü sözleşme öyle diyor. Bu, hocanın [örnek deposundaki](https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-ornek-kirtasiye) `Uygulama.java`'nın bu haftaki hali:
+
+```java
+import java.util.Scanner;
+
+public class Uygulama {
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        final double KALEM = 15.0;
+        final double DEFTER = 45.0;
+        final double SILGI = 10.0;
+        final double CETVEL = 25.0;
+        double sepet = 0.0;
+        int islem = 0;
+        int secim;
+
+        do {
+            System.out.println("1) Kalem  2) Defter  3) Silgi  4) Cetvel  5) Sepet  0) Cikis");
+            System.out.print("Secim: ");
+            secim = klavye.nextInt();
+
+            switch (secim) {
+                case 1:
+                    sepet = sepet + KALEM;
+                    islem++;
+                    System.out.println("Kalem eklendi");
+                    break;
+                case 2:
+                    sepet = sepet + DEFTER;
+                    islem++;
+                    System.out.println("Defter eklendi");
+                    break;
+                case 3:
+                    sepet = sepet + SILGI;
+                    islem++;
+                    System.out.println("Silgi eklendi");
+                    break;
+                case 4:
+                    sepet = sepet + CETVEL;
+                    islem++;
+                    System.out.println("Cetvel eklendi");
+                    break;
+                case 5:
+                    System.out.printf("Sepet: %.2f TL%n", sepet);
+                    break;
+                case 0:
+                    System.out.println("Cikis");
+                    break;
+                default:
+                    System.out.println("Gecersiz secim");
+            }
+        } while (secim != 0);
+
+        System.out.println("Islem sayisi: " + islem);
+    }
+}
+```
+
+Okuyun: `do` ile menü gösterilir ve seçim okunur, `switch` seçime göre bir iş yapar, `while (secim != 0)` "çıkış seçilmediyse bir daha" der. Kullanıcı `1`, `2`, `5`, `0` girerse Kalem ve Defter eklenir, sepet 60.00 yazılır, `Cikis` ve `Islem sayisi: 2` görünür; `7` girerse `Gecersiz secim` yazılır ve menü yeniden gelir, çünkü `7` sıfır değildir. Geçen haftanın `switch`'ine iki satır eklendi (`do {` ve `} while (secim != 0);`) ve program tek geçişlikten döngülüye dönüştü. Otomatik kontrolün "yalnızca `0` verip hatasız bitmesini" beklemesi de bu yapıyla sağlanıyor: `0` ilk seçimse `Cikis` yazılır, koşul yanlış olur, program biter.
+
+Portfolyonuz için bunun anlamı net: bu döngülü menü **KT2'nin şartı** (27 Kasım), KT1'in değil. KT1'de uygulamanız tek geçişlik olabilir; geçen haftaki `switch` menüsü, hatta tek bir `if/else` yeter. Ama bu hafta döngüyü öğrendiğiniz için KT1'i teslim ettikten sonra yapılacak ilk iş bellidir: menüyü `do-while`'a almak ve bir girdi doğrulama döngüsü eklemek. İkisini de bugün gördünüz.
+
+> [!nerede] Sahada
+> Gerçek bir satış noktası yazılımında kasiyerin ekranı tam bu döngüdür: ürün okut, ürün okut, "toplam" tuşuna bas; tuş gözcü değerdir ve fiş kapanır. Fark şu ki orada `switch`'in içindeki her `case` yüzlerce satırlık bir alt sistem çağırır ve döngünün kendisi günde on bin kez döner. Bugün yazdığınız `do-while`, o sistemin iskeletiyle aynıdır; büyüyen şey gövde, döngü değil.
+
+## KT1 Kontrol Listesi
+
+**6 Kasım Cuma 23.59**'da Classroom 50 portfolyo deponuzda ne varsa onu KT1 sürümü sayar; ek bir işlem yok, push edilmiş olması yeter. O saatte deponuzda şunlar olmalı:
+
+> [!uyari] KT1: 6 Kasım Cuma 23.59'a kadar portfolyo deponuzda ne olmalı
+> - `README.md`: konunuzun adı ve ayırt edici kuralınız; "benim konumda bu kural şu demek" cümlesi ([Proje](/proje) sayfasındaki numaranızla).
+> - `Uygulama.java` (ana sınıfın adı değişmez): `Scanner` ile en az bir girdi okuyor, en az bir `if/else` ile karar veriyor, ayırt edici kuralınız **en basit haliyle** kodda çalışıyor (eşik uyarısı yazan biri için tek bir `if`, zaman kuralı için tek bir saat karşılaştırması yeter).
+> - `0` girildiğinde program hatasız bitiyor; menü döngüsü şart değil, ama `0` her zaman çıkıştır ve otomatik kontrol yalnızca bunu dener.
+> - `AI-BEYANI.md` içinde **KT1** başlıklı bir bölüm, dört satırı dolu ([şablon](/rehber/ai-beyani)); yapay zeka kullanmadıysanız bunu da yazın.
+> - Derleniyor: `javac Uygulama.java` hatasız bitiyor.
+>
+> Vizedeki 10 puanlık soru bu sürümden gelir ("ilk sürümündeki seçim yapısını yaz") ve geç teslimde o soru için ek süre verilmez.
+
+**Ajan ile:** KT1 öncesi son kontrolü ajana yaptırın; görev modunda portfolyo klonunuzun klasörünü yetkilendirin:
+
+```text
+Bu klasör benim Algoritma ve Programlama I portfolyo depom. Şu KT1 kontrol listesine göre eksiklerimi söyle: (1) README.md'de konu adı ve ayırt edici kural cümlesi var mı; (2) Uygulama.java adında bir dosya var mı, içinde Scanner ile okuma ve en az bir if/else var mı; (3) javac Uygulama.java hatasız derleniyor mu; derle ve sonucu söyle; (4) programa yalnızca 0 verip çalıştır, hatasız bitiyor mu; (5) AI-BEYANI.md içinde KT1 başlıklı dolu bir bölüm var mı. Her madde için "var / eksik" ve tek cümle gerekçe yaz. KOD YAZMA, dosya değiştirme, yalnızca kontrol et ve raporla.
+```
+
+Bu istemin son cümlesi önemli: ajan "README'yi ben yazayım mı?" derse hayır. Kontrol listesi ajanın işi, içerik sizin; README'deki kural cümlesini siz yazacaksınız çünkü vizede o kuralı kağıda siz yazacaksınız. Bot ile ajan farkını bir kez daha görün: aynı listeyi bota verseniz "şunlara bakmalısın" diye listeyi size geri okur; ajan dosyaları açar, derler, `0` verip çalıştırır ve "madde 3 eksik, `Uygulama.java` 14. satırda derleme hatası" der.
+
+> [!not] Çalışma rehberi (evde 15 dk)
+> **Terminal:** Portfolyo klonunuzda `javac Uygulama.java && java Uygulama` çalıştırın, `0` girin, hatasız bittiğini görün. **İstem (ajan ile):** Yukarıdaki kontrol istemini verin, raporu alın. **Doğrulama:** Rapordaki her "eksik" maddeyi kendi gözünüzle dosyada kontrol edin; ajan "var" dediği halde eksik bir şey bulursanız ajan dosyayı okumamış olabilir, raporu çöpe atıp listeyi elle geçin. Eksikleri kapatın, push edin, Classroom 50'de Actions'ın yeşil olduğunu görün.
+
+## Yapay Zeka Anı
+
+Bu hafta aracı iki kez yakalıyoruz ve bu kez tuzaklar döngülerden. Önce kendinizi sorguya çektirin, cep kartındaki üçüncü istem:
+
+```text
+Java hocası gibi davran ve beni "while, do-while, for ve gözcü değer" konusunda sorguya çek. Her seferinde tek soru, cevabımı bekle; doğruysa zorlaştır, yanlışsa önce ipucu, ikinci yanlışta açıkla. En az iki soru "bu döngü kaç kez döner?" biçiminde olsun. 5 soru sonra değerlendirme ve en zayıf noktam. Bağlam: 1. sınıf, döngüleri bugün gördüm, iç içe döngü ve break görmedim.
+```
+
+Sonra doğrulama anı. İki soru soruyoruz, biri doğru bir iddia, biri yanlış; bakalım araç ikisini ayırt edebiliyor mu:
+
+```text
+İki iddiam var, her birine kısa "doğru" ya da "yanlış" de ve tek cümleyle neden: (1) do-while en az bir kez çalışır, while hiç çalışmayabilir. (2) for döngüsünün parantezinde tanımlanan sayaç, döngü bittikten sonra da yaşar ve değeri okunabilir.
+```
+
+Birinci iddia **doğru**; bugünün "Hiç mi, en az bir mi?" kutusu kanıtı. İkinci iddia **yanlış**: `for (int i = ...)` ile tanımlanan `i` yalnızca döngünün içinde yaşar, döngü bitince kapsam dışına çıkar ve `System.out.println(i)` derleme hatası verir (`cannot find symbol`). Bu yüzden "Çarpım tablosu ve geri sayım" kutusunda iki döngü de `int i` tanımlayabildi. Araç ikincisine "doğru" derse, ki soru onu buna davet ediyor, Playground'a gidin:
+
+<CodeTry title="Sayaç nerede yaşar?" hint="Önce çalıştırın ve derleme hatasını okuyun: cannot find symbol, variable i. Sonra son satırı silin ya da sayacı döngüden önce int i; diye tanımlayıp for (i = 1; ...) yazın; şimdi derleniyor ve i = 4 yazıyor. İkinci sürüm 'while ile yazsaydım' halidir.">
+
+```java
+for (int i = 1; i <= 3; i++) {
+    System.out.println("Tur " + i);
+}
+System.out.println("Dongu bitti, i = " + i);
+```
+
+</CodeTry>
+
+Geçen haftanın dersi aynen geçerli: soruya gömülü bir iddiayı araç onaylayabilir, derleyici onaylamaz. Ama bu hafta bir şey daha ekliyoruz: doğru iddiayı da yanlış iddiayı da **aynı soruda** sormak, aracın "evet" deme eğilimini ölçmenin en kısa yoludur. İkisine de "doğru" diyen araç o gün iyi gününde değildir ve bunu bilmek, ona o gün ne kadar güveneceğinizi belirler.
+
+> [!uyari] Trafik ışığı hatırlatması: Lab 6 sarı bölge
+> Lab 6'da asistana "do-while'ın noktalı virgülü nereye gelir?", "gözcü değer nedir?" gibi **kavram** soruları serbest; bu sayfadaki bot istemlerinin hepsi serbest. Ama "0 girilene kadar sayı okuyup toplayan Java programı yaz" demek görevi yaptırmaktır ve yasaktır; görev modunda ajana dosya yazdırmak da bu labda yok. Portfolyo yeşil bölge: orada ajanla kontrol de, iskelet de serbest, beyan zorunlu.
+
+> [!not] Vize yaklaşıyor
+> Ara sınav **9. haftada (16-20 Kasım)**, günü şubenize göre ayrıca ilan edilecek. Kağıt üzerinde; kod izleme, boşluk doldurma ve portfolyonuzdan 10 puanlık soru. **30 Ekim'den 15 Kasım'a** gün gün çalışma planı [/vize-plani](/vize-plani) sayfasında ve **bu hafta planın 1. günü**: bugün döngüleri öğrendiniz, planın ilk maddesi bu sayfadaki yedi kutuyu bir kez daha çalıştırmak. Sayfayı yer imlerine ekleyin, her gün bir madde.
+
+## Temel Kavramlar
+
+- **Döngü (loop)**: Bir bloğu koşul doğru olduğu sürece tekrar çalıştıran yapı; bir kez yaz, yüz kez çalıştır. Bilgisayarın yorulmamasının Java'daki adı.
+- **Başlangıç, koşul, adım**: Her döngünün üç parçası; sayacı kur, "devam mı?" diye sor, sayacı değiştir. Biri eksikse döngü ya hiç dönmez ya hiç durmaz.
+- **Gövde**: Her turda çalışan blok; süslü parantezin içi.
+- **while**: Önce sorar, koşul doğruysa gövdeyi çalıştırır ve başa döner; hiç çalışmayabilir. Tekrar sayısı belli değilse.
+- **do-while**: Önce yapar, sonra sorar; gövde en az bir kez çalışır; `while (koşul);` ile biter, noktalı virgül zorunlu. Otomat, menü, girdi doğrulama.
+- **for**: Başlangıç, koşul ve adım tek parantezde; tekrar sayısı baştan belliyse. `for`'da tanımlanan sayaç döngü bitince yaşamaz.
+- **Sayaç kontrollü döngü**: Kaç kez döneceği sayaçla belirlenen döngü; `0`'dan başla `<` ile, `1`'den başla `<=` ile.
+- **Gözcü değer (sentinel)**: Girdinin bittiğini bildiren, gerçek girdiyle karışmayan özel değer; kasiyerin "toplam" tuşu. İlk okuma döngüden önce, sonrakiler gövdenin sonunda; gözcü asla işlenmez.
+- **Girdi doğrulama döngüsü**: Geçerli değer gelene kadar yeniden soran `do-while`; portfolyo sözleşmesinin maddesi.
+- **Sonsuz döngü**: Koşulu hiç yanlış olmayan döngü; adım unutulmuş, ters yönde ya da koşul bozulamıyor. Koşulu yanlış yapan satırı gösteremiyorsanız döngünüz sonsuzdur.
+- **Bir eksik, bir fazla (off-by-one)**: `<` ile `<=` arasındaki tek kapı farkı; sayacı döngüden sonra yazdırarak yakalanır.
+- **Bot ve ajan**: Bot sohbet modudur, sorar ve cevaplar, dosyanızı görmez ve çalıştıramaz; ajan görev modudur, klasörde dosya açar, derler, çalıştırır, sonucu getirir. Mekanik iş ajana, anlama işi size.
+
+## Sahadan Örnekler
+
+- **Bankamatiğin günü.** Bir ATM sabah açıldığında bir döngüye girer: kart bekle, kartı oku, işlemi yap, kartı geri ver, başa dön. Kaç müşteri geleceğini bilmez, bu yüzden sayaçla değil "kapatma komutu gelene kadar" döner; gözcü değer, bankanın gece gönderdiği kapatma sinyalidir. Her müşterinin içindeyse bugünkü girdi doğrulama döngüsü tam üç kez çalışır: şifre doğru girilene kadar sor, ama en fazla üç deneme, sonra kartı yut. İki koşullu bu döngüyü 7. haftada yazacaksınız.
+- **Sensör okuyan cihaz: bilerek sonsuz.** Bir seranın sıcaklığını ölçen küçük bir cihazın programı `while (true)` ile başlar ve hiç bitmez: ölç, eşiği aştıysa vanayı aç, bir saniye bekle, başa dön. Bu, bugün "hata" dediğimiz sonsuz döngünün kasıtlı halidir; cihazı durduran şey koşul değil, fişin çekilmesidir. Aradaki fark niyettir ve niyet kodda yorum olarak yazılır: `// ana döngü, cihaz kapanana kadar`. Böyle bir yorumu olmayan sonsuz döngü hatadır.
+- **Bir oyunun ana döngüsü.** Oynadığınız her oyun tek bir döngünün içinde yaşar ve oyun programcıları ona "game loop" der: girdiyi oku (tuş, dokunuş), dünyayı bir adım ilerlet, ekranı çiz, başa dön. Saniyede altmış kez döner ve oyuncu "çık" diyene kadar sürer; "çık" gözcü değerdir. Her tur 16 milisaniyede bitmek zorundadır, çünkü bir tur uzarsa oyun takılır; bu yüzden oyun programcıları gövdeye koydukları her satırın kaç mikrosaniye sürdüğünü bilir. Sizin `do-while` menünüzle aynı iskelet, bin kat daha hızlı.
+
+## Portfolyo
+
+KT1 bir hafta sonra, **6 Kasım Cuma 23.59**, ve bu sayfadaki kontrol listesi kutusunda ne olması gerektiği madde madde yazıyor; ajanla kontrol istemi de orada. Bugünden sonra uygulamanız için iki şey biliyorsunuz: menünüzü `do-while`'a alıp `0` gözcüsüyle döndürmek ve yanlış girdiyi doğru girdiye kadar soran bir doğrulama döngüsü eklemek. İkisi de **KT2**'nin (27 Kasım) şartı, KT1'in değil; ama KT1'i bu hafta sonu kapatıp Lab 6'dan sonra ikisini eklerseniz KT2'ye üç hafta erken girmiş olursunuz. Hocanın [örnek deposu](https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-ornek-kirtasiye) bu hafta döngülü menüye geçti; kendi konunuzla karşılaştırmak için bakın, kopyalamak için değil, çünkü vizede kağıda yazacağınız şey kendi menünüz. Takvim: KT1 6 Kasım, KT2 27 Kasım, KT3 11 Aralık, KT4 25 Aralık ([Ders Hakkında · Portfolyo](/ders-hakkinda)).
+
+## Laboratuvara Hazırlık
+
+Lab 6, A şubesi için **4 Kasım Çarşamba 13.15**, B şubesi için **5 Kasım Perşembe 15.15** ve yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Altı görev, altısı da döngü: gözcüyle toplam, `for` ile çarpım tablosu, `while` ile sayı tahmin, `do-while` ile doğrulama, Lab 5'in menüsünün döngülü hali ve bonus olarak bileşik faiz. Lab son teslimi ve **KT1 aynı gün: 6 Kasım Cuma 23.59**, iki ayrı depo. Lab sorumlu hocanız bu labda iki şey dinleyecek: Lab 5 günlüğünüzdeki en işe yarayan istem ve KT1 uygulamanızın 30 saniyelik anlatımı.
+
+Lab'a gelirken:
+
+- **Lab 4 ve Lab 5'in son teslimi bu gece 23.59**; Lab 6 deposu açılmadan ikisini kapatın.
+- Bu sayfadaki `NotAl`, `Kasa` ve `Tahmin` dosyalarını okuyup her birinde "koşulu yanlış yapan satır hangisi?" sorusuna cevap verebiliyor olun; lab görevlerinin üçü bu programların kendisi.
+- Yedi kutuyu Playground'da bir kez çalıştırmış olun; özellikle "Kaç kapı?" ve "Sayaç nerede yaşar?", çünkü labdaki gizli testler sınır değerlere bakıyor.
+- Portfolyo deponuz açık ve en az bir kez push edilmiş olsun; KT1 kontrol istemini ajanla bir kez çalıştırmış olun.
+- Ayrıntı, görev listesi ve test tablosu: [Lab 6](/laboratuvar/lab-06).
+
+## Tartışma Soruları
+
+1. "Bilgisayarın tek üstünlüğü yorulmamasıdır" dedik. Bir kasiyerin 500. fişte yaptığı hata ile bir programın 500. turda yaptığı hata arasında ne fark var? Program hangi hatayı yapmaz, hangisini yapar?
+2. `do-while` olmasaydı girdi doğrulama döngüsünü `while` ile nasıl yazardınız? Kaç satır fazla olurdu ve hangi satır iki kez yazılırdı? Java'nın `do-while`'ı dile eklemesi buna değer mi?
+3. Gözcü değer olarak `0` seçtik, çünkü sıfır liralık ürün yok. Peki sıcaklık okuyan bir programda gözcü ne olmalı? Sıfır derece geçerli bir sıcaklık; `-1` de öyle. Gözcüsü olmayan bir girdi türü düşünebiliyor musunuz, böyle bir durumda döngü nasıl biter?
+4. Ajana "üç girdiyle çalıştır, tabloya yaz" dedik ve getirdiği tabloyu yine de elle doğruladık. Ajan dosyayı gerçekten çalıştırdıysa doğrulamaya neden gerek var? Hangi durumda ajanın tablosu yanlış çıkabilir?
+5. Seradaki sensör programı `while (true)` ile bilerek sonsuz. Bu dersin "her döngü bitmeli" kuralı o programda ihlal ediliyor mu? Bir kuralın istisnası varsa o kural hâlâ kural mıdır; kodda istisnayı nasıl belli edersiniz?
+
+## Haftanın Özeti
+
+Tahtaya yüz kez "Merhaba" yazdırarak başladık ve dört cümlenin yüz satır ürettiğini gördük: başlangıç, koşul, adım ve geri dön. Bilgisayarın tek üstünlüğünün yorulmamak olduğunu ve döngünün bu üstünlüğü kullanmanın yolu olduğunu konuştuk. `while` ile 1'den 10'a toplamı yazdık, sayacın döngü bitince 11'de kaldığını gördük ve `i++` silinince sonsuz döngüye düşen programı kağıtta izledik; "koşulu yanlış yapan satır hangisi?" sorusunu her döngüye sormayı öğrendik. Otomatla `do-while`'ı, önce yap sonra sor kuralını ve sonundaki noktalı virgülü gördük; 1-5 arası not isteyen girdi doğrulama döngüsünü yazdık ve bunun portfolyo sözleşmesindeki madde olduğunu söyledik. `for` ile üç parçayı tek satıra topladık, çarpım tablosunu ve Lab 2'nin geri sayımını yazdık, "belli sayıda tur `for`, bilinmeyen `while`, en az bir kez `do-while`" kuralını çıkardık. Kasiyerin "toplam" tuşuyla gözcü değeri tanıdık, fişin toplamını ve ortalamasını aldık, gözcünün toplanmaması tuzağını gördük. Sayı tahmin oyununu yazdık ve ilk kez bir ajana iş verdik: dosyayı üç girdiyle çalıştırıp tabloyu getirdi; bot sorar ve cevaplar, ajan klasörde çalıştırır ve sonucu getirir. Dört tuzağı, noktalı virgül, unutulan adım, bir kapı farkı ve `double` sayaç, Playground'da gözümüzle gördük ve hata avında üçünü yakaladık. Kırtasiye menüsü `do-while` ile "0 girilene kadar" dönmeye başladı; bunun KT2'nin şartı olduğunu, KT1'in daha azını istediğini ve KT1 listesini ajana kontrol ettirebileceğinizi gördük. Doğrulama anında aynı soruya bir doğru bir yanlış iddia gömdük ve `for` sayacının döngü bitince yaşamadığını derleyiciye söylettik. Lab 4 ve Lab 5 bu gece; Lab 6 ve KT1 6 Kasım; vize 9. haftada (16-20 Kasım) ve 30 Ekim'den 15 Kasım'a uzanan çalışma planının 1. günü bugün. Haftaya döngünün içinde döngü, `break` ve `continue`, ve bankamatiğin üç denemesi.

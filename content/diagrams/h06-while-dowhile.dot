@@ -1,0 +1,39 @@
+// Hafta 6: while önce sorar, do-while önce yapar; iki akış yan yana
+digraph WhileDoWhile {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    subgraph cluster_while {
+        label="while: önce sor";
+        fontname="Helvetica";
+        fontsize=12;
+        style="rounded";
+        color="#888888";
+
+        w_kosul [shape=diamond, label="koşul doğru mu?"];
+        w_govde [shape=box, label="gövde"];
+        w_sonra [shape=box, style="rounded", label="sonraki satır"];
+
+        w_kosul -> w_govde [label="true"];
+        w_govde -> w_kosul [color="#b5541c", fontcolor="#b5541c", label="tekrar"];
+        w_kosul -> w_sonra [label="false\n(hiç çalışmayabilir)"];
+    }
+
+    subgraph cluster_dowhile {
+        label="do-while: önce yap";
+        fontname="Helvetica";
+        fontsize=12;
+        style="rounded";
+        color="#888888";
+
+        d_govde [shape=box, label="gövde\n(en az bir kez)"];
+        d_kosul [shape=diamond, label="koşul doğru mu?"];
+        d_sonra [shape=box, style="rounded", label="sonraki satır"];
+
+        d_govde -> d_kosul;
+        d_kosul -> d_govde [label="true", color="#b5541c", fontcolor="#b5541c"];
+        d_kosul -> d_sonra [label="false"];
+    }
+}

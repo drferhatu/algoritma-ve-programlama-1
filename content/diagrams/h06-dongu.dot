@@ -1,0 +1,19 @@
+// Hafta 6: bir döngünün üç parçası; başlangıç, koşul, adım. Gövde koşul doğru olduğu sürece tekrar eder
+digraph Dongu {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    basla  [shape=box, label="1) BAŞLANGIÇ\nsayac = 0"];
+    kosul  [shape=diamond, label="2) KOŞUL\nsayac < 100 mü?"];
+    govde  [shape=box, label="GÖVDE\n\"Merhaba\" yaz"];
+    adim   [shape=box, label="3) ADIM\nsayac = sayac + 1"];
+    sonra  [shape=box, style="rounded", label="döngüden sonraki satır"];
+
+    basla -> kosul;
+    kosul -> govde [label="true"];
+    govde -> adim;
+    adim -> kosul [label="tekrar sor", color="#b5541c", fontcolor="#b5541c"];
+    kosul -> sonra [label="false"];
+}

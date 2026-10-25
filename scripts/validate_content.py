@@ -12,6 +12,8 @@ Kontroller:
   4. course.json: sections (A/B), assistant, aiPolicy (kirmizi/sari/yesil), portfolio alanları var mı?
      proje.json: 20 konu, 10 kural, atama boş değil, her atamanın konu_kodu/kural_no tanımlı mı,
      kt id'leri course.json kilometre taşlarıyla eşleşiyor mu?
+     vize-plani.json: günler ardışık ve tarihler sıralı mı, her blokta istem ve 3 sınama sorusu var mı,
+     yoğunluk değerleri geçerli mi, cep kartı 6 istem mi, ilke 4-5 madde mi?
   5. Defter tanımlı haftalarda notebooks/*.ipynb ve public/notebooks/*.html var mı?
   6. Diyagramlar: content/diagrams/*.dot için public/diagrams/*.svg üretilmiş mi;
      içerikte <Diagram name="..."> ile anılan her ad için .dot var mı? (hata)
@@ -125,6 +127,52 @@ def check_proje(milestones: set):
     for k in d.get("kt", []):
         _iso(k.get("date", ""), f"proje.json kt {k.get('id')}")
     print(f"✓ proje.json: {len(konular)} konu, {len(kurallar)} kural, {len(atama)} atama, {len(kt_ids)} KT")
+
+
+def check_vize_plani():
+    path = DATA / "vize-plani.json"
+    if not path.exists():
+        errors.append("content/data/vize-plani.json yok (vize planı sayfası bu dosyayı okur)")
+        return
+    d = load_json("vize-plani.json")
+    gunler = d.get("gunler", [])
+    nos = [g.get("gun") for g in gunler]
+    if nos != list(range(1, len(gunler) + 1)):
+        errors.append(f"vize-plani.json: gün numaraları 1..{len(gunler)} sırasında değil: {nos}")
+    prev = None
+    for g in gunler:
+        w = f"vize-plani.json gün {g.get('gun')}"
+        t = _iso(g.get("tarih", ""), w)
+        if t:
+            if prev and t <= prev:
+                errors.append(f"{w}: tarih {t} bir öncekinden sonra değil")
+            prev = t
+        if g.get("yogunluk") not in {"hafif", "orta", "yogun"}:
+            errors.append(f"{w}: yoğunluk 'hafif|orta|yogun' olmalı (bulunan: {g.get('yogunluk')})")
+        bloklar = g.get("bloklar", [])
+        if not bloklar:
+            errors.append(f"{w}: blok yok")
+        for i, b in enumerate(bloklar, 1):
+            if not b.get("istem"):
+                errors.append(f"{w} blok {i}: istem boş")
+            if len(b.get("sina", [])) != 3:
+                errors.append(f"{w} blok {i}: 3 sınama sorusu bekleniyor, {len(b.get('sina', []))} var")
+            if not b.get("yap"):
+                errors.append(f"{w} blok {i}: 'yap' listesi boş")
+            for k in b.get("kodlar", []) or []:
+                if not (k.get("kod") and k.get("cevap")):
+                    errors.append(f"{w} blok {i}: kodlar içinde kod/cevap eksik")
+    if "deneme" in d:
+        errors.append("vize-plani.json: 'deneme' alanı kaldırıldı; hoca sınava benzer soru yayımlamaz")
+    if len(d.get("cepkarti", [])) != 6:
+        errors.append(f"vize-plani.json: cep kartı 6 istem olmalı, {len(d.get('cepkarti', []))} var")
+    if not (4 <= len(d.get("ilke", [])) <= 5):
+        errors.append(f"vize-plani.json: 4-5 ilke bekleniyor, {len(d.get('ilke', []))} var")
+    sinav = d.get("sinav", {})
+    if not (sinav.get("hafta") and sinav.get("aralik")):
+        errors.append("vize-plani.json: sinav.hafta ve sinav.aralik gerekli")
+    blok = sum(len(g.get("bloklar", [])) for g in gunler)
+    print(f"✓ vize-plani.json: {len(gunler)} gün, {blok} blok, {len(d.get('cepkarti', []))} cep kartı istemi")
 
 
 def check_weeks(milestones: set):
@@ -327,6 +375,7 @@ def main():
     strict = "--strict" in sys.argv
     milestones = check_course()
     check_proje(milestones)
+    check_vize_plani()
     check_weeks(milestones)
     check_labs(milestones)
     check_schedule()

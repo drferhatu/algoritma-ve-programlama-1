@@ -71,6 +71,29 @@ const ogImage = new URL(href('/og.png'), Astro.site);
         } catch (e) {}
       });
     </script>
+    <script is:inline>
+      // Her kod/istem bloğunun sağ üstüne "Kopyala" düğmesi (CodeTry ve istem kartları kendi düğmesine sahip, onlar atlanır).
+      window.addEventListener('DOMContentLoaded', function () {
+        if (!navigator.clipboard) return;
+        document.querySelectorAll('pre').forEach(function (pre) {
+          if (pre.closest('[data-codetry], [data-istem], .diagram-dot, [data-no-copy]')) return;
+          if (pre.querySelector('[data-pre-copy]')) return;
+          var btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'pre-copy'; btn.setAttribute('data-pre-copy', ''); btn.setAttribute('aria-live', 'polite');
+          btn.textContent = 'Kopyala';
+          btn.addEventListener('click', function () {
+            var code = pre.querySelector('code') || pre;
+            var text = code.innerText.replace(/\n$/, '');
+            navigator.clipboard.writeText(text).then(function () {
+              btn.textContent = 'Kopyalandı'; btn.setAttribute('data-copied', '');
+              setTimeout(function () { btn.textContent = 'Kopyala'; btn.removeAttribute('data-copied'); }, 1800);
+            });
+          });
+          pre.classList.add('has-copy');
+          pre.appendChild(btn);
+        });
+      });
+    </script>
     <slot name="head" />
   </head>
   <body class="min-h-dvh flex flex-col">

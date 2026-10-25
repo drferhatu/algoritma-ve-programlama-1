@@ -250,3 +250,10 @@ code, pre, kbd, samp, .astro-code, .font-mono, .jp-InputArea-editor, .cm-editor 
   font-variant-ligatures: none !important;
   font-feature-settings: "liga" 0, "calt" 0, "dlig" 0 !important;
 }
+
+/* Her kod ve istem bloğunun sağ üstünde Kopyala düğmesi (BaseLayout'taki inline script ekler) */
+pre.has-copy { position: relative; padding-top: 2.1rem !important; }
+.pre-copy { position: absolute; top: 0.45rem; right: 0.5rem; font-family: var(--font-sans); font-size: 11px; font-weight: 700; line-height: 1; padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid var(--color-line-2); background: #fff; color: var(--color-ink); cursor: pointer; opacity: 0.85; }
+.pre-copy:hover { border-color: var(--color-ink); background: var(--color-paper-2); opacity: 1; }
+.pre-copy[data-copied] { border-color: var(--color-accent); background: var(--color-accent-soft); color: var(--color-accent); }
+html[data-yansi="on"] .pre-copy { border: 2px solid #000; color: #000; }

@@ -1,21 +1,24 @@
-// Hafta 5: iyi bir istemin dört parçası (rol, görev, biçim, bağlam) ve ortadaki soru
+// Hafta 5: iyi bir istemin dört parçası (rol, görev, biçim, bağlam) ve ortadaki soru (dot yerleşimi)
 digraph Istem {
     charset="UTF-8";
-    layout=neato;
-    overlap=false;
-    splines=true;
+    rankdir=TB;
+    nodesep=0.6;
+    ranksep=0.5;
     node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", fillcolor="#f4f1fb", color="#5b4b8a", width=2.3, height=1.0, fixedsize=true];
     edge [color="#5b4b8a", arrowhead=none];
 
-    merkez [label="İSTEM\n\"switch nedir?\"", shape=ellipse, fillcolor="#fde9d9", color="#b5541c", width=1.8, height=0.9, pos="0,0!"];
+    { rank=same; rol; gorev; }
+    rol    [label="ROL\nkim cevaplıyor?\n\"Java hocası gibi davran\""];
+    gorev  [label="GÖREV\nne yapsın?\n\"switch'i if/else ile karşılaştır\""];
 
-    rol    [label="ROL\nkim cevaplıyor?\n\"Java hocası gibi davran\"", pos="-2.2,1.1!"];
-    gorev  [label="GÖREV\nne yapsın?\n\"switch'i if/else ile karşılaştır\"", pos="2.2,1.1!"];
-    bicim  [label="BİÇİM\nnasıl versin?\n\"5 satır + 1 örnek + 1 soru\"", pos="-2.2,-1.1!"];
-    baglam [label="BAĞLAM\nben kimim, neredeyim?\n\"1. sınıf, if/else biliyorum\"", pos="2.2,-1.1!"];
+    merkez [label="İSTEM\n\"switch nedir?\"", shape=ellipse, fillcolor="#fde9d9", color="#b5541c", width=2.0, height=0.9];
+
+    { rank=same; bicim; baglam; }
+    bicim  [label="BİÇİM\nnasıl versin?\n\"5 satır + 1 örnek + 1 soru\""];
+    baglam [label="BAĞLAM\nben kimim, neredeyim?\n\"1. sınıf, if/else biliyorum\""];
 
     rol -> merkez;
     gorev -> merkez;
-    bicim -> merkez;
-    baglam -> merkez;
+    merkez -> bicim;
+    merkez -> baglam;
 }

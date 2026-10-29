@@ -7,7 +7,7 @@ module: m2
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: bu konu 13 Kasım'da işlenir. Ara sınav kapsamının son konusudur."
+changeNote: "Program güncellemesi: bu konu 13 Kasım'da işlenir. Ara sınav kapsamının son konusudur."
 tags:
   - "iç içe döngü"
   - "break"

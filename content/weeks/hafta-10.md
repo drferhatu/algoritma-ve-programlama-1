@@ -7,7 +7,7 @@ module: m3
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: metotlar II 27 Kasım'da işlenir; KT2 tarihi değişmedi."
+changeNote: "Program güncellemesi: metotlar II 27 Kasım'da işlenir; KT2 tarihi değişmedi."
 milestone: "KT2"
 tags:
   - "kapsam"

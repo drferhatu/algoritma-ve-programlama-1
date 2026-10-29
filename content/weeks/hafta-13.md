@@ -7,7 +7,7 @@ module: m4
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: çok boyutlu diziler 18 Aralık'ta işlenir; KT3 bu Cuma toplanır."
+changeNote: "Program güncellemesi: çok boyutlu diziler 18 Aralık'ta işlenir; KT3 bu Cuma toplanır."
 milestone: "KT3"
 tags:
   - "KT3"

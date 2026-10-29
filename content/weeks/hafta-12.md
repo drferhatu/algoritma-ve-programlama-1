@@ -7,7 +7,7 @@ module: m4
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: diziler II 11 Aralık'ta işlenir; KT3 teslimi 18 Aralık'a kaydı."
+changeNote: "Program güncellemesi: diziler II 11 Aralık'ta işlenir; KT3 teslimi 18 Aralık'ta."
 tags:
   - "doğrusal arama"
   - "ikili arama"

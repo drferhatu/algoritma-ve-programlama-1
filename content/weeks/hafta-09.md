@@ -7,7 +7,7 @@ module: m3
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: metotlar I 20 Kasım'da, ara sınav haftasında işlenir."
+changeNote: "Program güncellemesi: metotlar I 20 Kasım'da, ara sınav haftasında işlenir."
 tags:
   - "ara sınav"
   - "metot"

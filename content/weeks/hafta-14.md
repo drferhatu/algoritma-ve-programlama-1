@@ -7,7 +7,7 @@ module: m4
 semester: 1
 exam: false
 status: taslak
-changeNote: "Bayram nedeniyle bir hafta ötelendi: String dersi 25 Aralık'a kaydı ve eski 14. haftanın 'aynı algoritma üç dil' bölümüyle birleştirildi."
+changeNote: "Program güncellemesi: String dersi 25 Aralık'ta ve eski 14. haftanın 'aynı algoritma üç dil' bölümüyle birleştirildi."
 milestone: "KT4"
 tags:
   - "String"

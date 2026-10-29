@@ -4,13 +4,13 @@
     "hafta": 9,
     "aralik": "16-20 Kasım 2026",
     "not": "gün bölümce ilan edilecek",
-    "kapsamNotu": "Sınav kapsamı 1-8. hafta içerikleridir (döngüler II dahil); bayram nedeniyle döngüler 7-8. haftaya kaydı. 9. haftanın konusu olan metotlar, hoca aksini duyurmadıkça kapsam dışıdır.",
+    "kapsamNotu": "Sınav kapsamı 1-8. hafta içerikleridir (döngüler II dahil); döngüler 7. ve 8. haftada işlenir. 9. haftanın konusu olan metotlar, hoca aksini duyurmadıkça kapsam dışıdır.",
     "kapsam": [
       "Hafta 1-2: algoritma, akış diyagramı, sözde kod; Java program yapısı, derleme zinciri, üç hata türü",
       "Hafta 3: değişkenler, tipler, operatörler, tam sayı bölmesi, tür dönüşümü, Scanner",
       "Hafta 4: boolean, if/else, else-if merdiveni, iç içe if, sarkan else",
       "Hafta 5: switch, case/break/default, mantıksal operatörler, kısa devre",
-      "Hafta 8 (6 Kasım; bayramdan ötelenen ders): while, do-while, for, gözcü değer, girdi doğrulama",
+      "Hafta 7 (6 Kasım): while, do-while, for, gözcü değer, girdi doğrulama",
       "Hafta 8 (13 Kasım): iç içe döngü, break/continue, desenler, EBOB"
     ],
     "format": [
@@ -70,7 +70,7 @@
       "tarih": "2026-10-30",
       "baslik": "Başlangıç: algoritma, akış diyagramı, program yapısı, hata türleri",
       "yogunluk": "hafif",
-      "ozet": "Bugün ders yok: 30 Ekim Cuma Cumhuriyet Bayramı tatili ve döngüler dersi 6 Kasım'a kaydı. Plan yine bugün başlıyor; akşam tek bir hafif blokla en eski konuları, yani 1. ve 2. haftayı hatırlıyorsunuz; bu konular en çok unutulan ama vizede en kolay puan getiren kısım.",
+      "ozet": "Plan bugün başlıyor; akşam tek bir hafif blokla en eski konuları, yani 1. ve 2. haftayı hatırlıyorsunuz. Bu konular en çok unutulan ama vizede en kolay puan getiren kısım.",
       "bloklar": [
         {
           "sure": 25,
@@ -218,7 +218,7 @@
       "tarih": "2026-11-03",
       "baslik": "Döngülere ön bakış: while, do-while, for, gözcü değer",
       "yogunluk": "hafif",
-      "ozet": "Salı, tek blok. Bayram nedeniyle döngüler dersi 6 Kasım'a kaydı; bugün ders anlatılmadan bir ön bakış: 7. haftanın sayfasını okuyun, kutuları Playground'da deneyin, Cuma derse bir soru hazırlayın. Anlamadığınız yer normal; o yer Cuma'nın sorusu.",
+      "ozet": "Salı, tek blok. Döngüleri Cuma birlikte açacağız; bugün yalnızca bir ön bakış: 7. haftanın sayfasını okuyun, kutuları Playground'da deneyin, Cuma derse bir soru hazırlayın. Anlamadığınız yer normal; o yer Cuma'nın sorusu.",
       "bloklar": [
         {
           "sure": 25,
@@ -305,7 +305,7 @@
       "tarih": "2026-11-06",
       "baslik": "7. hafta dersi (döngüler I), KT1 teslimi ve ilk portfolyo provası",
       "yogunluk": "hafif",
-      "ozet": "Cuma: 7. hafta dersi (while, do-while, for, gözcü değer; bayramdan ötelenen ders, 5. gündeki ön bakış sorunuzu derste sorun) ve 23.59'da KT1 teslimi. Akşam yalnızca kısa bir blok: push, portfolyo sorusunun ilk provası ve cep kartı. Bugün yorulmayın; hafta sonu iki yoğun gün var.",
+      "ozet": "Cuma: 7. hafta dersi, döngüler (while, do-while, for, gözcü değer; 5. gündeki ön bakış sorunuzu derste sorun) ve 23.59'da KT1 teslimi. Akşam yalnızca kısa bir blok: push, portfolyo sorusunun ilk provası ve cep kartı. Bugün yorulmayın; hafta sonu iki yoğun gün var.",
       "bloklar": [
         {
           "sure": 20,

@@ -4,21 +4,36 @@
     "hafta": 9,
     "aralik": "16-20 Kasım 2026",
     "not": "gün bölümce ilan edilecek",
-    "kapsamNotu": "Sınav kapsamı 1-7. haftadır; 8. haftanın konusu olan metotlar, hoca aksini duyurmadıkça kapsam dışıdır.",
+    "kapsamNotu": "Sınav kapsamı 1-8. hafta içerikleridir (döngüler II dahil); bayram nedeniyle döngüler 7-8. haftaya kaydı. 9. haftanın konusu olan metotlar, hoca aksini duyurmadıkça kapsam dışıdır.",
     "kapsam": [
       "Hafta 1-2: algoritma, akış diyagramı, sözde kod; Java program yapısı, derleme zinciri, üç hata türü",
       "Hafta 3: değişkenler, tipler, operatörler, tam sayı bölmesi, tür dönüşümü, Scanner",
       "Hafta 4: boolean, if/else, else-if merdiveni, iç içe if, sarkan else",
       "Hafta 5: switch, case/break/default, mantıksal operatörler, kısa devre",
-      "Hafta 6 (30 Ekim): while, do-while, for, gözcü değer, girdi doğrulama",
-      "Hafta 7 (6 Kasım): iç içe döngü, break/continue, desenler, EBOB"
+      "Hafta 8 (6 Kasım; bayramdan ötelenen ders): while, do-while, for, gözcü değer, girdi doğrulama",
+      "Hafta 8 (13 Kasım): iç içe döngü, break/continue, desenler, EBOB"
     ],
     "format": [
-      { "tur": "Kod izleme ve çıktı yazma", "aciklama": "10-15 satırlık bir program verilir, ekrana ne yazıldığını satır satır yazarsınız." },
-      { "tur": "Boşluk doldurma", "aciklama": "Programdaki 3-4 boşluğa doğru anahtar kelimeyi, operatörü ya da metodu yazarsınız." },
-      { "tur": "Hata sayma ve bulma", "aciklama": "Bozuk bir programda kaç hata olduğunu, her birinin satırını ve türünü (sözdizimi, çalışma zamanı, mantık) yazarsınız." },
-      { "tur": "Kısa program tamamlama", "aciklama": "Verilen iskeletin eksik bölümünü (bir döngü, bir seçim) tamamlarsınız." },
-      { "tur": "Portfolyo sorusu (10 puan)", "aciklama": "KT1 sürümünüzdeki seçim yapısını kağıda yazarsınız. Portfolyosunu teslim etmeyen bu soruyu yapamaz." }
+      {
+        "tur": "Kod izleme ve çıktı yazma",
+        "aciklama": "10-15 satırlık bir program verilir, ekrana ne yazıldığını satır satır yazarsınız."
+      },
+      {
+        "tur": "Boşluk doldurma",
+        "aciklama": "Programdaki 3-4 boşluğa doğru anahtar kelimeyi, operatörü ya da metodu yazarsınız."
+      },
+      {
+        "tur": "Hata sayma ve bulma",
+        "aciklama": "Bozuk bir programda kaç hata olduğunu, her birinin satırını ve türünü (sözdizimi, çalışma zamanı, mantık) yazarsınız."
+      },
+      {
+        "tur": "Kısa program tamamlama",
+        "aciklama": "Verilen iskeletin eksik bölümünü (bir döngü, bir seçim) tamamlarsınız."
+      },
+      {
+        "tur": "Portfolyo sorusu (10 puan)",
+        "aciklama": "KT1 sürümünüzdeki seçim yapısını kağıda yazarsınız. Portfolyosunu teslim etmeyen bu soruyu yapamaz."
+      }
     ]
   },
   "ilke": [
@@ -55,7 +70,7 @@
       "tarih": "2026-10-30",
       "baslik": "Başlangıç: algoritma, akış diyagramı, program yapısı, hata türleri",
       "yogunluk": "hafif",
-      "ozet": "Bugün 6. hafta dersi var (döngüler). Akşam tek bir hafif blokla en eski konuları, yani 1. ve 2. haftayı hatırlıyorsunuz; bu konular en çok unutulan ama vizede en kolay puan getiren kısım.",
+      "ozet": "Bugün ders yok: 30 Ekim Cuma Cumhuriyet Bayramı tatili ve döngüler dersi 6 Kasım'a kaydı. Plan yine bugün başlıyor; akşam tek bir hafif blokla en eski konuları, yani 1. ve 2. haftayı hatırlıyorsunuz; bu konular en çok unutulan ama vizede en kolay puan getiren kısım.",
       "bloklar": [
         {
           "sure": 25,
@@ -201,19 +216,19 @@
     {
       "gun": 5,
       "tarih": "2026-11-03",
-      "baslik": "Döngüler: while, do-while, for, gözcü değer",
+      "baslik": "Döngülere ön bakış: while, do-while, for, gözcü değer",
       "yogunluk": "hafif",
-      "ozet": "Salı, tek blok. Cuma günü işlenen 6. hafta konusu, yarınki Lab 6'dan önce bir kez elinizden geçsin: üç döngü, gözcü değer ve girdi doğrulama.",
+      "ozet": "Salı, tek blok. Bayram nedeniyle döngüler dersi 6 Kasım'a kaydı; bugün ders anlatılmadan bir ön bakış: 7. haftanın sayfasını okuyun, kutuları Playground'da deneyin, Cuma derse bir soru hazırlayın. Anlamadığınız yer normal; o yer Cuma'nın sorusu.",
       "bloklar": [
         {
           "sure": 25,
-          "konu": "Hafta 6: while, do-while, for, gözcü değer, girdi doğrulama",
+          "konu": "Ön bakış, Hafta 8: while, do-while, for, gözcü değer, girdi doğrulama",
           "yap": [
-            "1'den 10'a toplamı üç döngüyle (while, do-while, for) ayrı ayrı yazın; üçünde de sayaç, koşul ve artış satırını işaretleyin.",
-            "Kağıda 'int i = 1, toplam = 0; while (i <= 5) { toplam += i; i += 2; }' için bir izleme tablosu tutun: her turda i ve toplam; döngü bitince i kaçtır?",
-            "do-while ile 1-5 arası girdi isteyen doğrulama döngüsünü bakmadan yazın; sonra bilerek sonsuz döngü kurun (i-- yazın) ve neden bitmediğini bir cümleyle yazın."
+            "7. haftanın sayfasındaki while, do-while ve for bölümlerini okuyun; her kutuyu Playground'da çalıştırmadan önce çıktıyı tahmin edin, sonra çalıştırın.",
+            "Kağıda 'int i = 1, toplam = 0; while (i <= 5) { toplam += i; i += 2; }' için bir izleme tablosu tutun: her turda i ve toplam; döngü bitince i kaçtır? Tahmininizi Playground'da doğrulayın.",
+            "Anlamadığınız ya da emin olmadığınız bir şeyi tek cümlelik soru olarak yazın ve Cuma derse getirin; 8. günde bu notu kontrol edeceksiniz. Sonsuz döngü merak ediyorsanız kağıtta kurun (i-- yazın), Playground'da çalıştırmayın."
           ],
-          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: while, do-while ve for arasındaki farkı 'hangi durumda hangisi' sorusuna cevap vererek anlat; gözcü değerle biten döngü ile girdi doğrulama döngüsünün neden do-while'a yakıştığını söyle. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir örnek ver ama çıktısını yazma, 'bu döngü kaç tur döner ve sonunda sayaç kaçtır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; if/else ve switch biliyorum, döngüleri geçen hafta gördüm, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
+          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: while, do-while ve for arasındaki farkı 'hangi durumda hangisi' sorusuna cevap vererek anlat; gözcü değerle biten döngü ile girdi doğrulama döngüsünün neden do-while'a yakıştığını söyle. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir örnek ver ama çıktısını yazma, 'bu döngü kaç tur döner ve sonunda sayaç kaçtır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; if/else ve switch biliyorum, döngüleri henüz derste görmedim, ders sayfasından okuyup ön bakış yapıyorum, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
           "ajan": null,
           "sina": [
             "do-while en az kaç kez çalışır; while en az kaç kez?",
@@ -223,8 +238,8 @@
         }
       ],
       "tekrar": [
-        "İlk tur: Hafta 6.",
-        "Geri gelecek: 4 Kasım lab (6. gün), 7 Kasım karışık izleme (9. gün), 9 ve 12 Kasım (11. ve 14. gün)."
+        "Ön bakış: Hafta 8 (ders 6 Kasım).",
+        "Geri gelecek: 6 Kasım ders (8. gün), 7 Kasım (9. gün), 9 ve 12 Kasım (11. ve 14. gün)."
       ]
     },
     {
@@ -232,27 +247,27 @@
       "tarih": "2026-11-04",
       "baslik": "Lab 6 günü ve KT1 son kontrol",
       "yogunluk": "hafif",
-      "ozet": "Çarşamba, A şubesinin Lab 6 günü (B şubesi Perşembe). Bugün asıl çalışma labın kendisi; akşam tek blokla labda yazdığınızı kapalı kitap yeniden yazıyor ve KT1 deponuzu Cuma'dan önce kontrol ediyorsunuz.",
+      "ozet": "Çarşamba, A şubesinin Lab 6 günü (B şubesi Perşembe). Bu lab KT1 teslimi ve seçim yapıları pekiştirme labı (döngü labı gelecek hafta); akşam tek blokla labdaki kağıt alıştırmalarını kapalı kitap yeniden yapıyor ve KT1 deponuzu Cuma'dan önce kontrol ediyorsunuz.",
       "bloklar": [
         {
           "sure": 25,
           "konu": "Lab 6'yı hatırlama ve KT1 depo kontrolü",
           "yap": [
-            "Labda yazdığınız döngülü programı (dosyaya bakmadan) kağıda yeniden yazın; sonra dosyayı açıp satır satır karşılaştırın. Unuttuğunuz satır, sınavda da unutacağınız satırdır.",
+            "Labda kağıtta çözdüğünüz seçim yapısı alıştırmalarını (not merdiveni, sarkan else, durmayan asansör, kısa devre) bakmadan yeniden yazın; sonra lab sayfasıyla karşılaştırın. Unuttuğunuz kural, sınavda da unutacağınız kuraldır.",
             "Labda takıldığınız bir hatayı hatırlayın; hata mesajını, ilgili on satırı ve ne denediğinizi hata protokolüyle (aşağıdaki istem) yazın.",
             "Depoyu açın: README'de konunuz ve ayırt edici kuralınız yazıyor mu, Uygulama.java derleniyor mu, ilk soruya 0 girince program hatasız bitiyor mu, AI-BEYANI.md dolu mu? Eksik varsa Cuma'ya kadar iki gününüz var."
           ],
           "istem": "Java'da hata alıyorum; nedenini anlamama yardım et ama düzeltmeyi yazma, bana ipucu ver.\nHata mesajı (kopyalandı):\n[MESAJ]\nİlgili satırlar:\n[10 SATIR]\nNe denedim ve ne bekliyordum:\n[DENEDİKLERİM]\n1. sınıf öğrencisiyim; döngüleri yeni gördüm, metot ve dizi bilmiyorum. Verdiğin ipucuyla düzeltmeyi kendim yapıp programı çalıştırarak doğrulayacağım; ikinci ipucu istersem 'ipucu yetmedi' diyeceğim.",
           "ajan": "Bu klasördeki Uygulama.java ve README.md dosyalarını oku. Bana üç şeyi söyle: (1) README'de konu ve ayırt edici kural yazılı mı; (2) Uygulama.java derleniyor mu, programa yalnızca 0 girilince hatasız bitiyor mu (derleyip çalıştır, çıktıyı getir); (3) ayırt edici kural kodda hangi satırlarda karar veriyor? Hiçbir dosyayı DEĞİŞTİRME, düzeltme önerme; eksik varsa yalnızca eksiğin adını söyle, kapatmayı ben yapacağım.",
           "sina": [
-            "Labdaki döngünüz while mı, do-while mı, for mu; neden o seçildi?",
-            "Girdi doğrulama döngüsünde koşul 'geçerli olduğu sürece' mi, 'geçersiz olduğu sürece' mi yazılır?",
+            "Labdaki hata avında üç hata hangi satırlardaydı ve türleri neydi?",
+            "Sarkan else hangi if'e aittir; süslü parantez bunu nasıl değiştirir?",
             "KT1'de hangi üç şey bulunmalı ve otomatik kontrol programa ne verip ne bekler?"
           ]
         }
       ],
       "tekrar": [
-        "İlk tekrar: Hafta 6 (lab ile, bir gün sonra).",
+        "İlk tekrar: Hafta 4-5 (lab ile).",
         "KT1 teslimi: 6 Kasım Cuma 23.59."
       ]
     },
@@ -288,9 +303,9 @@
     {
       "gun": 8,
       "tarih": "2026-11-06",
-      "baslik": "7. hafta dersi, KT1 teslimi ve ilk portfolyo provası",
+      "baslik": "7. hafta dersi (döngüler I), KT1 teslimi ve ilk portfolyo provası",
       "yogunluk": "hafif",
-      "ozet": "Cuma: 7. hafta dersi (iç içe döngü, break/continue) ve 23.59'da KT1 teslimi. Akşam yalnızca kısa bir blok: push, portfolyo sorusunun ilk provası ve cep kartı. Bugün yorulmayın; hafta sonu iki yoğun gün var.",
+      "ozet": "Cuma: 7. hafta dersi (while, do-while, for, gözcü değer; bayramdan ötelenen ders, 5. gündeki ön bakış sorunuzu derste sorun) ve 23.59'da KT1 teslimi. Akşam yalnızca kısa bir blok: push, portfolyo sorusunun ilk provası ve cep kartı. Bugün yorulmayın; hafta sonu iki yoğun gün var.",
       "bloklar": [
         {
           "sure": 20,
@@ -311,25 +326,25 @@
       ],
       "tekrar": [
         "Portfolyo provası 1/2; ikincisi 15 Kasım (17. gün).",
-        "Hafta 7 ilk turu yarın (9. gün)."
+        "Hafta 8 (döngüler I) ilk tekrarı yarın (9. gün)."
       ]
     },
     {
       "gun": 9,
       "tarih": "2026-11-07",
-      "baslik": "İç içe döngüler ve ilk karışık izleme",
+      "baslik": "Döngülerin ilk tekrarı, iç içe döngüye ön bakış ve ilk karışık izleme",
       "yogunluk": "yogun",
-      "ozet": "Cumartesi, iki blok. İlk blokta dünkü dersin konusu (iç içe döngü, break/continue, EBOB), ikinci blokta planın ilk karışık günü: tipler, seçim ve döngünün bir arada geçtiği üç programı kağıtta izliyorsunuz. Karışık çalışmak o an zordur, sınavda kolaydır.",
+      "ozet": "Cumartesi, iki blok. İlk blokta dünkü dersin konusu (while, do-while, for, gözcü değer) ve 13 Kasım'da anlatılacak iç içe döngü ile break/continue'ya bir ön bakış; ikinci blokta planın ilk karışık günü: tipler, seçim ve döngünün bir arada geçtiği üç programı kağıtta izliyorsunuz. Karışık çalışmak o an zordur, sınavda kolaydır.",
       "bloklar": [
         {
           "sure": 25,
-          "konu": "Hafta 7: iç içe döngü, break/continue, desenler, EBOB",
+          "konu": "Hafta 8 tekrarı ve Hafta 8'e ön bakış: iç içe döngü, break/continue, EBOB",
           "yap": [
-            "Playground'da 3x3 çarpım tablosunu iç içe for ile yazın; kağıda (i, j) çiftlerini sırayla yazın: (1,1), (1,2), ... ve hangi anda satır atlandığını işaretleyin.",
+            "Dünkü dersin dört programını (toplam, NotAl, Kasa, Tahmin) bakmadan kağıda yazın ve sayfayla karşılaştırın. Sonra ön bakış: Playground'da 3x3 çarpım tablosunu iç içe for ile yazın; kağıda (i, j) çiftlerini sırayla yazın ve hangi anda satır atlandığını işaretleyin.",
             "Üç satırlık yıldız desenini (1, 2, 3 yıldız) yazın; iç döngünün sınırının dış döngünün sayacına bağlı olduğunu görün.",
             "1'den 50'ye kadar sayarken 7'ye bölünen ilk sayıda break ile duran döngüyü yazın; sonra break'i continue yapıp çıktının nasıl değiştiğini önce tahmin edin, sonra çalıştırın. EBOB döngüsünü (kalan sıfır olana kadar) 48 ve 18 için kağıtta izleyin."
           ],
-          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: iç içe döngüde dış ve iç döngünün nasıl döndüğünü (saatin akrebi ve yelkovanı gibi) ve break ile continue arasındaki farkı anlat. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir iç içe döngü örneği ver ama çıktısını yazma, 'iç döngü toplam kaç kez çalışır ve ekrana ne yazılır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; tek döngüyü biliyorum, iç içe döngüyü dün gördüm, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
+          "istem": "Birinci sınıfa Java öğreten, benzetmelerle anlatan bir hoca gibi davran. Görev: iç içe döngüde dış ve iç döngünün nasıl döndüğünü (saatin akrebi ve yelkovanı gibi) ve break ile continue arasındaki farkı anlat. Biçim: en fazla 8 cümle; sonra Scanner kullanmayan, 10 satırı geçmeyen bir iç içe döngü örneği ver ama çıktısını yazma, 'iç döngü toplam kaç kez çalışır ve ekrana ne yazılır?' diye bana sor. Bağlam: Algoritma ve Programlama I alan 1. sınıf öğrencisiyim; tek döngüyü dün derste gördüm, iç içe döngü henüz anlatılmadı ve ön bakış yapıyorum, metot ve dizi görmedim; örneği Playground'da çalıştırıp anlatımını ders notuyla karşılaştıracağım.",
           "ajan": null,
           "sina": [
             "Dış döngü 3, iç döngü 4 tur dönüyorsa iç gövde toplam kaç kez çalışır?",
@@ -372,8 +387,8 @@
         }
       ],
       "tekrar": [
-        "İlk tur: Hafta 7. Karışık izleme: Hafta 3, 4, 5, 6 bir arada (Hafta 6 ikinci tekrar).",
-        "Hafta 7 geri gelecek: 9 Kasım (11. gün), 12 Kasım (14. gün)."
+        "İlk tekrar: Hafta 8. Ön bakış: Hafta 8 (ders 13 Kasım). Karışık izleme: Hafta 3, 4, 5, 7 bir arada.",
+        "Hafta 8 geri gelecek: 9 Kasım (11. gün), 12 Kasım (14. gün) ve 13 Kasım dersi (15. gün)."
       ]
     },
     {
@@ -443,11 +458,11 @@
       "tarih": "2026-11-09",
       "baslik": "Döngü izleme: while, for ve iç içe döngü",
       "yogunluk": "hafif",
-      "ozet": "Pazartesi, tek blok. 6. ve 7. haftanın döngüleri bir arada: kağıtta izleme tablosu, Playground'da kontrol. Bu haftanın hafta içi blokları yalnızca tekrar; yeni konu yok.",
+      "ozet": "Pazartesi, tek blok. 7. ve 8. haftanın döngüleri bir arada: kağıtta izleme tablosu, Playground'da kontrol. İç içe döngü 13 Kasım'a kadar ön bakış sayılır; takıldığınız yeri Cuma dersine soru olarak saklayın. Bu haftanın hafta içi blokları yalnızca tekrar; yeni konu yok.",
       "bloklar": [
         {
           "sure": 25,
-          "konu": "Tekrar: Hafta 6-7 (döngüler ve iç içe döngü), kod izleme",
+          "konu": "Tekrar: Hafta 8-8 (döngüler ve iç içe döngü ön bakışı), kod izleme",
           "yap": [
             "Kağıda, bakmadan: 1'den n'e kadar 3'e bölünen sayıların toplamını ve sayısını bulan for döngüsünü yazın (n = 10 için çıktı ne?). Sonra Playground'da çalıştırın.",
             "İç içe iki for ile (i 1..3, j 1..i) yazılan 'i*j' değerlerini kağıda sırayla yazın; iç gövde toplam kaç kez çalıştı?",
@@ -463,8 +478,8 @@
         }
       ],
       "tekrar": [
-        "İlk tekrar: Hafta 7 (iki gün sonra). Hafta 6 ile birlikte.",
-        "Geri gelecek: 12 Kasım (14. gün) ikinci tekrar."
+        "İlk tekrar: Hafta 8 ön bakışı (iki gün sonra). Hafta 8 ile birlikte.",
+        "Geri gelecek: 12 Kasım (14. gün) ikinci tekrar, 13 Kasım dersi."
       ]
     },
     {
@@ -530,11 +545,11 @@
       "tarih": "2026-11-12",
       "baslik": "Hata avı, ikinci tur ve döngülerin ikinci tekrarı",
       "yogunluk": "hafif",
-      "ozet": "Perşembe, tek blok. 10. gündeki hata avının ikinci turu, bu kez döngülü programda ve asistanın gömdüğü hatalarla. Hafta 6-7'nin ikinci tekrarı da burada.",
+      "ozet": "Perşembe, tek blok. 10. gündeki hata avının ikinci turu, bu kez döngülü programda ve asistanın gömdüğü hatalarla. Hafta 7-8'in ikinci tekrarı da burada.",
       "bloklar": [
         {
           "sure": 25,
-          "konu": "Hata avı 2 (döngülü program) ve ikinci tekrar: Hafta 6-7",
+          "konu": "Hata avı 2 (döngülü program) ve ikinci tekrar: Hafta 7-8",
           "yap": [
             "10. günün 'Bozuk 3' programını (sonsuz döngü) cevaba bakmadan yeniden okuyun; hatayı bulmanız bu kez bir dakikadan az sürmeli.",
             "Aşağıdaki istemle üç hata gömülü döngülü bir program alın; satır ve türüyle yazın, Playground'da doğrulayın.",
@@ -550,36 +565,36 @@
         }
       ],
       "tekrar": [
-        "İkinci tekrar: Hafta 6-7 (döngüler). Hata avı provası 2/2.",
-        "Yarın 8. hafta dersi (metotlar, kapsam dışı); akşam yalnızca cep kartı."
+        "İkinci tekrar: Hafta 7-8 (döngüler). Hata avı provası 2/2.",
+        "Yarın 8. hafta dersi (döngüler II: iç içe döngü, break/continue; kapsamın son konusu); akşam cep kartı ve kısa bir iç içe döngü izlemesi."
       ]
     },
     {
       "gun": 15,
       "tarih": "2026-11-13",
-      "baslik": "8. hafta dersi, akşam yalnızca cep kartı",
+      "baslik": "8. hafta dersi (döngüler II), akşam cep kartı",
       "yogunluk": "hafif",
-      "ozet": "Cuma: 8. hafta dersi (Metotlar I). Metotlar, hoca aksini duyurmadıkça vize kapsamı dışında; derse gidin, yeni konuyu dinleyin, ama akşam vize için yalnızca kısa bir flash kart turu yapın. Yarın kendi deneme sınavınızı yazacaksınız.",
+      "ozet": "Cuma: 8. hafta dersi (Döngüler II: iç içe döngü, break/continue, EBOB), vize kapsamının son konusu; 9. haftanın metotları kapsam dışı. Bir haftadır ön bakışta takıldığınız yerleri derste sorun; akşam kısa bir flash kart turu ve iç içe döngü için tek bir izleme. Yarın kendi deneme sınavınızı yazacaksınız.",
       "bloklar": [
         {
           "sure": 15,
-          "konu": "Cep kartı: 1-7. hafta flash kart turu (kısa blok)",
+          "konu": "Cep kartı: 1-8. hafta flash kart turu ve bir iç içe döngü izlemesi (kısa blok)",
           "yap": [
-            "Sayfanın sonundaki cep kartını okuyun; altı istemden yalnızca flash kart istemini çalıştırın ve 10 kartı sesli cevaplayın.",
+            "Önce dersteki bir iç içe döngüyü (çarpım tablosu ya da yıldız deseni) bakmadan kağıda yazıp (i, j) çiftlerini sıralayın; sonra sayfanın sonundaki cep kartını okuyun, altı istemden yalnızca flash kart istemini çalıştırın ve 10 kartı sesli cevaplayın.",
             "Takıldığınız kartları 17. günün zayıf konu listesine ekleyin.",
             "Yarın için kağıt, kalem ve 60 dakikalık sessiz bir yer ayarlayın; deneme kağıdını telefonsuz çözeceksiniz."
           ],
-          "istem": "Birinci sınıfa Java öğreten bir hoca gibi davran. Görev: Algoritma ve Programlama I dersinin 1-7. haftasından (algoritma ve akış diyagramı, program yapısı ve hata türleri, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü, iç içe döngü ve break/continue) hatırlama gerektiren 10 flash kart hazırla; her haftadan en az bir kart olsun, metot ve dizi içermesin. Biçim: ön yüzde tek soru, cevapları başta verme; ben 'arkasını çevir' dediğimde yalnızca o kartın cevabını yaz. Bağlam: 1. sınıf öğrencisiyim, yarın kendi deneme sınavımı çözeceğim, gelecek hafta kağıt üzerinde vizem var. Her cevabı ders notuyla karşılaştıracağım; uymayan yerde ders notu kazanır.",
+          "istem": "Birinci sınıfa Java öğreten bir hoca gibi davran. Görev: Algoritma ve Programlama I dersinin 1-8. haftasından (algoritma ve akış diyagramı, program yapısı ve hata türleri, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü, iç içe döngü ve break/continue) hatırlama gerektiren 10 flash kart hazırla; her haftadan en az bir kart olsun, metot ve dizi içermesin. Biçim: ön yüzde tek soru, cevapları başta verme; ben 'arkasını çevir' dediğimde yalnızca o kartın cevabını yaz. Bağlam: 1. sınıf öğrencisiyim, yarın kendi deneme sınavımı çözeceğim, gelecek hafta kağıt üzerinde vizem var. Her cevabı ders notuyla karşılaştıracağım; uymayan yerde ders notu kazanır.",
           "ajan": null,
           "sina": [
             "Cep kartındaki altı istemin ortak kuralı nedir?",
-            "Metotlar vize kapsamında mı? Bunu kim değiştirebilir?",
+            "Metotlar vize kapsamında mı; iç içe döngü kapsamında mı? Bunu kim değiştirebilir?",
             "Yarın deneme kağıdında hangi iki şey masada olmayacak?"
           ]
         }
       ],
       "tekrar": [
-        "Üçüncü tur (flash kart): Hafta 1-7'nin tamamı.",
+        "Üçüncü tur (flash kart): Hafta 1-8'nin tamamı.",
         "Yarın: kendi deneme sınavınız."
       ]
     },
@@ -598,7 +613,7 @@
             "Telefon kapalı, 60 dakika: kod izleme sorularında her değişken için sütun açın; boşluk doldurmada boşluğun türüne (anahtar kelime, operatör, metot) karar verin; hata sayarken 'derleyici görür mü?' diye sorun.",
             "Emin olmadığınız soruya soru işareti koyup geçin; süre bitmeden geri dönün. Bu blok bitince beş dakika mola, sonra ikinci blokta devam."
           ],
-          "istem": "Sınav yazarı ve Java hocası gibi davran. Görev: Algoritma ve Programlama I dersinin 1-7. haftasını (algoritma ve akış diyagramı, program yapısı ve üç hata türü, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü değer, iç içe döngü ve break/continue) kapsayan, 60 dakikalık, kağıt üzerinde çözülecek 6 soruluk bir deneme kağıdı yaz: 2 kod izleme ve çıktı yazma (12-15 satırlık, Scanner'sız; biri tipler + seçim, biri döngü + switch), 1 boşluk doldurma (4 boşluk, girdi doğrulama döngüsü), 1 hata sayma (bir sözdizimi, bir çalışma zamanı, bir mantık hatası gömülü 10 satır), 1 kısa program tamamlama (iskelet verilsin, döngü gövdesi boş), 1 portfolyo benzeri soru (bir değer okuyup bir kurala göre karar veren if/else). Biçim: yalnızca soruları ver, her soruya puan yaz; CEVAPLARI SÖYLEME. 60 dakika sonra ben cevaplarımı yazınca puanla ve her yanlışın nedenini anlat; doğru cevapların da gerekçesini ver. Bağlam: 1. sınıf öğrencisiyim, metot ve dizi görmedim, sorularda kullanma; gelecek hafta kağıt üzerinde vizem var. Kodlu her sorunun çıktısını Playground'da çalıştırıp senin anahtarınla karşılaştıracağım; uymazsa kazanan Playground.",
+          "istem": "Sınav yazarı ve Java hocası gibi davran. Görev: Algoritma ve Programlama I dersinin 1-8. haftasını (algoritma ve akış diyagramı, program yapısı ve üç hata türü, tipler ve operatörler, if/else ve sarkan else, switch ve mantıksal operatörler, while/do-while/for ve gözcü değer, iç içe döngü ve break/continue) kapsayan, 60 dakikalık, kağıt üzerinde çözülecek 6 soruluk bir deneme kağıdı yaz: 2 kod izleme ve çıktı yazma (12-15 satırlık, Scanner'sız; biri tipler + seçim, biri döngü + switch), 1 boşluk doldurma (4 boşluk, girdi doğrulama döngüsü), 1 hata sayma (bir sözdizimi, bir çalışma zamanı, bir mantık hatası gömülü 10 satır), 1 kısa program tamamlama (iskelet verilsin, döngü gövdesi boş), 1 portfolyo benzeri soru (bir değer okuyup bir kurala göre karar veren if/else). Biçim: yalnızca soruları ver, her soruya puan yaz; CEVAPLARI SÖYLEME. 60 dakika sonra ben cevaplarımı yazınca puanla ve her yanlışın nedenini anlat; doğru cevapların da gerekçesini ver. Bağlam: 1. sınıf öğrencisiyim, metot ve dizi görmedim, sorularda kullanma; gelecek hafta kağıt üzerinde vizem var. Kodlu her sorunun çıktısını Playground'da çalıştırıp senin anahtarınla karşılaştıracağım; uymazsa kazanan Playground.",
           "ajan": null,
           "sina": [
             "7 / 2 geçen bir satırı tabloya ne olarak yazdınız: 3 mü, 3.5 mi, 3.0 mı?",
@@ -624,7 +639,7 @@
         }
       ],
       "tekrar": [
-        "Üçüncü tur: Hafta 1-7'nin tamamı (kendi deneme kağıdınızla).",
+        "Üçüncü tur: Hafta 1-8'nin tamamı (kendi deneme kağıdınızla).",
         "Yanlış listesi yarının (17. gün) programını belirler."
       ]
     },

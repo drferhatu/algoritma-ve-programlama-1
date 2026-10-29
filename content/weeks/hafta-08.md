@@ -1,64 +1,69 @@
 ---
 week: 8
-title: "Metotlar I: Tanım, Parametre, return ve Math"
-topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon"
-description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak."
-module: m3
+title: "Döngüler II: İç İçe Döngü, break/continue, EBOB ve Monte Carlo"
+topic: "İç içe döngüler ve desen yazdırma; break ve continue; Euclid EBOB algoritması, asal sayılar ve Monte Carlo ile pi tahmini"
+description: "Döngünün içinde döngü: çarpım tablosu ve yıldız desenleri, döngüyü erken bitiren break ve turu atlayan continue; klasik algoritmalar EBOB ve asal sayı; rastgele sayılarla pi."
+module: m2
 semester: 1
 exam: false
 status: taslak
-changeNote: ""
+changeNote: "Bayram nedeniyle bir hafta ötelendi: bu konu 13 Kasım'da işlenir. Ara sınav kapsamının son konusudur."
 tags:
-  - "metot"
-  - "parametre"
-  - "return"
-  - "void"
-  - "Math"
+  - "iç içe döngü"
+  - "break"
+  - "continue"
+  - "EBOB"
+  - "Euclid"
+  - "asal"
+  - "Monte Carlo"
 objectives:
-  - "void ve değer döndüren metot tanımlar, çağırır; çalışma akışını izler."
-  - "Parametre ile argüman farkını açıklar; çok parametreli metot yazar."
-  - "Math sınıfının sık metotlarını (pow, sqrt, abs, max, random) kullanır."
-  - "Tekrar eden kodu metoda çıkararak programı kısaltır."
+  - "İç içe döngü ile tablo ve desen yazdırır; dış ve iç döngünün rolünü ayırt eder."
+  - "break ve continue'yu yerinde kullanır, kötüye kullanımını tanır."
+  - "Euclid EBOB algoritmasını elle izler ve Java'da yazar."
+  - "Monte Carlo yöntemiyle pi tahmininin mantığını açıklar."
 tools:
   - "Java Playground"
   - "JDK 21"
   - "VS Code"
-  - "GitHub Codespaces"
+  - "Math.random"
 ---
+
+> [!not] Ara sınav kapsamı burada bitiyor
+> Ara sınav (9. hafta, 16-20 Kasım) 1-8. haftaları kapsar; bu haftanın iç içe döngü, `break`/`continue` ve EBOB konuları kapsamdadır, gelecek haftanın metotları değildir. Gün gün plan: [/vize-plani](/vize-plani).
 
 ## Haftanın Bulmacası
 
-Tarifin içindeki tarif: kağıttaki kek tarifinde "sosu hazırla" adımı üç yerde geçiyor. Sosu ayrı bir kağıda yazın, tarifte yalnızca adını çağırın. Şeker miktarını her seferinde farklı istiyorsanız? İşte parametre.
+Elle Euclid: 252 ve 105'in EBOB'unu kağıtta bölme kalanıyla bulun (kaç adım?). Sonra aynı işi "1'den küçüğe kadar hepsini dene" yöntemiyle yapmayı düşünün: kaç adım? İki algoritma, aynı cevap, çok farklı emek.
 
 ## Ders Notları
 
 > [!not] Hazırlanıyor
-> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon**
+> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **İç içe döngüler ve desen yazdırma; break ve continue; Euclid EBOB algoritması, asal sayılar ve Monte Carlo ile pi tahmini**
 
 İşlenecek başlıklar:
 
-- Metot nedir; neden: tekrar azaltma, okunabilirlik, test edilebilirlik
-- İlk metot: newLine, threeLine; çağrı ve tanım farkı
-- Çalışma akışı (flow of execution): main'den başlar, çağrıya gider, geri döner
-- Parametreler ve argümanlar; çok parametreli metotlar
-- void metot ile değer döndüren metot; return ifadesi
-- Math sınıfı: pow, sqrt, abs, max, min, round, random
-- Kompozisyon: metot içinde metot çağırma; ifadelerin içinde çağrı
-- Metot imzası; aşırı yükleme (overloading) kısa bakış
-- Portfolyo: KT2 (menü döngüsü ve girdi doğrulama) gelecek hafta, 27 Kasım Cuma 23.59'da toplanır
+- İç içe döngü: dış döngü satır, iç döngü sütun; çarpım tablosu
+- Yıldız desenleri: üçgen, piramit; printf ile hizalama
+- break: döngüyü bitir; continue: bu turu atla; etiketli break'e kısa bakış
+- Sayı tahmin oyununu break ile yazmak
+- EBOB: kaba kuvvet (v1), geriye doğru (v2), Euclid (v3); adım sayısı karşılaştırması
+- Asal sayı bulma ve iyileştirme (kareköke kadar)
+- Monte Carlo ile pi: rastgele nokta, çeyrek daire
+- Gelecek değer / faiz tablosu örneği
+- Döngü tasarım stratejisi: önce bir tur elle, sonra genelle
 
 ## Temel Kavramlar
 
-- **Metot (method)**: Adı olan, tekrar çağrılabilen kod bloğu.
-- **Parametre / argüman**: Tanımda beklenen değişken / çağrıda gönderilen değer.
-- **return**: Metodun sonucunu çağırana geri verip metodu bitirir.
-- **void**: Değer döndürmeyen metot.
-- **Kompozisyon**: Küçük metotları birleştirerek büyük iş yapmak.
+- **İç içe döngü**: Bir döngünün gövdesinde başka bir döngü; toplam tur = dış × iç.
+- **break**: İçinde bulunduğu döngüyü hemen bitirir.
+- **continue**: Kalan gövdeyi atlayıp sonraki tura geçer.
+- **Euclid algoritması**: EBOB(a, b) = EBOB(b, a mod b); 2300 yıllık, hâlâ en iyisi.
+- **Monte Carlo**: Rastgele deneylerle sayısal tahmin yapma yöntemi.
 
 ## Sahadan Örnekler
 
-- Kütüphaneler: Math.sqrt'yi siz yazmadınız; her programlama dili milyonlarca hazır metottan oluşan bir ekosistemdir.
-- Uçuş kontrol yazılımı: her hesaplama küçük, test edilmiş metotlardır; Apollo yazılımının önceliklendirmesi de metot çağrılarıyla çalışıyordu.
+- Kriptografi: RSA'nın içinde Euclid'in genişletilmiş hali çalışır; her HTTPS bağlantısı bu döngüden geçer.
+- Görüntü işleme: bir fotoğrafın her pikseli satır-sütun iç içe döngüsüyle gezilir; 12 megapiksel = 12 milyon tur.
 
 ## Laboratuvar
 

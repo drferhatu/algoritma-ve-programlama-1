@@ -1,71 +1,69 @@
 ---
 week: 9
-title: "Metotlar II: Kapsam, Yığın Diyagramı, Artımlı Geliştirme ve KT2 Teslimi"
-topic: "Değişken kapsamı ve yerel değişkenler, çağrı yığını ve yığın diyagramları, artımlı geliştirme ve test etme alışkanlığı; ara sınav haftası"
-description: "Metot çağrıldığında bellekte ne olur: yığın diyagramıyla adım adım izleme, kapsam kuralları ve büyük programı küçük adımlarla yazma disiplini. Ara sınav haftası; tarih bölümce ilan edilecek. KT2 teslim haftası: 27 Kasım Cuma 23.59."
+title: "Metotlar I: Tanım, Parametre, return ve Math"
+topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon; ara sınav haftası"
+description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak. Ara sınav haftası (16-20 Kasım); gün bölümce ilan edilecek, metotlar kapsam dışı."
 module: m3
 semester: 1
 exam: false
 status: taslak
-changeNote: ""
-milestone: "KT2"
+changeNote: "Bayram nedeniyle bir hafta ötelendi: metotlar I 20 Kasım'da, ara sınav haftasında işlenir."
 tags:
-  - "kapsam"
-  - "yığın"
-  - "stack"
-  - "artımlı geliştirme"
-  - "test"
   - "ara sınav"
-  - "KT2"
+  - "metot"
+  - "parametre"
+  - "return"
+  - "void"
+  - "Math"
 objectives:
-  - "Yerel değişken ve kapsam kurallarını açıklar; kapsam hatasını tanır."
-  - "Bir metot çağrı zincirini yığın diyagramıyla çizer ve değişken değerlerini izler."
-  - "Artımlı geliştirme ile bir problemi küçük, test edilen adımlarla çözer."
-  - "Kod izleme sorusunda metot çağrısının dönüş değerini doğru bulur."
-  - "KT2: ana akışı gözcü değerle biten bir menü döngüsünde çalışan ve girdi doğrulama döngüsü içeren sürümü 27 Kasım Cuma 23.59'a kadar push eder."
+  - "void ve değer döndüren metot tanımlar, çağırır; çalışma akışını izler."
+  - "Parametre ile argüman farkını açıklar; çok parametreli metot yazar."
+  - "Math sınıfının sık metotlarını (pow, sqrt, abs, max, random) kullanır."
+  - "Tekrar eden kodu metoda çıkararak programı kısaltır."
 tools:
   - "Java Playground"
   - "JDK 21"
   - "VS Code"
-  - "Java Visualizer"
+  - "GitHub Codespaces"
 ---
+
+> [!uyari] Ara sınav haftası
+> Ara sınav bu hafta, **16-20 Kasım**; gün ve yer bölümce ilan edilecek. Kağıt üzerinde, kırmızı bölge. Kapsam **1-8. haftalar** (döngüler II dahil); bu haftanın konusu metotlar, hoca aksini duyurmadıkça kapsam dışıdır. Kod izleme, boşluk doldurma, hata sayma, program tamamlama ve KT1 sürümünüzden 10 puanlık portfolyo sorusu. Plan: [/vize-plani](/vize-plani).
 
 ## Haftanın Bulmacası
 
-Kağıt yığını: her metot çağrısı için bir kağıt, üstteki kağıt aktif; return olunca kağıt atılır. Üç metotlu bir program tahtada kağıtlarla "çalıştırılır"; hangi değişken hangi kağıtta?
-
-> [!uyari] KT2 teslim haftası
-> Portfolyo kilometre taşı **KT2** bu haftanın lab haftasında, **27 Kasım Cuma 23.59**'da toplanır: Classroom 50 o saatte deponuzda ne varsa onu KT2 sürümü sayar. Beklenen: uygulamanın ana akışı gözcü değerle (ör. 0 veya q) biten bir menü döngüsünde çalışıyor ve yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü var. Ayrıntı: [Proje](/proje).
+Tarifin içindeki tarif: kağıttaki kek tarifinde "sosu hazırla" adımı üç yerde geçiyor. Sosu ayrı bir kağıda yazın, tarifte yalnızca adını çağırın. Şeker miktarını her seferinde farklı istiyorsanız? İşte parametre.
 
 ## Ders Notları
 
 > [!not] Hazırlanıyor
-> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **Değişken kapsamı ve yerel değişkenler, çağrı yığını ve yığın diyagramları, artımlı geliştirme ve test etme alışkanlığı; ara sınav haftası**
+> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon**
 
 İşlenecek başlıklar:
 
-- Kapsam (scope): yerel değişkenler, blok kapsamı, aynı ad farklı metot
-- Çağrı yığını ve yığın diyagramları (Think Java 4.5)
-- Metot içinde değişken değiştirmek çağıranı etkiler mi? (değer ile geçirme)
-- Artımlı geliştirme: mesafe hesabı örneği adım adım (Think Java 4.9)
-- Test: bilinen cevaplı girdilerle metot doğrulama
-- Kod tekrarını metotla giderme; iyi metot adı
+- Metot nedir; neden: tekrar azaltma, okunabilirlik, test edilebilirlik
+- İlk metot: newLine, threeLine; çağrı ve tanım farkı
+- Çalışma akışı (flow of execution): main'den başlar, çağrıya gider, geri döner
+- Parametreler ve argümanlar; çok parametreli metotlar
+- void metot ile değer döndüren metot; return ifadesi
+- Math sınıfı: pow, sqrt, abs, max, min, round, random
+- Kompozisyon: metot içinde metot çağırma; ifadelerin içinde çağrı
+- Metot imzası; aşırı yükleme (overloading) kısa bakış
 - Ara sınav haftası: tarih ve yer bölümce ilan edilecek; kırmızı bölge
-- Ara sınava hazırlık: kod izleme, boşluk doldurma, portfolyodan 10 puanlık soru
-- KT2: gözcü değerle biten menü döngüsü, girdi doğrulama (27 Kasım Cuma 23.59)
+- Portfolyo: KT2 (menü döngüsü ve girdi doğrulama) gelecek hafta, 27 Kasım Cuma 23.59'da toplanır
 
 ## Temel Kavramlar
 
-- **Kapsam (scope)**: Bir değişkenin görülebildiği kod bölgesi.
-- **Yerel değişken**: Metot içinde tanımlanan, metot bitince yok olan değişken.
-- **Çağrı yığını (call stack)**: Aktif metot çağrılarının üst üste dizildiği bellek bölgesi.
-- **Değer ile geçirme**: Argümanın kopyası gönderilir; ilkel tiplerde çağıranın değişkeni değişmez.
-- **Artımlı geliştirme**: Her seferinde küçük bir parça ekleyip test etme.
+- **Metot (method)**: Adı olan, tekrar çağrılabilen kod bloğu.
+- **Parametre / argüman**: Tanımda beklenen değişken / çağrıda gönderilen değer.
+- **return**: Metodun sonucunu çağırana geri verip metodu bitirir.
+- **void**: Değer döndürmeyen metot.
+- **Kompozisyon**: Küçük metotları birleştirerek büyük iş yapmak.
 
 ## Sahadan Örnekler
 
-- StackOverflowError: bir metodun kendini sonsuz çağırması yığını taşırır; Stack Overflow sitesinin adı buradan gelir.
-- Profesyonel ekiplerde her metot için otomatik test yazılır (JUnit); artımlı geliştirme bu alışkanlığın ilk adımıdır.
+- Kütüphaneler: Math.sqrt'yi siz yazmadınız; her programlama dili milyonlarca hazır metottan oluşan bir ekosistemdir.
+- Uçuş kontrol yazılımı: her hesaplama küçük, test edilmiş metotlardır; Apollo yazılımının önceliklendirmesi de metot çağrılarıyla çalışıyordu.
 
 ## Laboratuvar
 

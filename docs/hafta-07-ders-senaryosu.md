@@ -1,7 +1,7 @@
-# Hafta 6 · Ders senaryosu (öğretim üyesi notu, siteye girmez)
+# Hafta 7 · Ders senaryosu (öğretim üyesi notu, siteye girmez)
 
-**Tarih:** 30 Ekim 2026 Cuma · A şubesi 09.15 (fiilen 09.30 başla, 10.40 bitir) · B şubesi 13.15 (fiilen 13.30 başla, 14.40 bitir).
-**Tek oturum, 70 dakika fiilî.** Slayt yok; yansıda `/haftalar/hafta-06` açık. İkinci ekranda Java Playground sekmesi ve **Gemini masaüstü uygulaması** (sohbet + görev modu, `Belgeler/algo1` yetkili). Poll Everywhere soruları `docs/hafta-06-polleverywhere.md`.
+**Tarih:** 6 Kasım 2026 Cuma (30 Ekim dersi Cumhuriyet Bayramı nedeniyle yapılmadı; bu senaryo bir hafta ötelendi) · A şubesi 09.15 (fiilen 09.30 başla, 10.40 bitir) · B şubesi 13.15 (fiilen 13.30 başla, 14.40 bitir).
+**Tek oturum, 70 dakika fiilî.** Slayt yok; yansıda `/haftalar/hafta-07` açık. İkinci ekranda Java Playground sekmesi ve **Gemini masaüstü uygulaması** (sohbet + görev modu, `Belgeler/algo1` yetkili). Poll Everywhere soruları `docs/hafta-07-polleverywhere.md`.
 **Slogan:** bir kez yaz, yüz kez çalıştır; koşulu yanlış yapan satır hangisi?
 **Üslup notu:** Geçen hafta ders canlı gösteri ağırlıklıydı; bu hafta normal ders üslubuna dönülüyor: önce kavram ve kod (tahmin → Run), **sonra** "şimdi bunu asistanla şöyle çalışın". Asistan her bölümün sonunda bir dakikalık bir ek, bölümün kendisi değil. İstisna 44-52. dakika: ajan gösterisi orada dersin kendisi. "Bot" ve "ajan" kelimelerini bilerek kullan ve farkı her seferinde aynı cümleyle söyle: **bot sorar ve cevaplar; ajan klasörde dosya açar, çalıştırır, sonucu getirir.** Her bölümün sonundaki "Çalışma rehberi" kutusunu göstermek için 10 saniye yeter: "evde 15 dakika, üç adım: Playground, istem, doğrulama."
 
@@ -13,14 +13,14 @@
 - Gemini görev modu önceden denenmiş: `javac`/`java` çalıştırma ve stdin girdi verme akışı bu sürümde nasıl, izin diyalogları nerede; bir gün önce prova et ve çıktının ekran görüntüsünü al (B planı).
 - Yedek ekran görüntüleri: "kaç kez döner" tablosu, gözcü tuzağı cevabı (9 mu 10 mu), ajan tablosu, KT1 kontrol raporu, doğrulama anı cevabı.
 - Geçen haftadan: Poll 5 duvarından 2-3 cümle (açılışta oku); Poll 2'de "break olmadan durur" diyenlerin yüzdesi (Menu2 uyarısında söyle).
-- Lab 4 ve Lab 5 son teslim **bu gece 23.59** (Lab 4 kabul sorunu nedeniyle uzatıldı): açılışta ve kapanışta söyle. Lab 6 4-5 Kasım; KT1 6 Kasım; vize 9. hafta (16-20 Kasım), çalışma planı `/vize-plani` (30 Ekim-15 Kasım, bugün 1. gün).
+- **KT1 bu Cuma 23.59** (bugün): açılışta ve kapanışta söyle; Lab 6'da (4-5 Kasım) KT1 anlatıldı, Classroom 50 bu gece depoyu alır. Lab 7 11-12 Kasım, son teslim 13 Kasım; vize 9. hafta (16-20 Kasım), kapsam 1-8. hafta; çalışma planı `/vize-plani` (30 Ekim-15 Kasım, bugün 8. gün). Bayram haftasının A4 ödevini toplat.
 - El kaldırt: "portfolyo deposunu açan?" Düşükse kapanışta kabul bağlantısını yansıt.
 
 ## Dakika dakika
 
 | Dk | Blok | Hoca ne yapar | Öğrenci ne yapar | Tahtaya yazılacak |
 |---|---|---|---|---|
-| 0-6 | Bulmaca: yüz kere | Geçen haftanın duvarından 2 cümle. "Lab 4 ve Lab 5 bu gece 23.59." Gönüllü tahtaya: "yüz kez Merhaba." Sınıf 100 kez söylemeye başlasın, 10'da kes: "dört cümleyle." Sınıf tarifi bulana kadar bekle; bulunca dört cümleyi tahtaya numarala. Zor soru: "kaç kez olduğunu bilmiyorsak?" → "dur diyene kadar"; "sayaç gerekli mi?" Hayır. "İki döngü türü buradan doğdu." | Tarifi bulur; zor soruyu tartışır | `1 sayaç = 0` · `2 sayaç < 100 ise yaz, değilse dur` · `3 sayaç + 1` · `4 → 2` · `"dur" diyene kadar = GÖZCÜ` |
+| 0-6 | Bulmaca: yüz kere | 5. haftanın duvarından 2 cümle. "KT1 bu gece 23.59." A4 ödevlerini toplat. Gönüllü tahtaya: "yüz kez Merhaba." Sınıf 100 kez söylemeye başlasın, 10'da kes: "dört cümleyle." Sınıf tarifi bulana kadar bekle; bulunca dört cümleyi tahtaya numarala. Zor soru: "kaç kez olduğunu bilmiyorsak?" → "dur diyene kadar"; "sayaç gerekli mi?" Hayır. "İki döngü türü buradan doğdu." | Tarifi bulur; zor soruyu tartışır | `1 sayaç = 0` · `2 sayaç < 100 ise yaz, değilse dur` · `3 sayaç + 1` · `4 → 2` · `"dur" diyene kadar = GÖZCÜ` |
 | 6-10 | Neden tekrar | "Bilgisayar sizden iyi hesap yapmaz; tek üstünlüğü yorulmamak." Kasiyer 500. fiş. "Bir kez yaz, yüz kez çalıştır." Diyagram h06-dongu: başlangıç, koşul, gövde, adım; dört cümleyle eşleştir. "Lab 2 geri sayım diyagramındaki ok buydu." Çalışma rehberi kutusunu göster (10 sn). | Diyagramla dört cümleyi eşler | `BAŞLANGIÇ · KOŞUL · GÖVDE · ADIM` · `bir kez yaz, yüz kez çalıştır` |
 | 10-20 | while | Sözdizimi: "olduğu sürece"; if'e benzer, farkı başa dönmesi. Dört satırlık Merhaba'yı tahtada satır satır izle (0,1,...,99,100 → hayır). **Canlı:** "1'den 10'a toplam": önce tahmin (toplam ve bitişte i), Run; "i = 11!" Sonra `i++`'ı sil, Run'a BASMA: "ne olur?" → sonsuz; Ctrl+C / sekme kapat. Üç sebep: adım yok, ters yön, koşul bozulamaz. **Kilit soru:** "koşulu yanlış yapan satır hangisi?" Uyarı kutusu: kasıtlı sonsuz (sensör) sonra. **Bot ile (1 dk):** "kaç kez döner" istemini sohbette gönder, tablo gelince son satıra bak: 11 mi? Poll 1 burada (kaç satır). | Tahmin, Run, i = 11'i görür; sonsuz döngüyü kağıtta izler | `while (koşul) { … adım; }` · `i döngü bitince = 11` · `KOŞULU YANLIŞ YAPAN SATIR HANGİSİ?` · `bot: sorar-cevaplar` |
 | 20-28 | do-while ve doğrulama | Otomat: önce para, sonra soru. Sözdizimi; **noktalı virgül** tahtada daire içinde. Diyagram h06-while-dowhile. **Canlı:** "Hiç mi, en az bir mi?" para = 50: tahmin, Run; while 0 satır, do-while 1 satır. Poll 2 (en az kaç kez). `NotAl.java` tam dosya: satır satır; `9 0 4` terminalde çalıştır. **Kilit:** "Bu on satır portfolyo sözleşmesindeki girdi doğrulama döngüsü; KT2'de sizin konunuzda." Tanım kutusu. **Bot ile (1 dk):** test girdisi istemi, "çıktıyı söyleme"; beş diziden sınır olanı sınıf hesaplar. | Tahmin, Run; NotAl çıktısını izler; sınır girdiyi hesaplar | `do { … } while (koşul);` ← `;` · `ÖNCE YAP, SONRA SOR` · `en az 1 kez` · `KT2: girdi doğrulama döngüsü` |
@@ -29,7 +29,7 @@
 | 44-52 | Tahmin oyunu + AJAN gösterisi | `Tahmin.java` tam dosya: dört parçayı sınıf bulsun (başlangıç -1, koşul != HEDEF, adım = yeni tahmin okumak, deneme sayar ama sürdürmez). Terminalde `50 40 42`. Sonra: "Şimdi bunu üç girdiyle çalıştırıp tabloya yazsın istiyorum. Bot yapabilir mi?" Hayır, dosyayı görmez, çalıştıramaz. Gemini görev modu: klasör yetkili, istemi sayfadan kopyala, gönder. İzin diyaloglarını **yüksek sesle oku** ve onayla. Tablo gelince: ikinci satır Deneme 1, üçüncü Deneme 3 mü? "Hangi komutları çalıştırdın" satırını oku. Ajan "iyileştireyim mi?" derse HAYIR. **Kilit cümle tahtaya.** Neden kutusu: mekanik iş ajana, anlama size; artırma otomasyon değil. | Dört parçayı söyler; ajan tablosunu elle doğrular | `BOT: sorar-cevaplar · AJAN: klasörde açar, çalıştırır, getirir` · `mekanik iş → ajan · anlama → siz` · `izin = okuyarak` |
 | 52-60 | Yaygın hatalar + hata avı | Dört tuzak hızlı: (1) `while (i < 3);` tahtada, Run yok: sonsuz. (2) adım unutma: "while'da ilk iş adım satırı." (3) Kapı hikayesi: 10 kapı, `<` dokuz, `<=` on. **Canlı:** "Kaç kapı?" Run, say. (4) **Canlı:** "On kere 0.1": tahmin, Run, false. Ortak nokta: iki soru. Hata avı puzzle'ı aç, 3 dk, sınıf bulur; cevap details. Bot ile sorgu istemi: tek cümle, "evde." | Kağıtta tahmin, Run; hata avında üç hatayı bulur | `while (…);` ← SONSUZ · `0'dan < · 1'den <=` · `double sayaç YOK` · `; · i++ · gözcü` |
 | 60-65 | Büyük Resim: kırtasiye döngülü menü | Örnek depodaki `Uygulama.java`'yı aç; geçen haftanın switch'ine iki satır eklendi: `do {` ve `} while (secim != 0);`. Terminalde `1 2 5 7 0`. "0 ilk girdiyse Cikis ve biter; otomatik kontrol bunu dener." **Kilit:** "Bu KT2'nin şartı, KT1'in değil; KT1 tek geçişlik olabilir." Sahada kutusu tek cümle: kasa yazılımı aynı iskelet. | Çıktıyı tahmin eder | `KT2: do { menü; switch } while (secim != 0);` · `KT1: menü döngüsü ŞART DEĞİL` |
-| 65-70 | KT1 listesi + vize planı + kapanış | KT1 kutusunu oku: README kural cümlesi, Uygulama.java Scanner + if/else + kural en basit hali, 0 ile hatasız çıkış, AI-BEYANI KT1 bölümü, derleniyor. **Ajan ile (2 dk):** örnek portfolyo klasöründe kontrol istemi, "KOD YAZMA"; rapor gelince bilerek bıraktığın eksiği buldu mu? "README'yi yazayım mı?" derse hayır. Doğrulama anı (1 dk): iki iddialı istem; ikincisine "doğru" derse "Sayaç nerede yaşar?" Run → cannot find symbol. Vize kutusu: 9. hafta (16-20 Kasım), gün bölümce; `/vize-plani` 30 Ekim-15 Kasım, "bugün 1. gün." Kapanış: Lab 4 + Lab 5 **bu gece**; Lab 6 4-5 Kasım, altı görev; KT1 6 Kasım, ayrı depo, ritüel labda; Poll 5. Haftaya: iç içe döngü, break/continue, bankamatiğin üç denemesi. | Listeyi kendi deposuyla karşılaştırır; anket | `KT1 6 Kasım: README · Uygulama.java · 0 → çıkış · AI-BEYANI KT1` · `ajan: kontrol et, KOD YAZMA` · `VİZE 9. HAFTA · /vize-plani · bugün 1. gün` · `Lab 4+5 BU GECE` |
+| 65-70 | KT1 listesi + vize planı + kapanış | KT1 kutusunu oku: README kural cümlesi, Uygulama.java Scanner + if/else + kural en basit hali, 0 ile hatasız çıkış, AI-BEYANI KT1 bölümü, derleniyor. **Ajan ile (2 dk):** örnek portfolyo klasöründe kontrol istemi, "KOD YAZMA"; rapor gelince bilerek bıraktığın eksiği buldu mu? "README'yi yazayım mı?" derse hayır. Doğrulama anı (1 dk): iki iddialı istem; ikincisine "doğru" derse "Sayaç nerede yaşar?" Run → cannot find symbol. Vize kutusu: 9. hafta (16-20 Kasım), gün bölümce; `/vize-plani` 30 Ekim-15 Kasım, "bugün 8. gün." Kapanış: **KT1 bu gece 23.59**, ayrı depo, anlatım Lab 6'da yapıldı; Lab 7 11-12 Kasım, altı görev, son teslim 13 Kasım; Poll 5. Haftaya: iç içe döngü, break/continue, bankamatiğin üç denemesi. | Listeyi kendi deposuyla karşılaştırır; anket | `KT1 6 Kasım: README · Uygulama.java · 0 → çıkış · AI-BEYANI KT1` · `ajan: kontrol et, KOD YAZMA` · `VİZE 9. HAFTA · /vize-plani · bugün 8. gün` · `KT1 BU GECE 23.59` |
 
 ## Kilit cümleler (blok blok)
 
@@ -53,14 +53,14 @@
 
 **KT1 + doğrulama.** "Kontrol listesi ajanın işi, içerik sizin; README'deki kuralı vizede siz yazacaksınız." · "Aynı soruya bir doğru bir yanlış iddia; ikisine de evet diyen araç o gün iyi gününde değil." · "for sayacı döngü bitince yaşamaz; derleyici cannot find symbol der."
 
-**Kapanış.** "Lab 4 ve Lab 5 bu gece 23.59." · "Lab 6 altı görev, hepsi döngü; KT1 aynı Cuma, ayrı depo, anlatım labda." · "Vize 9. hafta; plan /vize-plani, bugün 1. gün."
+**Kapanış.** "KT1 bu gece 23.59; push edilmemiş sürüm teslim edilmemiş sayılır." · "Lab 7 altı görev, hepsi döngü; son teslim 13 Kasım." · "Vize 9. hafta, kapsam 1-8; plan /vize-plani, bugün 8. gün."
 
 ## Olası aksaklıklar ve B planı
 
 | Sorun | B planı |
 |---|---|
 | **İnternet yok / Gemini açılmıyor** | Dersin omurgası (üç döngü, gözcü, doğrulama, dört tuzak) Playground'suz da tahtada anlatılır; her CodeTry'ın çıktısını sen söyle, sınıf tahmin etsin. Ajan gösterisi için bir gün önce alınmış tablo ekran görüntüsü; "bot ile ajan farkı" cümlesini yine söyle, resimle göster. KT1 kontrol raporu ekran görüntüsü. |
-| **Görev modu programı çalıştıramıyor / stdin veremiyor** | Ajana "derle ve çalıştır" yerine "bu klasördeki Tahmin.java'yı oku, 50 40 42 girdisi için satır satır izleyip çıktıyı tabloya yaz" de; sonra sen terminalde çalıştır ve karşılaştır. "Ajan bugün yalnızca okudu; siz çalıştırdınız; fark yine aynı: bot dosyayı göremezdi bile." Lab 6 sayfasında ajan zaten yok, sorun büyümez. |
+| **Görev modu programı çalıştıramıyor / stdin veremiyor** | Ajana "derle ve çalıştır" yerine "bu klasördeki Tahmin.java'yı oku, 50 40 42 girdisi için satır satır izleyip çıktıyı tabloya yaz" de; sonra sen terminalde çalıştır ve karşılaştır. "Ajan bugün yalnızca okudu; siz çalıştırdınız; fark yine aynı: bot dosyayı göremezdi bile." Lab 7 sayfasında ajan zaten yok, sorun büyümez. |
 | **Ajan Tahmin.java'yı değiştirmeye kalkıyor** | Beklenen; "hayır" de ve izin diyaloğunu göster: "işte bu yüzden okuyarak onaylıyoruz." AI-BEYANI dördüncü satırına örnek. |
 | **Ajan KT1 raporunda bilerek bırakılan eksiği bulamıyor** | En iyi senaryo: "ajan 'var' dedi, dosyada yok; raporu çöpe atıp listeyi elle geçin" cümlesi sayfada zaten yazıyor; göster. |
 | Bulmacada sınıf tarifi bulamıyor | "Aklında bir sayı tut" diye başlat; sonra "o sayı 100'den küçükse ne yaparsın?"; "yazdıktan sonra sayıya ne yaparsın?"; "sonra hangi adıma dönersin?" Dört soru, dört cümle. |
@@ -69,7 +69,7 @@
 | Doğrulama anında araç iki iddiayı da doğru ayırt ediyor | "İyi; ama derleyici de ayırt ediyor, bakalım": Sayaç nerede yaşar? Run, hata oku. "Aracın doğru günü sizi doğrulamadan muaf tutmaz." |
 | Poll Everywhere çalışmıyor | El kaldırma: "0 toplanır diyen / toplanmaz diyen"; "for diyen / while diyen". |
 | **Süre taşıyor** | Kesilecek sıra: "1'den N'e toplam, for ile" CodeTry (evde) → bot ile "üç sürüme çevir" (evde) → "On kere 0.1" (evde, 3. haftadan biliyorlar) → hata avı puzzle'ı (evde, cevap details'te) → Sahada kutuları. **Kesilmeyecekler:** bulmaca, while canlı + sonsuz döngü, do-while canlı + NotAl, gözcü tuzağı, Tahmin + ajan gösterisi, kırtasiye iki satır, KT1 listesi + ajan kontrol, vize planı + kapanış duyuruları. |
-| B şubesi öğle sonrası, enerji düşük | Bulmacayı yarış yap: dört cümleyi ilk bulan sıra. Kaç kapı: "kaç satır?" diye bahis. Tahmin oyununu bir öğrenciye oynat (42'yi bilmeden, ikili arama ipucu vermeden); "kaç denemede?" → 11. hafta ikili arama tohumu. |
+| B şubesi öğle sonrası, enerji düşük | Bulmacayı yarış yap: dört cümleyi ilk bulan sıra. Kaç kapı: "kaç satır?" diye bahis. Tahmin oyununu bir öğrenciye oynat (42'yi bilmeden, ikili arama ipucu vermeden); "kaç denemede?" → 12. hafta ikili arama tohumu. |
 
 ## B şubesi (13.15)
 
@@ -77,8 +77,8 @@ Aynı akış (13.30 başla, 14.40 bitir). A şubesinden not: bulmacada tarifi bu
 
 ## Ders sonrası (5 dk)
 
-- Poll 3 (gözcü toplanır mı) ve Poll 4 (for mu while mi) sonuçlarını lab sorumlu hocasına ilet: Lab 6'da `Toplam` ve `Carpim` görevlerinde beklenen hatalar.
-- Ajan gösterisinde görev modunun çalıştırma/stdin akışında ne değiştiyse not et; hafta-06 sayfasındaki "ajan ile" istemini yalnızca gerçekten yanıltıcıysa güncelle.
-- "Portfolyo deposunu açan" el sayısı düşükse Pazartesi hatırlatma duyurusu: "KT1 Cuma 23.59; kabul bağlantısı /proje; ajanla kontrol istemi hafta-06 sayfasında."
-- Poll 5'ten 2-3 cümle → 7. haftanın açılışında oku.
-- 7. hafta: iç içe döngü, break/continue, EBOB, bankamatiğin üç denemesi (iki koşullu döngü); açılışta Tahmin.java'ya "en fazla 7 deneme" ekleyerek başla.
+- Poll 3 (gözcü toplanır mı) ve Poll 4 (for mu while mi) sonuçlarını lab sorumlu hocasına ilet: Lab 7'de `Toplam` ve `Carpim` görevlerinde beklenen hatalar.
+- Ajan gösterisinde görev modunun çalıştırma/stdin akışında ne değiştiyse not et; hafta-07 sayfasındaki "ajan ile" istemini yalnızca gerçekten yanıltıcıysa güncelle.
+- KT1 push etmeyen varsa Cumartesi duyuru: geç teslimde sınav sorusu için ek süre yok; KT2 27 Kasım.
+- Poll 5'ten 2-3 cümle → 8. haftanın açılışında oku.
+- 8. hafta (13 Kasım): iç içe döngü, break/continue, EBOB, bankamatiğin üç denemesi (iki koşullu döngü); açılışta Tahmin.java'ya "en fazla 7 deneme" ekleyerek başla.

@@ -1,19 +1,21 @@
 ---
 week: 14
-title: "Lab 14 · Üç Dil ve KT4 Son Teslim"
-description: "Portfolyo uygulamasının çekirdek algoritmasını yapay zekayla Python ve C'ye çevirme, çıktıları karşılaştırma; KT4 son teslimi ve 30 saniyelik sunum."
+title: "Lab 14 · String Algoritmaları, Nehir Bulmacası ve Üç Dil"
+description: "Karakter sayma, palindrom, sezar şifresi ve 1. haftanın nehir bulmacasının Java'da tam çözümü; portfolyonun çekirdek algoritmasının Python ve C sürümleriyle karşılaştırılması ve KT4'ün 30 saniyelik sunumu."
 status: taslak
 objectives:
-  - "Çekirdek algoritmayı Python ve C'ye çevirip aynı girdiyle aynı çıktıyı aldığını doğrular."
-  - "README ve AI beyanını tamamlar; KT4'ü push eder."
-  - "Uygulamasının bir metodunu lab sorumlu hocasına 30 saniyede anlatır."
+  - "String metotlarıyla en az üç metin algoritması yazar."
+  - "Nehir bulmacasını durum dizisi, güvenlik kontrolü metodu ve hamle döngüsüyle kodlar."
+  - "Kendi çözümünü yapay zekanın 1. haftadaki çözümüyle karşılaştırıp farkı yazar."
+  - "Çekirdek algoritmanın Python ve C sürümlerinin aynı girdiyle aynı çıktıyı verdiğini doğrular; uygulamasının bir metodunu lab sorumlu hocasına 30 saniyede anlatır."
 tools:
   - "JDK 21"
+  - "VS Code"
+  - "GitHub Codespaces"
   - "Python"
   - "C"
-  - "GitHub"
   - "Git"
-deliverable: "Lab 14 deposu ve portfolyo KT4 sürümü: çalışan Java uygulaması, README, AI beyanı, uc-dil/ klasöründe Python ve C sürümleri."
+deliverable: "Lab 14 deposu: metin programları ve NehirBulmacasi.java. Portfolyo KT4 sürümü (çalışan Java uygulaması, README, AI beyanı, uc-dil/ klasöründe Python ve C sürümleri) 25 Aralık Cuma 23.59'da toplandı; labda 30 saniyelik sunum."
 milestone: "KT4"
 ---
 
@@ -21,8 +23,8 @@ milestone: "KT4"
 
 [14. haftanın](/haftalar/hafta-14) teorisini. Laboratuvar teoriden bir hafta sonra yapılır: A şubesi Çarşamba 13.15, B şubesi Perşembe 15.15; tarihler [Ders Hakkında](/ders-hakkinda) takviminde.
 
-> [!uyari] KT4 teslimi
-> Bu lab, portfolyo kilometre taşı **KT4** için son teslim haftasıdır: kilometre taşı sürümü, lab deposundan **ayrı** olan portfolyo deponuza (Classroom 50 ile verilen bağlantı) en geç **bu haftanın Cuma 23.59**'una kadar push edilmiş olmalı. Push edilmemiş sürüm teslim edilmemiş sayılır; kilometre taşına bağlı sınav sorusu için ek süre verilmez. Şablon ve kurallar: [Ders Hakkında · Portfolyo](/ders-hakkinda), [AI beyanı](/rehber/ai-beyani).
+> [!uyari] KT4 ve dönemin son labı
+> Portfolyonun son sürümü **KT4**, bu labdan önce, **25 Aralık Cuma 23.59**'da toplandı: Classroom 50 o saatte portfolyo deponuzda ne varsa onu son sürüm saydı. Bu labda iki şey yapılır: `uc-dil/` klasöründeki Python ve C sürümlerini Java sürümüyle aynı girdiyle çalıştırıp aynı çıktıyı aldığınızı gösterirsiniz ve lab sorumlu hocanıza uygulamanızın bir metodunu **30 saniyede** anlatırsınız; finaldeki 15 puanlık soru o metottan gelir. Şablon ve kurallar: [Proje](/proje), [AI beyanı](/rehber/ai-beyani).
 
 ## Görevler
 
@@ -31,4 +33,4 @@ milestone: "KT4"
 
 ## Teslim
 
-Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 14 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab14-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Portfolyo (KT4) **ayrı bir depodur**: kilometre taşı sürümünü lab deposuna değil, Classroom 50 ile verilen portfolyo deponuza push edin; onun son teslimi de aynı Cuma 23.59. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 14 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab14-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

@@ -1,27 +1,23 @@
 ---
 week: 11
-title: "Lab 11 · Arama, Sıralama ve KT3 Teslimi"
-description: "Doğrusal ve ikili arama, seçmeli sıralama, dizi kopyalama; portfolyonun metotlu ve dizili sürümünün (KT3) teslimi."
+title: "Lab 11 · Dizilerle İlk Adımlar"
+description: "Dizi oluşturma, doldurma, gezinme; toplam, ortalama, en büyük; rastgele dizi ve histogram; sınır dışı hata deneyimi."
 status: taslak
 objectives:
-  - "Doğrusal ve ikili aramayı yazar; karşılaştırma sayılarını ölçer."
-  - "Seçmeli sıralama ve derin kopyalama yazar."
-  - "KT3: dizi alıp tek değer döndüren metot ve girdi doğrulayan metot içeren sürümü push eder."
+  - "Dizi oluşturur, for ve for-each ile gezer; istatistik hesaplar."
+  - "ArrayIndexOutOfBoundsException'ı bilerek üretip mesajını yorumlar."
+  - "Dizinin referans olduğunu iki değişkenle gösterir."
 tools:
   - "JDK 21"
   - "VS Code"
   - "GitHub Codespaces"
   - "Git"
-deliverable: "Lab 11 deposu ve portfolyo KT3 sürümü."
-milestone: "KT3"
+deliverable: "Lab 11 deposu: dizi istatistik ve histogram programları."
 ---
 
 ## Bu lab neyi uyguluyor?
 
 [11. haftanın](/haftalar/hafta-11) teorisini. Laboratuvar teoriden bir hafta sonra yapılır: A şubesi Çarşamba 13.15, B şubesi Perşembe 15.15; tarihler [Ders Hakkında](/ders-hakkinda) takviminde.
-
-> [!uyari] KT3 teslimi
-> Bu lab, portfolyo kilometre taşı **KT3** için son teslim haftasıdır: kilometre taşı sürümü, lab deposundan **ayrı** olan portfolyo deponuza (Classroom 50 ile verilen bağlantı) en geç **bu haftanın Cuma 23.59**'una kadar push edilmiş olmalı. Push edilmemiş sürüm teslim edilmemiş sayılır; kilometre taşına bağlı sınav sorusu için ek süre verilmez. Şablon ve kurallar: [Ders Hakkında · Portfolyo](/ders-hakkinda), [AI beyanı](/rehber/ai-beyani).
 
 ## Görevler
 
@@ -30,4 +26,4 @@ milestone: "KT3"
 
 ## Teslim
 
-Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 11 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab11-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Portfolyo (KT3) **ayrı bir depodur**: kilometre taşı sürümünü lab deposuna değil, Classroom 50 ile verilen portfolyo deponuza push edin; onun son teslimi de aynı Cuma 23.59. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.
+Görev dosyalarınızı [Classroom 50](/rehber/classroom-50) bağlantısıyla açılan **Lab 11 deponuza** push edin (bağlantı lab günü verilir; depo adı `algo1-lab11-KULLANICIADI`). Otomatik kontrol sonucunu deponun Releases sayfasında görür, düzeltip tekrar push edebilirsiniz. Son teslim: **lab haftasının Cuma 23.59'u**. Lab'da lab sorumlu hocanıza **30 saniyede** bir görevi anlatın. Yapay zeka **sarı bölge**: soru sorabilirsiniz, kod kopyalayamazsınız.

@@ -1,63 +1,67 @@
 ---
 week: 12
-title: "Çok Boyutlu Diziler: Matris, Sudoku ve Hava Durumu"
-topic: "İki boyutlu dizi tanımlama, satır ve sütun, iç içe döngüyle gezinme, satır/sütun toplamları, sudoku doğrulama ve hava durumu tablosu örnekleri; düzensiz diziler"
-description: "Tablo şeklindeki veriler: matris, mesafe tablosu, sudoku tahtası. İki boyutlu dizi ile 7. haftanın iç içe döngüsü buluşuyor."
+title: "Diziler II: Arama, Sıralama ve Kopyalama"
+topic: "Doğrusal ve ikili arama, seçmeli sıralama, dizi kopyalama (sığ ve derin), diziyi metoda gönderme ve metottan dizi döndürme, java.util.Arrays"
+description: "Dizilerle klasik algoritmalar: aramak (doğrusal ve ikili), sıralamak, doğru kopyalamak ve diziyi metotlarla birlikte kullanmak. KT3 (18 Aralık) için dizi alıp tek değer döndüren metot burada yazılır."
 module: m4
 semester: 1
 exam: false
 status: taslak
-changeNote: ""
+changeNote: "Bayram nedeniyle bir hafta ötelendi: diziler II 11 Aralık'ta işlenir; KT3 teslimi 18 Aralık'a kaydı."
 tags:
-  - "iki boyutlu dizi"
-  - "matris"
-  - "sudoku"
-  - "iç içe döngü"
-  - "hava durumu"
+  - "doğrusal arama"
+  - "ikili arama"
+  - "sıralama"
+  - "kopyalama"
+  - "Arrays"
 objectives:
-  - "İki boyutlu dizi tanımlar, oluşturur ve başlangıç değeri verir; length'in satır/sütun anlamını bilir."
-  - "İç içe döngüyle 2B diziyi gezer; satır ve sütun toplamlarını hesaplar."
-  - "Sudoku çözümünü doğrulayan programı parçalara bölerek yazar."
-  - "Düzensiz (ragged) diziyi tanır."
+  - "Doğrusal ve ikili aramayı yazar; adım sayılarını karşılaştırır."
+  - "Seçmeli sıralamayı elle izler ve Java'da yazar."
+  - "Sığ ve derin kopyalama farkını bellek çizimiyle açıklar."
+  - "Dizi alan ve dizi döndüren metot yazar; değişikliğin çağırana yansıdığını fark eder."
 tools:
   - "JDK 21"
   - "VS Code"
   - "GitHub Codespaces"
+  - "java.util.Arrays"
 ---
 
 ## Haftanın Bulmacası
 
-Kağıt sudoku: sınıfa dolu bir sudoku dağıtılır; ikili gruplar bir satırı, bir sütunu ve bir 3×3 kutuyu elle doğrular. Doğrulama adımlarını yazın: kaç iç içe döngü gerekiyor?
+Kart destesi: 16 kapalı kart, birini arıyorsunuz. Karışık desteyi en kötü kaç bakışta bulursunuz? Sıralı desteyi? (16 ve 4.) 7. haftanın sayı tahmin oyunu geri döndü; adı ikili arama.
+
+> [!not] KT3 gelecek Cuma, 18 Aralık 23.59
+> Portfolyonun metotlu ve dizili sürümü **KT3** gelecek hafta, **18 Aralık Cuma 23.59**'da toplanır. Bu haftanın konusu olan "dizi alıp tek değer döndüren metot" KT3'ün şartıdır; dersten sonra kendi konunuza uyarlayın. Ayrıntı: [Proje](/proje).
 
 ## Ders Notları
 
 > [!not] Hazırlanıyor
-> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **İki boyutlu dizi tanımlama, satır ve sütun, iç içe döngüyle gezinme, satır/sütun toplamları, sudoku doğrulama ve hava durumu tablosu örnekleri; düzensiz diziler**
+> Bu haftanın ders notları hazırlanıyor; ders günü bu sayfa yansıda açık olacak. Şimdilik konu başlıkları: **Doğrusal ve ikili arama, seçmeli sıralama, dizi kopyalama (sığ ve derin), diziyi metoda gönderme ve metottan dizi döndürme, java.util.Arrays**
 
 İşlenecek başlıklar:
 
-- Neden 2B dizi: mesafe tablosu, sınav sonuçları (öğrenci × soru), sudoku
-- Tanımlama: int[][] m = new int[3][4]; m.length ve m[0].length
-- Başlangıç değeri listesiyle oluşturma
-- İç içe döngüyle gezinme, yazdırma, toplam
-- Satır toplamları, sütun toplamları, en büyük satır
-- Sınav notlandırma (02_gradeExam), en yakın nokta (03_findNearest)
-- Sudoku doğrulama (04_sudoku): satır, sütun, kutu
-- Hava durumu analizi (06_weather, WeatherAnalyzer): günlük ortalama
-- Düzensiz diziler; 2B diziyi metoda gönderme
+- Doğrusal arama: baştan sona; bulununca dur
+- İkili arama: sıralı dizide ortadan böl; adım sayısı log2(n)
+- Seçmeli sıralama (selection sort): en küçüğü bul, başa al
+- Dizi kopyalama: = ile sığ, döngüyle derin, System.arraycopy, Arrays.copyOf
+- Diziyi metoda gönderme: referans geçer, metot diziyi değiştirebilir
+- Metottan dizi döndürme; dizi ters çevirme
+- java.util.Arrays: sort, toString, fill, binarySearch
+- Harf sayma örneği (11-HarfSay), sayı analizi
+- KT3 (18 Aralık): dizi alıp tek değer döndüren metot + girdi doğrulayan metot
 
 ## Temel Kavramlar
 
-- **İki boyutlu dizi**: Dizilerin dizisi; m[satır][sütun].
-- **Satır / sütun**: İlk indeks satır, ikinci sütun; m.length satır sayısı.
-- **Düzensiz dizi (ragged)**: Her satırın uzunluğu farklı olabilir.
-- **Matris**: Sayısal 2B dizi; toplama, çarpma gibi işlemler.
-- **Doğrulama**: Verinin kurallara uyduğunu kontrol eden algoritma.
+- **Doğrusal arama**: Her elemana sırayla bakma; n adım.
+- **İkili arama**: Sıralı dizide aralığı yarıya bölerek arama; log n adım.
+- **Seçmeli sıralama**: Her turda kalanların en küçüğünü öne alma.
+- **Sığ kopya**: İki değişken aynı diziyi gösterir; biri değişince öteki de.
+- **Derin kopya**: Yeni dizi oluşturup elemanları tek tek kopyalama.
 
 ## Sahadan Örnekler
 
-- Dijital görüntü: her fotoğraf piksellerden oluşan 2B (renkli ise 3B) bir dizidir; Instagram filtresi bu dizinin üstünde iç içe döngüdür.
-- Satranç motoru ve oyun tahtaları: 8×8 dizi; her hamle bir hücre değişimi, her kural bir doğrulama döngüsü.
+- Telefon rehberi: alfabetik sıralı olduğu için ikili arama; milyar kayıtta 30 adım.
+- Veritabanı indeksleri: sıralı tutulan sütunlar sayesinde arama saniyeler yerine milisaniyeler sürer; SQL'in altında bu haftanın algoritmaları var.
 
 ## Laboratuvar
 

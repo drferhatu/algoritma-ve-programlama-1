@@ -70,17 +70,17 @@ const codeCls = 'rounded border border-line bg-paper-2 px-1.5 py-0.5 font-mono t
       <section aria-labelledby="sinav">
         <p class="eyebrow">Sınav</p>
         <h2 id="sinav" class="display mt-1 scroll-mt-28 text-2xl md:text-3xl">{plan.sinav.hafta}. hafta, {plan.sinav.aralik}: kağıt, kalem, yapay zeka yok</h2>
-        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Sınav kağıt üzerindedir, telefon ve bilgisayar kapalıdır; günü bölüm ilan edecek. Soru türleri aşağıda ve kapsam 1-7. haftadır. {plan.sinav.kapsamNotu}</p>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-2">Sınav kağıt üzerindedir, telefon ve bilgisayar kapalıdır; günü bölüm ilan edecek. Soru türleri aşağıda ve kapsam 1-8. haftadır (döngüler II dahil). {plan.sinav.kapsamNotu}</p>
 
         <div class="mt-6 grid gap-4 md:grid-cols-2">
           <div class="rounded-2xl border border-line bg-white p-5 shadow-soft">
-            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Kapsam: 1-7. hafta</p>
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Kapsam: 1-8. hafta</p>
             <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-ink-2">
               {plan.sinav.kapsam.map((k, i) => (
                 <li class="flex gap-2"><span class="shrink-0 font-mono text-xs text-ink-3">{String(i + 1).padStart(2, '0')}</span><span>{k}</span></li>
               ))}
             </ul>
-            <p class="mt-3 text-xs text-ink-3">Hafta sayfaları: {[1, 2, 3, 4, 5, 6, 7].map((n, i) => (<><a href={weekHref(n)} class="link">{n}</a>{i < 6 ? ' · ' : ''}</>))}</p>
+            <p class="mt-3 text-xs text-ink-3">Hafta sayfaları: {[1, 2, 3, 4, 5, 7, 8].map((n, i) => (<><a href={weekHref(n)} class="link">{n}</a>{i < 6 ? ' · ' : ''}</>))}</p>
           </div>
           <div class="rounded-2xl border border-line bg-white p-5 shadow-soft">
             <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">Soru türleri</p>

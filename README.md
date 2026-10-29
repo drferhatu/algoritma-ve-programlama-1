@@ -223,6 +223,8 @@ unzip -q ijava.zip -d ijava
 
 ## İçerik bakımı
 
+- **Hafta numarası takvime bağlıdır.** 6. hafta (30 Ekim 2026) Cumhuriyet Bayramı nedeniyle tatildir; o haftadan itibaren tüm teori ve lab içeriği **bir hafta ötelenmiştir** (döngüler I = 7. hafta, …, String + "aynı algoritma üç dil" = 14. hafta; eski 14. haftanın içeriği 13. haftanın String dersine katlanmıştır). Diyagram dosya adları (`h06-*`, `lab06-*`) eski numaralarla kalmıştır; ad ile hafta numarası uyuşmazlığı bilinçlidir, `validate_content.py` bunu denetlemez.
+
 - **Yeni hafta / lab iskeleti:** `generate_week_files.py` var olan dosyalara dokunmaz; `--weeks` / `--labs` ile sınırlanabilir, `--titles konu.json` ile başlıklar verilebilir, `--force` mevcutları **ezer**.
 - **Tarih/tatil/erteleme:** `schedule.json` ilgili satırı; `note` alanı sayfada uyarı olarak görünür.
 - **Duyuru:** `content/announcements/<ad>.md` (`title`, `date`, `pinned`, `kind: bilgi|onemli|sinav`).

@@ -1,0 +1,176 @@
+---
+week: 7
+title: "Lab 7 · Döngülerle Tekrar"
+description: "while, do-while ve for ile altı program: gözcü değerle biten toplam, for ile çarpım tablosu, sayı tahmin oyunu, girdi doğrulama döngüsü, Lab 5 menüsünün döngülü hali ve bonus bileşik faiz. Bayram nedeniyle bir hafta ötelenen döngüler I dersinin labı."
+status: hazir
+objectives:
+  - "Üç döngü türünün her biriyle en az bir program yazar; her döngüde koşulu yanlış yapan satırı gösterir."
+  - "Gözcü değerle biten ve girdi doğrulayan döngüler kurar; gözcünün işlenmediğini kendi programında test eder."
+  - "Sonsuz döngüye düşen bir programı tanır ve düzeltir; bir eksik/bir fazla hatasını sınır girdisiyle yakalar."
+tools:
+  - "JDK 21 / Codespaces"
+  - "VS Code"
+  - "Scanner"
+  - "Git"
+deliverable: "Lab 7 deposu: Toplam.java, Carpim.java, Tahmin.java, Dogrula.java, Menu2.java ve bonus Faiz.java; son teslim 13 Kasım Cuma 23.59."
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 11 Kasım 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 12 Kasım 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [7. haftanın](/haftalar/hafta-07) teorisini uyguluyor: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama döngüsü. Derste program ilk kez geri döndü; bu labda altı program yazacaksınız ve altısı da bir satırı kullanıcı "yeter" diyene ya da sayaç dolana kadar tekrar ediyor. Hiçbiri Java Playground'da çalışmaz, çünkü hepsi `Scanner` kullanıyor; lab Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor. Lab 5 günlüğü ritüeli ve KT1 anlatımı [Lab 6](/laboratuvar/lab-06)'da yapıldı; bu labda ritüel yalnızca döngünüz üstüne.
+
+> [!not] Lab 7 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab07/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab07/accept)**
+> Deponuz `algo1-lab07-KULLANICIADI` adıyla oluşur ve boş gelir, dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
+> Lab 5'te evde yeşil bölgedeydiniz, Lab 6 kağıt üstündeydi; bu lab yeniden **sarı**. Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "do-while'ın noktalı virgülü nereye gelir?", "gözcü değer nedir?", "for sayacı döngü bitince neden yaşamıyor?" serbest; ders sayfasındaki "bot ile" istemlerinin hepsi serbest. Ama "0 girilene kadar sayı okuyup toplayan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**; görev modunda ajana lab klasörüne dosya yazdırmak da bu labda yok. Teslim ritüelinde lab sorumlu hocanız bir döngünüzü gösterip "koşulu yanlış yapan satır hangisi?" diye soracak ve döngüyü siz yazdıysanız parmağınız o satıra gider. Portfolyo ayrı: orada yeşil bölge, beyan zorunlu.
+
+> [!not] KT1 geçen Cuma toplandı, sıra KT2'de
+> Portfolyonun ilk sürümü **KT1** 6 Kasım Cuma 23.59'da toplandı. Bu labdaki `Dogrula.java` ve `Menu2.java`, **KT2**'nin (27 Kasım Cuma 23.59) iki şartının provasıdır: gözcü değerle biten menü döngüsü ve girdi doğrulama döngüsü. Labdan sonra ikisini kendi konunuza uyarlayıp portfolyo deponuza (`algo1-portfolyo-KULLANICIADI`) push ederseniz KT2'ye erken girmiş olursunuz. Kurallar: [Proje](/proje), [AI beyanı](/rehber/ai-beyani).
+
+## Adım 0 · Depo ve ortam (5 dk)
+
+1. Yukarıdaki kabul bağlantısından Lab 7 deponuzu oluşturun.
+2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab07-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**).
+3. Terminale `java -version` yazın ve 21 ya da üstünü gördüğünüzden emin olun.
+4. Lab 4 ve Lab 5'te geçmeyen testiniz varsa süre doldu (30 Ekim), bugün onlara dönmeyin.
+5. Portfolyo deponuz da klonlanmış olsun; Görev 4 ve Görev 5'i bitirince aynı kalıbı kendi uygulamanıza taşıyabilirsiniz (KT2 hazırlığı).
+
+Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+
+## Ortak iskelet ve bu labın kuralı
+
+İskelet geçen haftaların aynısı: en üstte `import java.util.Scanner;`, `main` içinde `new Scanner(System.in)`, sonra `nextInt()` ile okuma. Yeni olan şey okumanın bir döngünün içinde ya da hemen önünde olması. Her görevde çıktı biçimi **birebir** verilmiştir, çünkü otomatik kontrol programınızı belirtilen girdiyle çalıştırıp çıktıda o satırı aynen arar. Soru metinleri (`Sayi: ` gibi) serbesttir, kontrol yalnızca cevap satırına bakar.
+
+Bu labın kuralı iki cümle. Birincisi derste söylediğimiz: **her döngü için koşulu yanlış yapan satırı gösterin**; gösteremiyorsanız döngünüz sonsuzdur ve otomatik kontrol zaman aşımıyla düşer. İkincisi geçen haftalardan: **sınır girdisiyle test edin**; gözcüyü ilk girdi olarak verin, doğrulamaya tam 1 ve tam 5 verin, tahmine ilk denemede 42 verin. Gizli testler tam oraya bakıyor.
+
+> [!uyari] Türkçe karakter yok, noktalı virgül var, sonsuz döngü yok
+> Çıktılarda `Toplam`, `Daha buyuk`, `Gecersiz`, `Cikis` gibi ASCII yazım kullanın. `do-while`'ın sonundaki `while (...)` noktalı virgülle biter; unutursanız derleyici durur ve bütün testler düşer. Sonsuz döngüye giren bir programı otomatik kontrol 10 saniye sonra keser ve o görevi 0 sayar; terminalde sonsuz döngüye düşerseniz `Ctrl+C`.
+
+## Görev 1 · `Toplam.java` (15 puan, 8 dk)
+
+Gözcü değerle biten toplam: dersteki kasiyer fişi. Program `0` girilene kadar tam sayı okur, okuduklarını toplar ve kaç sayı okuduğunu sayar; `0` gözcüdür, **toplanmaz ve sayılmaz**. `5`, `7`, `3`, `0` girdisi için çıktının son iki satırı tam olarak:
+
+```
+Toplam: 15
+Adet: 3
+```
+
+`while` ile yazın ve dersteki kalıbı kullanın: ilk okuma döngüden önce, sonraki okuma gövdenin sonunda. Sınır testi: ilk girdi `0` ise `Toplam: 0` ve `Adet: 0` yazmalı; döngü hiç dönmemeli. Negatif sayılar geçerli girdidir, `-4` toplanır.
+
+## Görev 2 · `Carpim.java` (15 puan, 7 dk)
+
+Program bir `N` tam sayısı okur ve `N`'in 1'den 10'a çarpım tablosunu `for` ile yazar, her çarpım ayrı satırda. `3` için on satır çıkar ve sonuncusu tam olarak:
+
+```
+3 x 10 = 30
+```
+
+Satır biçimi `N x i = sonuc`, araya tek boşluk, `x` küçük harf. Tekrar sayısı baştan belli olduğu için bu görevde `for` zorunlu; `while` ile yazan program otomatik kontrolden geçer, lab sorumlu hocanızdan not düşer. Sınır testi: `N = 0` için on satır `0 x i = 0`; `N = 1` için tablo kendisi.
+
+## Görev 3 · `Tahmin.java` (20 puan, 10 dk)
+
+Dersteki sayı tahmin oyunu. Hedef `42`, bir `final int` sabitte. Program tahmin okur; tahmin hedeften küçükse `Daha buyuk`, büyükse `Daha kucuk` yazar ve yeniden sorar; eşitse döngü biter ve kaçıncı denemede bulunduğu yazılır. `50`, `40`, `42` girdisi için çıktı satırları sırasıyla:
+
+```
+Daha kucuk
+Daha buyuk
+Bildin! Deneme: 3
+```
+
+`while` ile yazın; koşul `tahmin != HEDEF`. Başlangıç değeri hedefe eşit olmayan bir sayı olmalı (`-1`), yoksa oyun oynanmadan biter. Sınır testi: ilk tahmin `42` ise `Bildin! Deneme: 1`, "Daha" satırı hiç yazılmamalı.
+
+<Diagram name="lab06-tahmin" caption="Sayı tahmin akışı: döngü koşulu 'tahmin ≠ HEDEF mi?', gövdede oku, say, iki elmasla karşılaştır. Eşitlikte iki elmas da Hayır der ve akış koşula döner, koşul Hayır deyip döngüyü bitirir." dot width="420px" />
+
+## Görev 4 · `Dogrula.java` (20 puan, 8 dk)
+
+Dersteki girdi doğrulama döngüsü. Program 1 ile 5 arasında (ikisi dahil) bir not ister; geçersiz her girdide `Gecersiz, tekrar:` yazıp yeniden sorar, geçerli not gelince durur ve notu yazar. `9`, `0`, `4` girdisi için:
+
+```
+Gecersiz, tekrar:
+Gecersiz, tekrar:
+Gecerli not: 4
+```
+
+`do-while` ile yazın, çünkü soru en az bir kez sorulmalı; koşul `not < 1 || not > 5` (geçen haftanın `||` operatörü, iki uç tek parantezde). Sınır testi: `1` ve `5` geçerlidir, `0` ve `6` değildir; `>` ile `>=` karıştırılırsa gizli test düşer. Bu on satır, portfolyo sözleşmesindeki "girdi doğrulama döngüsü"nün ta kendisi; KT2'de kendi konunuza uyarlayacaksınız.
+
+## Görev 5 · `Menu2.java` (20 puan, 10 dk)
+
+Lab 5'teki kütüphane menüsünün döngülü hali. Aynı menü, aynı `switch`, ama bu kez bir `do-while`'ın içinde ve `0` girilene kadar dönüyor:
+
+```
+1) Kitap ara  2) Odunc al  3) Iade et  0) Cikis
+```
+
+Her seçimde ilgili satır: `1` için `Kitap ara`, `2` için `Odunc al`, `3` için `Iade et`, başka her sayı için `Gecersiz secim`; `0` için `Cikis` ve döngü biter. Döngü bitince program kaç **geçerli** işlem yapıldığını yazar; geçersiz seçimler ve `0` sayılmaz. `1`, `3`, `0` girdisi için çıktı satırları sırasıyla:
+
+```
+Kitap ara
+Iade et
+Cikis
+Islem sayisi: 2
+```
+
+Sayacı `case 1`, `case 2` ve `case 3`'ün içinde artırın, `default`'ta artırmayın. Her `case`'in sonunda `break`; geçen haftanın durmayan asansörü döngünün içinde iki kat can yakar, çünkü her turda tekrarlanır. Sınır testi: ilk girdi `0` ise yalnızca `Cikis` ve `Islem sayisi: 0`; `7`, `0` için `Gecersiz secim`, `Cikis`, `Islem sayisi: 0`.
+
+## Görev 6 (bonus) · `Faiz.java` (10 puan, 7 dk)
+
+Bir hesapta `1000` TL var ve her yıl yüzde 7 bileşik faiz işliyor, yani her yıl tutar `1.07` ile çarpılıyor. Program hiçbir şey okumaz; tutarın `2000` TL'yi **geçtiği** ilk yılı bulur ve yazar:
+
+```
+Yil: 11
+```
+
+`while` ile yazın: koşul `tutar <= 2000`, gövdede tutarı `1.07` ile çarpın ve yılı bir artırın. Tutar `double`, yıl `int`; döngü sayacı `double` olmasın, dersteki "on kere 0.1" kutusunun sebebi bu. Kendinizi sınamak için: yüzde 10 ile kaç yıl? Program okumadığı için otomatik kontrol girdi vermez, yalnızca satırı arar; gizli test aynı programı yeniden çalıştırır ve aynı satırı bekler, yani rastgelelik yok.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 7: donguler"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 13 Kasım 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir. Lab dosyalarını portfolyoya, portfolyoyu lab deposuna koymayın.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Deponuzda **Add file → Upload files** ile de yükleyebilirsiniz. Ricamız aynı: dosyaları teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır ve altı dosyayı altı kez yüklemek altı ayrı kontrol demektir.
+
+Kontrol listesi: deponuzun kökünde `Toplam.java`, `Carpim.java`, `Tahmin.java`, `Dogrula.java`, `Menu2.java` ve bonusu yaptıysanız `Faiz.java` olmalı. Her dosyadaki sınıf adı dosya adıyla birebir aynı olmalı, aksi halde `javac` derlemez.
+
+### Otomatik kontrol (100 puan)
+
+Her görev için **iki test** çalışır. Birincisi aşağıdaki tabloda yazan girdiyi verir ve belirtilen satırı **birebir** arar. İkincisi aynı programı **başka değerlerle**, çoğunlukla bir sınır girdisiyle (gözcü ilk girdi, tam 1 ve tam 5, ilk denemede 42, menüde yalnızca 0) çalıştırır; o değerleri önceden söylemiyoruz. Sonsuz döngüye giren program 10 saniye sonra kesilir ve o görevin iki testi de düşer.
+
+| # | Test | Örnek girdi | Aranan çıktı | Puan (örnek + gizli) |
+|---|---|---|---|---|
+| 1 | `Toplam` gözcü ve adet | `5 7 3 0` | `Toplam: 15` ve `Adet: 3` | 8 + 7 |
+| 2 | `Carpim` for ile tablo | `3` | `3 x 10 = 30` | 8 + 7 |
+| 3 | `Tahmin` deneme sayacı | `50 40 42` | `Bildin! Deneme: 3` | 10 + 10 |
+| 4 | `Dogrula` geçersiz ve geçerli | `9 0 4` | `Gecersiz, tekrar:` ve `Gecerli not: 4` | 10 + 10 |
+| 5 | `Menu2` döngülü menü | `1 3 0` | `Cikis` ve `Islem sayisi: 2` | 10 + 10 |
+| 6 | `Faiz` (bonus) | – | `Yil: 11` | 5 + 5 |
+
+> [!uyari] Girdi biçimi
+> Otomatik kontrol girdileri ayrı satırlarda ya da aynı satırda boşlukla verebilir; `nextInt()` ikisini de kabul eder. Programınız girdi bitmeden döngüden çıkarsa (ör. `Toplam` gözcüyü görmeden durursa) kalan girdi okunmaz ve test düşer; girdi bittiği halde döngü devam ederse `NoSuchElementException` alırsınız ve bu, döngünüzün gözcüyü ya da hedefi yakalayamadığının işaretidir.
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol yalnızca verilen girdiyle verilen çıktının çıkıp çıkmadığına bakar. `Carpim`'de `for` kullanıp kullanmadığınız, `Dogrula`'da `do-while` kullanıp kullanmadığınız, `Toplam`'da ilk okumanın döngüden önce olup olmadığı, her `case`'te `break` olup olmadığı, sabitin `final` olup olmadığı ve ritüelde "koşulu yanlış yapan satır" sorusuna verdiğiniz cevap lab sorumlu hocanızın değerlendirmesidir. Beş görevi `while` ile yazıp doğru çıktıyı veren program otomatik kontrolden tam puan alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+
+> [!not] Teslim ritüeli: koşulu yanlış yapan satır, 30 saniye
+> Push ettikten sonra lab sorumlu hocanızı çağırın. Lab sorumlu hocanız altı programdan birini seçer, döngüsünü gösterir ve "koşulu yanlış yapan satır hangisi?" diye sorar; parmağınız o satıra gider ve sınır girdisinde (gözcü ilk girdi, tam 5, ilk denemede 42) ne olduğunu söylersiniz. Lab 1'de kodu, Lab 2'de diyagramı, Lab 3'te beklenen satırı, Lab 4'te hangi dalın çalıştığını, Lab 5'te nasıl sorduğunuzu, Lab 6'da projenizi anlattınız; bu kez anlattığınız şey döngünüzün nerede durduğu.
+
+## Bitiremediyseniz
+
+Lab'da Adım 0 (depo açıldı, `java -version` çalıştı), Görev 1 ve Görev 3'ün derlenip push edilmiş olması ve ritüelin yapılmış olması yeterli. Kalanı **13 Kasım Cuma 23.59**'a kadar evde bitirip push edin; Codespaces evde de aynı şekilde çalışır. Cuma'dan sonra gelen push'lar puanlanmaz. Takıldığınız yer `do-while` noktalı virgülü, gözcünün toplanması ya da `NoSuchElementException` ise yapay zekaya sorabilirsiniz (sarı bölge); takıldığınız yer "bu döngü neden bitmiyor" ise önce "koşulu yanlış yapan satır hangisi?" diye kendinize sorun, cevap yoksa ofis saatine gelin, çünkü o soru görevin kendisidir.

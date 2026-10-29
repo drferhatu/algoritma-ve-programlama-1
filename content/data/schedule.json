@@ -76,8 +76,8 @@
         "A": "2026-11-04",
         "B": "2026-11-05"
       },
-      "status": "normal",
-      "note": "KT1 teslimi (6 Kasım Cuma 23.59)"
+      "status": "tatil",
+      "note": "Cumhuriyet Bayramı: ders yok (Lab 4 ve Lab 5 son teslim 30 Ekim 23.59)"
     },
     {
       "week": 7,
@@ -90,7 +90,7 @@
         "B": "2026-11-12"
       },
       "status": "normal",
-      "note": ""
+      "note": "KT1 teslimi (6 Kasım Cuma 23.59)"
     },
     {
       "week": 8,
@@ -116,7 +116,7 @@
         "B": "2026-11-26"
       },
       "status": "normal",
-      "note": "Ara sınav haftası (16-20 Kasım); gün bölümce ilan edilecek. KT2 teslimi (27 Kasım Cuma 23.59)"
+      "note": "Ara sınav haftası (16-20 Kasım); gün bölümce ilan edilecek"
     },
     {
       "week": 10,
@@ -129,7 +129,7 @@
         "B": "2026-12-03"
       },
       "status": "normal",
-      "note": ""
+      "note": "KT2 teslimi (27 Kasım Cuma 23.59)"
     },
     {
       "week": 11,
@@ -142,7 +142,7 @@
         "B": "2026-12-10"
       },
       "status": "normal",
-      "note": "KT3 teslimi"
+      "note": ""
     },
     {
       "week": 12,
@@ -168,7 +168,7 @@
         "B": "2026-12-24"
       },
       "status": "normal",
-      "note": ""
+      "note": "KT3 teslimi (18 Aralık Cuma 23.59)"
     },
     {
       "week": 14,
@@ -181,7 +181,7 @@
         "B": "2026-12-31"
       },
       "status": "normal",
-      "note": "Son ders; KT4 son teslim. Lab B 31 Aralık yılbaşı arifesi, saat teyit edilecek"
+      "note": "Son ders; KT4 teslimi (25 Aralık Cuma 23.59). Lab B 31 Aralık yılbaşı arifesi, saat teyit edilecek"
     }
   ]
 }

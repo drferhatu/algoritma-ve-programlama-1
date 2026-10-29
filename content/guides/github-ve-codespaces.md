@@ -52,7 +52,7 @@ cd algo1-lab01-KULLANICIADI
 Git kurulu değilse [git-scm.com](https://git-scm.com/downloads). İlk push'ta GitHub kullanıcı adı ve **şifre yerine token** ister; tarayıcı üzerinden giriş öneren pencereyi kabul edin, en kolayı odur. VS Code'da sol çubuktaki **Source Control** simgesi aynı üç adımı düğmeyle yapar.
 
 > [!uyari] Commit mesajı
-> "asdf" ya da "düzeltme" yazmayın. Ne yaptığınızı bir cümleyle yazın: "Lab 6: gözcü değerli toplama eklendi". Sınavdan önce kendi tarihçenizi okuyacaksınız.
+> "asdf" ya da "düzeltme" yazmayın. Ne yaptığınızı bir cümleyle yazın: "Lab 7: gözcü değerli toplama eklendi". Sınavdan önce kendi tarihçenizi okuyacaksınız.
 
 ## Adım 5 · Codespaces: kurulumsuz VS Code
 

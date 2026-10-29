@@ -360,21 +360,21 @@
     "milestones": [
       {
         "id": "KT1",
-        "week": 6,
+        "week": 7,
         "title": "Depo, konu ve ilk karar: seçim yapıları",
         "desc": "6 Kasım Cuma 23.59. Depo açılmış, README'de konunuz ve ayırt edici kuralınız yazılı. Uygulama Scanner ile girdi alıyor, en az bir if/else ile karar veriyor ve ayırt edici kural en basit haliyle kodda. Vizedeki 10 puanlık soru bu sürümden gelir."
       },
       {
         "id": "KT2",
-        "week": 9,
+        "week": 10,
         "title": "Döngülü sürüm: gözcü değerle biten menü",
         "desc": "27 Kasım Cuma 23.59. Ana akış gözcü değerle (ör. 0 veya 'q') biten bir menü döngüsünde çalışıyor; yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü var."
       },
       {
         "id": "KT3",
-        "week": 11,
+        "week": 13,
         "title": "Metotlu ve dizili sürüm",
-        "desc": "11 Aralık Cuma 23.59. Kod metotlara bölünmüş: dizi alıp tek değer döndüren bir metot ve girdi doğrulayan bir metot var; veriler dizide tutuluyor."
+        "desc": "18 Aralık Cuma 23.59. Kod metotlara bölünmüş: dizi alıp tek değer döndüren bir metot ve girdi doğrulayan bir metot var; veriler dizide tutuluyor."
       },
       {
         "id": "KT4",
@@ -390,7 +390,7 @@
       "Ortak sözleşme: dizi alıp tek değer döndüren bir metot, girdi doğrulayan bir metot, gözcü değerle biten bir döngü ve çalışan ayırt edici kural zorunludur.",
       "Her teslimde README.md ve AI-BEYANI.md bulunur (şablon: /rehber/ai-beyani); otomatik kontrol yalnızca iskelete bakar: derleniyor mu, bu iki dosya var mı.",
       "Kod yapay zeka ile yazılabilir (yeşil bölge) ama her satırını anlatabilmelisiniz; sınavda o kodu kağıda yazmanız istenir.",
-      "Kilometre taşı teslimleri Cuma 23.59'da Classroom 50'nin o anda depoda ne varsa onu alması ile yapılır (KT1 6 Kasım, KT2 27 Kasım, KT3 11 Aralık, KT4 25 Aralık); ek bir işlem gerekmez, geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
+      "Kilometre taşı teslimleri Cuma 23.59'da Classroom 50'nin o anda depoda ne varsa onu alması ile yapılır (KT1 6 Kasım, KT2 27 Kasım, KT3 18 Aralık, KT4 25 Aralık); ek bir işlem gerekmez, geç teslimde o kilometre taşına bağlı sınav sorusu için ek süre verilmez.",
       "Lab görevleri ve portfolyo, Classroom 50 üzerinden verilen bağlantılarla açılan depolarda yürütülür; depo adı değiştirilmez.",
       "Kopya bulunan iki depo için de kilometre taşı geçersiz sayılır."
     ]

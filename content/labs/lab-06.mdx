@@ -1,19 +1,18 @@
 ---
 week: 6
-title: "Lab 6 · Döngülerle Tekrar ve KT1 Teslimi"
-description: "while, do-while ve for ile altı program: gözcü değerle biten toplam, for ile çarpım tablosu, sayı tahmin oyunu, girdi doğrulama döngüsü, Lab 5 menüsünün döngülü hali ve bonus bileşik faiz; aynı Cuma portfolyonun ilk sürümü (KT1) ayrı depoda toplanıyor."
+title: "Lab 6 · KT1 Teslimi ve Pekiştirme"
+description: "Bayram haftasının labı: Lab 5 günlüğü ritüeli, KT1 uygulamasının 30 saniyelik anlatımı ve kontrol listesi, seçim yapıları ve switch için kağıtta kısa hata avı ve kod izleme, Codespaces'te portfolyo deposunu düzenleme. Ayrı Classroom 50 ödevi yok."
 status: hazir
 objectives:
-  - "Üç döngü türünün her biriyle en az bir program yazar; her döngüde koşulu yanlış yapan satırı gösterir."
-  - "Gözcü değerle biten ve girdi doğrulayan döngüler kurar; gözcünün işlenmediğini kendi programında test eder."
-  - "Sonsuz döngüye düşen bir programı tanır ve düzeltir; bir eksik/bir fazla hatasını sınır girdisiyle yakalar."
-  - "KT1: README'de konu ve ayırt edici kural yazılı, Scanner ile girdi alan ve en az bir if/else ile karar veren ilk sürümü 6 Kasım Cuma 23.59'a kadar portfolyo deposuna push eder ve 30 saniyede anlatır."
+  - "Lab 5 günlüğündeki en işe yarayan istemi ve nasıl doğrulandığını 30 saniyede anlatır."
+  - "KT1 uygulamasını lab sorumlu hocasına 30 saniyede gösterir: 0 ile hatasız çıkış, README'deki kural cümlesi ve kuralın kodda bulunduğu if."
+  - "KT1 kontrol listesini kendi deposuyla karşılaştırır ve eksikleri labda tamamlar."
+  - "if/else, sarkan else ve switch içeren kısa programlarda kağıtta hata bulur ve çıktıyı izler."
 tools:
-  - "JDK 21 / Codespaces"
-  - "VS Code"
-  - "Scanner"
+  - "GitHub Codespaces"
+  - "Kağıt ve kalem"
   - "Git"
-deliverable: "Lab 6 deposu: Toplam.java, Carpim.java, Tahmin.java, Dogrula.java, Menu2.java ve bonus Faiz.java; son teslim 6 Kasım Cuma 23.59. Portfolyo KT1 sürümü ayrı depoda, aynı gün 23.59."
+deliverable: "Ayrı lab deposu yok. Tek teslim: portfolyo deponuzdaki KT1 sürümü, 6 Kasım Cuma 23.59'a kadar push edilmiş olmalı."
 milestone: "KT1"
 ---
 
@@ -24,155 +23,133 @@ milestone: "KT1"
 | A | 4 Kasım 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
 | B | 5 Kasım 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
 
-Bu lab [6. haftanın](/haftalar/hafta-06) teorisini uyguluyor: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama döngüsü. Derste program ilk kez geri döndü; bu labda altı program yazacaksınız ve altısı da bir satırı kullanıcı "yeter" diyene ya da sayaç dolana kadar tekrar ediyor. Hiçbiri Java Playground'da çalışmaz, çünkü hepsi `Scanner` kullanıyor; lab Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor. Bu lab iki labın hesabını da kapatıyor: 30 saniye ritüelinde Lab 5 günlüğünüzden en işe yarayan istemi anlatacak, sonra KT1 uygulamanızı göstereceksiniz.
+30 Ekim Cuma dersi Cumhuriyet Bayramı nedeniyle yapılmadı, döngüler 6 Kasım'a kaydı; bu yüzden bu lab anlatılmamış bir konuyu uygulayamaz. Onun yerine açık hesapları kapatıyoruz: Lab 5'in ertelenen 30 saniye ritüeli, bu Cuma toplanacak **KT1**'in anlatımı ve kontrolü, ve [4.](/haftalar/hafta-04) ile [5. haftanın](/haftalar/hafta-05) seçim yapılarını kağıtta pekiştiren kısa alıştırmalar. Döngü labı ([Lab 7](/laboratuvar/lab-07)) gelecek hafta, 11-12 Kasım.
 
-> [!not] Lab 6 kabul bağlantısı
-> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
-> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab06/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab06/accept)**
-> Deponuz `algo1-lab06-KULLANICIADI` adıyla oluşur ve boş gelir, dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+> [!not] Bu labın ayrı deposu yok
+> Bu lab için Classroom 50'de ödev **açılmadı**; `algo1-lab06-...` diye bir depo olmayacak. Tek teslim, zaten açık olan portfolyo deponuzdaki (`algo1-portfolyo-KULLANICIADI`) **KT1** sürümüdür ve son an **6 Kasım Cuma 23.59**. Kağıt alıştırmaları teslim edilmez; labda yapılır, lab sorumlu hocanız gezerken bakar.
 
-> [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
-> Geçen hafta evde yeşil bölgedeydiniz; bu lab yeniden **sarı**. Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "do-while'ın noktalı virgülü nereye gelir?", "gözcü değer nedir?", "for sayacı döngü bitince neden yaşamıyor?" serbest; ders sayfasındaki "bot ile" istemlerinin hepsi serbest. Ama "0 girilene kadar sayı okuyup toplayan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**; görev modunda ajana lab klasörüne dosya yazdırmak da bu labda yok. Teslim ritüelinde lab sorumlu hocanız bir döngünüzü gösterip "koşulu yanlış yapan satır hangisi?" diye soracak ve döngüyü siz yazdıysanız parmağınız o satıra gider. Portfolyo ayrı: orada yeşil bölge, beyan zorunlu.
+> [!uyari] KT1: 6 Kasım Cuma 23.59, portfolyo deposu
+> Classroom 50 o saatte portfolyo deponuzda ne varsa onu KT1 sürümü sayar; ek bir işlem yok, push edilmiş olması yeter. Kontrol listesi: `README.md`'de konunuz ve ayırt edici kural cümleniz; `Uygulama.java` (ana sınıf adı değişmez) `Scanner` ile girdi alıyor, en az bir `if/else` ile karar veriyor, ayırt edici kural **en basit haliyle** çalışıyor; `0` girildiğinde program hatasız bitiyor (menü döngüsü şart değil); `AI-BEYANI.md`'de dört satırı dolu bir **KT1** bölümü; `javac Uygulama.java` hatasız. Ayrıntılı liste ve ajanla kontrol istemi [7. haftanın sayfasında](/haftalar/hafta-07#kt1-kontrol-listesi). Vizedeki 10 puanlık soru bu sürümden gelir; geç teslimde o soru için ek süre verilmez. Konu tablosu ve kurallar: [Proje](/proje), [AI beyanı](/rehber/ai-beyani).
 
-> [!uyari] KT1 aynı gün, ayrı depo: 6 Kasım Cuma 23.59
-> Bu lab, portfolyo kilometre taşı **KT1** için son teslim haftasıdır. **6 Kasım Cuma 23.59**'da Classroom 50, lab deposundan **ayrı** olan portfolyo deponuzda (`algo1-portfolyo-KULLANICIADI`) ne varsa onu KT1 sürümü olarak alır; ek bir işlem yapmanız gerekmez, yeter ki push edilmiş olsun. Kontrol listesi: `README.md`'de konunuz ve ayırt edici kural cümleniz; `Uygulama.java` (ana sınıf adı değişmez) `Scanner` ile girdi alıyor, en az bir `if/else` ile karar veriyor, ayırt edici kural en basit haliyle çalışıyor; `0` girildiğinde program hatasız bitiyor; `AI-BEYANI.md`'de dört satırı dolu bir **KT1** bölümü. Ders sayfasındaki [KT1 kontrol listesi](/haftalar/hafta-06#kt1-kontrol-listesi) kutusunda ajanla kontrol istemi var. Push edilmemiş sürüm teslim edilmemiş sayılır; vizedeki 10 puanlık soru bu sürümden gelir ve ek süre verilmez. Konu tablosu ve kurallar: [Proje](/proje), [AI beyanı](/rehber/ai-beyani).
+## Adım 0 · Ortam (5 dk)
 
-## Adım 0 · Depo ve ortam (5 dk)
+1. Portfolyo deponuzu açın: Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**) ya da kendi bilgisayarınızda klon.
+2. Terminalde `javac Uygulama.java && java Uygulama` çalıştırın, `0` girin; program hatasız bitiyorsa KT1'in iskeleti var demektir.
+3. Deponuz yoksa [Proje](/proje) sayfasındaki kabul bağlantısından şimdi açın; README ve `AI-BEYANI.md` şablonları hazır gelir.
 
-1. Yukarıdaki kabul bağlantısından Lab 6 deponuzu oluşturun.
-2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab06-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**).
-3. Terminale `java -version` yazın ve 21 ya da üstünü gördüğünüzden emin olun.
-4. Lab 4 ve Lab 5'te geçmeyen testiniz varsa süre doldu (30 Ekim), bugün onlara dönmeyin.
-5. Portfolyo deponuz da klonlanmış olsun; labın sonunda lab sorumlu hocanıza KT1'i o klasörden göstereceksiniz.
+## Bölüm 1 · Ritüel, iki parça: 30 + 30 saniye (lab boyunca sırayla)
 
-Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+Lab sorumlu hocanız sırayla herkese uğrar; sıra size gelince iki şey anlatırsınız.
 
-## Ortak iskelet ve bu labın kuralı
+**Birinci 30 saniye, Lab 5'in borcu.** `istemler.md` günlüğünüzü açın ve şu soruyu cevaplayın: "Beş istemden sana en çok işe yarayanı hangisi, neden ve cevabını nasıl doğruladın?" Lab sorumlu hocanız `Menu.java`'nızdan bir `case` gösterip "bu neden burada?" diye de sorabilir.
 
-İskelet geçen haftaların aynısı: en üstte `import java.util.Scanner;`, `main` içinde `new Scanner(System.in)`, sonra `nextInt()` ile okuma. Yeni olan şey okumanın bir döngünün içinde ya da hemen önünde olması. Her görevde çıktı biçimi **birebir** verilmiştir, çünkü otomatik kontrol programınızı belirtilen girdiyle çalıştırıp çıktıda o satırı aynen arar. Soru metinleri (`Sayi: ` gibi) serbesttir, kontrol yalnızca cevap satırına bakar.
+**İkinci 30 saniye, KT1.** Portfolyo klasörünüzü açın, uygulamanızı `0` ile çalıştırıp hatasız bittiğini gösterin, README'deki ayırt edici kural cümlenizi okuyun ve kodda o kuralın en basit halinin hangi `if`'te olduğunu parmağınızla gösterin. Cuma 23.59'da Classroom 50 depoyu alır; anlatım bugündür.
 
-Bu labın kuralı iki cümle. Birincisi derste söylediğimiz: **her döngü için koşulu yanlış yapan satırı gösterin**; gösteremiyorsanız döngünüz sonsuzdur ve otomatik kontrol zaman aşımıyla düşer. İkincisi geçen haftalardan: **sınır girdisiyle test edin**; gözcüyü ilk girdi olarak verin, doğrulamaya tam 1 ve tam 5 verin, tahmine ilk denemede 42 verin. Gizli testler tam oraya bakıyor.
+Sıranız gelene kadar Bölüm 2 ve 3'te çalışırsınız.
 
-> [!uyari] Türkçe karakter yok, noktalı virgül var, sonsuz döngü yok
-> Çıktılarda `Toplam`, `Daha buyuk`, `Gecersiz`, `Cikis` gibi ASCII yazım kullanın. `do-while`'ın sonundaki `while (...)` noktalı virgülle biter; unutursanız derleyici durur ve bütün testler düşer. Sonsuz döngüye giren bir programı otomatik kontrol 10 saniye sonra keser ve o görevi 0 sayar; terminalde sonsuz döngüye düşerseniz `Ctrl+C`.
+## Bölüm 2 · KT1 kontrol listesi, maddeyi işaretleyerek (15 dk)
 
-## Görev 1 · `Toplam.java` (15 puan, 8 dk)
+Yukarıdaki kutudaki altı maddeyi kağıda alt alta yazın ve deponuza bakarak her birinin yanına ✓ ya da ✗ koyun. ✗ olan her maddeyi **labda** kapatın; en sık eksikler şunlar:
 
-Gözcü değerle biten toplam: dersteki kasiyer fişi. Program `0` girilene kadar tam sayı okur, okuduklarını toplar ve kaç sayı okuduğunu sayar; `0` gözcüdür, **toplanmaz ve sayılmaz**. `5`, `7`, `3`, `0` girdisi için çıktının son iki satırı tam olarak:
+- README'de konu adı var ama **kural cümlesi** yok: "Benim konumda ayırt edici kural şu demek: ..." cümlesini yazın.
+- `0` girilince program çöküyor ya da `Gecersiz` yazıyor: `0`'ı en üstte, diğer seçeneklerden önce ele alın ve programı bitirin.
+- Kural kodda var ama `if`'in içinde değil, yorum satırında anlatılmış: yorumu silmeyin, altına tek bir `if` yazın.
+- `AI-BEYANI.md`'de KT1 bölümü boş: yapay zeka kullanmadıysanız bile "kullanmadım" yazın; dört satır.
 
-```
-Toplam: 15
-Adet: 3
-```
-
-`while` ile yazın ve dersteki kalıbı kullanın: ilk okuma döngüden önce, sonraki okuma gövdenin sonunda. Sınır testi: ilk girdi `0` ise `Toplam: 0` ve `Adet: 0` yazmalı; döngü hiç dönmemeli. Negatif sayılar geçerli girdidir, `-4` toplanır.
-
-## Görev 2 · `Carpim.java` (15 puan, 7 dk)
-
-Program bir `N` tam sayısı okur ve `N`'in 1'den 10'a çarpım tablosunu `for` ile yazar, her çarpım ayrı satırda. `3` için on satır çıkar ve sonuncusu tam olarak:
-
-```
-3 x 10 = 30
-```
-
-Satır biçimi `N x i = sonuc`, araya tek boşluk, `x` küçük harf. Tekrar sayısı baştan belli olduğu için bu görevde `for` zorunlu; `while` ile yazan program otomatik kontrolden geçer, lab sorumlu hocanızdan not düşer. Sınır testi: `N = 0` için on satır `0 x i = 0`; `N = 1` için tablo kendisi.
-
-## Görev 3 · `Tahmin.java` (20 puan, 10 dk)
-
-Dersteki sayı tahmin oyunu. Hedef `42`, bir `final int` sabitte. Program tahmin okur; tahmin hedeften küçükse `Daha buyuk`, büyükse `Daha kucuk` yazar ve yeniden sorar; eşitse döngü biter ve kaçıncı denemede bulunduğu yazılır. `50`, `40`, `42` girdisi için çıktı satırları sırasıyla:
-
-```
-Daha kucuk
-Daha buyuk
-Bildin! Deneme: 3
-```
-
-`while` ile yazın; koşul `tahmin != HEDEF`. Başlangıç değeri hedefe eşit olmayan bir sayı olmalı (`-1`), yoksa oyun oynanmadan biter. Sınır testi: ilk tahmin `42` ise `Bildin! Deneme: 1`, "Daha" satırı hiç yazılmamalı.
-
-<Diagram name="lab06-tahmin" caption="Sayı tahmin akışı: döngü koşulu 'tahmin ≠ HEDEF mi?', gövdede oku, say, iki elmasla karşılaştır. Eşitlikte iki elmas da Hayır der ve akış koşula döner, koşul Hayır deyip döngüyü bitirir." dot width="420px" />
-
-## Görev 4 · `Dogrula.java` (20 puan, 8 dk)
-
-Dersteki girdi doğrulama döngüsü. Program 1 ile 5 arasında (ikisi dahil) bir not ister; geçersiz her girdide `Gecersiz, tekrar:` yazıp yeniden sorar, geçerli not gelince durur ve notu yazar. `9`, `0`, `4` girdisi için:
-
-```
-Gecersiz, tekrar:
-Gecersiz, tekrar:
-Gecerli not: 4
-```
-
-`do-while` ile yazın, çünkü soru en az bir kez sorulmalı; koşul `not < 1 || not > 5` (geçen haftanın `||` operatörü, iki uç tek parantezde). Sınır testi: `1` ve `5` geçerlidir, `0` ve `6` değildir; `>` ile `>=` karıştırılırsa gizli test düşer. Bu on satır, portfolyo sözleşmesindeki "girdi doğrulama döngüsü"nün ta kendisi; KT2'de kendi konunuza uyarlayacaksınız.
-
-## Görev 5 · `Menu2.java` (20 puan, 10 dk)
-
-Lab 5'teki kütüphane menüsünün döngülü hali. Aynı menü, aynı `switch`, ama bu kez bir `do-while`'ın içinde ve `0` girilene kadar dönüyor:
-
-```
-1) Kitap ara  2) Odunc al  3) Iade et  0) Cikis
-```
-
-Her seçimde ilgili satır: `1` için `Kitap ara`, `2` için `Odunc al`, `3` için `Iade et`, başka her sayı için `Gecersiz secim`; `0` için `Cikis` ve döngü biter. Döngü bitince program kaç **geçerli** işlem yapıldığını yazar; geçersiz seçimler ve `0` sayılmaz. `1`, `3`, `0` girdisi için çıktı satırları sırasıyla:
-
-```
-Kitap ara
-Iade et
-Cikis
-Islem sayisi: 2
-```
-
-Sayacı `case 1`, `case 2` ve `case 3`'ün içinde artırın, `default`'ta artırmayın. Her `case`'in sonunda `break`; geçen haftanın durmayan asansörü döngünün içinde iki kat can yakar, çünkü her turda tekrarlanır. Sınır testi: ilk girdi `0` ise yalnızca `Cikis` ve `Islem sayisi: 0`; `7`, `0` için `Gecersiz secim`, `Cikis`, `Islem sayisi: 0`.
-
-## Görev 6 (bonus) · `Faiz.java` (10 puan, 7 dk)
-
-Bir hesapta `1000` TL var ve her yıl yüzde 7 bileşik faiz işliyor, yani her yıl tutar `1.07` ile çarpılıyor. Program hiçbir şey okumaz; tutarın `2000` TL'yi **geçtiği** ilk yılı bulur ve yazar:
-
-```
-Yil: 11
-```
-
-`while` ile yazın: koşul `tutar <= 2000`, gövdede tutarı `1.07` ile çarpın ve yılı bir artırın. Tutar `double`, yıl `int`; döngü sayacı `double` olmasın, dersteki "on kere 0.1" kutusunun sebebi bu. Kendinizi sınamak için: yüzde 10 ile kaç yıl? Program okumadığı için otomatik kontrol girdi vermez, yalnızca satırı arar; gizli test aynı programı yeniden çalıştırır ve aynı satırı bekler, yani rastgelelik yok.
-
-## Teslim (5 dk)
-
-Deponun kök dizininde:
+Her düzeltmeden sonra `javac Uygulama.java` ve push:
 
 ```bash
 git add .
-git commit -m "Lab 6: donguler"
+git commit -m "KT1: kontrol listesi duzeltmeleri"
 git push
 ```
 
-Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+Push'tan 1-2 dakika sonra deponuzun **Releases** sayfasına bakın; otomatik kontrol yalnızca iskelete bakar: derleniyor mu, iki dosya var mı, `0` ile bitiyor mu.
 
-**Son teslim: 6 Kasım 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir. Aynı saatte **KT1** de toplanıyor, ama **portfolyo deposundan**; lab dosyalarını portfolyoya, portfolyoyu lab deposuna koymayın.
+## Bölüm 3 · Kağıtta seçim yapıları: hata avı ve kod izleme (20 dk)
 
-> [!not] Dosyaları tarayıcıdan yüklüyorsanız
-> Deponuzda **Add file → Upload files** ile de yükleyebilirsiniz. Ricamız aynı: dosyaları teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır ve altı dosyayı altı kez yüklemek altı ayrı kontrol demektir.
+Bilgisayara dokunmadan, kağıtta. Vizenin iki soru türü tam olarak bu: "bu program ne yazar?" ve "kaç hata var, hangi satırda?". Cevaplarınızı yanınızdaki arkadaşınızla karşılaştırın; anlaşamadığınız yerde kazanan Playground'dur, ama önce kağıt.
 
-Kontrol listesi: deponuzun kökünde `Toplam.java`, `Carpim.java`, `Tahmin.java`, `Dogrula.java`, `Menu2.java` ve bonusu yaptıysanız `Faiz.java` olmalı. Her dosyadaki sınıf adı dosya adıyla birebir aynı olmalı, aksi halde `javac` derlemez.
+### 3a · Kod izleme: hangi dal çalışır?
 
-### Otomatik kontrol (100 puan)
+Aşağıdaki programı `puan = 85`, sonra `puan = 60`, sonra `puan = 100` için satır satır izleyin ve ekrana ne yazıldığını yazın.
 
-Her görev için **iki test** çalışır. Birincisi aşağıdaki tabloda yazan girdiyi verir ve belirtilen satırı **birebir** arar. İkincisi aynı programı **başka değerlerle**, çoğunlukla bir sınır girdisiyle (gözcü ilk girdi, tam 1 ve tam 5, ilk denemede 42, menüde yalnızca 0) çalıştırır; o değerleri önceden söylemiyoruz. Sonsuz döngüye giren program 10 saniye sonra kesilir ve o görevin iki testi de düşer.
+```java
+int puan = 85;
+if (puan >= 90)
+    System.out.println("AA");
+else if (puan >= 80)
+    System.out.println("BA");
+else if (puan >= 70)
+    System.out.println("BB");
+else
+    System.out.println("Kaldi");
+if (puan >= 80)
+    System.out.println("Tebrikler");
+```
 
-| # | Test | Örnek girdi | Aranan çıktı | Puan (örnek + gizli) |
-|---|---|---|---|---|
-| 1 | `Toplam` gözcü ve adet | `5 7 3 0` | `Toplam: 15` ve `Adet: 3` | 8 + 7 |
-| 2 | `Carpim` for ile tablo | `3` | `3 x 10 = 30` | 8 + 7 |
-| 3 | `Tahmin` deneme sayacı | `50 40 42` | `Bildin! Deneme: 3` | 10 + 10 |
-| 4 | `Dogrula` geçersiz ve geçerli | `9 0 4` | `Gecersiz, tekrar:` ve `Gecerli not: 4` | 10 + 10 |
-| 5 | `Menu2` döngülü menü | `1 3 0` | `Cikis` ve `Islem sayisi: 2` | 10 + 10 |
-| 6 | `Faiz` (bonus) | – | `Yil: 11` | 5 + 5 |
+Soru: `puan = 100` için kaç satır çıkar; neden "AA" ile birlikte "BA" çıkmaz ama "Tebrikler" çıkar? Merdiven ile ayrı `if`'in farkını bir cümleyle yazın.
 
-> [!uyari] Girdi biçimi
-> Otomatik kontrol girdileri ayrı satırlarda ya da aynı satırda boşlukla verebilir; `nextInt()` ikisini de kabul eder. Programınız girdi bitmeden döngüden çıkarsa (ör. `Toplam` gözcüyü görmeden durursa) kalan girdi okunmaz ve test düşer; girdi bittiği halde döngü devam ederse `NoSuchElementException` alırsınız ve bu, döngünüzün gözcüyü ya da hedefi yakalayamadığının işaretidir.
+### 3b · Sarkan else
 
-> [!not] İki puan, iki bakış
-> Otomatik kontrol yalnızca verilen girdiyle verilen çıktının çıkıp çıkmadığına bakar. `Carpim`'de `for` kullanıp kullanmadığınız, `Dogrula`'da `do-while` kullanıp kullanmadığınız, `Toplam`'da ilk okumanın döngüden önce olup olmadığı, her `case`'te `break` olup olmadığı, sabitin `final` olup olmadığı ve ritüelde "koşulu yanlış yapan satır" sorusuna verdiğiniz cevap lab sorumlu hocanızın değerlendirmesidir. Beş görevi `while` ile yazıp doğru çıktıyı veren program otomatik kontrolden tam puan alır, lab sorumlu hocanızdan almaz. İkisi birlikte lab notunuzu oluşturur.
+```java
+int yas = 20;
+boolean ogrenci = false;
+if (yas >= 18)
+    if (ogrenci)
+        System.out.println("Ogrenci bileti");
+else
+    System.out.println("Cocuk bileti");
+```
 
-> [!not] Teslim ritüeli: bu kez iki konu, 30 + 30 saniye
-> Push ettikten sonra lab sorumlu hocanızı çağırın; bu labda ritüel iki parça. **Birinci 30 saniye, Lab 5'in borcu:** `istemler.md` günlüğünüzü açın ve "beş istemden sana en çok işe yarayanı hangisi, neden ve cevabını nasıl doğruladın?" sorusunu cevaplayın; lab sorumlu hocanız `Menu.java`'nızdan bir `case` gösterip "bu neden burada?" diye de sorabilir. **İkinci 30 saniye, KT1:** portfolyo klonunuzu açın, uygulamanızı `0` ile çalıştırıp hatasız bittiğini gösterin, README'deki ayırt edici kural cümlenizi okuyun ve kodda o kuralın en basit halinin hangi `if`'te olduğunu parmağınızla gösterin. Lab sorumlu hocanız KT1'i burada dinler; 6 Kasım'da Classroom 50 depoyu alır ama anlatım bugündür. Lab 1'de kodu, Lab 2'de diyagramı, Lab 3'te beklenen satırı, Lab 4'te hangi dalın çalıştığını, Lab 5'te nasıl sorduğunuzu anlattınız; bu kez anlattığınız şey nerede durduğunuz: döngünüz ve projeniz.
+Girinti sizi yanıltmak için bu şekilde yazıldı. `else` hangi `if`'e aittir ve `yas = 20, ogrenci = false` için ekrana ne yazılır? Programı süslü parantezle, yazarın niyetine uygun hale getirin.
+
+### 3c · Hata avı: durmayan asansör
+
+Aşağıdaki programda **üç** hata var: bir sözdizimi, bir mantık, bir de "derlenir ama yanlış dal" hatası. Satır numarası ve türüyle yazın.
+
+```java
+int kat = 2;
+switch (kat) {
+    case 1:
+        System.out.println("Zemin");
+    case 2:
+        System.out.println("Birinci kat");
+    case 3
+        System.out.println("Ikinci kat");
+        break;
+    default:
+        System.out.println("Gecersiz");
+}
+if (kat = 3)
+    System.out.println("Cati");
+```
+
+İpucu: Lab 5'teki durmayan asansörü hatırlayın; `break` olmadan `switch` nereye kadar akar? `=` ile `==` farkı derleyicide mi, çalışırken mi, çıktıda mı görünür?
+
+### 3d · Kısa devre
+
+```java
+int a = 5, b = 0;
+if (b != 0 && a / b > 1)
+    System.out.println("Buyuk");
+else
+    System.out.println("Bolme yok");
+```
+
+Ne yazar ve `a / b` hiç hesaplanır mı? `&&` yerine `&` yazılsaydı ne olurdu? (Cevabı derste 5. haftada verdik; bakmadan deneyin.)
+
+> [!not] Cevaplar
+> Lab sorumlu hocanız labın son on dakikasında tahtada geçer. Kendi cevabınızı önce yazmadan tahtaya bakmayın; vizede tahta olmayacak.
+
+## Bölüm 4 · Döngülere ön bakış (kalan süre)
+
+Sıranız geçtiyse ve kontrol listeniz tamamsa, hocanın [örnek deposundaki](https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-ornek-kirtasiye) `Uygulama.java`'yı açın: 5. haftanın `switch` menüsüne iki satır eklendi, `do {` ve `} while (secim != 0);`. Kopyalamayın; "bu program ne zaman durur?" sorusuna cevap bulmaya çalışın ve Cuma derse bir soruyla gelin. Vize planının [5. günü](/vize-plani#gun-5) de aynı ön bakış.
+
+## Teslim
+
+Bu labın lab deposu yok. Teslim yalnızca portfolyo deposuna **KT1**, en geç **6 Kasım Cuma 23.59**; push edilmemiş sürüm teslim edilmemiş sayılır. Yapay zeka: portfolyo **yeşil bölge**, ajanla kontrol de iskelet de serbest, beyan zorunlu; kağıt alıştırmaları **kırmızı bölge**, çünkü vize provasıdır.
 
 ## Bitiremediyseniz
 
-Lab'da Adım 0 (depo açıldı, `java -version` çalıştı), Görev 1 ve Görev 3'ün derlenip push edilmiş olması ve ritüelin iki parçasının yapılmış olması yeterli. Kalanı **6 Kasım Cuma 23.59**'a kadar evde bitirip push edin; Codespaces evde de aynı şekilde çalışır. Cuma'dan sonra gelen push'lar puanlanmaz. KT1 için sıralama şöyle: önce README ve `0` ile çıkan bir `Uygulama.java`, sonra `if/else` ve kural, en son beyan; depo boş kalırsa vizedeki 10 puanlık soru da boş kalır. Takıldığınız yer `do-while` noktalı virgülü, gözcünün toplanması ya da `NoSuchElementException` ise yapay zekaya sorabilirsiniz (sarı bölge); takıldığınız yer "bu döngü neden bitmiyor" ise önce "koşulu yanlış yapan satır hangisi?" diye kendinize sorun, cevap yoksa ofis saatine gelin, çünkü o soru görevin kendisidir.
+Labda ritüelin iki parçasının yapılmış olması ve KT1'in `0` ile hatasız çıkıyor olması yeterli. Kalan maddeleri Cuma 23.59'a kadar evde kapatın. Kağıt alıştırmalarını bitiremediyseniz evde tamamlayın; 3c'nin üç hatasını bulamıyorsanız yapay zekaya "bu programda kaç hata var" demeyin, [5. haftanın](/haftalar/hafta-05) `switch` bölümünü bir kez daha okuyun.

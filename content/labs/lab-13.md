@@ -1,18 +1,18 @@
 ---
 week: 13
-title: "Lab 13 · String Algoritmaları ve Nehir Bulmacası"
-description: "Karakter sayma, palindrom, sezar şifresi ve 1. haftanın nehir bulmacasının Java'da tam çözümü."
+title: "Lab 13 · İki Boyutlu Dizilerle Tablolar"
+description: "Matris işlemleri, satır/sütun toplamları, sudoku doğrulayıcı ve haftalık hava durumu analizi."
 status: taslak
 objectives:
-  - "String metotlarıyla en az üç metin algoritması yazar."
-  - "Nehir bulmacasını durum dizisi, güvenlik kontrolü metodu ve hamle döngüsüyle kodlar."
-  - "Kendi çözümünü yapay zekanın 1. haftadaki çözümüyle karşılaştırıp farkı yazar."
+  - "2B dizi oluşturur ve iç içe döngüyle gezer."
+  - "Sudoku doğrulayıcının satır, sütun ve kutu kontrollerini ayrı metotlarla yazar."
+  - "Hava durumu tablosundan günlük ve haftalık istatistik çıkarır."
 tools:
   - "JDK 21"
   - "VS Code"
   - "GitHub Codespaces"
   - "Git"
-deliverable: "Lab 13 deposu: metin programları ve NehirBulmacasi.java."
+deliverable: "Lab 13 deposu: matris, sudoku ve hava durumu programları."
 ---
 
 ## Bu lab neyi uyguluyor?

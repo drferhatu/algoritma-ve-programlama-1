@@ -74,7 +74,7 @@ Kontrol yalnızca dosyaların **derlenip derlenmediğine** ve **birkaç beklenen
 
 **Her lab'ın son teslimi, o lab haftasının Cuma günü 23.59'udur.** Lab saatinde bitiremeyenler Cuma gecesine kadar evden push edebilir. Cuma'dan sonra gelen push'lar puanlanmaz. Portfolyo kilometre taşları (KT1-KT4) için de aynı kural geçerlidir: ilgili lab haftasının Cuma 23.59'u.
 
-Portfolyo deposu, lab depolarından **ayrıdır** ve aynı yöntemle, tek bir "portfolyo" ödevi olarak verilir: kabul bağlantısı ve konu tablosu [Proje](/proje) sayfasında, depo adı `algo1-portfolyo-KULLANICIADI`. Ara teslimler (KT1 6 Kasım, KT2 27 Kasım, KT3 11 Aralık) o tarihlerde Cuma 23.59'da depoda ne varsa onu alarak toplanır; son teslim 25 Aralık Cuma 23.59.
+Portfolyo deposu, lab depolarından **ayrıdır** ve aynı yöntemle, tek bir "portfolyo" ödevi olarak verilir: kabul bağlantısı ve konu tablosu [Proje](/proje) sayfasında, depo adı `algo1-portfolyo-KULLANICIADI`. Ara teslimler (KT1 6 Kasım, KT2 27 Kasım, KT3 18 Aralık) o tarihlerde Cuma 23.59'da depoda ne varsa onu alarak toplanır; son teslim 25 Aralık Cuma 23.59.
 
 ## Sık sorunlar
 

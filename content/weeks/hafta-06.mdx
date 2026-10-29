@@ -19,8 +19,10 @@ objectives:
   - "KT1 kontrol listesini kendi portfolyo deposuyla karşılaştırır; eksikleri 6 Kasım'dan önce tamamlar."
   - "Vize çalışma planının 1. ve 2. gününü yapar."
   - "Kırtasiye örneğinin döngülü sürümünü okuyup anlamaya çalışır; derste sorulacak bir soru hazırlar."
+  - "Mektup programını görev modunda ajana derletip çalıştırır ve gerçek çıktıyı mektuba ekler; KT1'in ilk üç maddesini ajana kontrol ettirip raporu kendi gözüyle doğrular."
 tools:
   - "Java Playground"
+  - "Gemini (Java Hocam becerisi, görev modu)"
   - "GitHub Codespaces"
   - "Kağıt ve kalem"
 resources:
@@ -52,13 +54,36 @@ Mektup iki paragraf ve küçük bir programdan oluşuyor:
 
 1. **Şu an neredeyim.** Bu beş haftada neyi gerçekten anladığınızı, neyin hâlâ bulanık olduğunu, sizi en çok neyin şaşırttığını ve dersten neden korktuğunuzu ya da korkmadığınızı yazın. Dürüst olun, bu mektubu dönem sonunda yalnızca siz okuyacaksınız.
 2. **Dönem sonunda nerede olmak istiyorum.** Portfolyo uygulamanızın 25 Aralık'ta ne yapıyor olmasını istediğinizi, hangi özelliği eklemiş olmanın sizi mutlu edeceğini ve bu dersten sonra kendinize ne söylemek istediğinizi yazın.
-3. **Bir program.** Bu hafta kendi başınıza yazdığınız 10 ile 15 satır arası bir Java programı; konusu serbest, tek şartı kendi hayatınızdan bir soruya cevap vermesi: "kahvaltıya kaç dakikam var", "burs param kaç gün yeter", "sabah hangi ringe yetişirim", "bu hafta kaç saat uyudum" gibi. Scanner ile bir girdi alsın, bir karar versin ve çalışsın. Programı Playground'da çalıştırıp mektubun sonuna yapıştırın; altına da Java Hocam becerisine anlattırdığınız iki cümlelik özeti ekleyin. 25 Aralık'ta bu programı yeniden çalıştıracak ve büyük ihtimalle "bunu ben mi yazmışım, ne kadar basitmiş" diyeceksiniz; dönemin en güzel ölçüsü bu olacak.
+3. **Bir program.** Bu hafta kendi başınıza yazdığınız 10 ile 15 satır arası bir Java programı; konusu serbest, tek şartı kendi hayatınızdan bir soruya cevap vermesi: "kahvaltıya kaç dakikam var", "burs param kaç gün yeter", "sabah hangi ringe yetişirim", "bu hafta kaç saat uyudum" gibi. Scanner ile bir girdi alsın, bir karar versin ve çalışsın. Programı çalıştırıp (Playground'da ya da aşağıdaki ajan göreviyle terminalde) mektubun sonuna çıktısıyla birlikte yapıştırın; altına da Java Hocam becerisine anlattırdığınız iki cümlelik özeti ekleyin. 25 Aralık'ta bu programı yeniden çalıştıracak ve büyük ihtimalle "bunu ben mi yazmışım, ne kadar basitmiş" diyeceksiniz; dönemin en güzel ölçüsü bu olacak.
 
 > [!not] Nasıl gönderilir
 > Alıcı: **drferhatu.iletisim@gmail.com**. Konu satırı birebir şöyle olsun: **Algo-I mektup 2x0541xxx** (kendi öğrenci numaranızla). Mektup e-postanın gövdesine yazılır, ek dosya gerekmez. Son gönderim: **5 Kasım Perşembe 23.59**. Mektuplar açılmadan saklanır ve 25 Aralık'ta size geri gönderilir; derste okunmaz, notlandırılmaz, yalnızca gönderip göndermediğiniz kaydedilir.
 
 > [!uyari] Bu kez yapay zeka yok
-> Mektubun iki paragrafı yalnızca sizin sesinizle yazılır; yapay zekaya yazdırılmış bir mektubun 25 Aralık'ta size söyleyeceği hiçbir şey olmaz. Yapay zekanın bu ödevdeki tek yeri, programı yazdıktan sonra Java Hocam becerisine anlattırmak ve o iki cümleyi mektuba eklemektir.
+> Mektubun iki paragrafı yalnızca sizin sesinizle yazılır; yapay zekaya yazdırılmış bir mektubun 25 Aralık'ta size söyleyeceği hiçbir şey olmaz. Yapay zekanın bu ödevde iki yeri var ve ikisi de program yazıldıktan sonra gelir: Java Hocam becerisine anlattırmak ve o iki cümleyi mektuba eklemek; bir de aşağıdaki ajan görevi.
+
+## Ajan ile: Programı Çalıştır, KT1'i Kontrol Ettir
+
+Geçen hafta görev modunu bir klasörü yetkilendirip `Taksi.java`'yı okutmak için kullanmıştık; bu hafta ajana iki küçük iş veriyoruz. Mektup programınız `Scanner` kullandığı için Playground'da girdi vermek zahmetli; oysa programı `Belgeler/algo1` klasörünüze `Mektup.java` adıyla kaydederseniz ajan onu derler, sizin söylediğiniz girdiyle çalıştırır ve **gerçek çıktıyı** getirir. Mektuba yapıştıracağınız çıktı tahmin değil, çalışmış programın çıktısı olsun.
+
+**Ajan ile, birinci iş:** Gemini masaüstü uygulamasında görev modunu seçin, `Belgeler/algo1` klasörü yetkili olsun ve `Mektup.java` orada dursun:
+
+```text
+Bu klasördeki Mektup.java dosyasını derle ve iki kez çalıştır; birincisinde [GİRDİ 1], ikincisinde [GİRDİ 2] gir (girdileri köşeli parantezsiz, kendi programına göre yaz). Her çalıştırma için programın yazdığı satırları olduğu gibi listele. Kodu değiştirme, iyileştirme önerme; yalnızca derle, çalıştır ve çıktıyı getir. Bittiğinde hangi komutları çalıştırdığını da yaz.
+```
+
+Ajanın getirdiği iki çıktıyı mektubun sonuna, programın altına yapıştırın. Ajan "programı şöyle düzelteyim mi?" derse hayır deyin; mektuptaki program sizin bugünkü halinizdir, düzeltilmiş hali değil. Bir de "hangi komutları çalıştırdın" satırını okuyun: `javac Mektup.java` ve `java Mektup` görmelisiniz, başka bir şey görüyorsanız sebebini sorun.
+
+**Ajan ile, ikinci iş:** aynı görev modunda bu kez portfolyo klonunuzun klasörünü yetkilendirin ve KT1'in ilk üç maddesini kontrol ettirin. Tam kontrol listesi ve beş maddelik istem [7. haftanın sayfasında](/haftalar/hafta-07#kt1-kontrol-listesi); bu hafta yalnızca iskelet:
+
+```text
+Bu klasör benim Algoritma ve Programlama I portfolyo depom. Üç şeyi kontrol et ve her biri için "var / eksik" ile tek cümle gerekçe yaz: (1) README.md içinde konu adı ve ayırt edici kural cümlesi var mı; (2) Uygulama.java adında bir dosya var mı, içinde Scanner ile okuma ve en az bir if/else var mı; (3) javac Uygulama.java hatasız derleniyor mu; derle ve sonucu söyle. KOD YAZMA, dosya değiştirme, yalnızca kontrol et ve raporla.
+```
+
+Rapordaki her "eksik" maddeyi kendi gözünüzle dosyada doğrulayın ve eksiği siz kapatın; "README'yi ben yazayım mı?" teklifine hayır, çünkü kural cümlesini vizede kağıda siz yazacaksınız. Ajanın "var" dediği bir şey aslında eksikse bunu not edin: `AI-BEYANI.md`'nin KT1 bölümündeki dördüncü satır tam da bunun için var.
+
+> [!not] Görev modu açılmıyorsa
+> Öğrenci planı ya da masaüstü uygulaması elinizde yoksa iki iş de elle yapılır: terminalde `javac Mektup.java && java Mektup` ile çıktıyı alın, KT1 maddelerini 7. haftadaki listeden kendiniz işaretleyin. Ajan kolaylıktır, şart değil.
 
 ## Döngülere Ön Bakış
 
@@ -74,4 +99,4 @@ Lab 6: A şubesi **4 Kasım Çarşamba 13.15**, B şubesi **5 Kasım Perşembe 1
 
 ## Haftanın Özeti
 
-Bu hafta ekrana değil kendinize yazdınız: 25 Aralık'taki kendinize iki paragraf ve küçük bir program, son gönderim 5 Kasım 23.59. Yanında dört küçük iş vardı: Lab 4 ve Lab 5 bu gece 23.59; KT1 6 Kasım, kontrol listesi 7. haftanın sayfasında; vize planının ilk iki günü; ve kırtasiye örneğinin döngülü menüsüyle döngülere kısa bir ön bakış, bir soru hazırlayıp yanınıza almak. Döngüleri 6 Kasım'da birlikte açıyoruz: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama.
+Bu hafta ekrana değil kendinize yazdınız: 25 Aralık'taki kendinize iki paragraf ve küçük bir program, son gönderim 5 Kasım 23.59. Yanında dört küçük iş vardı: Lab 4 ve Lab 5 bu gece 23.59; KT1 6 Kasım, kontrol listesi 7. haftanın sayfasında; vize planının ilk iki günü; ve kırtasiye örneğinin döngülü menüsüyle döngülere kısa bir ön bakış, bir soru hazırlayıp yanınıza almak. Ajana da iki iş verdiniz: mektup programınızı derleyip çalıştırmak ve KT1'in ilk üç maddesini kontrol etmek; raporu siz doğruladınız. Döngüleri 6 Kasım'da birlikte açıyoruz: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama.

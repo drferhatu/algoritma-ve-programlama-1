@@ -83,6 +83,9 @@ Bilgisayar sizden daha iyi hesap yapmaz; toplamayı siz de biliyorsunuz. Tek üs
 
 <Diagram name="h06-dongu" caption="Bir döngünün parçaları: başlangıç, koşul, adım. Gövde koşul doğru olduğu sürece tekrar eder; turuncu ok 'tekrar sor' demek. Lab 2'nin geri sayım diyagramında da aynı ok vardı." dot width="380px" />
 
+> [!nerede] Sahada: telefonunuzdaki en bağımlılık yapıcı özellik
+> Instagram ya da TikTok'taki "sonsuz kaydırma" bir döngüdür: siz kaydırmayı bırakana kadar yeni gönderi yükle, göster, başa dön. Koşulu yanlış yapan tek şey sizin durmanız. Milyarlarca dolarlık o özellik, bugün öğreneceğiniz tek bir `while`.
+
 </Kapsul>
 
 <Kapsul n={2} title="while: koşul doğru olduğu sürece" fikir="while, if gibi bir soru sorar; farkı, bloğun sonunda başa dönüp soruyu bir daha sormasıdır." dene="Aşağıdaki kutuyu önce çalıştırmadan tahmin edin: kaç tur, toplam kaç, döngü bitince i kaç? Sonra çalıştırın. İkinci deneme: 10'u 100 yapın ve 5050'yi görün." istem="Aşağıdaki while döngüsü kaç kez döner? Çalıştırmadan söyle; her tur için i ve toplam değerlerini tabloya yaz, son satıra döngü bitince i'nin kaç olduğunu ekle. Kodu düzeltme. [KOD]" dogrula="Tablonun son satırında i = 11 yoksa bot yanılmıştır; kanıt kutudaki ikinci println satırı.">
@@ -119,6 +122,9 @@ System.out.println("i dongu bitince: " + i);
 <Kapsul n={3} title="Sonsuz döngü: koşulu yanlış yapan satır hangisi?" fikir="Bir döngüde koşulu yanlış yapacak satırı parmağınızla gösteremiyorsanız döngünüz sonsuzdur." renk="rose" dene="Yukarıdaki kutuda i++ satırını silin ama ÇALIŞTIRMAYIN; kağıtta izleyin: i hep 1 kalır, soru hep evet alır, toplam sonsuza büyür. Playground'da denerseniz sekme donar." istem="Şu döngü neden hiç bitmiyor? Üç olası sebebi tek cümleyle say, sonra bana sor: hangisi bu kodda var? while (i > 0) { toplam += i; i++; }" dogrula="Botun üç sebebi şu üçü olmalı: adım yok, adım ters yönde, koşul bozulamıyor. Bu kodda üçüncüsü var: i artıyor ve hiç sıfırın altına inmiyor.">
 
 Sonsuz döngü (infinite loop) her programcının başına en az bir kez gelir ve program "çalışıyor" göründüğü için en sinsi hatadır. Üç klasik sebep: **adım unutulmuş** (`i++` yok), **adım ters yönde** (`i--` yazılmış, sayaç hedeften uzaklaşıyor), **koşul hiç yanlış olamıyor** (`while (i > 0)` ve `i` artıyor). Terminalde takılan programı `Ctrl+C` öldürür.
+
+> [!nerede] Sahada: 31 Aralık 2008, bütün Zune'lar dondu
+> O sabah Microsoft'un 30 GB'lık Zune müzik çalarlarının hepsi aynı anda açılmaz oldu. Sebep, saat sürücüsündeki gün sayan bir döngüydü: `while (gun > 365) { if (artikYil) { if (gun > 366) { gun -= 366; yil++; } } else { gun -= 365; yil++; } }`. 2008 artık yıldı ve 31 Aralık yılın 366. günüydü: `gun > 365` doğru, `gun > 366` yanlış, döngünün içinde hiçbir şey değişmiyor. Koşulu yanlış yapacak satır o gün için yoktu. Ertesi gün `gun` 367 olunca cihazlar kendiliğinden düzeldi.
 
 > [!uyari] Kasıtsızsa hata, kasıtlıysa tasarım
 > Bir seradaki sensör programı ya da bir oyunun ana döngüsü bilerek `while (true)` ile yazılır; onu durduran şey koşul değil, dış dünyadan gelen bir olaydır (sayfa sonunda Sahadan). Bu dersteki her döngü bitmeli.
@@ -184,6 +190,9 @@ public class NotAl {
 
 `not` döngüden önce tanımlı ama değersiz, çünkü ilk değer klavyeden gelecek. Gövde sorar, okur, geçersizse uyarır; koşul aynı soruyu bir daha sorar: hâlâ geçersiz mi? Evetse başa döner. `||` geçen haftanın operatörü: iki uç tek parantezde.
 
+> [!nerede] Sahada: sizi bırakmayan form
+> e-Devlet'te kimlik numaranız 11 haneli değilse form ilerlemez; bankada SMS şifresi doğru girilene kadar ekran yeniden sorar. Hepiniz bu ekranı yaşadınız. Arkasında yukarıdaki on satır var; bankanın tek farkı bir sayaç tutup üçüncü yanlışta kapıyı kilitlemesi, onu da bugün yazabilirsiniz.
+
 > [!tanim] Girdi doğrulama döngüsü
 > Girilen değer kabul edilebilir aralıkta değilse uyarıp yeniden soran, geçerli değer gelene kadar dönen döngü. Hemen her zaman `do-while` ile yazılır, çünkü soru en az bir kez sorulmalıdır. **KT2'nin (27 Kasım) şartı**: bütçe uygulaması "pozitif tutar girene kadar", kütüphane "1-3 arası seçim girene kadar" sorar.
 
@@ -217,6 +226,9 @@ System.out.println("Basla!");
 ```
 
 </CodeTry>
+
+> [!nerede] Sahada: 12 milyon tur
+> 12 megapiksellik bir fotoğrafa filtre uygulamak, 12 milyon tur dönen bir `for` demektir: her pikselde aynı küçük hesap. Telefonunuz bunu bir saniyenin altında bitirir, çünkü kaç tur döneceği baştan bellidir ve işi paralel bölebilir. "Bir kez yaz, yüz kez çalıştır" sözünün milyonlarca ölçekte hali.
 
 | Soru | Cevap evetse |
 |---|---|
@@ -260,6 +272,9 @@ public class Kasa {
 
 Gözcü seçerken tek kural: gerçek girdiyle karışmasın. Fiyat için `0` iyi gözcüdür, yaş için `-1`. `(double) toplam / adet` 3. haftanın tam sayı bölmesine karşı; `adet > 0` sıfıra bölmeye karşı.
 
+> [!nerede] Sahada: her metnin sonundaki görünmez karakter
+> C dilinde her metin, sonunu bildiren görünmez bir karakterle biter: `'\0'`. Program metni o karakteri görene kadar okur; gözcü değerin ta kendisi. Java bunu yapmaz, `String` uzunluğunu ayrıca tutar; ama 14. haftada C'ye baktığınızda o karakteri göreceksiniz ve bugünkü kasiyeri hatırlayacaksınız.
+
 > [!tanim] Gözcü değer (sentinel)
 > Girdinin bittiğini bildiren, geçerli girdilerle karışmayan özel değer. Tekrar sayısı baştan bilinmediği için `while` kullanılır. **KT2'nin diğer şartı**: ana akış `0` gözcüsüyle biten bir menü döngüsünde çalışır.
 
@@ -295,12 +310,17 @@ public class Tahmin {
 
 Burada adım bir sayacı artırmak değil, **yeni bir tahmin okumak**: koşulu yanlış yapacak satır `tahmin = klavye.nextInt()`. `deneme` sayar ama döngüyü sürdürmez; döngüyü sürdüren tek şey tahminin hedeften farklı olmasıdır.
 
+> [!nerede] Sahada: yedi tahmin ve git bisect
+> Akıllı oynayan biri 1-100 arasındaki sayıyı her seferinde aralığı ortadan bölerek en fazla **yedi** tahminde bulur (2'nin 7. kuvveti 128, 100'ü geçer). Yazılımcılar hatayı getiren commit'i bulmak için aynı stratejiyi `git bisect` komutuyla kullanır: bin commit, on deneme. Sınıfta yarışma: kim 42'yi yedi tahminin altında bulur?
+
 > [!neden] Neden bu işi ajana veriyoruz da toplamı vermiyoruz?
 > Programı üç girdiyle çalıştırıp tabloya yazmak **mekanik** iş: düşünme gerektirmez, zaman alır. Böyle işler ajana verilir. Dört parçayı bulmak ya da gözcünün toplanıp toplanmadığını görmek **öğrenme** işi; o size kalır. Ajan sizin test etmenizi hızlandırır, sizin yerinize anlamaz.
 
 </Kapsul>
 
 <Kapsul n={9} title="Bir eksik, bir fazla: kapı hikayesi" fikir="On kapı, 1'den 10'a numaralı. 'Numara 10'dan küçükken gir' dokuz kapı, 'küçük ya da eşitken' on kapı. Tek karakter, bir kapı." renk="rose" dene="Aşağıdaki kutuyu çalıştırıp satırları sayın. Sonra ilk döngüyü i = 0'dan başlatın: şimdi kaç sayı? '0'dan başla < ile, 1'den başla <= ile' kuralını kendi cümlenizle yazın." istem="Java hocası gibi davran ve beni bir eksik/bir fazla hatası konusunda sorguya çek: her seferinde 3-4 satırlık bir for ya da while göster ve 'kaç kez döner, döngü bitince sayaç kaç?' diye sor; cevabımı bekle. Doğruysa zorlaştır, yanlışsa ipucu. 5 soru sonra en zayıf noktam." dogrula="Botun 'doğru' dediği her cevabı Playground'da sayacı döngüden sonra yazdırarak sınayın; bu, bir eksik/bir fazlayı yakalamanın en kısa yoludur.">
+
+Önce bir soru: 100 metrelik bir çite 10 metrede bir direk dikilirse kaç direk gerekir? Çoğunluk 10 der, doğru cevap 11; iki uçta da direk var. Mühendislikte adı **çit direği problemi** ve döngülerdeki haliyle her gün karşınıza çıkacak.
 
 <CodeTry title="Kaç kapı?" hint="Programlama tarihinin en sık hatası (off-by-one) ve vizenin en sevdiği soru. Sayacı döngüden sonra yazdırmak her zaman cevabı verir.">
 
@@ -345,6 +365,9 @@ System.out.println("1.0'a esit mi: " + (toplam == 1.0));
 ```
 
 </CodeTry>
+
+> [!nerede] Sahada: 25 Şubat 1991, 0,34 saniye
+> Körfez Savaşı'nda Dhahran'daki bir Patriot füze bataryası saati 0,1 saniyelik adımlarla sayıyordu ve 0,1 ikili sistemde tam gösterilemez. Her adımdaki minik hata yaklaşık 100 saat sonra 0,34 saniyeye birikti; gelen Scud füzesi o sürede yarım kilometre yol aldı, sistem onu kaçırdı ve 28 asker hayatını kaybetti. Yukarıdaki kutunun `false` satırı bu olayın küçük halidir: ondalık sayı biriktirerek saymayın, `int` sayın ve gerekirse çarpın.
 
 </Kapsul>
 

@@ -123,8 +123,26 @@ System.out.println("i dongu bitince: " + i);
 
 Sonsuz döngü (infinite loop) her programcının başına en az bir kez gelir ve program "çalışıyor" göründüğü için en sinsi hatadır. Üç klasik sebep: **adım unutulmuş** (`i++` yok), **adım ters yönde** (`i--` yazılmış, sayaç hedeften uzaklaşıyor), **koşul hiç yanlış olamıyor** (`while (i > 0)` ve `i` artıyor). Terminalde takılan programı `Ctrl+C` öldürür.
 
-> [!nerede] Sahada: 31 Aralık 2008, bütün Zune'lar dondu
-> O sabah Microsoft'un 30 GB'lık Zune müzik çalarlarının hepsi aynı anda açılmaz oldu. Sebep, saat sürücüsündeki gün sayan bir döngüydü: `while (gun > 365) { if (artikYil) { if (gun > 366) { gun -= 366; yil++; } } else { gun -= 365; yil++; } }`. 2008 artık yıldı ve 31 Aralık yılın 366. günüydü: `gun > 365` doğru, `gun > 366` yanlış, döngünün içinde hiçbir şey değişmiyor. Koşulu yanlış yapacak satır o gün için yoktu. Ertesi gün `gun` 367 olunca cihazlar kendiliğinden düzeldi.
+**Sahada: 31 Aralık 2008, bütün Zune'lar dondu.** O sabah Microsoft'un 30 GB'lık Zune müzik çalarlarının hepsi aynı anda açılmaz oldu. Sebep, saat sürücüsünde 1980'den bu yana geçen gün sayısını yıla çeviren şu döngüydü:
+
+```java
+int gun = 10593;        // 1 Ocak 1980'den 31 Aralık 2008'e geçen gün sayısı
+int yil = 1980;
+
+while (gun > 365) {
+    if (artikYil(yil)) {
+        if (gun > 366) {
+            gun = gun - 366;
+            yil++;
+        }
+    } else {
+        gun = gun - 365;
+        yil++;
+    }
+}
+```
+
+Döngü her turda bir yılı düşüyor ve sonunda `gun` elde kalan günü, `yil` içinde bulunulan yılı veriyor. Sorun 2008'de çıktı: artık yıl ve 31 Aralık yılın **366.** günü. `gun` 366 olunca dış koşul `gun > 365` doğru, iç koşul `gun > 366` yanlış; `else` dalı da çalışmıyor, çünkü yıl artık. Döngünün içinde hiçbir satır `gun`'ü değiştirmiyor. Koşulu yanlış yapacak satır o gün için yoktu; ertesi gün `gun` 367 olunca cihazlar kendiliğinden düzeldi. Düzeltmesi tek satır: iç `if`'e bir `else { break; }` eklemek, yani "artık yılın son günündeyiz, çık".
 
 > [!uyari] Kasıtsızsa hata, kasıtlıysa tasarım
 > Bir seradaki sensör programı ya da bir oyunun ana döngüsü bilerek `while (true)` ile yazılır; onu durduran şey koşul değil, dış dünyadan gelen bir olaydır (sayfa sonunda Sahadan). Bu dersteki her döngü bitmeli.

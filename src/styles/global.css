@@ -181,6 +181,30 @@ body {
 
 /* Puzzle: haftanın bulmacası */
 .puzzle { @apply my-8 rounded-2xl border-2 p-5 shadow-soft; }
+
+/* Kapsül kartları */
+.kapsul { @apply my-8 overflow-hidden rounded-2xl border border-line bg-white shadow-soft; border-top: 4px solid var(--kapsul); }
+.kapsul-head { @apply flex items-start gap-4 px-5 pt-4 pb-3; }
+.kapsul-n { @apply grid size-10 shrink-0 place-items-center rounded-xl font-display text-lg font-bold text-white; background: var(--kapsul); }
+.kapsul-label { @apply !m-0 text-[11px] font-bold uppercase tracking-[0.14em]; color: var(--kapsul); }
+.kapsul-title { @apply !m-0 font-display text-xl font-semibold leading-tight text-ink; }
+.kapsul-fikir { @apply !mt-1 !mb-0 text-base font-medium leading-snug text-ink-2; }
+.kapsul-body { @apply px-5 pb-4; }
+.kapsul-body > * + * { margin-top: 0.75em; }
+.kapsul-body p, .kapsul-body li { @apply text-ink-2 leading-relaxed; }
+.kapsul-body pre { @apply !my-3; }
+.kapsul-body .codetry { @apply my-4; }
+.kapsul-foot { @apply grid gap-2 border-t border-line bg-paper-2/50 px-5 py-3 text-sm leading-relaxed text-ink-2; }
+.kapsul-foot p { @apply !m-0 flex items-start gap-2.5; }
+.kapsul-tag { @apply mt-0.5 inline-flex shrink-0 rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide; }
+.kapsul-sor { @apply grid gap-2; }
+.kapsul-istem { @apply !my-0 !ml-0 whitespace-pre-wrap rounded-lg border border-line bg-white px-3.5 py-2.5 text-[13px] leading-relaxed text-ink; }
+.kapsul-istem code { @apply bg-transparent p-0 text-inherit; }
+.kapsul-tag-dene { @apply bg-accent-soft text-accent; }
+.kapsul-tag-sor { background: #ede8f7; color: var(--mod-violet); }
+.kapsul-tag-dogrula { background: #e3f3ea; color: var(--mod-emerald); }
+html[data-yansi="on"] .kapsul { border-width: 2px; border-color: #000; border-top-width: 6px; }
+html[data-yansi="on"] .kapsul-fikir { font-size: 1.15em; }
 .puzzle p, .puzzle li { @apply text-ink-2 leading-relaxed; }
 .puzzle > .puzzle-body > * + * { margin-top: 0.75em; }
 .puzzle ul { @apply list-disc pl-5 space-y-1; }

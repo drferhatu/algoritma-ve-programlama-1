@@ -22,7 +22,7 @@ deliverable: "Lab 7 deposu: Toplam.java, Carpim.java, Tahmin.java, Dogrula.java,
 | A | 11 Kasım 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
 | B | 12 Kasım 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
 
-Bu lab [7. haftanın](/haftalar/hafta-07) teorisini uyguluyor: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama döngüsü. Derste program ilk kez geri döndü; bu labda altı program yazacaksınız ve altısı da bir satırı kullanıcı "yeter" diyene ya da sayaç dolana kadar tekrar ediyor. Hiçbiri Java Playground'da çalışmaz, çünkü hepsi `Scanner` kullanıyor; lab Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor. Lab 5 günlüğü ritüeli ve KT1 anlatımı [Lab 6](/laboratuvar/lab-06)'da yapıldı; bu labda ritüel yalnızca döngünüz üstüne.
+Bu lab [7. haftanın](/haftalar/hafta-07) on iki kapsülünü uyguluyor: `while`, `do-while`, `for`, gözcü değer ve girdi doğrulama döngüsü. Derste program ilk kez geri döndü; bu labda altı program yazacaksınız ve altısı da bir satırı kullanıcı "yeter" diyene ya da sayaç dolana kadar tekrar ediyor. Her görevin başında hangi kapsülün uygulaması olduğu yazıyor; takıldığınızda o kapsüle dönün, çünkü kod orada neredeyse hazır. Hiçbiri Java Playground'da çalışmaz, çünkü hepsi `Scanner` kullanıyor; lab Codespaces ya da kendi bilgisayarınızda, terminalde geçiyor. KT1 anlatımı [Lab 6](/laboratuvar/lab-06)'da yapıldı; bu labda ritüel yalnızca döngünüz üstüne.
 
 > [!not] Lab 7 kabul bağlantısı
 > Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
@@ -30,7 +30,7 @@ Bu lab [7. haftanın](/haftalar/hafta-07) teorisini uyguluyor: `while`, `do-whil
 > Deponuz `algo1-lab07-KULLANICIADI` adıyla oluşur ve boş gelir, dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
 
 > [!uyari] Yapay zeka: Sarı bölge, bu lab için somut çizgi
-> Lab 5'te evde yeşil bölgedeydiniz, Lab 6 kağıt üstündeydi; bu lab yeniden **sarı**. Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "do-while'ın noktalı virgülü nereye gelir?", "gözcü değer nedir?", "for sayacı döngü bitince neden yaşamıyor?" serbest; ders sayfasındaki "bot ile" istemlerinin hepsi serbest. Ama "0 girilene kadar sayı okuyup toplayan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**; görev modunda ajana lab klasörüne dosya yazdırmak da bu labda yok. Teslim ritüelinde lab sorumlu hocanız bir döngünüzü gösterip "koşulu yanlış yapan satır hangisi?" diye soracak ve döngüyü siz yazdıysanız parmağınız o satıra gider. Portfolyo ayrı: orada yeşil bölge, beyan zorunlu.
+> Lab 5'te evde yeşil bölgedeydiniz, Lab 6 KT1 labıydı; bu lab yeniden **sarı**. Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "do-while'ın noktalı virgülü nereye gelir?", "gözcü değer nedir?", "for sayacı döngü bitince neden yaşamıyor?" serbest; ders sayfasındaki on iki kapsülün **Sor** şeritlerindeki istemlerin hepsi labda da serbest. Ama "0 girilene kadar sayı okuyup toplayan Java programı yaz" demek görevi yaptırmaktır ve **yasaktır**; görev modunda ajana lab klasörüne dosya yazdırmak da bu labda yok. Teslim ritüelinde lab sorumlu hocanız bir döngünüzü gösterip "koşulu yanlış yapan satır hangisi?" diye soracak ve döngüyü siz yazdıysanız parmağınız o satıra gider. Portfolyo ayrı: orada yeşil bölge, beyan zorunlu.
 
 > [!not] KT1 geçen Cuma toplandı, sıra KT2'de
 > Portfolyonun ilk sürümü **KT1** 6 Kasım Cuma 23.59'da toplandı. Bu labdaki `Dogrula.java` ve `Menu2.java`, **KT2**'nin (27 Kasım Cuma 23.59) iki şartının provasıdır: gözcü değerle biten menü döngüsü ve girdi doğrulama döngüsü. Labdan sonra ikisini kendi konunuza uyarlayıp portfolyo deponuza (`algo1-portfolyo-KULLANICIADI`) push ederseniz KT2'ye erken girmiş olursunuz. Kurallar: [Proje](/proje), [AI beyanı](/rehber/ai-beyani).
@@ -56,7 +56,7 @@ Bu labın kuralı iki cümle. Birincisi derste söylediğimiz: **her döngü iç
 
 ## Görev 1 · `Toplam.java` (15 puan, 8 dk)
 
-Gözcü değerle biten toplam: dersteki kasiyer fişi. Program `0` girilene kadar tam sayı okur, okuduklarını toplar ve kaç sayı okuduğunu sayar; `0` gözcüdür, **toplanmaz ve sayılmaz**. `5`, `7`, `3`, `0` girdisi için çıktının son iki satırı tam olarak:
+7. kapsülün (`Kasa`) uygulaması: gözcü değerle biten toplam, dersteki kasiyer fişi. Program `0` girilene kadar tam sayı okur, okuduklarını toplar ve kaç sayı okuduğunu sayar; `0` gözcüdür, **toplanmaz ve sayılmaz**. `5`, `7`, `3`, `0` girdisi için çıktının son iki satırı tam olarak:
 
 ```
 Toplam: 15
@@ -67,7 +67,7 @@ Adet: 3
 
 ## Görev 2 · `Carpim.java` (15 puan, 7 dk)
 
-Program bir `N` tam sayısı okur ve `N`'in 1'den 10'a çarpım tablosunu `for` ile yazar, her çarpım ayrı satırda. `3` için on satır çıkar ve sonuncusu tam olarak:
+6. kapsülün uygulaması: program bir `N` tam sayısı okur ve `N`'in 1'den 10'a çarpım tablosunu `for` ile yazar, her çarpım ayrı satırda. `3` için on satır çıkar ve sonuncusu tam olarak:
 
 ```
 3 x 10 = 30
@@ -77,7 +77,7 @@ Satır biçimi `N x i = sonuc`, araya tek boşluk, `x` küçük harf. Tekrar say
 
 ## Görev 3 · `Tahmin.java` (20 puan, 10 dk)
 
-Dersteki sayı tahmin oyunu. Hedef `42`, bir `final int` sabitte. Program tahmin okur; tahmin hedeften küçükse `Daha buyuk`, büyükse `Daha kucuk` yazar ve yeniden sorar; eşitse döngü biter ve kaçıncı denemede bulunduğu yazılır. `50`, `40`, `42` girdisi için çıktı satırları sırasıyla:
+8. kapsülün (`Tahmin`) uygulaması: dersteki sayı tahmin oyunu. Hedef `42`, bir `final int` sabitte. Program tahmin okur; tahmin hedeften küçükse `Daha buyuk`, büyükse `Daha kucuk` yazar ve yeniden sorar; eşitse döngü biter ve kaçıncı denemede bulunduğu yazılır. `50`, `40`, `42` girdisi için çıktı satırları sırasıyla:
 
 ```
 Daha kucuk
@@ -91,7 +91,7 @@ Bildin! Deneme: 3
 
 ## Görev 4 · `Dogrula.java` (20 puan, 8 dk)
 
-Dersteki girdi doğrulama döngüsü. Program 1 ile 5 arasında (ikisi dahil) bir not ister; geçersiz her girdide `Gecersiz, tekrar:` yazıp yeniden sorar, geçerli not gelince durur ve notu yazar. `9`, `0`, `4` girdisi için:
+5. kapsülün (`NotAl`) uygulaması: girdi doğrulama döngüsü. Program 1 ile 5 arasında (ikisi dahil) bir not ister; geçersiz her girdide `Gecersiz, tekrar:` yazıp yeniden sorar, geçerli not gelince durur ve notu yazar. `9`, `0`, `4` girdisi için:
 
 ```
 Gecersiz, tekrar:
@@ -103,7 +103,7 @@ Gecerli not: 4
 
 ## Görev 5 · `Menu2.java` (20 puan, 10 dk)
 
-Lab 5'teki kütüphane menüsünün döngülü hali. Aynı menü, aynı `switch`, ama bu kez bir `do-while`'ın içinde ve `0` girilene kadar dönüyor:
+12. kapsülün uygulaması: Lab 5'teki kütüphane menüsünün döngülü hali. Aynı menü, aynı `switch`, ama bu kez bir `do-while`'ın içinde ve `0` girilene kadar dönüyor:
 
 ```
 1) Kitap ara  2) Odunc al  3) Iade et  0) Cikis
@@ -128,7 +128,7 @@ Bir hesapta `1000` TL var ve her yıl yüzde 7 bileşik faiz işliyor, yani her 
 Yil: 11
 ```
 
-`while` ile yazın: koşul `tutar <= 2000`, gövdede tutarı `1.07` ile çarpın ve yılı bir artırın. Tutar `double`, yıl `int`; döngü sayacı `double` olmasın, dersteki "on kere 0.1" kutusunun sebebi bu. Kendinizi sınamak için: yüzde 10 ile kaç yıl? Program okumadığı için otomatik kontrol girdi vermez, yalnızca satırı arar; gizli test aynı programı yeniden çalıştırır ve aynı satırı bekler, yani rastgelelik yok.
+`while` ile yazın: koşul `tutar <= 2000`, gövdede tutarı `1.07` ile çarpın ve yılı bir artırın. Tutar `double`, yıl `int`; döngü sayacı `double` olmasın, 10. kapsüldeki "on kere 0.1" kutusunun sebebi bu. Kendinizi sınamak için: yüzde 10 ile kaç yıl? Program okumadığı için otomatik kontrol girdi vermez, yalnızca satırı arar; gizli test aynı programı yeniden çalıştırır ve aynı satırı bekler, yani rastgelelik yok.
 
 ## Teslim (5 dk)
 

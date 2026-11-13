@@ -1,0 +1,19 @@
+// Hafta 8: Euclid EBOB algoritması; kalan sıfır olana kadar (a, b) yerine (b, a % b)
+digraph Euclid {
+    charset="UTF-8";
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    edge [fontname="Helvetica", fontsize=10];
+
+    oku    [shape=parallelogram, label="a ve b'yi oku"];
+    kosul  [shape=diamond, label="b != 0 mı?"];
+    kalan  [shape=box, label="kalan = a % b"];
+    kaydir [shape=box, label="a = b\nb = kalan"];
+    yaz    [shape=parallelogram, label="EBOB = a"];
+
+    oku -> kosul;
+    kosul -> kalan [label="true"];
+    kalan -> kaydir;
+    kaydir -> kosul [label="tekrar sor", color="#b5541c", fontcolor="#b5541c"];
+    kosul -> yaz [label="false"];
+}

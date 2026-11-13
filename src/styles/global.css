@@ -200,9 +200,27 @@ body {
 .kapsul-sor { @apply grid gap-2; }
 .kapsul-istem { @apply !my-0 !ml-0 whitespace-pre-wrap rounded-lg border border-line bg-white px-3.5 py-2.5 text-[13px] leading-relaxed text-ink; }
 .kapsul-istem code { @apply bg-transparent p-0 text-inherit; }
+.kapsul-tag-sinifta { background: var(--color-brand); color: #fff; }
 .kapsul-tag-dene { @apply bg-accent-soft text-accent; }
 .kapsul-tag-sor { background: #ede8f7; color: var(--mod-violet); }
 .kapsul-tag-dogrula { background: #e3f3ea; color: var(--mod-emerald); }
+/* Mülakat sorusu kartı */
+.mulakat { @apply my-6 overflow-hidden rounded-2xl border-2 border-dashed bg-white; border-color: color-mix(in srgb, var(--mod-indigo) 45%, white); }
+.mulakat-head { @apply flex items-start gap-3 px-5 pt-4 pb-3; }
+.mulakat-ico { @apply grid size-9 shrink-0 place-items-center rounded-lg text-white; background: var(--mod-indigo); }
+.mulakat-label { @apply !m-0 text-[11px] font-bold uppercase tracking-[0.14em]; color: var(--mod-indigo); }
+.mulakat-kaynak { @apply font-semibold normal-case tracking-normal text-ink-3; }
+.mulakat-soru { @apply !mt-1 !mb-0 text-base font-semibold leading-snug text-ink; }
+.mulakat-kod { @apply !my-2 whitespace-pre rounded-lg border border-line bg-paper-2/60 px-3.5 py-2.5 text-[13px] leading-relaxed text-ink; }
+.mulakat-kod code { @apply bg-transparent p-0 text-inherit; }
+.mulakat-ipucu { @apply !mt-1.5 !mb-0 text-sm leading-relaxed text-ink-2; }
+.mulakat-cevap { @apply border-t border-line px-5 py-3; background: color-mix(in srgb, var(--mod-indigo) 5%, white); }
+.mulakat-cevap > summary { @apply cursor-pointer text-sm font-semibold; color: var(--mod-indigo); }
+.mulakat-body { @apply pt-3; }
+.mulakat-body > * + * { margin-top: 0.75em; }
+.mulakat-body p, .mulakat-body li { @apply text-ink-2 leading-relaxed; }
+.mulakat-body pre { @apply !my-3; }
+html[data-yansi="on"] .mulakat { border-color: #000; }
 html[data-yansi="on"] .kapsul { border-width: 2px; border-color: #000; border-top-width: 6px; }
 html[data-yansi="on"] .kapsul-fikir { font-size: 1.15em; }
 .puzzle p, .puzzle li { @apply text-ink-2 leading-relaxed; }

@@ -5,16 +5,16 @@
  *   <Kapsul n={3} title="for: üç parça tek satırda" fikir="Kaç tur döneceği belliyse for.">
  *     ...markdown / kod...
  *   </Kapsul>
- * İsteğe bağlı şeritler: dene (Playground'da ne yapılacak), sor (giriş cümlesi) + istem (kopyalanabilir istem metni), dogrula (cevabı neyle sınayacak).
+ * İsteğe bağlı şeritler: sinifta (derste canlı yapılan etkinlik), dene (Playground'da ne yapılacak), sor (giriş cümlesi) + istem (kopyalanabilir istem metni), dogrula (cevabı neyle sınayacak).
  * Her kapsül 2-4 dakikada okunur; ayrıntı yerine tek fikir + tek kod + tek deneme.
  */
-interface Props { n?: number | string; title: string; fikir?: string; dene?: string; sor?: string; istem?: string; dogrula?: string; renk?: 'brand' | 'accent' | 'violet' | 'emerald' | 'rose' | 'amber' | 'teal'; }
-const { n, title, fikir, dene, sor, istem, dogrula, renk = 'brand' } = Astro.props;
+interface Props { n?: number | string; title: string; fikir?: string; sinifta?: string; dene?: string; sor?: string; istem?: string; dogrula?: string; renk?: 'brand' | 'accent' | 'violet' | 'emerald' | 'rose' | 'amber' | 'teal'; }
+const { n, title, fikir, sinifta, dene, sor, istem, dogrula, renk = 'brand' } = Astro.props;
 const COLOR = {
   brand: 'var(--color-brand-2)', accent: 'var(--color-accent)', violet: 'var(--mod-violet)', emerald: 'var(--mod-emerald)',
   rose: 'var(--mod-rose)', amber: 'var(--mod-amber)', teal: 'var(--mod-teal)',
 }[renk];
-const hasFoot = dene || sor || istem || dogrula;
+const hasFoot = sinifta || dene || sor || istem || dogrula;
 ---
 <section class="kapsul" style={`--kapsul:${COLOR}`} aria-label={`Kapsül${n ? ` ${n}` : ''}: ${title}`}>
   <header class="kapsul-head">
@@ -28,6 +28,7 @@ const hasFoot = dene || sor || istem || dogrula;
   <div class="kapsul-body"><slot /></div>
   {hasFoot && (
     <footer class="kapsul-foot">
+      {sinifta && <p><span class="kapsul-tag kapsul-tag-sinifta">Sınıfta</span><span>{sinifta}</span></p>}
       {dene && <p><span class="kapsul-tag kapsul-tag-dene">Dene</span><span>{dene}</span></p>}
       {(sor || istem) && (
         <div class="kapsul-sor">

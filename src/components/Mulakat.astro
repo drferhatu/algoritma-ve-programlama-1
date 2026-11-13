@@ -1,0 +1,28 @@
+---
+/**
+ * Mülakat sorusu kartı: işe alımda sorulan türden bir soru, cevabı açılır kapanır.
+ * MDX'te kullanım:
+ *   <Mulakat soru="1'den N'e FizzBuzz yazdırın." kaynak="Klasik eleme sorusu · LeetCode 412">
+ *     ...cevap (markdown / kod)...
+ *   </Mulakat>
+ */
+interface Props { soru: string; kod?: string; kaynak?: string; ipucu?: string; }
+const { soru, kod, kaynak, ipucu } = Astro.props;
+---
+<aside class="mulakat" role="note" aria-label={`Mülakat sorusu: ${soru}`}>
+  <div class="mulakat-head">
+    <span class="mulakat-ico" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z" /><path d="M9.5 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.7-.9 1.3M12 15h.01" /></svg>
+    </span>
+    <div class="min-w-0">
+      <p class="mulakat-label">Mülakat sorusu{kaynak && <span class="mulakat-kaynak"> · {kaynak}</span>}</p>
+      <p class="mulakat-soru">{soru}</p>
+      {kod && <pre class="mulakat-kod" data-no-copy><code>{kod}</code></pre>}
+      {ipucu && <p class="mulakat-ipucu"><span class="font-semibold text-ink">İpucu:</span> {ipucu}</p>}
+    </div>
+  </div>
+  <details class="mulakat-cevap">
+    <summary>Önce kağıtta deneyin, sonra cevabı açın</summary>
+    <div class="mulakat-body"><slot /></div>
+  </details>
+</aside>

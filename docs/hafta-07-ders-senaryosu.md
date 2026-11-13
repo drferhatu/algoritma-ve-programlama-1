@@ -23,7 +23,7 @@ Hiçbir kapsül 3 dakikayı geçmesin; ayrıntı sayfada, evde okurlar. Canlı G
 - Yedek ekran görüntüleri: 2. kapsül tur tablosu (son satır i = 11), 7. kapsül tuzak cevabı (9 mu 10 mu), 8. kapsül ajan tablosu (3, 1, 5), 11. kapsül doğrulama anı cevabı, KT1 kontrol raporu.
 - Portfolyo örnek deposu klonu `Belgeler/algo1-portfolyo-ornek` adıyla, bilerek bir eksikle (AI-BEYANI'nda KT1 bölümü boş); kapanıştaki KT1 kontrol istemi için.
 - Mektup ödevi 5 Kasım'da bitti. Açılışta tek cümle: **"Gelen mektupları aldım, hiçbirini açmadım, 25 Aralık'ta size geri geliyor."** Göndermeyenlere süre uzatması yok, ama "hâlâ yazmak isteyen gönderebilir, yine açılmadan bekler" de.
-- **KT1 bu gece 23.59.** Açılışta ve kapanışta söyle. Lab 7 11-12 Kasım, son teslim 13 Kasım. Vize 9. hafta (16-20 Kasım), kapsam 1-8. hafta; `/vize-plani` bugün 8. gün.
+- **KT1 bu gece 23.59.** Açılışta ve kapanışta söyle. Lab 7 11-12 Kasım, son teslim 13 Kasım. Vize 24 Kasım Salı 17.00 (A: A304-306, B: A306 ve A404-406), kapsam 1-8. hafta; `/vize-plani` bugün 8. gün.
 - El kaldırt: "portfolyo deposunu açan?" Düşükse kapanışta kabul bağlantısını yansıt.
 
 ## Dakika dakika

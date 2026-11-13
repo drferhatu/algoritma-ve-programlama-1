@@ -1,0 +1,187 @@
+---
+week: 8
+title: "Lab 8 · İç İçe Döngüler ve İlk Algoritmalar"
+description: "Altı program: çarpım tablosu, yıldız üçgeni, asal testi, Euclid ile EBOB ve adım sayısı, FizzBuzz ve bonus olarak Monte Carlo ile pi. Sınavdan önceki son uygulamalı prova; görevlerin üçü birer mülakat klasiği."
+status: hazir
+objectives:
+  - "İç içe döngüyle bir tablo ve bir desen yazdırır; dış ve iç döngünün görevini söyler."
+  - "Asal testinde bulunca break ile durur ve kareköke kadar bakmanın neden yettiğini açıklar."
+  - "Euclid algoritmasını yazar, tur sayısını sayar ve aynı girdiyi kağıtta izleyerek doğrular."
+  - "FizzBuzz'ı yardımsız yazar ve koşul sırasının neden önemli olduğunu gösterir."
+  - "İç içe bir döngünün iz tablosunu kağıtta 60 saniyede çıkarır."
+tools:
+  - "JDK 21 / Codespaces"
+  - "VS Code"
+  - "Scanner"
+  - "Git"
+deliverable: "Lab 8 deposu: Tablo.java, Ucgen.java, Asal.java, Ebob.java, FizzBuzz.java ve bonus Pi.java; son teslim 20 Kasım Cuma 23.59."
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 18 Kasım 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 19 Kasım 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [8. haftanın](/haftalar/hafta-08) on iki kapsülünü uyguluyor. Derste döngünün içine döngü koydunuz ve üç gerçek algoritmayla tanıştınız; bugün altı program yazacaksınız ve her görevin başında hangi kapsülün uygulaması olduğu yazıyor, takıldığınızda o kapsüle dönün. Görevlerin üçü (asal, EBOB, FizzBuzz) dünyanın her yerinde mülakatlarda sorulan sorular; bu labdan çıktığınızda üçünü de yazmış olacaksınız.
+
+> [!not] Lab 8 kabul bağlantısı
+> Ödev yine **Classroom 50** üzerinden. Bağlantıya tıklayıp **Accept assignment** deyin:
+> **[classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab08/accept](https://classroom50.org/FiratUniversity-FerhatUcarsLAB/algo1/assignments/lab08/accept)**
+> Deponuz `algo1-lab08-KULLANICIADI` adıyla oluşur ve boş gelir, dosyaları siz oluşturacaksınız. Depoyu yeniden adlandırmayın, Actions'ı kapatmayın. Ayrıntı: [Classroom 50 rehberi](/rehber/classroom-50).
+
+> [!uyari] Sınavdan önceki son prova
+> Ara sınav **24 Kasım Salı 17.00**'de ve kağıt üzerinde. Bu labın görevleri sınav kapsamının son konusu; teslim ritüeli de sınavın en çok puan getiren becerisi: iç içe bir döngüyü kağıtta izlemek. Görevleri bitirdikten sonra kalan zamanı [vize planının](/vize-plani) o günkü bloğuna ayırın.
+
+> [!uyari] Yapay zeka: sarı bölge, bu lab için somut çizgi
+> Yapay zekaya **kavram** ve **sözdizimi** sorabilirsiniz: "break hangi döngüyü kırar?", "printf'te %4d ne demek?", "Euclid'de neden a % b alıyoruz?" serbest; ders sayfasındaki on iki kapsülün **Sor** şeritlerindeki istemlerin hepsi labda da serbest. Ama "FizzBuzz yazan Java programı ver" ya da "şu görevi çöz" demek görevi yaptırmaktır ve yasaktır. Bu labda bunun bir sebebi daha var: bu altı program mülakatta ve sınavda önünüze kağıtla gelecek, yanınızda asistan olmayacak.
+
+## Adım 0 · Depo ve ortam (5 dk)
+
+1. Yukarıdaki kabul bağlantısından Lab 8 deponuzu oluşturun.
+2. Ortamınızı açın: **Yol A** kendi bilgisayarınız (`git clone https://github.com/FiratUniversity-FerhatUcarsLAB/algo1-lab08-KULLANICIADI.git`), **Yol B** Codespaces (depo sayfasında **Code → Codespaces → Create codespace on main**).
+3. Terminale `java -version` yazın ve 21 ya da üstünü gördüğünüzden emin olun.
+4. Lab 7'nin süresi 13 Kasım'da doldu; bugün ona dönmeyin.
+
+Bütün dosyalar deponun **kök dizinine**, alt klasör açmayın, çünkü otomatik kontrol kökte arar.
+
+## Bu labın kuralı: soru metni yok
+
+Önceki lablarda programınız `Not (1-5): ` gibi bir soru yazıp sonra okuyabiliyordu. Bu labda **programlar hiçbir soru metni yazdırmaz**: yalnızca okur ve sonucu yazar. Sebebi 12. kapsülde konuştuğumuz antrenman siteleri; HackerRank'te, LeetCode'da ve şirketlerin eleme sınavlarında çıktınız karakter karakter karşılaştırılır ve fazladan yazdığınız tek bir `Sayi girin:` satırı bütün testleri düşürür. Bugün bu disipline alışıyorsunuz.
+
+İskelet aynı: en üstte `import java.util.Scanner;`, `main` içinde `new Scanner(System.in)`, sonra `nextInt()` ile okuma. Kendi denemelerinizde girdiyi yazıp Enter'a basmanız yeter; ekranda soru görmeyeceksiniz, program sessizce bekleyecek.
+
+> [!uyari] Türkçe karakter yok, sonsuz döngü yok
+> Çıktılarda `Asal degil`, `Adim` gibi ASCII yazım kullanın. Sonsuz döngüye giren bir programı otomatik kontrol bir süre sonra keser ve o görevi sıfırlar; iç döngünün adımında yanlış sayacı artırmak (`j++` yerine `i++`) bu labın en sık hatasıdır.
+
+## Görev 1 · `Tablo.java` (15 puan, 7 dk)
+
+2. kapsülün uygulaması: çarpım tablosunun tamamı. Program bir `N` tam sayısı okur ve `N` satır, `N` sütunluk çarpım tablosunu yazar; aynı satırdaki sayılar arasında **tek boşluk** vardır. `3` girdisi için çıktı tam olarak:
+
+```
+1 2 3
+2 4 6
+3 6 9
+```
+
+Dış döngü satırı seçer, iç döngü o satırı doldurur, satır bitince `println` ile alta geçilir. Bu görevde `printf` ile hizalama yapmayın; sayıdan sonra tek boşluk yazmanız yeterli (satır sonunda kalan fazladan boşluk sorun olmaz). Sınır testi: `N = 1` için tek satır `1`.
+
+## Görev 2 · `Ucgen.java` (15 puan, 7 dk)
+
+3. kapsülün uygulaması: yıldız üçgeni. Program bir `N` okur ve `N` satırlık dik üçgen yazar; `i`. satırda `i` yıldız vardır. `4` girdisi için:
+
+```
+*
+**
+***
+****
+```
+
+İç döngünün sınırı dış sayaca bağlı: `j <= i`. Kendinizi sınamak için, depoya koymadan: aynı üçgeni baş aşağı yazdırın, sonra dersteki mülakat sorusunun ortalanmış piramidini deneyin.
+
+## Görev 3 · `Asal.java` (20 puan, 8 dk)
+
+6. kapsülün uygulaması ve bir mülakat klasiği: asal testi. Program bir tam sayı okur; sayı asalsa `Asal`, değilse `Asal degil` yazar. `17` için:
+
+```
+Asal
+```
+
+`91` için:
+
+```
+Asal degil
+```
+
+Böleni bulduğunuz anda `break` ile durun ve döngü koşulunu `i * i <= n` yazın; ikisi de puanın değil, lab sorumlu hocanızın bakacağı şeyler. Köşe durumları gizli testte: `1` asal değildir, `2` asaldır. İkisini de ayrı `if` yazmadan çözen tek satır derste vardı; bulun.
+
+## Görev 4 · `Ebob.java` (20 puan, 10 dk)
+
+9. kapsülün uygulaması: Euclid algoritması ve adım sayacı. Program iki pozitif tam sayı okur (önce `a`, sonra `b`), EBOB'u Euclid ile bulur ve döngünün kaç tur attığını sayar. `252` ve `105` girdisi için:
+
+```
+EBOB: 21
+Adim: 3
+```
+
+Adım sayısının herkeste aynı çıkması için dersteki kalıbı birebir kullanın: döngü `while (b != 0)`, gövdede kalanı hesapla, `a`'ya `b`'yi, `b`'ye kalanı ver, sayacı bir artır. Adım, **gövdenin çalışma sayısıdır**.
+
+<Diagram name="h08-euclid" caption="Euclid algoritması. Göndermeden önce 252 ve 105 için üç turu kağıtta izleyin: (252, 105) → (105, 42) → (42, 21) → (21, 0)." dot width="300px" />
+
+Push etmeden önce kağıtta bir kez izleyin; programınızın yazdığı adım sayısıyla kağıttaki tur sayınız aynı olmalı. Sınır denemesi: `1920` ve `1080` için EBOB kaç, kaç adım? Ekranınızın oranı bu sayıdan çıkıyor.
+
+## Görev 5 · `FizzBuzz.java` (20 puan, 8 dk)
+
+11. kapsülün uygulaması: dünyanın en ünlü eleme sorusu. Program bir `N` okur ve 1'den `N`'e kadar her sayı için ayrı bir satır yazar: sayı 3'ün katıysa `Fizz`, 5'in katıysa `Buzz`, hem 3'ün hem 5'in katıysa `FizzBuzz`, hiçbiri değilse sayının kendisi. `15` girdisi için on beş satır çıkar; ilk beşi ve sonuncusu:
+
+```
+1
+2
+Fizz
+4
+Buzz
+...
+FizzBuzz
+```
+
+Önce **kağıtta** yazın, sonra klavyeye geçin; derste üç dakikada yazdığınız çözüm yanınızdaysa onu kullanın. 15'te `Fizz` görüyorsanız koşullarınızın sırası yanlıştır: en özel koşul en üstte olmalı.
+
+## Görev 6 (bonus) · `Pi.java` (10 puan, 7 dk)
+
+10. kapsülün uygulaması: Monte Carlo ile pi. Program hiçbir şey okumaz; bir milyon rastgele nokta üretir, çeyrek dairenin içine düşenleri sayar ve tahmini yazar:
+
+```
+Pi: 3.141592
+```
+
+Sizin çıktınızdaki basamaklar her çalıştırmada biraz farklı olacak; otomatik kontrol `Pi: 3.13`, `Pi: 3.14` ya da `Pi: 3.15` ile başlayan her sonucu kabul eder. `Math.random()` her çağrıda 0 ile 1 arasında bir `double` verir; bir nokta için iki kez çağırın. Bölmeyi `4.0 * icinde / N` diye yazın; `4 * (icinde / N)` yazarsanız 3. haftanın tam sayı bölmesi sonucu sıfırlar.
+
+## Teslim (5 dk)
+
+Deponun kök dizininde:
+
+```bash
+git add .
+git commit -m "Lab 8: ic ice donguler"
+git push
+```
+
+Codespaces'te **Source Control** düğmesi aynı üç adımı tıklamayla yapar. Push'tan sonra 1-2 dakika bekleyip deponun **Releases** sayfasına bakın; otomatik kontrol her push'ta çalışır ve puanı orada listeler. Geçmeyen test varsa düzeltin, tekrar push edin; en son push geçerlidir.
+
+**Son teslim: 20 Kasım 2026 Cuma 23.59.** Lab saatinde bitiremeyenler o saate kadar evden push edebilir.
+
+> [!not] Dosyaları tarayıcıdan yüklüyorsanız
+> Deponuzda **Add file → Upload files** ile de yükleyebilirsiniz. Dosyaları teker teker değil, **hepsini birden** yükleyin, çünkü her yükleme kontrolü baştan çalıştırır.
+
+Kontrol listesi: deponuzun kökünde `Tablo.java`, `Ucgen.java`, `Asal.java`, `Ebob.java`, `FizzBuzz.java` ve bonusu yaptıysanız `Pi.java` olmalı. Her dosyadaki sınıf adı dosya adıyla birebir aynı olmalı, aksi halde `javac` derlemez.
+
+### Otomatik kontrol (100 puan)
+
+Her görev en az **iki kez** test edilir. Birincisi aşağıdaki tabloda yazan girdiyi verir ve çıktının tamamını karşılaştırır. İkincisi aynı programı **başka bir girdiyle** çalıştırır; o girdiyi görmezsiniz, yalnızca programınızın ne yazdığını görürsünüz. Örnek girdiye özel yazılmış bir program (içine `1 2 3` satırlarını elle yazmak gibi) ikinci testi geçemez.
+
+| # | Test | Örnek girdi | Aranan çıktı | Puan (örnek + gizli) |
+|---|---|---|---|---|
+| 1 | `Tablo` çarpım tablosu | `3` | `1 2 3`, `2 4 6`, `3 6 9` | 8 + 7 |
+| 2 | `Ucgen` yıldız üçgeni | `4` | `*`, `**`, `***`, `****` | 8 + 7 |
+| 3 | `Asal` asal testi | `17`, ayrıca `91` | `Asal`, `Asal degil` | 12 + 8 |
+| 4 | `Ebob` Euclid ve adım | `252 105` | `EBOB: 21` ve `Adim: 3` | 10 + 10 |
+| 5 | `FizzBuzz` | `15` | `1`, `2`, `Fizz`, … `FizzBuzz` | 10 + 10 |
+| 6 | `Pi` (bonus) | – | `Pi: 3.14…` ve kaynakta rastgele sayı | 5 + 5 |
+
+> [!uyari] Çıktının tamamı karşılaştırılır
+> Bu labda testler çıktının **son satırına kadar** bakar: fazladan bir satır, eksik bir satır ya da en sona eklenmiş bir `Bitti` yazısı testi düşürür. Satır sonlarındaki boşluklar ve en sondaki boş satır sorun olmaz. Bir test düştüğünde Releases sayfasında programınızın gerçek çıktısını görürsünüz; beklenenle satır satır karşılaştırın.
+
+> [!not] İki puan, iki bakış
+> Otomatik kontrol yalnızca çıktıya bakar. `Asal`'da `break` kullanıp kullanmadığınız, `Ebob`'da kaba kuvvet yerine Euclid yazıp yazmadığınız, `Tablo`'da iç içe döngü kurup kurmadığınız lab sorumlu hocanızın bakacağı şeylerdir ve ritüelde sorulur.
+
+> [!not] Teslim ritüeli: iz tablosu, 60 saniye
+> Push ettikten sonra lab sorumlu hocanızı çağırın. Lab sorumlu hocanız kağıda dört satırlık iç içe bir döngü yazar (derste 4. kapsülde yaptığınızın benzeri) ve sizden iz tablosunu ister: her değişkene bir sütun, her tura bir satır, sonunda ekrana ne yazıldığı. Bilgisayar kapalı, kalem sizde. Sınavda yapacağınız şeyin bir dakikalık provası.
+
+## Bitiremediyseniz
+
+Lab'da Adım 0, Görev 1, Görev 3 ve Görev 5'in derlenip push edilmiş olması ve ritüelin yapılmış olması yeterli. Kalanı **20 Kasım Cuma 23.59**'a kadar evde bitirip push edin; Codespaces evde de aynı şekilde çalışır.
+
+## Bitirdiyseniz: antrenman sahasına geçin
+
+Altı görev de yeşilse kalan zamanı 12. kapsüldeki sitelere ayırın. İlk adres [HackerRank'in Java alanı](https://www.hackerrank.com/domains/java): "Java Loops I" ve "Java Loops II" bu labın devamı gibidir. Mülakat tadı isteyenler için LeetCode'da [9 · Palindrome Number](https://leetcode.com/problems/palindrome-number/) (8. kapsülün basamak döngüsü) ve [412 · Fizz Buzz](https://leetcode.com/problems/fizz-buzz/); matematik sevenler için [Project Euler Problem 1](https://projecteuler.net/problem=1). Çözdüğünüz ilk sorunun ekran görüntüsünü saklayın; dönem sonunda kaç tane biriktirdiğinize birlikte bakacağız.

@@ -1,0 +1,644 @@
+---
+week: 8
+title: "Döngüler II: Döngünün İçinde Döngü ve İlk Gerçek Algoritmalar"
+topic: "İç içe döngüler ve desen yazdırma; break ve continue; Euclid EBOB algoritması, asal sayılar ve Monte Carlo ile pi tahmini"
+description: "On iki kapsülde iç içe döngü, iz tablosu, break ve continue, asal sayı, basamak döngüsü, 2300 yıllık Euclid algoritması, Monte Carlo ile pi ve mülakatların efsane sorusu FizzBuzz. Her kapsülde sahadan bir olay, aralarda cevaplı mülakat soruları. Ara sınav kapsamının son konusu."
+module: m2
+semester: 1
+exam: false
+status: hazir
+changeNote: "Ara sınav 24 Kasım Salı 17.00'de. Bu hafta sınav kapsamının son konusu; 20 Kasım'da işlenecek metotlar kapsam dışı."
+tags:
+  - "iç içe döngü"
+  - "iz tablosu"
+  - "break"
+  - "continue"
+  - "asal"
+  - "EBOB"
+  - "Euclid"
+  - "Monte Carlo"
+  - "FizzBuzz"
+  - "mülakat"
+objectives:
+  - "İç içe döngü ile tablo ve desen yazdırır; dış ve iç döngünün rolünü ayırt eder."
+  - "İç içe bir döngüyü kağıtta iz tablosuyla izler; (i, j) çiftlerini ve tur sayısını yazar."
+  - "break ve continue'yu yerinde kullanır; iç içe döngüde break'in yalnızca en içteki döngüyü kırdığını bilir."
+  - "Asal sayı testini, basamak ayırmayı ve Euclid EBOB algoritmasını elle izler ve Java'da yazar."
+  - "Aynı problemi çözen iki algoritmanın adım sayısını ölçer ve karşılaştırır."
+  - "Monte Carlo yöntemiyle pi tahmininin mantığını açıklar."
+  - "FizzBuzz düzeyinde bir mülakat sorusunu kağıtta, yardımsız çözer."
+tools:
+  - "Java Playground"
+  - "Gemini (sohbet ve görev modu)"
+  - "JDK 21 / Codespaces"
+  - "Math.random"
+resources:
+  - title: "Think Java 2, Bölüm 7: Loops and Strings"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch07.html"
+    note: "İç içe döngü ve çarpım tablosu bölümü; bu haftanın kitap karşılığı."
+  - title: "Java Tutorials: Branching Statements (break, continue)"
+    url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/branch.html"
+    note: "break ve continue'nun resmî tanımı; bot cevaplarını doğrulayacağınız yer."
+  - title: "HackerRank: Java alanı"
+    url: "https://www.hackerrank.com/domains/java"
+    note: "Scanner ile okuyup ekrana yazan sorular; lab görevleriyle aynı biçim. 'Java Loops I' bu dersin çarpım tablosudur."
+  - title: "LeetCode"
+    url: "https://leetcode.com/problemset/"
+    note: "Mülakat hazırlığının standart adresi; 12. kapsülde başlangıç listesi var."
+  - title: "CodingBat Java"
+    url: "https://codingbat.com/java"
+    note: "Stanford'dan Nick Parlante'nin sitesi; küçük, anında kontrol edilen alıştırmalar. Warmup-1 ve Logic-1 ile başlayın."
+  - title: "Project Euler"
+    url: "https://projecteuler.net/archives"
+    note: "Matematik tadında döngü problemleri; ilk beş problem bu haftanın bilgisiyle çözülür."
+  - title: "Vize çalışma planı"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/vize-plani"
+    note: "24 Kasım'daki ara sınava kadar gün gün plan."
+---
+
+## Derse Başlamadan Önce
+
+- **Ara sınav 24 Kasım Salı 17.00.** Bugünün konusu sınav kapsamının son halkası ve sınavda en çok puan getiren beceri bu derste: iç içe bir döngüyü kağıtta izlemek (4. kapsül).
+- Bu sayfa yine **on iki kapsül**. Her kapsülde tek fikir ve tek kod var; bu hafta iki yenilik eklendi: **Sınıfta** şeridi (yalnızca derste yapılan canlı etkinlik) ve **Mülakat sorusu** kartları (işe alımda gerçekten sorulan türden sorular; önce kağıtta deneyin, sonra cevabı açın).
+- Tarayıcıda [Java Playground](https://dev.java/playground/) ve Gemini açık olsun. **Lab 7 son teslimi bu gece 23.59.**
+
+> [!not] Bugün neden önemli
+> Geçen hafta programınız geri dönmeyi öğrendi. Bugün iki şey oluyor. Birincisi, döngünün içine döngü koyuyorsunuz ve ekrandaki her tablo, her resim, her oyun haritası bir anda yazabileceğiniz şeyler haline geliyor. İkincisi, ilk kez gerçek **algoritmalarla** tanışıyorsunuz: 2300 yıl önce yazılmış ve bugün her şifreli bağlantının içinde çalışan Euclid, atom bombası projesinde doğup bugün film sahnelerini boyayan Monte Carlo ve dünyadaki yazılım mülakatlarının en ünlü eleme sorusu FizzBuzz. Bu derste "kod yazmak" ile "algoritma kurmak" arasındaki farkı göreceksiniz: aynı cevabı veren iki programdan biri 85 adımda, diğeri 3 adımda bitiyor. Yapay zeka kodu yazabiliyor; hangisinin 3 adımlık olduğunu bilmek sizin işiniz.
+
+## Haftanın Bulmacası
+
+<Puzzle title="El sıkışma" kind="bulmaca">
+
+Beş gönüllü tahtaya çıkar. Kural: **herkes herkesle tam bir kez** el sıkışacak. Sınıf sayar: kaç el sıkışma oldu?
+
+Sonra sorular büyür:
+
+1. Beş kişi için cevap neden 25 değil? Neden 20 de değil?
+2. Bu sınıftaki 70 kişi için kaç el sıkışma gerekir? Her biri iki saniye sürse ne kadar zaman alır?
+3. Derse kayıtlı 250 kişinin tamamı için?
+
+Hesap makinesi yok; bir yöntem bulmanız gerekiyor. İpucu: birinci kişi dört kişiyle sıkışır, ikinci kişi yeni olarak kaç kişiyle?
+
+</Puzzle>
+
+Beş kişi için cevap 10: birinci kişi 4, ikinci kişi yeni olarak 3, sonra 2, sonra 1. Her kişi için "kendinden sonrakilerin hepsi" diye saydınız; yani bir sayımın **içinde** başka bir sayım yaptınız. Bu, bugünün ana fikri: iç içe döngü. 70 kişi için 2415 el sıkışma, yani bir saat yirmi dakika; 250 kişi için 31.125. Kişi sayısı 3,5 katına çıktı, iş 13 katına. Bu orantısız büyüme bugün bir video oyununun milyonlarca oyuncusunu yıllarca nasıl beklettiğini de açıklayacak.
+
+## Kapsüller
+
+<Kapsul n={1} title="İç içe döngü: saatin akrebi ve yelkovanı" fikir="Dış döngünün her bir turunda iç döngü baştan sona döner. Akrep bir adım atar, yelkovan tam tur." sinifta="Sınıfın sol yarısı akrep, sağ yarısı yelkovan. Akrep 'sıfır' der ve bekler; yelkovan 'sıfır, bir, iki' diye sayar; sonra akrep 'bir' der. Kim ne zaman konuşuyor, kim kimi bekliyor?" dene="Kutuyu çalıştırmadan önce çıktının kaç satır olacağını söyleyin. Sonra saat sınırını 24, dakika sınırını 60 yapın: bir gün kaç satır?" istem="Aşağıdaki iç içe döngüde ekrana yazılan (saat, dakika) çiftlerini sırayla listele. Çalıştırmadan söyle, kodu değiştirme. Sonra bana sor: iki for satırının yerini değiştirirsem çıktı nasıl değişir? [KOD]" dogrula="Çıktı 0:0, 0:1, 0:2, 1:0, 1:1, 1:2 olmalı. Yer değiştirince satır sayısı aynı kalır ama sıra değişir; Playground'da deneyerek botun cevabını sınayın.">
+
+Geçen hafta bir döngünün gövdesine `println` koydunuz. Gövdeye **her şey** konabilir; bir döngü daha da. Okuması tek cümle: dış döngü bir adım atar, iç döngü işini **baştan sona** bitirir, sonra dış döngü bir adım daha atar.
+
+<CodeTry title="Saat" hint="Toplam tur sayısı iki sınırın çarpımıdır: 2 x 3 = 6 satır. 24 x 60 = 1440; bir günde 1440 dakika var ve programınız hepsini bir saniyeden kısa sürede yazıyor.">
+
+```java
+for (int saat = 0; saat < 2; saat++) {
+    for (int dakika = 0; dakika < 3; dakika++) {
+        System.out.println(saat + ":" + dakika);
+    }
+}
+```
+
+</CodeTry>
+
+<Diagram name="h08-icice" caption="İç içe döngünün akışı. Mor ok iç tur, turuncu ok dış tur. Dikkat edilecek kutu 'j = 1': iç döngünün sayacı dış döngünün her turunda baştan başlar." dot width="400px" />
+
+> [!nerede] Sahada: ekranınız bir iç içe döngüdür
+> Baktığınız ekran 1920 sütun ve 1080 satır pikselden oluşuyor. Ekran kartınız her kareyi "her satır için, o satırdaki her sütun için rengi hesapla" diye çiziyor: bir karede 2.073.600 piksel, saniyede 60 kare, yani saniyede 124 milyon tur. Oynadığınız her oyun ve izlediğiniz her video bu iki satırlık yapının üstünde duruyor.
+
+</Kapsul>
+
+<Kapsul n={2} title="Satır ve sütun: çarpım tablosunun tamamı" fikir="Dış döngü satırı seçer, iç döngü o satırı doldurur. Satır bitince println ile alta geçilir." renk="teal" dene="Kutuyu çalıştırın. Sonra println satırını silin: tablo ne oluyor? Geri koyun ve iç döngünün içine taşıyın: şimdi ne oluyor? Üç sürümün farkını bir cümleyle yazın." istem="Aşağıdaki çarpım tablosu kodunda System.out.println() satırı neden iç döngünün dışında ama dış döngünün içinde duruyor? İki cümleyle açıkla, sonra bana sor: bu satırı iç döngünün içine taşırsam ekranda kaç satır olur? [KOD]" dogrula="Cevap 81 satır: her sayıdan sonra alt satıra geçilir. Playground'da taşıyıp sayın.">
+
+Geçen hafta tek bir sayının çarpım tablosunu yazdınız. Bütün tablo, o döngünün bir dış döngüye sarılmış halidir.
+
+<CodeTry title="9 x 9 çarpım tablosu" hint="printf içindeki %4d 'sayıyı dört karakter genişliğinde, sağa yaslı yaz' demek; sütunlar bu sayede hizalanıyor. print alt satıra geçmez, println geçer; tablonun şeklini bu ikisinin yeri belirler.">
+
+```java
+for (int i = 1; i <= 9; i++) {
+    for (int j = 1; j <= 9; j++) {
+        System.out.printf("%4d", i * j);
+    }
+    System.out.println();
+}
+```
+
+</CodeTry>
+
+İki satırlık bir yapı 81 hesap yaptı. Bir Excel sayfası, bir satranç tahtası, bir sınıf oturma planı, bir fotoğraf: satırı ve sütunu olan her şey bu kalıpla gezilir. 13. haftada iki boyutlu dizilerle bu kalıbı yeniden göreceksiniz.
+
+</Kapsul>
+
+<Kapsul n={3} title="Desen: iç döngünün sınırı dış sayaca bağlanınca" fikir="İç döngü her satırda aynı sayıda dönmek zorunda değil. Sınırına i yazarsanız kare üçgene dönüşür." renk="teal" sinifta="Tahtaya 5 satırlık dik üçgeni çiziyoruz. Her satır için iki soru: kaç yıldız var, satır numarasıyla ilişkisi ne? Sonra tersini soruyoruz: üçgeni baş aşağı çevirmek için hangi tek ifadeyi değiştirmek gerekir?" dene="Kutuyu çalıştırın. Sonra j <= i yerine j <= n - i + 1 yazın: üçgen ters dönmeli. Sonra n'yi 20 yapın." istem="Java hocası gibi davran. Yıldız desenleri konusunda beni sorguya çek: her seferinde 5 satırlık bir deseni metin olarak göster ve 'iç döngünün koşulu ne olmalı?' diye sor, cevabımı bekle. Kod yazma; yalnızca koşulu ben söyleyeceğim. 4 soru sonra en zayıf noktamı yaz." dogrula="Söylediğiniz her koşulu Playground'da kutuya yazıp çıkan deseni botun gösterdiğiyle karşılaştırın.">
+
+<CodeTry title="Yıldız üçgeni" hint="Desen sorularının tek yöntemi: her satır için 'kaç tane' sorusunu sorup cevabı satır numarası i cinsinden yazmak. 1. satırda 1, 2. satırda 2, i. satırda i yıldız: iç koşul j <= i.">
+
+```java
+int n = 5;
+
+for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print("*");
+    }
+    System.out.println();
+}
+```
+
+</CodeTry>
+
+<Mulakat soru="N satırlık, ortalanmış bir yıldız piramidi yazdırın. N = 4 için tepe tek yıldız, taban yedi yıldız olmalı." kaynak="Stajyer mülakatlarının klasik ısınma sorusu" ipucu="Her satırda iki şey var: önce boşluklar, sonra yıldızlar. İkisinin sayısını satır numarası cinsinden yazın.">
+
+Bir satırı ikiye bölün ve iki ayrı "kaç tane" sorusu sorun. `i`. satırda `n - i` boşluk ve `2 * i - 1` yıldız var. Demek ki bir dış döngünün içinde **arka arkaya iki iç döngü** gerekiyor:
+
+```java
+int n = 4;
+
+for (int i = 1; i <= n; i++) {
+    for (int b = 1; b <= n - i; b++) {
+        System.out.print(" ");
+    }
+    for (int y = 1; y <= 2 * i - 1; y++) {
+        System.out.print("*");
+    }
+    System.out.println();
+}
+```
+
+Mülakatçı deseni değil yönteminizi izler: tabloyu kağıda çizip "1. satırda 3 boşluk 1 yıldız, 2. satırda 2 boşluk 3 yıldız" diye yüksek sesle sayan aday, kodu ezberden yazan adaydan daha iyi puan alır.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={4} title="İz tablosu: iç içe döngüyü kağıtta çalıştırmak" fikir="Her değişkene bir sütun, her tura bir satır. Sınavda da mülakatta da bilgisayar sizsiniz." renk="amber" sinifta="Üç dakika, kağıt kalem, telefon kapalı. Aşağıdaki kodun iz tablosunu herkes tek başına doldurur; sonra yanındakiyle karşılaştırır. Tabloları farklı çıkan çiftler farkın hangi satırda başladığını bulur." dene="Tablonuz bitmeden kutuyu çalıştırmayın. Bittikten sonra çalıştırıp satır satır karşılaştırın; program her turu ekrana yazıyor." istem="Aşağıdaki kodun iz tablosunu çıkarmak istiyorum ama tabloyu SEN yazma. Bana yalnızca tablonun kaç satır olacağını söyle ve ben her satırı yazdıkça 'doğru' ya da 'yanlış' de; yanlışta hangi sütunun hatalı olduğunu söyle, doğrusunu söyleme. [KOD]" dogrula="Son söz Playground'un: kutunun çıktısı ile tablonuz satır satır aynı olmalı.">
+
+Sınavda önünüze 12 satırlık bir kod gelecek ve "ekrana ne yazar?" diye sorulacak. Bunun tek güvenilir yöntemi **iz tablosu**dur (trace table). Aşağıdaki kodda iç döngünün başlangıcına dikkat edin: `j = 1` değil, `j = i`.
+
+<CodeTry title="İz tablosu alıştırması" hint="İç döngü j = i ile başladığı için her satırda bir tur eksilir: 3 + 2 + 1 = 6 tur. Bulmacadaki el sıkışma sayımının aynısı.">
+
+```java
+int toplam = 0;
+
+for (int i = 1; i <= 3; i++) {
+    for (int j = i; j <= 3; j++) {
+        toplam = toplam + j;
+        System.out.println(i + " " + j + " " + toplam);
+    }
+}
+
+System.out.println("Toplam: " + toplam);
+```
+
+</CodeTry>
+
+<details>
+<summary>İz tablosunun doğrusu (kendi tablonuzu bitirmeden açmayın)</summary>
+
+| Tur | `i` | `j` | `toplam` (turdan sonra) |
+|---|---|---|---|
+| 1 | 1 | 1 | 1 |
+| 2 | 1 | 2 | 3 |
+| 3 | 1 | 3 | 6 |
+| 4 | 2 | 2 | 8 |
+| 5 | 2 | 3 | 11 |
+| 6 | 3 | 3 | 14 |
+
+Son satır `Toplam: 14`.
+
+</details>
+
+> [!uyari] Sınavda iz tablosu
+> Kod izleme sorusunda cevabı doğrudan yazmaya çalışmayın. Müsvedde alanına tabloyu açın, her tur için bir satır doldurun, çıktıyı tablodan okuyun. İç döngünün sayacının her dış turda **baştan** başladığını ve bir `for` bittiğinde sayacın koşulu bozan ilk değerde kaldığını unutmayın.
+
+<Mulakat soru="Aşağıdaki kod n = 10 için ekrana kaç kez x yazar? Genel n için formülü nedir?" kod={"for (int i = 0; i < n; i++) {\n    for (int j = 0; j < i; j++) {\n        System.out.print(\"x\");\n    }\n}"} kaynak="Telefon mülakatlarının en sık sorulan izleme sorusu" ipucu="i = 0 iken iç döngü kaç kez döner? i = 1 iken? Sayıları alt alta yazıp toplayın.">
+
+`i = 0` iken iç döngü hiç dönmez, `i = 1` iken 1 kez, `i = 2` iken 2 kez, en son `i = 9` iken 9 kez döner. Toplam `0 + 1 + 2 + ... + 9 = 45`.
+
+Genel formül `n * (n - 1) / 2`; bulmacadaki el sıkışma sayısının aynısı ve geçen haftanın Gauss toplamı. Mülakatçının duymak istediği cümle: "İç döngünün tur sayısı sabit değil, dış sayaca bağlı; bu yüzden çarpmıyorum, topluyorum."
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={5} title="Maliyet: iç içe döngü pahalıdır" fikir="Girdi 10 katına çıkınca tek döngünün işi 10 katına, iç içe döngünün işi 100 katına çıkar." renk="rose" sinifta="Bulmacanın rakamlarına dönüyoruz: 5 kişi 10, 70 kişi 2415, 250 kişi 31.125 el sıkışma. Soru: Fırat Üniversitesi'nin 40.000 öğrencisi için tahmininiz ne? Tahtaya en düşük ve en yüksek tahmini yazıp programa soruyoruz." dene="n'yi sırayla 5, 70, 250, 1000, 10000 yapın. Her on katta sonucun kaç kat büyüdüğünü not edin." istem="İç içe iki döngünün maliyetinin neden girdinin karesiyle büyüdüğünü, bir sınıftaki herkesin herkesle el sıkışması benzetmesiyle üç cümlede anlat. Sonra bana sor: 10 kişi için 45 el sıkışma varsa 20 kişi için kabaca kaç olur?" dogrula="Yaklaşık 4 katı: 190. Kutuda n = 20 yapıp görün.">
+
+<CodeTry title="El sıkışma sayacı" hint="n = 1000 için 499.500, n = 10000 için 49.995.000. Girdi 10 kat büyüdü, iş 100 kat. Buna karesel büyüme denir ve Algoritma Analizi dersinde adı O(n²) olacak.">
+
+```java
+int n = 5;
+int sayac = 0;
+
+for (int i = 1; i <= n; i++) {
+    for (int j = i + 1; j <= n; j++) {
+        sayac++;
+    }
+}
+
+System.out.println(n + " kisi, " + sayac + " el sikisma");
+```
+
+</CodeTry>
+
+**Sahada: GTA Online'ın altı dakikası.** GTA Online yıllarca altı dakikaya varan açılış süresiyle ünlüydü ve milyonlarca oyuncu bunu "oyun büyük, normal" diye kabullenmişti. Şubat 2021'de "t0st" takma adlı bir oyuncu merak edip oyunun ne yaptığına baktı. Oyun açılışta 63.000 kalemlik bir mağaza listesi okuyordu ve iki hata vardı: her kalemi okurken metnin tamamının uzunluğunu baştan sayıyor, her yeni kalemi de "daha önce eklemiş miyim?" diye o ana kadarki bütün kalemlerle tek tek karşılaştırıyordu. Yani fark edilmemiş bir iç içe döngü: 63.000 kalem, milyarlarca gereksiz adım. t0st küçük bir yamayla açılış süresini yüzde 70 kısalttı ve yazdıklarını yayımladı. Rockstar düzeltmeyi oyuna aldı ve kendisine 10.000 dolar ödül verdi. Yedi yıl boyunca şirketin içinde kimse o döngüye "bu kaç kez dönüyor?" diye sormamıştı.
+
+> [!not] Bugünden çıkan alışkanlık
+> İç içe bir döngü yazdığınızda kendinize şunu sorun: girdi büyüdüğünde bu kaç tur atar? 100 kalem için fark etmez, 63.000 kalem için altı dakikadır. Yapay zekanın yazdığı kod da bu sorudan muaf değildir; asistan çalışan kodu verir, tur sayısını siz sorarsınız.
+
+</Kapsul>
+
+<Kapsul n={6} title="break: aradığını bulunca dur" fikir="Anahtarı çantada bulduktan sonra cepleri aramazsınız. break döngüyü o anda bitirir." renk="violet" sinifta="Tahtada 91 asal mı? Sınıf sırayla böler: 2, 3, 5, 7. Yedide buluyoruz ve duruyoruz. İkinci soru: 97 için en fazla hangi sayıya kadar denemek yeter? 96'ya kadar mı, 48'e kadar mı, daha az mı?" dene="n'yi 91, 97, 2, 1 ve 1000003 yapın; her seferinde önce tahmin edin. Sonra break satırını silin: sonuç değişiyor mu, deneme sayısı değişiyor mu?" istem="Aşağıdaki asal sayı kodunda döngü koşulu neden i <= n değil de i * i <= n? Bir cümleyle söyle ve 36 sayısının bölen çiftleri üzerinden göster. Sonra bana sor: n = 97 için döngü en fazla kaç kez döner? [KOD]" dogrula="Cevap 8: i sırasıyla 2'den 9'a kadar gider, çünkü 10 x 10 = 100, 97'yi geçer. Kutuya bir deneme sayacı ekleyip kendiniz sayın.">
+
+Bir sayı asal mı? Tanım basit: 1'den ve kendinden başka böleni yok. Algoritma da basit: 2'den başlayıp bölenleri dene; **bir tane bile** bulursan asal değildir ve aramaya devam etmenin anlamı yoktur.
+
+<CodeTry title="Asal mı?" hint="1000003 asaldır ve döngü yalnızca 999 kez döner. i <= n yazsaydınız bir milyon kez dönerdi. Aynı cevap, bin kat az iş; algoritma farkı budur.">
+
+```java
+int n = 91;
+boolean asal = n >= 2;
+
+for (int i = 2; i * i <= n; i++) {
+    if (n % i == 0) {
+        asal = false;
+        System.out.println("Bolen bulundu: " + i);
+        break;
+    }
+}
+
+if (asal) {
+    System.out.println(n + " asal");
+} else {
+    System.out.println(n + " asal degil");
+}
+```
+
+</CodeTry>
+
+`i * i <= n` koşulu bugünün ilk algoritmik fikri. Bölenler çift çift gelir: 36 için 2 ile 18, 3 ile 12, 4 ile 9, 6 ile 6. Her çiftin küçük olanı karekökü geçemez; küçük olanı bulamadıysanız büyük olanı da yoktur. Demek ki kareköke kadar bakmak yeter.
+
+<Mulakat soru="Verilen bir tam sayının asal olup olmadığını bulan kodu yazın. Sonra: bunu nasıl hızlandırırsınız?" kaynak="Hemen her şirketin ilk tur sorusu · HackerRank 'Java Primality Test' · LeetCode 204" ipucu="Soru iki parçalı ve asıl puan ikinci parçada. Önce çalışan en basit çözümü söyleyin, sonra iyileştirin.">
+
+İlk cevap: 2'den `n - 1`'e kadar böl, bölen bulursan asal değil. Mülakatçı "daha iyisi?" diye sorar ve üç basamaklı bir iyileştirme bekler:
+
+1. **Bulunca dur:** `break`. İlk böleni bulduktan sonra devam etmek boşa iştir.
+2. **Kareköke kadar bak:** `i * i <= n`. Bir milyon adım bin adıma iner.
+3. **Çiftleri atla:** 2'yi ayrıca kontrol edip döngüyü 3'ten başlatın ve `i = i + 2` ile ilerleyin. İş yarıya iner.
+
+Köşe durumları unutmayın, mülakatçı mutlaka sorar: 0 ve 1 asal değildir, 2 asaldır, negatif sayılar asal değildir. Yukarıdaki kutudaki `boolean asal = n >= 2` satırı bu üçünü tek seferde hallediyor. Bir not daha: `i * i` çok büyük sayılarda `int` sınırını aşabilir; bunu söyleyen aday bir adım öne geçer.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={7} title="continue ve bayrak: turu atlamak, iki döngüden birden çıkmak" fikir="continue bu turu atlar ve döngü sürer. break yalnızca içinde bulunduğu en içteki döngüyü kırar; dışarıya haber vermek için bir boolean bayrak gerekir." renk="violet" dene="İlk kutuyu çalıştırıp atlanan sayıları görün. İkinci kutuda dış döngünün koşulundaki && !bulundu parçasını silin: program ne yazıyor, neden?" istem="break ile continue arasındaki farkı, bir kasiyerin önündeki müşteri kuyruğu benzetmesiyle iki cümlede anlat. Sonra şu while döngüsünün neden hiç bitmediğini bana SORU sorarak buldur, cevabı söyleme: int k = 0; while (k < 10) { if (k % 2 == 0) { continue; } System.out.println(k); k++; }" dogrula="k = 0 çifttir, continue çalışır ve k++ satırına hiç gelinmez; k sonsuza kadar 0 kalır. for döngüsünde bu tuzak yoktur, çünkü adım parantezin içindedir ve continue'dan sonra da çalışır.">
+
+`break` kasayı kapatır; `continue` "bu müşteriyi geç, sıradakine bak" der.
+
+<CodeTry title="Üçün katlarını atla" hint="Çıktı: 1 2 4 5 7 8 10. continue, gövdenin geri kalanını atlayıp doğrudan adıma (i++) gider.">
+
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i % 3 == 0) {
+        continue;
+    }
+    System.out.print(i + " ");
+}
+```
+
+</CodeTry>
+
+İç içe döngüde `break` yalnızca **içteki** döngüyü kırar; dış döngü hiçbir şey olmamış gibi sürer. Çarpımı 42 olan ilk çifti arıyorsak ve bulunca tamamen durmak istiyorsak dış döngüye haber vermemiz gerekir. Bunun adı **bayrak** (flag): başta `false`, bulununca `true`, dış döngünün koşulunda kontrol edilir.
+
+<CodeTry title="Çarpımı 42 olan ilk çift" hint="Çıktı tek satır: 6 x 7 = 42. Bayrak olmasaydı dış döngü sürer ve 7 x 6 = 42'yi de yazardı.">
+
+```java
+boolean bulundu = false;
+
+for (int i = 1; i <= 9 && !bulundu; i++) {
+    for (int j = 1; j <= 9; j++) {
+        if (i * j == 42) {
+            System.out.println(i + " x " + j + " = 42");
+            bulundu = true;
+            break;
+        }
+    }
+}
+```
+
+</CodeTry>
+
+> [!uyari] Az kullanın, yerinde kullanın
+> `break` ve `continue` akışı zıplatır; her zıplama kodu okuyanın işini zorlaştırır. Arama döngüsünde "bulunca dur" için `break` doğaldır. Ama döngünün asıl bitiş koşulunu `break` ile yazmak (koşula `true` koyup içeride kırmak) bu derste yok; koşulu yanlış yapan satırı parmağınızla gösterebilmelisiniz.
+
+<Mulakat soru="break ile continue arasındaki fark nedir? İç içe iki döngünün içindeki break hangisini bitirir? İkisinden birden nasıl çıkarsınız?" kaynak="Java temel bilgi turu">
+
+`break` içinde bulunduğu döngüyü tamamen bitirir; `continue` yalnızca o turu atlar ve döngü bir sonraki turla sürer. İç içe döngüde `break` yalnızca **en içteki** döngüyü bitirir.
+
+İkisinden birden çıkmanın üç yolu vardır ve hepsini saymak iyi puan getirir: bir `boolean` bayrak tutup dış koşulda kontrol etmek (bu dersin yolu); döngüleri bir metoda koyup `return` ile çıkmak (9. haftada); Java'nın etiketli `break` yazımını kullanmak (`dis: for (...)` ve içeride `break dis;`). Sahada en temiz bulunan çözüm ikincisidir.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={8} title="Basamak döngüsü: bir sayıyı parçalarına ayırmak" fikir="% 10 son basamağı verir, / 10 son basamağı atar. Bu iki işlemi sayı bitene kadar tekrarlarsanız her basamak sırayla elinize gelir." renk="emerald" sinifta="Tahtada 4725 sayısını elle söküyoruz: son basamak kaç, geriye ne kaldı? Dört turda sayı sıfırlanıyor. Sonra aynı turlarda basamakları ters sırayla yeni bir sayıya nasıl dizeceğimizi soruyoruz." dene="sayi'yi 12321, 4725, 7 ve 1200 yapın. 1200'ün tersi neden 21 çıkıyor? Sonra aynı döngüyle basamakların toplamını hesaplatın." istem="Aşağıdaki kodu sayi = 4725 için tur tur izle ve her turdaki basamak, ters ve kalan değerlerini tabloya yaz. Kodu değiştirme. Sonra bana sor: sayi = 1200 için ters neden 21 çıkar? [KOD]" dogrula="4725 için tablo dört satır: ters sırasıyla 5, 52, 527, 5274 olur. Kutuya bir println ekleyip her turu yazdırarak sınayın.">
+
+3. haftada `%` ve `/` operatörlerini öğrenirken "bir gün işe yarayacak" demiştik. Bugün o gün. Bir tam sayının basamaklarına ulaşmanın yolu bu iki operatör ve bir `while`:
+
+<CodeTry title="Palindrom sayı" hint="Palindrom, tersinden okunduğunda da aynı olan sayıdır: 12321, 1881, 7. Döngü kaç tur atar? Sayının basamak sayısı kadar.">
+
+```java
+int sayi = 12321;
+int kalan = sayi;
+int ters = 0;
+
+while (kalan > 0) {
+    int basamak = kalan % 10;
+    ters = ters * 10 + basamak;
+    kalan = kalan / 10;
+}
+
+System.out.println("Ters: " + ters);
+System.out.println("Palindrom mu: " + (sayi == ters));
+```
+
+</CodeTry>
+
+Koşulu yanlış yapan satır `kalan = kalan / 10`: her turda sayı bir basamak kısalır ve sonunda sıfır olur. `sayi`'yi ayrı bir kutuda saklamamızın sebebi, döngünün `kalan`'ı tüketmesi; karşılaştırma için asıl sayıya ihtiyacımız var.
+
+> [!nerede] Sahada: kredi kartı numaranızın son hanesi
+> Bir siteye kart numaranızı yanlış yazdığınızda "geçersiz kart" uyarısı bankaya sorulmadan, anında çıkar. Çünkü numaranın son hanesi bir kontrol hanesidir ve 1954'te IBM'de Hans Peter Luhn'un bulduğu algoritmayla hesaplanır: basamakları sağdan sola gez, her ikincisini iki katına çıkar, topla, 10'a bölünüyor mu bak. Bugün yazdığınız basamak döngüsünün iki satır eklenmiş hali. T.C. kimlik numaranızın son iki hanesi de benzer bir basamak hesabının sonucudur.
+
+<Mulakat soru="Bir tam sayının palindrom olup olmadığını, sayıyı metne çevirmeden bulun." kaynak="LeetCode 9 · Palindrome Number (kolay)" ipucu="Sayıyı ters çevirmek için bir diziye ya da metne ihtiyacınız yok; iki operatör yeter.">
+
+Çözüm yukarıdaki kutunun kendisi: `% 10` ile son basamağı al, `ters * 10 + basamak` ile yeni sayıya ekle, `/ 10` ile at; sonunda `sayi == ters` karşılaştır.
+
+Mülakatçının takip soruları ve cevapları: **Negatif sayılar?** Palindrom sayılmaz, başta `if` ile eleyin. **Sonu sıfırla biten sayılar?** Sıfırın kendisi hariç palindrom olamazlar; 1200 örneğinde gördünüz. **Taşma?** Çok büyük bir sayının tersi `int` sınırını aşabilir; çözümü sayının yalnızca yarısını ters çevirip iki yarıyı karşılaştırmaktır. Bunu ilk görüşte yazmanız beklenmez, ama "taşma olabilir" demeniz beklenir.
+
+Aynı kalıbın diğer mülakat soruları: basamakları topla (LeetCode 258), sayıyı ters çevir (LeetCode 7), Armstrong sayısı mı (153 = 1³ + 5³ + 3³).
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={9} title="EBOB: aynı cevap, 85 adım ve 3 adım" fikir="Kaba kuvvet bütün adayları dener. Euclid 2300 yıl önce problemi her adımda küçültmenin yolunu buldu." renk="emerald" sinifta="Önce kağıtta: 252 ve 105'in EBOB'unu Euclid'le bulun. 252'yi 105'e bölün, kalanı yazın; sonra böleni kalana bölün; kalan sıfır olana kadar. Kaç bölme yaptınız? Sonra el kaldırıyoruz: ekranınızın çözünürlüğü 1920 x 1080; bu iki sayının EBOB'u size neyi söyler?" dene="a ve b'yi 252 ve 105, sonra 1920 ve 1080, sonra 987654321 ve 123456789 yapın. Son çiftte iki adım sayısını yan yana yazın." istem="Euclid algoritmasını 1071 ve 462 için elle izlemek istiyorum. Tabloyu sen yazma; ben her adımda (a, b, kalan) üçlüsünü yazacağım, sen yalnızca doğru ya da yanlış de. Bitince bana sor: EBOB'u bildiğime göre EKOK'u tek işlemle nasıl bulurum?" dogrula="Adımlar: (1071, 462, 147), (462, 147, 21), (147, 21, 0). EBOB 21. EKOK = a / EBOB x b = 23562. Kutuda aynı sayıları deneyin.">
+
+İki sayının en büyük ortak böleni, ikisini de bölen en büyük sayıdır. İlk akla gelen yöntem **kaba kuvvet**: küçük sayıdan başla, geriye doğru her sayıyı dene, ikisini de böleni bulunca dur.
+
+Euclid'in MÖ 300 civarında yazdığı yöntem başka bir yerden bakar: `a` ile `b`'nin ortak bölenleri, `b` ile `a % b`'nin ortak bölenleriyle aynıdır. Demek ki büyük problemi küçüğüyle değiştirebilirsiniz ve kalan sıfır olunca cevap elinizdedir.
+
+<Diagram name="h08-euclid" caption="Euclid algoritması: kalan sıfır olana kadar (a, b) çiftinin yerine (b, a % b) geçer. Koşulu yanlış yapan satır 'b = kalan'; kalan her turda küçülür." dot width="300px" />
+
+<CodeTry title="İki algoritma, bir sayaç" hint="252 ve 105 için kaba kuvvet 85 adım, Euclid 3 adım. 987654321 ve 123456789 için kaba kuvvet 123.456.781 adım, Euclid 2 adım. İkisi de 9 buluyor.">
+
+```java
+int a = 252;
+int b = 105;
+
+// 1) Kaba kuvvet: küçük sayıdan geriye doğru dene
+int kucuk = a;
+if (b < a) {
+    kucuk = b;
+}
+int ebob1 = 1;
+int adim1 = 0;
+for (int k = kucuk; k >= 1; k--) {
+    adim1++;
+    if (a % k == 0 && b % k == 0) {
+        ebob1 = k;
+        break;
+    }
+}
+System.out.println("Kaba kuvvet: " + ebob1 + ", adim: " + adim1);
+
+// 2) Euclid: (a, b) yerine (b, a % b)
+int x = a;
+int y = b;
+int adim2 = 0;
+while (y != 0) {
+    int kalan = x % y;
+    x = y;
+    y = kalan;
+    adim2++;
+}
+System.out.println("Euclid: " + x + ", adim: " + adim2);
+```
+
+</CodeTry>
+
+1920 ve 1080'in EBOB'u 120'dir; ikisini 120'ye bölünce 16 ve 9 çıkar. Ekranınızın "16:9" oranı bir EBOB hesabıdır.
+
+**Sahada: EBOB ile kırılan anahtarlar.** İnternetteki şifreli bağlantıların çoğu RSA adlı yönteme dayanır ve RSA'nın güvenliği iki dev asal sayının çarpımını geri ayırmanın zorluğundan gelir; anahtar üretilirken de Euclid algoritması çalışır. 2012'de bir araştırma ekibi internetten milyonlarca açık anahtarı topladı ve basit bir şey denedi: anahtarları ikişer ikişer alıp EBOB'larına baktı. İki anahtarın EBOB'u 1'den büyük çıkıyorsa aynı asal sayıyı paylaşıyorlar demekti ve ikisi de o anda çözülüyordu. Rastgele sayı üretimi zayıf olan on binlerce modem, yönlendirici ve güvenlik cihazının anahtarı böyle kırıldı. 2300 yıllık algoritma, 21. yüzyılın en büyük güvenlik taramalarından birinin aracı oldu.
+
+<Mulakat soru="İki pozitif tam sayının EBOB'unu bulan kodu yazın. Sonra EKOK'u bulun." kaynak="LeetCode 1979 ve 2413'ün çekirdeği · Project Euler 5" ipucu="EKOK için ayrı bir döngü yazmayın; EBOB elinizdeyken tek satırdır.">
+
+EBOB için Euclid döngüsü dört satır:
+
+```java
+while (b != 0) {
+    int kalan = a % b;
+    a = b;
+    b = kalan;
+}
+// döngü bitince EBOB a'dadır
+```
+
+EKOK için ilişki: `a * b = EBOB * EKOK`. Demek ki `EKOK = a / EBOB * b`. Önce bölüp sonra çarpmanın sebebi taşma: `a * b` büyük sayılarda `int` sınırını aşabilir, önce bölerseniz ara sonuç küçük kalır. Bu ayrıntıyı kendiliğinden söylemek, mülakatta "deneyimli gibi düşünüyor" notunu getirir.
+
+Takip sorusu genellikle şudur: **"a, b'den küçükse kodunuz çalışır mı?"** Çalışır: ilk turda `a % b` zaten `a`'dır, döngü ikisinin yerini değiştirir ve devam eder. Bunu 105 ve 252 ile kağıtta bir tur izleyip gösterin.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={10} title="Monte Carlo: zar atarak pi sayısını bulmak" fikir="Bir kareye rastgele noktalar atın. Çeyrek dairenin içine düşenlerin oranı pi'nin dörtte birine yaklaşır." renk="accent" sinifta="Tahtaya kenarı 1 olan bir kare ve içine çeyrek daire çiziyoruz. Yirmi gönüllü gözü kapalı birer nokta söyler (iki sayı, 0 ile 1 arasında); içeride mi dışarıda mı birlikte karar veririz. Yirmi noktayla tahminimiz kaç çıktı? Sonra programa bir milyon nokta attırıyoruz." dene="N'yi 100, 10000 ve 1000000 yapıp her birini üç kez çalıştırın. Hangi N'de sonuçlar birbirine yakın çıkıyor? Aynı N'de neden her seferinde farklı sayı çıkıyor?" istem="Monte Carlo ile pi tahmininde nokta sayısı 100 katına çıkınca hata kabaca kaç kat küçülür? Formül verme; bir zar atma benzetmesiyle iki cümlede anlat. Sonra bana sor: 3,14'ün ilk beş basamağını tutturmak için bu yöntem iyi bir seçim mi?" dogrula="Hata kabaca 10 kat küçülür: her yeni doğru basamak 100 kat fazla nokta ister. Bu yüzden pi'nin basamaklarını hesaplamak için kötü, formülü olmayan problemler için çok iyi bir yöntemdir. Kendi üç çalıştırmanızın farklarına bakarak sınayın.">
+
+Buraya kadar her programınız aynı girdiyle aynı çıktıyı verdi. Şimdi bilerek rastgelelik kullanacağız. `Math.random()` her çağrıldığında 0 ile 1 arasında yeni bir ondalık sayı verir.
+
+Kenarı 1 olan karenin alanı 1, içindeki çeyrek dairenin alanı pi / 4. Kareye rastgele atılan bir noktanın çeyrek dairenin içine düşme olasılığı da pi / 4 olur. Çok sayıda nokta atıp içeride kalanları sayarsak oranı, oradan da pi'yi tahmin ederiz. Bir noktanın içeride olup olmadığını Pisagor söyler: `x * x + y * y <= 1`.
+
+<figure class="my-4 flex flex-col items-center">
+<svg viewBox="-8 -8 256 256" width="260" height="260" role="img" aria-label="Kenarı 1 olan kare, içinde çeyrek daire ve rastgele atılmış 60 nokta"><rect x="0" y="0" width="240" height="240" fill="#fff" stroke="#1f2a44" stroke-width="2" /><path d="M0 240 L0 0 A240 240 0 0 1 240 240 Z" fill="#e3f3ea" stroke="#1f7a4d" stroke-width="2" /><circle cx="54.4" cy="9.0" r="3.2" fill="#1f7a4d" /><circle cx="30.3" cy="70.8" r="3.2" fill="#1f7a4d" /><circle cx="20.4" cy="180.6" r="3.2" fill="#1f7a4d" /><circle cx="239.8" cy="189.7" r="3.2" fill="#be3a5a" /><circle cx="154.0" cy="129.8" r="3.2" fill="#1f7a4d" /><circle cx="108.8" cy="121.2" r="3.2" fill="#1f7a4d" /><circle cx="46.1" cy="40.7" r="3.2" fill="#1f7a4d" /><circle cx="21.5" cy="183.8" r="3.2" fill="#1f7a4d" /><circle cx="4.8" cy="176.0" r="3.2" fill="#1f7a4d" /><circle cx="97.8" cy="23.5" r="3.2" fill="#1f7a4d" /><circle cx="91.0" cy="212.7" r="3.2" fill="#1f7a4d" /><circle cx="62.0" cy="2.0" r="3.2" fill="#be3a5a" /><circle cx="15.1" cy="91.2" r="3.2" fill="#1f7a4d" /><circle cx="90.5" cy="81.4" r="3.2" fill="#1f7a4d" /><circle cx="81.2" cy="74.1" r="3.2" fill="#1f7a4d" /><circle cx="119.4" cy="84.1" r="3.2" fill="#1f7a4d" /><circle cx="216.3" cy="100.4" r="3.2" fill="#be3a5a" /><circle cx="34.1" cy="224.6" r="3.2" fill="#1f7a4d" /><circle cx="227.1" cy="122.7" r="3.2" fill="#be3a5a" /><circle cx="46.5" cy="12.9" r="3.2" fill="#1f7a4d" /><circle cx="139.0" cy="65.1" r="3.2" fill="#1f7a4d" /><circle cx="211.4" cy="171.4" r="3.2" fill="#1f7a4d" /><circle cx="85.6" cy="29.3" r="3.2" fill="#1f7a4d" /><circle cx="32.4" cy="56.6" r="3.2" fill="#1f7a4d" /><circle cx="23.4" cy="74.4" r="3.2" fill="#1f7a4d" /><circle cx="168.5" cy="12.0" r="3.2" fill="#be3a5a" /><circle cx="202.4" cy="119.1" r="3.2" fill="#1f7a4d" /><circle cx="47.4" cy="204.0" r="3.2" fill="#1f7a4d" /><circle cx="126.9" cy="117.7" r="3.2" fill="#1f7a4d" /><circle cx="17.1" cy="23.2" r="3.2" fill="#1f7a4d" /><circle cx="121.8" cy="71.7" r="3.2" fill="#1f7a4d" /><circle cx="52.8" cy="181.5" r="3.2" fill="#1f7a4d" /><circle cx="2.9" cy="157.6" r="3.2" fill="#1f7a4d" /><circle cx="64.0" cy="138.4" r="3.2" fill="#1f7a4d" /><circle cx="90.5" cy="39.8" r="3.2" fill="#1f7a4d" /><circle cx="214.0" cy="197.9" r="3.2" fill="#1f7a4d" /><circle cx="95.1" cy="200.1" r="3.2" fill="#1f7a4d" /><circle cx="159.2" cy="6.0" r="3.2" fill="#be3a5a" /><circle cx="48.4" cy="56.0" r="3.2" fill="#1f7a4d" /><circle cx="72.0" cy="236.8" r="3.2" fill="#1f7a4d" /><circle cx="183.4" cy="158.0" r="3.2" fill="#1f7a4d" /><circle cx="40.8" cy="135.5" r="3.2" fill="#1f7a4d" /><circle cx="55.6" cy="141.6" r="3.2" fill="#1f7a4d" /><circle cx="107.1" cy="139.7" r="3.2" fill="#1f7a4d" /><circle cx="141.2" cy="170.7" r="3.2" fill="#1f7a4d" /><circle cx="22.8" cy="219.5" r="3.2" fill="#1f7a4d" /><circle cx="25.6" cy="115.0" r="3.2" fill="#1f7a4d" /><circle cx="86.4" cy="46.2" r="3.2" fill="#1f7a4d" /><circle cx="121.2" cy="70.0" r="3.2" fill="#1f7a4d" /><circle cx="235.2" cy="224.9" r="3.2" fill="#1f7a4d" /><circle cx="4.1" cy="206.3" r="3.2" fill="#1f7a4d" /><circle cx="92.7" cy="102.3" r="3.2" fill="#1f7a4d" /><circle cx="178.5" cy="155.7" r="3.2" fill="#1f7a4d" /><circle cx="231.6" cy="239.3" r="3.2" fill="#1f7a4d" /><circle cx="200.6" cy="189.6" r="3.2" fill="#1f7a4d" /><circle cx="210.0" cy="232.1" r="3.2" fill="#1f7a4d" /><circle cx="231.6" cy="57.7" r="3.2" fill="#be3a5a" /><circle cx="237.7" cy="100.8" r="3.2" fill="#be3a5a" /><circle cx="42.7" cy="7.2" r="3.2" fill="#1f7a4d" /><circle cx="106.0" cy="220.0" r="3.2" fill="#1f7a4d" /></svg>
+<figcaption class="mt-2 text-center text-sm text-ink-3">60 nokta: 52'si içeride, tahmin 4 x 52 / 60 = 3,47. Az nokta, kötü tahmin. Bir milyon noktayla 3,14.</figcaption>
+</figure>
+
+<CodeTry title="Pi tahmini" hint="Her çalıştırmada sonuç biraz farklıdır; bu bir hata değil, yöntemin doğası. N büyüdükçe sonuçlar 3,14159'un çevresinde sıkışır.">
+
+```java
+int N = 1000000;
+int icinde = 0;
+
+for (int i = 0; i < N; i++) {
+    double x = Math.random();
+    double y = Math.random();
+    if (x * x + y * y <= 1.0) {
+        icinde++;
+    }
+}
+
+double pi = 4.0 * icinde / N;
+System.out.println(N + " nokta, pi yaklasik " + pi);
+```
+
+</CodeTry>
+
+**Sahada: bir iskambil oyunundan atom çağına.** 1946'da matematikçi Stanislaw Ulam bir hastalıktan sonra dinlenirken tek başına iskambil falı oynuyordu ve bir oyunun açılma olasılığını merak etti. Hesabı kağıtta yapmaya çalıştı, çıkamadı; sonra aklına başka bir şey geldi: yüz oyun oynayıp kaçının açıldığını saymak. Fikri Los Alamos'taki arkadaşı John von Neumann'a anlattı; ikisi yöntemi ilk bilgisayarlardan ENIAC'ta nötronların hareketini hesaplamak için kullandılar. Gizli projeye bir kod adı gerekiyordu ve Ulam'ın kumarhaneye düşkün amcasına gönderme olarak "Monte Carlo" dendi. Bugün aynı fikir film sahnelerindeki ışığı hesaplıyor, bankaların risk modellerini çalıştırıyor ve 2016'da dünya şampiyonunu yenen Go programı AlphaGo'nun hamle aramasının adında duruyor: Monte Carlo ağaç araması.
+
+> [!tanim] Monte Carlo yöntemi
+> Kesin formülü bulunmayan ya da hesabı çok zor olan bir sorunun cevabını, çok sayıda rastgele deneme yapıp sonuçları sayarak tahmin etme yöntemi. Programdaki karşılığı bir sayaç ve bir döngüdür; deneme sayısı arttıkça tahmin iyileşir.
+
+</Kapsul>
+
+<Kapsul n={11} title="FizzBuzz: dünyanın en ünlü eleme sorusu" fikir="1'den 100'e kadar say; 3'ün katında Fizz, 5'in katında Buzz, ikisinin katında FizzBuzz de. Bir döngü, bir else-if merdiveni ve doğru sıra." renk="rose" sinifta="Ayağa kalkıyoruz ve sınıfça sayıyoruz: sıradaki kişi sayısını ya da Fizz, Buzz, FizzBuzz'ı söyler; yanılan oturur. Kaçıncı sayıda ilk hata gelecek? Sonra üç dakika, kağıt kalem: aynı oyunu Java'da yazın. Yapay zeka yok, Playground yok." dene="Kağıttaki çözümünüzü Playground'a yazıp çalıştırın. 15'te ne yazıyor? Fizz yazıyorsa koşullarınızın sırası yanlış." istem="FizzBuzz çözümümü aşağıya yapıştırıyorum. Çalıştırmadan, 1'den 15'e kadar ne yazacağını satır satır söyle; kodumu düzeltme ve daha iyi bir çözüm önerme. Hata görürsen yalnızca hangi sayıda yanlış çıktı vereceğini söyle. [KOD]" dogrula="Botun söylediği çıktıyı Playground çıktısıyla karşılaştırın. 15'te FizzBuzz, 30'da yine FizzBuzz görmelisiniz.">
+
+2007'de yazılımcı Imran Ghory, mülakata gelen adayları elemek için kullandığı bu çocuk oyununu blogunda anlattı ve çarpıcı bir şey yazdı: bilgisayar bölümü mezunu adayların büyük çoğunluğu bu soruyu çözemiyordu. Jeff Atwood yazıyı "Programcılar neden programlayamıyor?" başlığıyla yaydı ve FizzBuzz o günden beri dünyanın en bilinen eleme sorusu. Soru zor olduğu için değil, **döngü, koşul ve `%` operatörünü bir arada, yardımsız kullanabiliyor musunuz** diye bakmak için sorulur. Siz sekiz haftada bu üçünü öğrendiniz.
+
+<Mulakat soru="1'den 100'e kadar sayıları yazdırın. 3'ün katları yerine Fizz, 5'in katları yerine Buzz, hem 3'ün hem 5'in katları yerine FizzBuzz yazın." kaynak="Klasik eleme sorusu · LeetCode 412 · HackerRank" ipucu="Adayların çoğu koşulların sırasında yanılır. 15 hangi koşula önce takılmalı?">
+
+```java
+for (int i = 1; i <= 100; i++) {
+    if (i % 15 == 0) {
+        System.out.println("FizzBuzz");
+    } else if (i % 3 == 0) {
+        System.out.println("Fizz");
+    } else if (i % 5 == 0) {
+        System.out.println("Buzz");
+    } else {
+        System.out.println(i);
+    }
+}
+```
+
+Kilit nokta sıra: **en özel koşul en üstte**. `i % 3 == 0` kontrolünü başa yazarsanız 15 oraya takılır, `Fizz` yazar ve alttaki dallara hiç bakılmaz; 4. haftanın else-if merdiveni kuralı. `i % 15 == 0` yerine `i % 3 == 0 && i % 5 == 0` yazmak da doğrudur.
+
+Mülakatçının takip soruları: **"7'nin katlarında Bazz de eklesek kodunuz nasıl değişir?"** Merdivene dal eklemek hızla çirkinleşir (3 ve 7, 5 ve 7, 3 ve 5 ve 7); iyi cevap, metni parça parça kurmaktır: boş bir metinle başla, 3'e bölünüyorsa "Fizz" ekle, 5'e bölünüyorsa "Buzz" ekle, metin hâlâ boşsa sayıyı yaz. **"Bu kodu nasıl test edersiniz?"** Sınır değerleri sayın: 1, 3, 5, 15, 30 ve 100.
+
+</Mulakat>
+
+> [!neden] Yapay zeka FizzBuzz'ı bir saniyede yazıyor; neden hâlâ soruluyor?
+> Çünkü mülakat, kodun yazılıp yazılamadığını değil **sizin** düşünüp düşünemediğinizi ölçer. Yapay zeka araçları yaygınlaştıkça şirketler tam tersi yöne gitti: adaydan ekran paylaşmasını, sesli düşünmesini, kodu satır satır izleyip açıklamasını istiyorlar; 2025'te Google, uzaktan mülakatlarda yapay zeka kullanımı arttığı için en az bir turu yeniden yüz yüze yapacağını duyurdu. İşe girdikten sonra da durum aynı: asistan kodu yazar, "bu döngü kaç kez dönüyor, sınır değerde ne oluyor?" sorusunu siz sorarsınız. Bugün kağıtta yaptığınız iz tablosu o işin kendisi.
+
+</Kapsul>
+
+<Kapsul n={12} title="Antrenman sahası: nerede, neyle, hangi sırayla" fikir="Programlama izlenerek değil çözülerek öğrenilir. Günde bir küçük soru, haftada yedi soru; dönem sonunda yüz soru." renk="brand" sinifta="Projeksiyonda HackerRank'in 'Java Loops I' sorusunu açıyoruz ve sınıfça çözüyoruz: soru geçen haftanın çarpım tablosu. Gönder tuşuna basıp yeşil işareti birlikte görüyoruz. Bu akşam ilk sorunuzu siz çözeceksiniz." dene="Bu akşam: HackerRank'te hesap açın ve Java alanında 'Welcome to Java', 'Java Stdin and Stdout I', 'Java If-Else', 'Java Loops I' sorularını sırayla çözün. Dördü de bu dersin ilk yedi haftasının bilgisiyle çözülür." istem="Java antrenörü gibi davran. Görev: aşağıya yapıştırdığım alıştırma sorusunu çözmeme yardım et ama çözümü yazma. Önce soruyu kendi cümlelerimle özetlememi iste; sonra girdi ve çıktı örneği üzerinden hangi döngü türünün uygun olduğunu bana sor; takılırsam tek cümlelik ipucu ver. Biçim: her seferinde tek soru. Bağlam: 1. sınıfım; değişken, if, switch ve döngüleri biliyorum; metot ve dizi bilmiyorum. [SORU]" dogrula="Doğrulayıcı sitenin kendisidir: çözümünüz bütün testlerden geçiyorsa doğrudur. Geçmeyen testin girdisini okuyun; çoğu zaman bir sınır değerdir.">
+
+Bu dersin lab testleri ile sektörün antrenman siteleri aynı mantıkla çalışır: girdiyi verir, çıktıyı bekler, gizli testlerle sınır değerleri dener. Classroom 50'de yeşil işaret almayı biliyorsanız bu sitelerde de bilirsiniz.
+
+| Site | Ne için iyi | Bu haftanın bilgisiyle çözülenler |
+|---|---|---|
+| [HackerRank](https://www.hackerrank.com/domains/java) | Lab'a en çok benzeyen: `Scanner` ile oku, ekrana yaz. Şirketlerin çoğu ilk elemeyi burada yapar. | Welcome to Java, Java Stdin and Stdout I, Java If-Else, Java Loops I, Java Loops II |
+| [CodingBat](https://codingbat.com/java) | Küçük, hızlı, anında kontrol. Stanford'dan Nick Parlante hazırladı. | Warmup-1 ve Logic-1 bölümleri |
+| [LeetCode](https://leetcode.com/problemset/) | Mülakat hazırlığının standardı; soruların çoğu dizi ister, onlar 11. haftadan sonra. | 2235 Add Two Integers, 1342 Number of Steps to Reduce a Number to Zero, 258 Add Digits, 9 Palindrome Number, 231 Power of Two, 412 Fizz Buzz |
+| [Project Euler](https://projecteuler.net/archives) | Matematik tadında döngü problemleri; tek bir sayı cevap verirsiniz. | Problem 1 (3 ve 5'in katları), Problem 5 (EBOB ve EKOK ile), Problem 6 |
+| [Exercism](https://exercism.org/tracks/java) | Ücretsiz, sıralı Java yolu ve gönüllü mentor geri bildirimi. | Java yolunun ilk on alıştırması |
+| [Codewars](https://www.codewars.com) | Oyunlaştırılmış; çözdükten sonra başkalarının çözümünü görürsünüz. | 8 kyu ve 7 kyu seviyeleri |
+| [Advent of Code](https://adventofcode.com) | Her yıl 1 Aralık'ta başlayan bulmaca takvimi; dünyanın her yerinden yazılımcılar aynı günlerde aynı soruyu çözer. | İlk günlerin birinci parçaları |
+
+> [!not] LeetCode ve CodingBat sizden bir metot ister
+> Bu iki sitede `main` yazmazsınız; site size içi boş bir **metot** verir ve gövdesini doldurmanızı ister. Metotları haftaya, 20 Kasım'da öğreneceğiz; o zamana kadar metodun süslü parantezleri arasına bugünkü döngülerinizi yazmanız yeter. 412 numaralı FizzBuzz'da sonuçlar ekrana yazılmaz, bir listeye eklenir; listeler bu dersin konusu değil, o yüzden o soruyu şimdilik HackerRank'teki haliyle çözün. HackerRank'te ise tam program yazarsınız, lab'daki gibi; ilk adres o olsun.
+
+> [!uyari] Antrenman sahasında trafik ışığı
+> Bu siteler sizin sahanız; not yok, kural sizin. Ama bir sorunun çözümünü asistana yazdırıp yeşil işareti almak, spor salonunda ağırlığı başkasına kaldırtmak gibidir. İşe yarayan kullanım yukarıdaki **Sor** şeridi: asistan soru sorar, ipucu verir, çözümü siz yazarsınız. Mülakatta yanınızda asistan olmayacak; 24 Kasım'daki sınavda da olmayacak.
+
+</Kapsul>
+
+## Hata Avı
+
+<Puzzle title="Hata avı, beşinci tur" kind="tahmin">
+
+Bu program 2 ile 10 arasındaki asal sayıları sayıp sonra bir yıldız üçgeni çizmeye çalışıyor. **Üç hata** var: biri derleyici tarafından yakalanır, biri programı hiç bitirmez, biri program bitip yanlış sayı yazdığı için ancak iz tablosuyla görülür. Dört dakika; her hata için satır numarası ve türü, düzeltme yok.
+
+```java
+public class Avci {
+    public static void main(String[] args) {
+        int asalSayisi = 0;
+        boolean asal = true;
+        for (int s = 2; s <= 10; s++) {
+            for (int d = 2; d < s; d++) {
+                if (s % d == 0) {
+                    asal = false;
+                }
+            }
+            if (asal) {
+                asalSayisi++
+            }
+        }
+        System.out.println("Asal sayisi: " + asalSayisi);
+
+        for (int i = 1; i <= 4; i++) {
+            for (int j = 1; j <= i; i++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+<details>
+<summary>Cevap (dört dakika dolmadan açmayın)</summary>
+
+- **Satır 12, noktalı virgül yok:** `asalSayisi++` satırının sonunda `;` eksik; derleyici `';' expected` der.
+- **Satır 17, yanlış sayaç:** iç döngünün adımında `j++` yerine `i++` yazılmış. `j` hep 1 kalır, `i` büyüdükçe `j <= i` hep doğrudur; program sonsuza kadar yıldız basar. Koşulu yanlış yapan satır yok.
+- **Satır 4, bayrak sıfırlanmıyor:** `asal` dış döngünün **dışında** tanımlanmış. 2 ve 3 sayılır; 4'te `false` olur ve bir daha `true`'ya dönmez, 5 ve 7 sayılmaz. Program `Asal sayisi: 2` yazar, doğrusu 4. Düzeltme: `boolean asal = true;` satırını dış döngünün içine, iç döngüden hemen önceye almak.
+
+Üçüncü hata bugünün en değerli dersi: iç içe döngüde her dış tur için baştan başlaması gereken değişkenler dış döngünün **içinde** kurulur. Diyagramdaki `j = 1` kutusunun yeri tesadüf değildi.
+
+</details>
+
+</Puzzle>
+
+## Ara Sınav: 24 Kasım Salı 17.00
+
+> [!uyari] Sınav bilgisi
+> **24 Kasım 2026 Salı, 17.00-18.00.** A şubesi: A304, A305, A306. B şubesi: A306, A404, A405, A406. Kağıt üzerinde, telefon ve bilgisayar kapalı (kırmızı bölge). Kapsam **1-8. haftalar**; bugünkü dersin tamamı dahil, 20 Kasım'da işlenecek metotlar hariç. O hafta dersler ve laboratuvarlar normal yapılır.
+
+Bugünün kapsüllerinden sınava en doğrudan bağlananlar: iz tablosu (4), `break` ve `continue` içeren kodun çıktısı (6 ve 7), basamak döngüsünün izlenmesi (8) ve Euclid'in elle izlenmesi (9). Portfolyonuzdan gelecek 10 puanlık soru için KT1 sürümünüzdeki seçim yapısını kağıda bakmadan yazabiliyor olun. Gün gün çalışma planı [/vize-plani](/vize-plani) sayfasında ve 23 Kasım'a kadar uzatıldı.
+
+Sınav için en iyi hazırlık bu sayfadaki yedi **mülakat sorusunu** kağıtta, yardımsız çözmektir. Mülakat sorusu ile sınav sorusu aynı kası çalıştırır: önünüzde yalnızca kağıt vardır ve bilgisayar sizsinizdir.
+
+## Temel Kavramlar
+
+- **İç içe döngü (nested loop)**: Gövdesinde başka bir döngü bulunan döngü; dış döngünün her turunda iç döngü baştan sona döner.
+- **İz tablosu (trace table)**: Her değişkene bir sütun, her tura bir satır ayırarak kodu kağıtta çalıştırma yöntemi.
+- **Karesel büyüme**: Girdi 10 katına çıkınca işin 100 katına çıkması; iç içe iki döngünün tipik maliyeti.
+- **break**: İçinde bulunduğu en içteki döngüyü o anda bitirir; "bulunca dur".
+- **continue**: Yalnızca o turun kalanını atlar; döngü bir sonraki turla sürer. `while` içinde adımdan önce kullanılırsa sonsuz döngü tuzağıdır.
+- **Bayrak (flag)**: Bir şeyin olup olmadığını hatırlayan `boolean` değişken; iç döngüden dış döngüye haber taşır.
+- **Asal sayı testi**: 2'den kareköke kadar bölen aramak; bölen bulununca `break`.
+- **Basamak döngüsü**: `% 10` ile son basamağı almak, `/ 10` ile atmak; sayı sıfırlanana kadar.
+- **Kaba kuvvet (brute force)**: Bütün adayları tek tek deneyen yöntem; yazması kolay, çoğu zaman yavaş.
+- **Euclid algoritması**: `(a, b)` yerine `(b, a % b)` koyarak EBOB bulan yöntem; kalan sıfır olunca cevap `a`'dadır.
+- **Monte Carlo yöntemi**: Cevabı çok sayıda rastgele denemenin sonucunu sayarak tahmin etmek.
+- **Köşe durumu (edge case)**: Sınırdaki girdi: 0, 1, negatif sayı, en büyük değer. Mülakatçı ve gizli test hep bunları sorar.
+
+## Sahadan Örnekler
+
+- **Yüz tanıma, karesel maliyetle.** Bir fotoğraf uygulaması 10.000 fotoğraftaki yüzleri "herkesi herkesle karşılaştır" yöntemiyle gruplarsa 50 milyon karşılaştırma yapar; bugünkü el sıkışma sayacının aynısı. Gerçek sistemlerin bu işi saniyeler içinde bitirebilmesi, karşılaştırma sayısını azaltan daha akıllı algoritmalar sayesindedir.
+- **Hava tahmini bir Monte Carlo'dur.** Meteoroloji servisleri aynı modeli başlangıç değerlerini biraz değiştirerek onlarca kez çalıştırır. "Yarın yağış olasılığı yüzde 70" cümlesi, o çalıştırmaların yüzde yetmişinde yağmur çıktığı anlamına gelir.
+- **Kesirleri sadeleştiren her program Euclid çalıştırır.** Bir tarif uygulaması 6/8 bardak yerine 3/4 bardak yazıyorsa, bir video oynatıcı 2560 x 1440'ı "16:9" diye etiketliyorsa arkada dört satırlık EBOB döngüsü vardır.
+
+## Portfolyo
+
+KT2 **27 Kasım Cuma 23.59**, yani sınavdan üç gün sonra. Şartları geçen haftadan biliyorsunuz: `0` gözcüsüyle dönen bir menü döngüsü ve en az bir girdi doğrulama döngüsü. Bu haftadan uygulamanıza taşıyabilecekleriniz: bir rapor ekranını iç içe döngüyle tablo olarak yazdırmak (2. kapsül), bir aramada bulunca `break` ile durmak (6. kapsül), bir numaranın basamaklarını kontrol etmek (8. kapsül). Hiçbiri KT2 şartı değil, ama final sunumunda "bunu neden böyle yaptın?" sorusuna güzel cevap olurlar. Sınav haftasında portfolyoya dokunmak zorunda değilsiniz; menü döngüsünü bu hafta sonu bitirirseniz 25-27 Kasım size kalır.
+
+## Laboratuvara Hazırlık
+
+Lab 8, A şubesi **18 Kasım Çarşamba 13.15**, B şubesi **19 Kasım Perşembe 15.15**, yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Altı görev: çarpım tablosu, yıldız üçgeni, asal testi, Euclid ile EBOB ve adım sayısı, FizzBuzz ve bonus olarak Monte Carlo ile pi. Son teslim **20 Kasım Cuma 23.59**. Bu lab aynı zamanda sınavdan önceki son uygulamalı prova.
+
+Lab'a gelirken:
+
+- **Lab 7 son teslimi bu gece 23.59.**
+- 4. kapsülün iz tablosunu kağıtta bir kez daha, bakmadan çıkarın; lab'ın teslim ritüeli bu.
+- 6., 9. ve 11. kapsüllerin kodlarını okuyup her birinde "koşulu yanlış yapan satır hangisi?" sorusuna cevap verebiliyor olun.
+- Ayrıntı, görev listesi ve test tablosu: [Lab 8](/laboratuvar/lab-08).
+
+## Tartışma Soruları
+
+1. GTA Online'daki hata yedi yıl boyunca şirketin içinde fark edilmedi ve dışarıdan bir oyuncu buldu. Sizce neden? Çalışan bir kodu kimsenin sorgulamaması hangi alışkanlıkla ilgili?
+2. Euclid algoritması 2300 yaşında ve hâlâ kullanılıyor. Bugün yazılan hangi kod 2300 yıl sonra kullanılıyor olabilir? Bir algoritmayı bir programdan daha uzun ömürlü yapan nedir?
+3. Monte Carlo ile her çalıştırmada farklı bir cevap alıyoruz. "Her seferinde farklı cevap veren program" ile "hatalı program" arasındaki farkı nasıl tanımlarsınız?
+4. FizzBuzz'ı yapay zeka bir saniyede yazıyor. Bir şirket sahibi olsaydınız mülakatta adaya ne sorardınız, neye bakardınız?
+5. `break` ve `continue` olmadan da her döngü yazılabilir. O halde dile neden eklenmişler? Okunabilirlik kimin için önemlidir?
+
+## Haftanın Özeti
+
+El sıkışarak başladık ve bir sayımın içinde başka bir sayım yaptığımızı gördük. İç içe döngüde dış döngü bir adım atar, iç döngü tam tur döner; satırı ve sütunu olan her şey bu kalıpla gezilir, iç döngünün sınırı dış sayaca bağlanınca desenler çıkar. Kağıtta iz tablosuyla her turu satır satır yazmak sınavın da mülakatın da temel becerisidir. İç içe döngü pahalıdır: girdi 10 katına çıkınca iş 100 katına çıkar ve bunu sormayan bir ekip milyonlarca oyuncuyu yedi yıl bekletti. `break` bulunca durur, `continue` turu atlar, bayrak iç döngüden dışarıya haber taşır. Üç gerçek algoritma gördük: kareköke kadar bakan asal testi, problemi her adımda küçülten Euclid ve cevabı zar atarak bulan Monte Carlo. Aynı cevabı 85 adımda ya da 3 adımda bulabilirsiniz; fark koddan değil fikirden gelir. Son olarak FizzBuzz'ı kağıtta çözdünüz ve antrenman sahalarının adresini aldınız. Bu gece Lab 7, haftaya Lab 8, 24 Kasım'da sınav. Günde bir soru.

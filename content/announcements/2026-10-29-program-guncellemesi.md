@@ -1,11 +1,11 @@
 ---
 title: "Program güncellemesi: döngüler 6 Kasım'da, bu hafta mektup haftası"
 date: 2026-10-29
-pinned: true
+pinned: false
 kind: onemli
 ---
 
-Program güncellendi: **döngüleri 6 Kasım Cuma birlikte açacağız** ve ondan sonraki konular birer hafta ileride işlenecek. Hafta numaraları takvime bağlı kaldı: döngüler I 6 Kasım'da (7. hafta), döngüler II 13 Kasım'da, metotlar 20 ve 27 Kasım'da, diziler Aralık'ta; son haftanın "aynı algoritma üç dil" konusu 25 Aralık'taki String dersine katıldı. [Haftalar](/haftalar) sayfası yeni dağılıma göre güncellendi. KT1 (6 Kasım), KT2 (27 Kasım) ve KT4 (25 Aralık) yerinde; yalnızca **KT3 18 Aralık**'ta. **Ara sınav 9. haftada (16-20 Kasım)**, aynı; günü şubenize göre ayrıca ilan edilecek, kapsam 1-8. hafta içerikleri (döngüler II dahil), metotlar kapsam dışı.
+Program güncellendi: **döngüleri 6 Kasım Cuma birlikte açacağız** ve ondan sonraki konular birer hafta ileride işlenecek. Hafta numaraları takvime bağlı kaldı: döngüler I 6 Kasım'da (7. hafta), döngüler II 13 Kasım'da, metotlar 20 ve 27 Kasım'da, diziler Aralık'ta; son haftanın "aynı algoritma üç dil" konusu 25 Aralık'taki String dersine katıldı. [Haftalar](/haftalar) sayfası yeni dağılıma göre güncellendi. KT1 (6 Kasım), KT2 (27 Kasım) ve KT4 (25 Aralık) yerinde; yalnızca **KT3 18 Aralık**'ta. **Ara sınav** (güncelleme, 13 Kasım: **24 Kasım Salı 17.00**; ayrıntı [ara sınav duyurusunda](/duyurular)), kapsam 1-8. hafta içerikleri (döngüler II dahil), metotlar kapsam dışı.
 
 Bu haftanın sayfası biraz farklı: ekrana değil kendinize yazıyorsunuz, mektup haftası. **25 Aralık'taki kendinize** iki paragraf ve 10-15 satırlık küçük bir program yazıp **drferhatu.iletisim@gmail.com** adresine, konu satırı birebir **Algo-I mektup 2x0541xxx** (kendi öğrenci numaranızla) olacak şekilde gönderiyorsunuz; mektup e-postanın gövdesine yazılır, ek dosya gerekmez. **Son gönderim 5 Kasım Perşembe 23.59.** Mektuplar açılmadan saklanır ve dönemin son dersinde size geri gönderilir; ayrıntı ve yazım çerçevesi [6. haftanın sayfasında](/haftalar/hafta-06). Aynı sayfada döngülere kısa bir ön bakış da var: kırtasiye örneğinin döngülü menüsünü okuyup 6 Kasım'a bir soru getirin.
 

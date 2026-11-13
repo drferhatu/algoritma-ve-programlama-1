@@ -34,7 +34,7 @@ tools:
 Kağıt yığını: her metot çağrısı için bir kağıt, üstteki kağıt aktif; return olunca kağıt atılır. Üç metotlu bir program tahtada kağıtlarla "çalıştırılır"; hangi değişken hangi kağıtta?
 
 > [!uyari] KT2 teslim haftası
-> Portfolyo kilometre taşı **KT2** bugün, **27 Kasım Cuma 23.59**'da toplanır: Classroom 50 o saatte deponuzda ne varsa onu KT2 sürümü sayar. Ara sınav geçen hafta yapıldı; sınav sonrası ilk iş KT2'yi kapatmak. Beklenen: uygulamanın ana akışı gözcü değerle (ör. 0 veya q) biten bir menü döngüsünde çalışıyor ve yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü var. Ayrıntı: [Proje](/proje).
+> Portfolyo kilometre taşı **KT2** bugün, **27 Kasım Cuma 23.59**'da toplanır: Classroom 50 o saatte deponuzda ne varsa onu KT2 sürümü sayar. Ara sınav bu hafta Salı günü yapıldı; sınav sonrası ilk iş KT2'yi kapatmak. Beklenen: uygulamanın ana akışı gözcü değerle (ör. 0 veya q) biten bir menü döngüsünde çalışıyor ve yanlış girdiyi doğru girdiye kadar soran bir girdi doğrulama döngüsü var. Ayrıntı: [Proje](/proje).
 
 ## Ders Notları
 

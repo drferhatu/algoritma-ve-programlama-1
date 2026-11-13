@@ -1,13 +1,13 @@
 ---
 week: 9
 title: "Metotlar I: Tanım, Parametre, return ve Math"
-topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon; ara sınav haftası"
-description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak. Ara sınav haftası (16-20 Kasım); gün bölümce ilan edilecek, metotlar kapsam dışı."
+topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon"
+description: "Programı parçalara bölmenin ilk aracı: metot. Tarifin içindeki tarifi ayrı yazmak, parametreyle genelleştirmek, return ile sonucu geri almak. Ara sınav 24 Kasım Salı 17.00'de; metotlar sınav kapsamında değil."
 module: m3
 semester: 1
 exam: false
 status: taslak
-changeNote: "Program güncellemesi: metotlar I 20 Kasım'da, ara sınav haftasında işlenir."
+changeNote: "Program güncellemesi: metotlar I 20 Kasım'da işlenir. Ara sınav 24 Kasım Salı 17.00'de; bu haftanın konusu kapsam dışıdır."
 tags:
   - "ara sınav"
   - "metot"
@@ -27,8 +27,8 @@ tools:
   - "GitHub Codespaces"
 ---
 
-> [!uyari] Ara sınav haftası
-> Ara sınav bu hafta, **16-20 Kasım**; gün ve yer bölümce ilan edilecek. Kağıt üzerinde, kırmızı bölge. Kapsam **1-8. haftalar** (döngüler II dahil); bu haftanın konusu metotlar, hoca aksini duyurmadıkça kapsam dışıdır. Kod izleme, boşluk doldurma, hata sayma, program tamamlama ve KT1 sürümünüzden 10 puanlık portfolyo sorusu. Plan: [/vize-plani](/vize-plani).
+> [!uyari] Ara sınav 24 Kasım Salı 17.00
+> Ara sınav **24 Kasım Salı 17.00-18.00**; A şubesi A304-306, B şubesi A306 ve A404-406. Kağıt üzerinde, kırmızı bölge. Kapsam **1-8. haftalar** (döngüler II dahil); bu haftanın konusu olan metotlar kapsam dışıdır. Bu dönem sınavlar derslerle birlikte yapılıyor, yani bu Cuma dersi ve labları her zamanki saatinde. Kod izleme, boşluk doldurma, hata sayma, program tamamlama ve KT1 sürümünüzden 10 puanlık portfolyo sorusu. Plan: [/vize-plani](/vize-plani).
 
 ## Haftanın Bulmacası
 
@@ -49,7 +49,7 @@ Tarifin içindeki tarif: kağıttaki kek tarifinde "sosu hazırla" adımı üç 
 - Math sınıfı: pow, sqrt, abs, max, min, round, random
 - Kompozisyon: metot içinde metot çağırma; ifadelerin içinde çağrı
 - Metot imzası; aşırı yükleme (overloading) kısa bakış
-- Ara sınav haftası: tarih ve yer bölümce ilan edilecek; kırmızı bölge
+- Ara sınav: 24 Kasım Salı 17.00 (A: A304-306, B: A306 ve A404-406); kırmızı bölge, metotlar kapsam dışı
 - Portfolyo: KT2 (menü döngüsü ve girdi doğrulama) gelecek hafta, 27 Kasım Cuma 23.59'da toplanır
 
 ## Temel Kavramlar

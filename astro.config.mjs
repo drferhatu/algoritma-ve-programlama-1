@@ -19,7 +19,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkCallouts],
     rehypePlugins: [[rehypeBaseLinks, { base }]],
-    shikiConfig: { theme: 'github-light', wrap: true },
+    // Çift tema: açık = github-light, karanlık = github-dark-high-contrast (renkler dark.css'te --shiki-dark değişkenlerinden uygulanır)
+    shikiConfig: { themes: { light: 'github-light', dark: 'github-dark-high-contrast' }, wrap: true },
   },
   // Tailwind kendi vite tipini getirir; Astro paketindeki vite sürümüyle tip uyuşmazlığı yalnızca tip düzeyindedir.
   vite: { plugins: [/** @type {any} */ (tailwindcss())] },

@@ -1,0 +1,517 @@
+---
+week: 9
+title: "Metotlar I: Bir İşe Ad Vermek"
+topic: "Metot tanımlama ve çağırma, void ve değer döndüren metotlar, parametre ve argüman, çalışma akışı, Math sınıfı ve kompozisyon"
+description: "On bir satırlık bir fonksiyonun interneti nasıl durdurduğunun hikayesiyle başlayan, yedi kapsüllük hafif bir ders: hazır metotları kullanmak, ilk metodunuzu yazmak, parametre ve return, imzanın bir sözleşme oluşu ve metotların birbirini çağırması. Geçen haftanın kodları bugün ad alıyor. Ara sınav 24 Kasım Salı 17.00'de; metotlar sınav kapsamında değil."
+module: m3
+semester: 1
+exam: false
+status: hazir
+changeNote: "Ara sınav 24 Kasım Salı 17.00'de. Bu haftanın konusu sınav kapsamında değil; ders bilerek hafif tutuldu ve geçen haftanın döngülerini bir kez daha gezdiriyor."
+tags:
+  - "metot"
+  - "parametre"
+  - "argüman"
+  - "return"
+  - "void"
+  - "Math"
+  - "imza"
+  - "kompozisyon"
+  - "mülakat"
+objectives:
+  - "Math sınıfının sık kullanılan metotlarını (sqrt, pow, max, abs, random) çağırır ve döndürdükleri değeri kullanır."
+  - "void bir metot tanımlar, çağırır ve programın çalışma akışını izler."
+  - "Parametre ile argüman arasındaki farkı açıklar; parametreli metot yazar."
+  - "Değer döndüren metot yazar; return ile println arasındaki farkı bir örnekle gösterir."
+  - "Bir metodun imzasını okur: adı, parametrelerinin tipi ve sırası, dönüş tipi."
+  - "Bir metodu başka bir metodun içinden çağırarak küçük parçalardan büyük iş kurar."
+tools:
+  - "Java Playground"
+  - "Gemini (sohbet modu)"
+  - "JDK 21"
+  - "LeetCode"
+resources:
+  - title: "Think Java 2, Bölüm 4: Methods and Testing"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch04.html"
+    note: "void metotlar, parametreler ve çalışma akışı; bu haftanın kitap karşılığı."
+  - title: "Think Java 2, Bölüm 5.7 ve sonrası: Value Methods"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch05.html"
+    note: "Değer döndüren metotlar ve return; 3. ve 4. kapsülün devamı."
+  - title: "Java Tutorials: Defining Methods"
+    url: "https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html"
+    note: "Metot imzasının resmî tanımı; 5. kapsülde bot cevabını doğrulayacağınız yer."
+  - title: "Java API: Math sınıfı"
+    url: "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Math.html"
+    note: "Math'in bütün metotlarının listesi. Her satır bir imzadır; bugünden sonra okuyabilirsiniz."
+  - title: "LeetCode 9 · Palindrome Number"
+    url: "https://leetcode.com/problems/palindrome-number/"
+    note: "7. kapsülde sınıfça gönderdiğimiz soru; geçen haftanın basamak döngüsü."
+  - title: "Vize çalışma planı"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/vize-plani"
+    note: "24 Kasım'daki ara sınava kadar gün gün plan; bugün planın 22. günü."
+---
+
+## Derse Başlamadan Önce
+
+Ara sınava dört gün var ve bugünün konusu, yani metotlar, sınavda sorulmayacak. Bu yüzden bugünkü dersi bilerek hafif tuttuk: yedi kapsül, yeni yazılacak tek bir döngü bile yok. Bugün yapacağımız şey, geçen hafta yazdığınız asal testini, Euclid'i ve palindrom kontrolünü alıp her birine bir **ad** vermek. Bunu yaparken o döngülerin hepsini bir kez daha okumuş olacaksınız; yani bugünkü ders sınav kapsamının dışında ama sınav hazırlığınızın tam içinde.
+
+Tarayıcınızda [Java Playground](https://dev.java/playground/) açık olsun. Bugünden itibaren kod kutularımız `Main` adlı tam bir sınıf olarak yazılıyor, çünkü metotlar bir sınıfın içinde yaşar. Playground tam bir sınıfı kendiliğinden çalıştırmadığı için kutuların sağ üstündeki düğme kodu, gereken son satırla (`Main.main(null);`) birlikte kopyalıyor; Playground'da yapıştırıp Run'a basmanız yeterli.
+
+## Günün Hikayesi: On Bir Satır
+
+22 Mart 2016 günü, dünyanın dört bir yanındaki yazılımcılar sabah işe geldiklerinde garip bir şeyle karşılaştılar: bir gün önce sorunsuz çalışan projeleri artık derlenmiyordu. Hata mesajı hep aynıydı ve kimsenin adını bile duymadığı küçük bir parçadan söz ediyordu: `left-pad` bulunamadı.
+
+Olayın arkasında Azer Koçulu adında, Türkiye'de doğup büyümüş bir yazılımcı vardı. Azer, yazdığı küçük kod parçalarını herkes kullanabilsin diye JavaScript dünyasının ortak deposuna koymuştu. Bir paketinin adı yüzünden bir şirketle anlaşmazlığa düştü, depoyu işleten kurum şirketten yana karar verince de kızdı ve o depodaki 273 paketinin hepsini bir gecede geri çekti.
+
+Bu paketlerden biri `left-pad` idi. Yaptığı iş şuydu: bir metin alır, istenen uzunluğa ulaşana kadar soluna boşluk ekler ve geri verir. Fişlerde tutarları sağa hizalamak için kullandığınız türden bir yardımcı. Tamamı **on bir satırdı.**
+
+Kimse o on bir satırı doğrudan kullandığını bilmiyordu. Ama onların kullandığı araç başka bir aracı, o araç bir diğerini, o da `left-pad`'i çağırıyordu. Facebook'un, Netflix'in, Airbnb'nin mühendislerinin her gün kullandığı araçlar bu zincirin bir yerindeydi. On bir satır ortadan kalkınca zincirin tamamı koptu ve depoyu işleten kurum, tarihinde ilk kez, silinmiş bir paketi sahibinin isteği dışında geri yüklemek zorunda kaldı.
+
+Bu hikayeden bugün için iki şey çıkarıyoruz. Birincisi, yazılım dünyası devasa programlardan değil, **küçük, adı konmuş, tek bir iş yapan parçalardan** kuruludur ve bu parçalara Java'da **metot** denir. İkincisi, o on bir satırı yazmak için gereken her şeyi geçen haftadan biliyorsunuz: bir döngü ve bir koşul. Eksik olan tek şey, yazdığınız döngüye bir ad verip başkalarının da çağırabileceği hale getirmek. Dersin sonunda `left-pad`'in Java sürümünü okuyacak ve "bunu ben de yazardım" diyeceksiniz.
+
+## Haftanın Bulmacası
+
+<Puzzle title="Üç kere aynı sekiz satır" kind="tahmin">
+
+Bir arkadaşınız geçen haftanın asal testini üç sayı için kullanmak istemiş. Metot bilmediği için kodu kopyalayıp iki kez yapıştırmış, sonra değişken adlarını tek tek düzeltmiş. Program derleniyor ve çalışıyor.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int n1 = 17;
+        boolean asal1 = true;
+        for (int i = 2; i * i <= n1; i++) {
+            if (n1 % i == 0) {
+                asal1 = false;
+                break;
+            }
+        }
+        System.out.println(n1 + " asal mi: " + asal1);
+
+        int n2 = 91;
+        boolean asal2 = true;
+        for (int i = 2; i * i <= n2; i++) {
+            if (n2 % i == 0) {
+                asal2 = false;
+                break;
+            }
+        }
+        System.out.println(n2 + " asal mi: " + asal2);
+
+        int n3 = 97;
+        boolean asal3 = true;
+        for (int i = 2; i * i <= n3; i++) {
+            if (n2 % i == 0) {
+                asal3 = false;
+                break;
+            }
+        }
+        System.out.println(n3 + " asal mi: " + asal3);
+    }
+}
+```
+
+İki dakikanız var. Program üç satır yazıyor; biri yanlış. Hangisi ve neden?
+
+<details>
+<summary>Cevap</summary>
+
+Program `97 asal mi: false` yazıyor, oysa 97 asaldır. Üçüncü kopyada döngü koşulu `n3` ile düzeltilmiş ama içerideki satırda `n2 % i` kalmış; arkadaşınız bir yeri düzeltmeyi unutmuş. Program 97'yi değil, hâlâ 91'i bölüyor.
+
+Derleyici bu hatayı göremez, çünkü `n2` geçerli bir değişkendir. Kod üç kez yazıldığı için hatanın saklanacağı üç yer vardı; yüz sayı için yüz yer olacaktı.
+
+</details>
+
+</Puzzle>
+
+Bu hatanın adı yazılım dünyasında bellidir: kopyala-yapıştır hatası. Çözümü daha dikkatli kopyalamak değildir; çözümü **hiç kopyalamamaktır**. Asal testini bir kez yazıp ona bir ad verirseniz, üç sayı için üç kez **çağırırsınız** ve düzeltilecek tek bir yer kalır. Bugünün konusu bu.
+
+## Kapsüller
+
+<Kapsul n={1} title="Zaten kullanıyordunuz" fikir="Metot, adı olan ve çağrıldığında bir iş yapan kod parçasıdır. İlk gününüzden beri başkalarının yazdığı metotları çağırıyorsunuz." sinifta="Sınıfa soruyoruz: 144'ün karekökünü bulan bir döngüyü şu an yazabilir misiniz? Bir dakika düşünün. Sonra tek satırda çağırıyoruz ve asıl soruyu soruyoruz: bu satırın arkasındaki kodu kim, ne zaman yazdı?" dene="Kutuyu çalıştırın ve her satır için önce çıktıyı tahmin edin. Sonra son satıra bakın: karekök ikinin karesi neden tam 2 çıkmıyor? Cevabı 3. haftadan biliyorsunuz." istem="Java'daki Math sınıfından, birinci sınıf öğrencisinin işine yarayacak beş metot seç. Her biri için tek satırlık bir çağrı örneği ve döndürdüğü değeri yaz; açıklama ekleme. Sonra bana sor: Math.max(3, 7.5) çağrısı hangi tipte bir değer döndürür?" dogrula="Cevap double: 7.5. Botun verdiği beş çağrıyı Playground'da çalıştırıp döndürdüğü değerleri kendi gözünüzle görün; listeyi Oracle'ın Math sayfasıyla karşılaştırın.">
+
+Dokuz haftadır yazdığınız `System.out.println(...)` bir metot çağrısıdır. `klavye.nextInt()` bir metot çağrısıdır. Geçen hafta pi sayısını bulurken kullandığınız `Math.random()` da öyle. Bunların hiçbirini siz yazmadınız; yalnızca adını söylediniz, parantez açtınız ve iş yapıldı. Bir metodu kullanmak için içinin nasıl yazıldığını bilmeniz gerekmez; **adını, ona ne vereceğinizi ve size ne geri vereceğini** bilmeniz yeter.
+
+Java, matematik işleri için `Math` adında hazır bir metot kutusuyla gelir:
+
+<CodeTry title="Math: hazır metotlar" hint="Çıktılar sırasıyla 12.0, 1024.0, 12, 5 ve 2.0000000000000004. Parantezin içine yazdığınız değer metoda gider; metot bir değer hesaplar ve o değer, çağrının yazıldığı yere geri gelir." sinif>
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(Math.sqrt(144));
+        System.out.println(Math.pow(2, 10));
+        System.out.println(Math.max(7, 12));
+        System.out.println(Math.abs(-5));
+        System.out.println(Math.sqrt(2) * Math.sqrt(2));
+    }
+}
+```
+
+</CodeTry>
+
+`Math.sqrt(144)` satırını okurken zihninizde şunu canlandırın: 144 sayısı bir kapıdan içeri girer, içeride sizin görmediğiniz bir hesap yapılır ve aynı kapıdan 12.0 çıkar. Çıkan değer, çağrının yazıldığı yerin **yerine geçer**; yani o satır artık `System.out.println(12.0)` gibi davranır. Bu "yerine geçme" fikrini aklınızda tutun, çünkü birazdan kendi metotlarınız da aynı şeyi yapacak.
+
+> [!nerede] Sahada: karekökü kim yazdı?
+> `Math.sqrt` satırının arkasındaki hesabın kökeni 1990'ların başına, Sun Microsystems'te yazılmış bir matematik kütüphanesine dayanır. O kod otuz yıldır milyarlarca cihazda her gün çalışıyor ve onu çağıran yazılımcıların neredeyse hiçbiri içini görmedi. Bir metodun en büyük başarısı budur: bir kez doğru yazılır, sonra herkes onu unutabilir.
+
+</Kapsul>
+
+<Kapsul n={2} title="İlk metodunuz: çizgi çek" fikir="Bir işi bir kez tarif edip ona ad verirsiniz; sonra adını söylediğiniz her yerde o iş yapılır. Parametre, tarifin içinde bıraktığınız boşluktur." renk="teal" sinifta="Bir gönüllü main olur, bir gönüllü cizgi metodu. Main programı yüksek sesle okur; cizgi() satırına gelince susar ve arkadaşına döner. Arkadaşı işini bitirince main kaldığı yerden devam eder. Sonra main bu kez 'cizgi, beş' der: ne değişti?" dene="Kutuyu çalıştırın. Sonra main'e bir cizgi(30) satırı ekleyin. Sonra cizgi metodunun içindeki tireyi yıldıza çevirin ve üç çizginin birden değiştiğini görün: tek yerde değişiklik, üç yerde sonuç." istem="Aşağıdaki programda satırların hangi sırayla çalıştığını numaralandır: main'in hangi satırından cizgi metoduna gidiliyor, metot bitince nereye dönülüyor? Kodu değiştirme. Sonra bana sor: cizgi metodunun tanımını main'in üstüne taşırsam çıktı değişir mi? [KOD]" dogrula="Değişmez. Java programı her zaman main'den başlatır; metotların dosyada hangi sırayla yazıldığı çalışma sırasını etkilemez. Playground'da yer değiştirip deneyin.">
+
+Fişlerin, menülerin, raporların arasına çizgi çekmek isteyen bir programcı her seferinde yirmi tire yazmak zorunda değildir. İşi bir kez tarif eder ve ona bir ad verir:
+
+```java
+static void cizgi() {
+    System.out.println("--------------------");
+}
+```
+
+Bu dört satırı parça parça okuyalım. `cizgi` metodun adıdır; onu siz seçtiniz. Parantezlerin içi boş, çünkü bu metot çalışmak için sizden hiçbir bilgi istemiyor. Süslü parantezlerin arası metodun **gövdesi**, yani ad verdiğiniz işin kendisi. `void` kelimesi "bu metot işini yapar ama geriye bir değer vermez" demektir; biraz sonra değer veren metotları da göreceğiz. `static` kelimesini şimdilik bir kalıp olarak yazın; ne anlama geldiğini bahar döneminde nesneleri öğrenirken konuşacağız.
+
+Bu dört satır **tanımdır** ve tek başına hiçbir şey yapmaz; tarif defterine yazılmış bir tarif gibi bekler. İşin yapılması için metodu **çağırmanız** gerekir: `cizgi();`
+
+<Diagram name="h09-akis" caption="Çalışma akışı. Program main'den başlar; cizgi() satırına gelince oradan ayrılır, metodun gövdesini çalıştırır ve çağrının yapıldığı yere geri döner. Numaralar satırların çalışma sırasını gösteriyor." dot width="560px" />
+
+Şimdi bir adım daha atalım. Her çizgi yirmi tire olmak zorunda mı? Kısa bir başlığın altına beş tire, uzun bir raporun altına kırk tire isteyebilirsiniz. Bunun için tarifin içinde bir **boşluk** bırakırsınız ve o boşluğa bir ad verirsiniz:
+
+<CodeTry title="Parametreli çizgi" hint="uzunluk bir parametredir: metodun içinde kullanılan, değeri çağrı sırasında belli olan bir değişken. cizgi(5) yazdığınızda 5 sayısı uzunluk kutusuna konur ve gövde o değerle çalışır." sinif>
+
+```java
+public class Main {
+
+    static void cizgi(int uzunluk) {
+        for (int i = 0; i < uzunluk; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        System.out.println("FIS");
+        cizgi(5);
+        System.out.println("Kalem   15 TL");
+        System.out.println("Defter  45 TL");
+        cizgi(12);
+        System.out.println("Toplam  60 TL");
+        cizgi(12);
+    }
+}
+```
+
+</CodeTry>
+
+> [!tanim] Parametre ve argüman
+> **Parametre**, metodun tanımında parantez içine yazdığınız değişkendir: `int uzunluk`. **Argüman**, metodu çağırırken o değişkene gönderdiğiniz değerdir: `cizgi(5)` çağrısındaki `5`. Parametre boş kutudur, argüman kutuya konan şeydir. Mülakatlarda ikisinin farkı sorulur; günlük konuşmada yazılımcılar çoğu zaman ikisine de parametre der.
+
+</Kapsul>
+
+<Kapsul n={3} title="return: metot size bir cevap getirir" fikir="Bazı metotlar bir iş yapmaz, bir soruyu cevaplar. Cevabı size return ile geri verir ve siz o cevabı istediğiniz yerde kullanırsınız." renk="emerald" sinifta="Bulmacadaki üç kopyalı programa dönüyoruz ve sınıfça tek bir asalMi metoduna indiriyoruz. Sonra tahtaya soruyu yazıyoruz: 1 ile 100 arasında kaç asal sayı var? Tahminleri topluyoruz, sonra main'e üç satır yazıp programa soruyoruz." dene="Kutuyu çalıştırın: 25 asal sayı. Sonra sınırı 1000 yapın. Sonra main'e, aralarında 2 fark olan asal çiftlerini (ikiz asallar: 3 ile 5, 11 ile 13) yazdıran bir döngü ekleyin; asalMi'yi iki kez çağırmanız yeterli." istem="Aşağıdaki asalMi metodunda üç tane return var. n = 91 için hangisi çalışır, n = 97 için hangisi, n = 1 için hangisi? Her biri için tek cümle yaz, kodu değiştirme. Sonra bana sor: döngünün içindeki return çalıştığında döngünün kalan turlarına ne olur? [KOD]" dogrula="91 için döngünün içindeki return false (i = 7'de), 97 için en sondaki return true, 1 için en baştaki return false. return çalıştığı an metot biter; döngünün kalanı çalışmaz. Geçen haftanın break'ine artık gerek kalmadığına dikkat edin.">
+
+`cizgi` bir iş yapıyordu: ekrana tire yazıyordu. Şimdi başka türden bir metot yazacağız; bu metot ekrana hiçbir şey yazmayacak, yalnızca bir **soruyu cevaplayacak**: bu sayı asal mı? Cevap evet ya da hayır olduğu için metodun vereceği değerin tipi `boolean`. O tipi, `void` kelimesinin yerine yazıyoruz:
+
+<CodeTry title="asalMi: geçen haftanın döngüsü ad aldı" hint="main'e bakın: asal testinin nasıl yapıldığına dair tek bir ayrıntı yok. main yalnızca soruyu soruyor, cevabı kullanıyor. Kodun bu şekilde kendi kendini anlatmasına okunabilirlik denir." sinif>
+
+```java
+public class Main {
+
+    static boolean asalMi(int n) {
+        if (n < 2) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int sayac = 0;
+        for (int i = 1; i <= 100; i++) {
+            if (asalMi(i)) {
+                sayac++;
+            }
+        }
+        System.out.println("100'e kadar asal sayisi: " + sayac);
+    }
+}
+```
+
+</CodeTry>
+
+`return` kelimesi iki iş birden yapar: metodu **o anda bitirir** ve yanındaki değeri çağırana **geri gönderir**. `asalMi(91)` çağrısında döngü 7'ye geldiğinde bölen bulunur, `return false` çalışır ve metot orada biter; geriye kalan sayılar denenmez. Geçen hafta bu işi bir `boolean` bayrak ve bir `break` ile yapıyordunuz; bugün ikisine de gerek kalmadı, çünkü `return` hem cevabı veriyor hem de aramayı durduruyor.
+
+Asıl güzellik `main`'in içinde. `if (asalMi(i))` satırını yüksek sesle okuyun: "eğer i asalsa". Kod neredeyse Türkçe bir cümle gibi okunuyor. Bulmacadaki arkadaşınızın yirmi dört satırı, burada tek bir çağrıya indi ve yanlış değişkeni bölme ihtimali ortadan kalktı, çünkü bölme işlemi artık tek bir yerde yazılı.
+
+<Mulakat soru="Bir tam sayının basamaklarının toplamını döndüren bir metot yazın. Örneğin 4725 için 18 dönmeli." kaynak="LeetCode 258 ve 1281'in çekirdeği" ipucu="Döngüyü geçen hafta yazdınız. Bugün yeni olan yalnızca üç şey: metodun adı, parametresi ve sonucu ekrana yazmak yerine geri vermek.">
+
+```java
+static int basamakToplami(int n) {
+    int toplam = 0;
+    while (n > 0) {
+        toplam = toplam + n % 10;
+        n = n / 10;
+    }
+    return toplam;
+}
+```
+
+Mülakatçının bakacağı ilk şey metodun **ekrana bir şey yazıp yazmadığıdır**. İçine `System.out.println(toplam)` koyan aday soruyu yanlış anlamıştır: soru "döndüren" diyor, "yazdıran" değil. Sonucu döndürürseniz çağıran kişi onu yazdırabilir, başka bir sayıyla toplayabilir ya da bir koşulda kullanabilir; yazdırırsanız sonuç ekranda kalır ve kimsenin eline geçmez. Bu ayrım bir sonraki kapsülün konusu.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={4} title="return ile println aynı şey değil" fikir="println sonucu ekranda gösterir ve sonuç orada kalır. return sonucu size verir ve onunla istediğinizi yaparsınız." renk="rose" sinifta="İki dakika, kağıt kalem, telefon kapalı. Aşağıdaki mülakat sorusundaki program ekrana ne yazar? Herkes kendi cevabını yazar, sonra yanındakiyle karşılaştırır. Cevabı farklı çıkan çiftler hangi satırda ayrıldıklarını bulur." dene="Kutuyu çalıştırın. Sonra main'e int z = kareYaz(5); satırını ekleyip derleme hatasını okuyun. Hatanın söylediği şeyi kendi cümlenizle yazın." istem="Java'da return ile System.out.println arasındaki farkı bir içecek otomatı benzetmesiyle üç cümlede anlat: biri ürünü camın arkasında gösteriyor, diğeri elinize veriyor. Sonra bana sor: void bir metodun sonucunu bir değişkene atamaya çalışırsam ne olur?" dogrula="Derleme hatası olur; void metot geriye değer vermez, atanacak bir şey yoktur. Playground'da kendi derleme hatanızla karşılaştırın.">
+
+Metotları yeni öğrenen herkesin en az bir kez düştüğü çukur budur ve mülakatlarda en çok sorulan ayrımlardan biridir. Bir içecek otomatı düşünün. Bazı otomatlar ürünü camın arkasında yalnızca **gösterir**; görürsünüz ama alamazsınız. Bazıları ürünü alttaki hazneye **düşürür**; elinize alırsınız ve onunla ne isterseniz yaparsınız. `println` birincisidir, `return` ikincisi.
+
+<CodeTry title="Göstermek ve vermek" hint="kareYaz(5) ekrana 25 yazar ve iş orada biter. kareAl(5) hiçbir şey yazmaz; 25'i geri verir ve siz onu bir değişkende saklayabilir, üstüne 1 ekleyebilir, hatta sonucu yeniden kareAl'a verebilirsiniz." sinif>
+
+```java
+public class Main {
+
+    static void kareYaz(int x) {
+        System.out.println(x * x);
+    }
+
+    static int kareAl(int x) {
+        return x * x;
+    }
+
+    public static void main(String[] args) {
+        kareYaz(5);
+
+        int k = kareAl(5);
+        System.out.println(k + 1);
+        System.out.println(kareAl(kareAl(3)));
+    }
+}
+```
+
+</CodeTry>
+
+Çıktı üç satır: `25`, `26` ve `81`. Son satır özellikle öğretici: içteki `kareAl(3)` önce çalışır ve 9 olur; 9, dıştaki çağrının argümanı olur ve 81 çıkar. Bunu `kareYaz` ile yapamazsınız, çünkü `kareYaz` size hiçbir şey vermez.
+
+Buradan bir kural çıkıyor ve bu kuralı dönemin sonuna kadar kullanacaksınız: **hesap yapan bir metot sonucunu döndürür, ekrana yazmaz.** Yazdırıp yazdırmamaya, metodu çağıran karar verir.
+
+<Mulakat soru="Aşağıdaki program ekrana ne yazar? Satır satır yazın." kod={"static int iki(int x) {\n    x = x * 2;\n    System.out.println(\"icerde \" + x);\n    return x + 1;\n}\n\npublic static void main(String[] args) {\n    int a = 3;\n    int b = iki(a);\n    System.out.println(a + \" \" + b);\n}"} kaynak="Java temel bilgi turunun klasik izleme sorusu" ipucu="İki ayrı soru saklı: metot neyi yazdırıyor, neyi döndürüyor? Ve metodun içinde x değişince main'deki a değişir mi?">
+
+Program iki satır yazar:
+
+```
+icerde 6
+3 7
+```
+
+`iki(a)` çağrıldığında `a`'nın değeri olan 3, metodun `x` kutusuna **kopyalanır**. Metot kendi `x`'ini 6 yapar ve bunu yazdırır; sonra 7 döndürür ve `b` 7 olur. `a` ise hâlâ 3'tür, çünkü metot `a`'nın kendisini değil, değerinin bir kopyasını almıştı.
+
+Mülakatçının duymak istediği cümle şudur: "Java'da argümanlar metoda değer olarak geçer; metot kendi kopyası üzerinde çalışır." Bu konunun adı "pass by value" ve onu gelecek hafta, kapsam ve yığın diyagramıyla birlikte ayrıntılı işleyeceğiz. Bugünlük şunu bilmeniz yeter: bir metodun parametresini değiştirmesi, çağıranın değişkenini değiştirmez.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={5} title="İmza bir sözleşmedir" fikir="Bir metodun adı, parametrelerinin tipi ve sırası ile dönüş tipi, metodu yazanla çağıran arasındaki sözleşmedir. Sözleşmede yazmayan şey, felakete yol açar." renk="amber" sinifta="Tahtaya tek bir satır yazıyoruz: static double itki(double sure). Soru: bu metot sonucu hangi birimde veriyor? Kimse bilemez, çünkü yazmıyor. Sonra 125 milyon dolarlık hikayeyi anlatıyoruz ve soruyoruz: bu satırı nasıl yazsaydınız kaza olmazdı?" dene="Kutuyu çalıştırın: iki çağrı farklı sonuç veriyor. Sonra bolum(10) yazıp derleme hatasını okuyun; sonra bolum(10, 4, 2) deneyin. Derleyici sözleşmenin hangi maddelerini denetliyor, hangisini denetleyemiyor?" istem="Java'da bir metodun imzası nelerden oluşur? Tek cümleyle söyle. Sonra şu metot için imzanın bana neleri söylediğini ve neleri SÖYLEMEDİĞİNİ iki madde halinde yaz: static double bolum(double bolunen, double bolen)" dogrula="İmza metodun adı ile parametrelerinin sayısı, tipi ve sırasıdır. Bölenin sıfır olamayacağını ya da sonucun hangi birimde olduğunu imza söylemez; bunlar parametre adlarına ve yorum satırına kalır. Oracle'ın Defining Methods sayfasındaki tanımla karşılaştırın.">
+
+Bir metodun ilk satırına **imza** denir ve bu satır bir sözleşme gibidir. `static double bolum(double bolunen, double bolen)` satırı çağırana şunu söyler: "Bana iki ondalıklı sayı ver, önce bölüneni sonra böleni; ben de sana bir ondalıklı sayı vereyim." Derleyici bu sözleşmenin bir kısmını sizin yerinize denetler: iki yerine bir sayı verirseniz ya da sayı yerine metin verirseniz program derlenmez. Ama denetleyemediği şeyler de vardır.
+
+<CodeTry title="Sıra önemlidir" hint="bolum(10, 4) 2.5 verir, bolum(4, 10) ise 0.4. İkisi de derlenir, çünkü ikisi de 'iki ondalıklı sayı' şartını sağlar. Hangisinin bölünen olduğunu derleyici bilemez; bunu yalnızca parametrelere verdiğiniz adlar söyler." sinif>
+
+```java
+public class Main {
+
+    static double bolum(double bolunen, double bolen) {
+        return bolunen / bolen;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(bolum(10, 4));
+        System.out.println(bolum(4, 10));
+    }
+}
+```
+
+</CodeTry>
+
+**Sahada: Mars'a 125 milyon dolarlık bir birim hatası.** 1998'in sonunda NASA, Mars'ın iklimini inceleyecek bir uydu fırlattı: Mars Climate Orbiter. Uydunun yörünge hesapları iki ayrı ekibin yazılımına dayanıyordu. Yüklenici firmanın yazılımı, motorların verdiği itkiyi hesaplayıp bir sayı döndürüyordu; NASA'nın yazılımı o sayıyı alıp uydunun rotasını düzeltiyordu. İki ekip de işini doğru yapmıştı ve iki program da hatasız çalışıyordu.
+
+Tek bir sorun vardı. Yüklenicinin metodu sonucu Amerikan birimiyle, pound cinsinden döndürüyordu. NASA'nın yazılımı ise aynı sayıyı metrik birimle, newton olarak okuyordu. Bir pound yaklaşık 4,45 newton eder; yani her rota düzeltmesi olması gerekenden dört buçuk kat küçük hesaplandı. Dokuz buçuk ay süren yolculuk boyunca bu küçük fark birikti. 23 Eylül 1999'da uydu Mars'a planlanandan yüz kilometre kadar daha alçaktan yaklaştı, atmosfere girdi ve parçalandı.
+
+Hatanın kaynağı bir döngü ya da bir formül değildi; iki metot arasındaki **sözleşmede yazmayan bir ayrıntıydı**. Dönen sayının tipi doğruydu, ama birimi hiçbir yerde yazmıyordu. O gün metodun adı `itkiNewton` olsaydı ya da başına tek satırlık bir yorum konsaydı, uydu bugün belki hâlâ Mars'ın çevresinde dönüyor olacaktı.
+
+> [!not] Bugünden çıkan alışkanlık
+> Bir metot yazarken adını ve parametre adlarını, sizden sonra gelecek kişinin başka hiçbir yere bakmadan anlayacağı şekilde seçin. `hesapla(a, b)` yerine `bolum(bolunen, bolen)`; `f(x)` yerine `asalMi(n)`. Birim varsa adına ekleyin: `sureSaniye`, `tutarTL`. Yapay zekanın yazdığı metotlarda da ilk bakacağınız yer burasıdır: imza, metodun ne yaptığını tek başına anlatıyor mu?
+
+</Kapsul>
+
+<Kapsul n={6} title="Metot metodu çağırır: küçük parçalardan büyük iş" fikir="Bir metot, başka bir metodu çağırabilir. Zor bir işi, zaten çözdüğünüz kolay işlerin üstüne kurarsınız." renk="violet" sinifta="Geçen hafta ekok'u EBOB'dan tek satırla bulmuştuk. Bugün soruyoruz: ekok metodunun gövdesi kaç satır olur? Tahminleri alıyoruz, sonra yazıyoruz. Ardından üç sayının en büyüğünü bulan metodu sınıf yazar; tek kural var, yeni bir if yazmak yasak." dene="Kutuyu çalıştırın. Sonra ebob metodunun içini bilerek bozun (örneğin return a yerine return b yazın) ve ekok'un da bozulduğunu görün. Geri düzeltin. Bir hatayı tek yerde düzeltmenin iki metodu birden onardığını fark ettiniz mi?" istem="Bana ebob metodunu çağırarak yazılabilecek üç küçük metot fikri ver: yalnızca metotların adını ve ne döndüreceklerini yaz, gövdelerini YAZMA; onları ben yazacağım. Örnek: bir kesri sadeleştirmek." dogrula="Yazdığınız her metodu Playground'da iki örnekle deneyin. Makul fikirler: ekok, aralarında asal mı (ebob 1 ise), bir kesrin sadeleşmiş payı ve paydası.">
+
+`left-pad` hikayesindeki zinciri hatırlayın: bir araç başka bir aracı, o da bir diğerini çağırıyordu. Aynı şeyi kendi programınızın içinde, kendi metotlarınızla yapabilirsiniz ve buna **kompozisyon** denir.
+
+<CodeTry title="ekok, ebob'un omuzlarında" hint="ekok metodunun içinde tek bir döngü yok; döngü ebob'un içinde ve ekok onu yalnızca çağırıyor. enBuyuk3 de enBuyuk'u iki kez çağırıyor: önce ilk ikisinin büyüğünü buluyor, sonra onu üçüncüyle karşılaştırıyor." sinif>
+
+```java
+public class Main {
+
+    static int ebob(int a, int b) {
+        while (b != 0) {
+            int kalan = a % b;
+            a = b;
+            b = kalan;
+        }
+        return a;
+    }
+
+    static int ekok(int a, int b) {
+        return a / ebob(a, b) * b;
+    }
+
+    static int enBuyuk(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    static int enBuyuk3(int a, int b, int c) {
+        return enBuyuk(enBuyuk(a, b), c);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("EBOB: " + ebob(252, 105));
+        System.out.println("EKOK: " + ekok(12, 18));
+        System.out.println("En buyuk: " + enBuyuk3(4, 9, 7));
+    }
+}
+```
+
+</CodeTry>
+
+Çıktı `EBOB: 21`, `EKOK: 36` ve `En buyuk: 9`. `ekok` metodunu yazarken Euclid'in nasıl çalıştığını hatırlamanız gerekmedi; yalnızca `ebob` diye bir metodun var olduğunu ve iki sayı alıp EBOB'larını döndürdüğünü bilmeniz yetti. Büyük programlar böyle yazılır: her metot kendi küçük işini bilir, geri kalanını güvendiği başka metotlara bırakır. Bir metodun gövdesi bir ekrandan uzunsa, büyük olasılıkla içinde ad verilmeyi bekleyen başka bir metot saklıdır.
+
+<Mulakat soru="Üç tam sayının en büyüğünü döndüren bir metot yazın. Sonra: dört sayı için ne yaparsınız?" kaynak="İlk tur ısınma sorusu; asıl bakılan şey takip sorusuna verdiğiniz cevap" ipucu="Üç sayıyı tek tek karşılaştırmak mümkün ama dördüncü sayı gelince çöker. İki sayının büyüğünü bulan bir metodunuz olsaydı?">
+
+Çoğu aday iç içe `if`'lerle başlar ve üç sayı için bunu doğru yazar. Mülakatçı "dört sayı olsa?" dediğinde ise karşılaştırma sayısı katlanır ve kod okunmaz hale gelir.
+
+İyi cevap işi küçültür: önce iki sayının büyüğünü bulan `enBuyuk(a, b)` metodunu yazın, sonra onu kullanın. Üç sayı için `enBuyuk(enBuyuk(a, b), c)`, dört sayı için `enBuyuk(enBuyuk(a, b), enBuyuk(c, d))`. Yeni bir karşılaştırma yazmadınız; var olan parçayı yeniden kullandınız.
+
+Daha da ileri gitmek isterseniz şunu ekleyin: "Java'da bunun hazırı var, `Math.max`; gerçek bir projede kendi metodumu yazmaz, onu çağırırdım." Hazır metodu bilmek ve yerinde kullanmak, mülakatta eksi değil artı puandır.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={7} title="Kilit açıldı: ilk LeetCode gönderiminiz" fikir="Geçen hafta 'LeetCode sizden bir metot ister' demiştik. Bugün o metodu yazabiliyorsunuz." renk="accent" sinifta="Projeksiyonda LeetCode'un 9 numaralı sorusunu açıyoruz. Site bize içi boş bir metot veriyor: public boolean isPalindrome(int x). Geçen haftanın basamak döngüsünü sınıfça gövdeye yazıyoruz, Submit'e basıyoruz ve yeşil Accepted yazısını birlikte görüyoruz. Bu akşam aynısını kendi hesabınızda siz yapacaksınız." dene="Bu akşam LeetCode'da hesap açın ve sırasıyla şu üç soruyu gönderin: 2235 Add Two Integers, 9 Palindrome Number, 258 Add Digits. Üçünün de gövdesi bugünkü kapsüllerde var. Sınava hazırlanırken ara verdiğinizde iyi bir mola olur." istem="Java antrenörü gibi davran. LeetCode'da çözdüğüm sorunun metodunu aşağıya yapıştırıyorum ve Wrong Answer aldım. Çözümü düzeltme ve doğru kodu yazma. Bana yalnızca metodumun yanlış cevap vereceği tek bir girdi söyle; o girdiyi kağıtta izleyip hatayı kendim bulacağım. [KOD]" dogrula="Asıl doğrulayıcı sitenin kendisidir: Accepted yazısını gördüyseniz metot bütün gizli testlerden geçmiştir. Botun verdiği girdiyi kağıtta izleyin; çoğu zaman bir köşe durumudur: sıfır, negatif sayı ya da sıfırla biten sayı.">
+
+Geçen haftanın 12. kapsülünde antrenman sitelerini sayarken bir not düşmüştük: LeetCode ve CodingBat'te `main` yazmazsınız, site size içi boş bir metot verir ve gövdesini doldurmanızı ister. O gün bu cümle bir engeldi. Bugün değil.
+
+LeetCode'un 9 numaralı sorusu sizden bir sayının palindrom olup olmadığını soruyor ve şu iskeleti veriyor:
+
+```java
+class Solution {
+    public boolean isPalindrome(int x) {
+
+    }
+}
+```
+
+İmzayı okuyun, çünkü 5. kapsülden beri okuyabiliyorsunuz: metodun adı `isPalindrome`, bir tam sayı alıyor, `boolean` döndürüyor. Gövdesi geçen haftanın 8. kapsülündeki basamak döngüsü; yalnızca sonucu ekrana yazmak yerine `return` ile veriyorsunuz ve negatif sayıları en başta eliyorsunuz:
+
+```java
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0) {
+            return false;
+        }
+        int kalan = x;
+        int ters = 0;
+        while (kalan > 0) {
+            ters = ters * 10 + kalan % 10;
+            kalan = kalan / 10;
+        }
+        return x == ters;
+    }
+}
+```
+
+Bu metodu gönderdiğinizde LeetCode onu binlerce gizli girdiyle çağırır; yani sizin metodunuz, başkasının yazdığı bir programın parçası olur. İmza iki tarafın da uyduğu sözleşmedir: site `isPalindrome` adını ve `boolean` cevabını bekler, siz de tam onu verirsiniz.
+
+Şimdi dersin başındaki hikayeye geri dönelim ve açık kalan sözü tutalım. İşte interneti durduran on bir satırın Java'daki karşılığı:
+
+```java
+static String solaDoldur(String metin, int uzunluk) {
+    String sonuc = metin;
+    while (sonuc.length() < uzunluk) {
+        sonuc = " " + sonuc;
+    }
+    return sonuc;
+}
+```
+
+Bir imza, bir `while`, bir `return`. `solaDoldur("42", 6)` çağrısı, başında dört boşluk olan `    42` metnini döndürür. İçindeki tek yeni şey `sonuc.length()`; o da metnin uzunluğunu döndüren bir başka metot çağrısı ve onu 14. haftada metinleri işlerken ayrıntılı göreceksiniz. Bu metodu okuyabiliyorsanız, 2016'nın o sabahında dünyayı durduran kodu okuyabiliyorsunuz demektir.
+
+> [!neden] Yapay zeka çağında neden metot yazmayı öğreniyoruz?
+> Bugün bir asistana "bana bir stok programı yaz" dediğinizde size metotlardan oluşan bir kod verir. O kodu teslim almadan önce yapacağınız şey, bugün öğrendiğiniz üç soruyu sormaktır: bu metodun imzası ne söz veriyor, sonucu döndürüyor mu yoksa yalnızca yazdırıyor mu ve hangi başka metotlara güveniyor? Yazılımcının işi giderek daha çok, iyi adlandırılmış küçük parçaları tasarlamak ve başkasının, bu başkası bir yapay zeka olsa bile, yazdığı parçaların sözleşmeye uyup uymadığını denetlemek haline geliyor. Mars Climate Orbiter'ı düşüren şey kod yazamamak değildi; iki parça arasındaki sözleşmeyi kimsenin okumamasıydı.
+
+</Kapsul>
+
+## Ara Sınav: 24 Kasım Salı 17.00
+
+> [!uyari] Sınav bilgisi
+> **24 Kasım 2026 Salı, 17.00-18.00.** A şubesi: A304, A305, A306. B şubesi: A306, A404, A405, A406. Kağıt üzerinde, telefon ve bilgisayar kapalı. Kapsam **1-8. haftalar**; bugünkü metotlar sınavda sorulmayacak. Yanınıza öğrenci kimliğinizi ve kaleminizi almanız yeterli.
+
+Önünüzde dört gün var ve bu süre, iyi kullanılırsa fazlasıyla yeter. [Vize planı](/vize-plani) sizi gün gün götürüyor: yarın, Cumartesi günü, kendi deneme kağıdınızı asistana yazdırıp altmış dakikada çözeceksiniz; Pazar günü yanlış yaptığınız konulara dönecek ve portfolyonuzun KT1 sürümündeki seçim yapısını kağıda bakmadan yazmayı deneyeceksiniz; Pazartesi günü yalnızca cep kartına göz atıp erken yatacaksınız.
+
+Bugünkü dersten sınava taşıyacağınız şey metotlar değil, metotların **içindeki döngüler**. `asalMi`'nin, `ebob`'un, `basamakToplami`'nin ve palindrom kontrolünün gövdeleri sınav kapsamının tam ortasında duruyor. Her birini bir kağıda, bir sayı seçerek, iz tablosuyla bir kez izleyin: asal testini 91 ile, Euclid'i 252 ve 105 ile, basamak toplamını 4725 ile, palindromu 1200 ile. Dört iz tablosu, yarım saat; sınavın en çok puan getiren becerisini çalışmış olursunuz.
+
+## Temel Kavramlar
+
+- **Metot (method)**: Adı olan, çağrıldığında bir iş yapan ya da bir soruyu cevaplayan kod parçası. Bir kez yazılır, istenildiği kadar çağrılır.
+- **Tanım ve çağrı**: Tanım, metodun ne yaptığını anlatan tariftir ve tek başına çalışmaz. Çağrı, metodun adını yazıp parantez açarak o tarifi çalıştırmaktır.
+- **Çalışma akışı**: Program `main`'den başlar; bir çağrıya gelince metoda gider, metot bitince çağrının yapıldığı yere döner.
+- **Parametre ve argüman**: Parametre tanımdaki boş kutudur (`int uzunluk`), argüman çağrıda o kutuya konan değerdir (`5`).
+- **void**: Geriye değer vermeyen metot; bir iş yapar ve biter.
+- **return**: Metodu o anda bitirir ve yanındaki değeri çağırana geri verir. Dönen değer, çağrının yazıldığı yerin yerine geçer.
+- **Dönüş tipi**: Metodun geri vereceği değerin tipi; imzada metodun adından hemen önce yazılır (`boolean`, `int`, `double`, `String` ya da `void`).
+- **İmza**: Metodun adı ile parametrelerinin sayısı, tipi ve sırası. Yazanla çağıran arasındaki sözleşmedir.
+- **Kompozisyon**: Bir metodun başka bir metodu çağırması; büyük işi küçük, çözülmüş parçaların üstüne kurmak.
+- **Math sınıfı**: Java'nın hazır matematik metotları: `Math.sqrt`, `Math.pow`, `Math.max`, `Math.min`, `Math.abs`, `Math.random`.
+
+## Sahadan Örnekler
+
+- **Telefonunuzdaki her dokunuş bir metot çağrısıdır.** Bir uygulamada "Gönder" düğmesine bastığınızda, o düğmeye bağlanmış bir metot çalışır; o metot mesajı hazırlayan bir başkasını, o da ağa gönderen bir diğerini çağırır. Uygulama geliştirmek, büyük ölçüde bu zincirin halkalarını yazmaktır.
+- **Bir bankanın faiz hesabı tek bir metotta yaşar.** Faiz oranı değiştiğinde binlerce ekranın tek tek düzeltilmesi gerekmez; hesabı yapan metot değişir ve onu çağıran her yer aynı anda güncellenir. Bulmacadaki kopyala-yapıştır hatasının bankadaki karşılığını düşünün.
+- **Açık kaynak dünyası imzalarla konuşur.** Bugün kullandığınız her kütüphane, başkalarının yazdığı metotların bir listesidir ve o listenin her satırı bir imzadır. Bir yazılımcının gününün önemli bir kısmı, hiç tanımadığı birinin yazdığı metodun imzasını okuyup ona güvenerek geçer.
+
+## Portfolyo
+
+KT2 **27 Kasım Cuma 23.59**'da ve şartları değişmedi: `0` gözcüsüyle dönen bir menü döngüsü ve en az bir girdi doğrulama döngüsü. Metotlar KT2'nin şartı değil; sınavdan önce portfolyonuza metot eklemek zorunda değilsiniz.
+
+Ama bugünden sonra uygulamanıza başka bir gözle bakacaksınız. `switch`'inizin her `case`'inin altında birkaç satır kod var ve o satırların her biri ad verilmeyi bekleyen birer metot: `urunEkle`, `sepetiGoster`, `indirimHesapla`. Menü seçeneklerini metotlara taşımak KT3'ün (18 Aralık) şartı olacak. Sınavdan sonra, 25-27 Kasım arasında KT2'yi bitirirken bir seçeneği deneme olarak metoda taşırsanız, Aralık'ta işiniz yarı yarıya azalmış olur.
+
+Deponuza push etmeye her zamanki gibi devam edin. Göndermeden önce kendi bilgisayarınızda `javac Uygulama.java` ile derleyip programa `0` vererek hatasız bittiğini görün; KT2'de deponuzda ne varsa o sayılır.
+
+## Laboratuvara Hazırlık
+
+Lab 9, A şubesi **25 Kasım Çarşamba 13.15**, B şubesi **26 Kasım Perşembe 15.15**, yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Sınavın ertesi günü olduğu için hafif bir lab: yeni döngü yok, geçen haftanın beş döngüsünü metoda saracaksınız.
+
+Bu labda bir şey değişiyor: **hiçbir yere dosya yüklemeyeceksiniz.** Lab sayfasında tek dosyalık bir iskelet var; içinde gövdesi boş beş metot ve hazır bir kontrol bölümü bulunuyor. Siz metotları doldurdukça program kendi kendini sınayacak ve ekrana "20 testten kaçı geçti" yazacak. Lab sorumlu hocanız sonucu ekranınızda görecek, metotlarınızdan birini size anlattıracak ve yoklama listesine işleyecek. Hesap açmak, depo kabul etmek gerekmiyor; iskelet Java Playground'da bile çalışıyor.
+
+Lab'a gelirken bugünkü yedi kapsülün kod kutularını Playground'da birer kez çalıştırmış olmanız yeterli. Ayrıntı ve iskelet: [Lab 9](/laboratuvar/lab-09).
+
+## Tartışma Soruları
+
+1. Azer Koçulu kendi yazdığı kodu geri çekti ve binlerce proje durdu. Sizce hata kimdeydi: paketi silen kişide mi, on bir satır için başkasına bağımlı olan projelerde mi, yoksa silmeye izin veren depoda mı? Küçük bir işi kendiniz yazmak ile hazırını kullanmak arasında nasıl karar verirsiniz?
+2. Mars Climate Orbiter'da iki ekibin de kodu "doğru" çalışıyordu. Bir programın doğru olması ile iki programın birlikte doğru çalışması arasındaki fark nedir? Bu farkı kim denetlemelidir?
+3. `asalMi` metodu ekrana hiçbir şey yazmıyor. Bir arkadaşınız "çıktı vermeyen metot ne işe yarar?" diye sorsa ona ne cevap verirsiniz?
+4. Bir metodun adını `hesapla` koymak ile `ekok` koymak arasında derleyici açısından hiçbir fark yok. O halde iyi ad seçmek kimin için önemlidir? Altı ay sonraki siz, bu "kim"lerden biri mi?
+5. Bir asistandan elli satırlık tek bir `main` yerine beş küçük metot istemek, size ne kazandırır? Asistanın yazdığı kodu denetlemeniz hangi durumda daha kolaydır?
+
+## Haftanın Özeti
+
+Dersi, on bir satırlık bir fonksiyonun silinmesiyle duran internetin hikayesiyle açtık ve yazılım dünyasının küçük, adı konmuş parçalardan kurulu olduğunu gördük. Sonra dokuz haftadır farkında olmadan metot çağırdığınızı fark ettiniz: `println`, `nextInt`, `Math.sqrt`. İlk metodunuzu yazdınız ve tanım ile çağrının ayrı şeyler olduğunu, programın çağrıya gelince metoda gidip sonra geri döndüğünü izlediniz. Parametreyle tarifin içinde bir boşluk bıraktınız; `return` ile metodun size bir cevap getirmesini sağladınız ve cevabı ekranda göstermek ile elinize vermek arasındaki farkı otomat örneğiyle ayırdınız. İmzanın bir sözleşme olduğunu ve sözleşmede yazmayan tek bir birimin bir uyduyu Mars'ta düşürdüğünü dinlediniz. `ekok`'u `ebob`'un üstüne kurarak metotların birbirini çağırabildiğini gördünüz. Sonunda geçen haftanın palindrom döngüsünü LeetCode'a gönderdiniz ve dersin başındaki on bir satırı kendi gözünüzle okudunuz.
+
+Bugün yeni bir döngü yazmadınız; geçen hafta yazdıklarınıza ad verdiniz. Dört gün sonra sınavda o döngüleri kağıtta izleyeceksiniz. Hazırsınız; Salı günü görüşürüz.

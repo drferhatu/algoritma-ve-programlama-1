@@ -1,0 +1,213 @@
+---
+week: 9
+title: "Lab 9 · Döngülere Ad Vermek"
+description: "Sınavın ertesi günü için hafif bir lab: geçen haftanın beş döngüsünü metoda sarıyorsunuz. Tek dosyalık iskelet kendi kendini sınıyor ve kaç testin geçtiğini ekrana yazıyor; hiçbir yere dosya yüklenmiyor, kontrol lab saatinde ekranınızda yapılıyor."
+status: hazir
+objectives:
+  - "Parametre alan ve değer döndüren beş metot yazar; hiçbirinin içinde ekrana yazdırmaz."
+  - "Bir metodu başka bir metodun içinden çağırır (ekok, ebob'u; ikizAsalSayisi, asalMi'yi)."
+  - "Bir metodun imzasını okuyarak ondan ne beklendiğini söyler."
+  - "Hazır bir test bölümünün çıktısını okuyarak hangi metodunun hangi girdide yanıldığını bulur."
+tools:
+  - "Java Playground ya da JDK 21"
+  - "Kağıt ve kalem"
+deliverable: "Dosya teslimi yok. Lab saatinde ekranınızdaki sonuç satırı ve bir metodu 30 saniyede anlatmanız yeterli; lab sorumlu hocanız yoklama listesine işler."
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 25 Kasım 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 26 Kasım 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [9. haftanın](/haftalar/hafta-09) yedi kapsülünü uyguluyor ve sınavın hemen ertesi gününe denk geliyor. Bu yüzden onu bilerek hafif tuttuk: bugün yeni bir döngü yazmayacaksınız. Geçen hafta Lab 8'de yazdığınız asal testini, Euclid'i, palindrom kontrolünü ve FizzBuzz'ı alacak, her birine bir ad verip metoda dönüştüreceksiniz. Döngülerin kendisini zaten biliyorsunuz; bugün öğreneceğiniz şey onları bir imzanın arkasına yerleştirmek ve sonucu ekrana yazmak yerine geri vermek.
+
+> [!not] Bu labda hiçbir yere dosya yüklemiyorsunuz
+> Depo kabul etmek, hesap açmak, push etmek yok. Aşağıdaki iskeleti kopyalayıp çalıştıracaksınız; program kendi kendini sınayacak ve en alt satırda kaç testin geçtiğini yazacak. İşiniz bittiğinde lab sorumlu hocanız sonucu **ekranınızda** görecek, metotlarınızdan birini size anlattıracak ve yoklama listesine işleyecek. Lab saati bittiğinde lab da bitmiş olur; eve iş kalmaz.
+
+> [!uyari] Yapay zeka: sarı bölge
+> Asistana kavram ve sözdizimi sorabilirsiniz: "return ile println farkı nedir?", "bir sayıyı metne nasıl çeviririm?", "void ne demek?" serbest; ders sayfasındaki **Sor** şeritlerinin hepsi serbest. Ama "asalMi metodunu yaz" demek görevi yaptırmaktır ve yasaktır. Bu labda bunun pratik bir karşılığı da var: lab sorumlu hocanız size "bu return çalıştığında döngüye ne olur?" diye soracak ve cevabı yalnızca kodu kendi yazan kişi verebilir.
+
+## Nasıl çalışacaksınız
+
+Üç ortamdan hangisi elinizin altındaysa onu kullanın; üçünde de aynı dosya çalışır.
+
+**Java Playground.** Aşağıdaki iskelet kutusunun sağ üstündeki **Playground için kopyala ve aç** düğmesine basın; açılan sayfada editördeki örnek kodu silip yapıştırın ve Run'a basın. Düğme, kodun sonuna Playground'un programı başlatması için gereken `Main.main(null);` satırını kendiliğinden ekler. Kurulum gerektirmez; laboratuvar bilgisayarında da kendi telefonunuzda da çalışır. Çalışırken kodunuzu ara sıra bir not dosyasına kopyalayın, çünkü sekme kapanırsa Playground yazdıklarınızı saklamaz.
+
+**Kendi bilgisayarınız ya da laboratuvar bilgisayarı.** İskeleti `Main.java` adıyla kaydedin, sonra terminalde `javac Main.java` ve ardından `java Main` yazın.
+
+**Codespaces.** Portfolyo deponuzun Codespace'ini kullanıyorsanız iskeleti orada, portfolyo dosyalarınıza karışmaması için `lab9` adında ayrı bir klasöre koyun.
+
+Çalışmanız bitince dosyayı kendiniz için saklayın. KT3'te portfolyonuzdaki menü seçeneklerini metotlara taşırken bugün yazdıklarınıza geri döneceksiniz.
+
+## İskelet
+
+Aşağıdaki dosyanın üst yarısında gövdesi boş altı metot var; onları siz dolduracaksınız. Alt yarısında, çizginin altında, hazır bir kontrol bölümü duruyor; ona dokunmayacaksınız ama okumanızı istiyoruz, çünkü içinde bugünün konusunun güzel bir örneği saklı.
+
+<CodeTry title="Lab 9 iskeleti: Main.java" hint="İskeleti hiç değiştirmeden çalıştırırsanız en altta 'Sonuc: 4/20 test gecti' görürsünüz. Henüz tek satır yazmadınız ama dört test geçti; nedenini aşağıda konuşuyoruz." sinif>
+
+```java
+public class Main {
+
+    // GOREV 1: n asal ise true, degilse false dondurun.
+    static boolean asalMi(int n) {
+        return false;
+    }
+
+    // GOREV 2: a ve b'nin en buyuk ortak bolenini Euclid ile bulup dondurun.
+    static int ebob(int a, int b) {
+        return 0;
+    }
+
+    // GOREV 3: a ve b'nin en kucuk ortak katini dondurun. Yeni dongu yazmayin, ebob'u cagirin.
+    static int ekok(int a, int b) {
+        return 0;
+    }
+
+    // GOREV 4: n tersinden okununca da ayni ise true dondurun.
+    static boolean palindromMu(int n) {
+        return false;
+    }
+
+    // GOREV 5: i icin "Fizz", "Buzz", "FizzBuzz" ya da sayinin kendisini metin olarak dondurun.
+    static String fizzBuzz(int i) {
+        return "";
+    }
+
+    // BONUS: 2'den n'e kadar kac ikiz asal cifti var? (3,5) bir cifttir. asalMi'yi cagirin.
+    static int ikizAsalSayisi(int n) {
+        return 0;
+    }
+
+    // ------------------------------------------------------------------
+    // Buradan asagisi kontrol bolumu. Okuyun ama degistirmeyin.
+    // ------------------------------------------------------------------
+
+    static int gecen = 0;
+    static int toplam = 0;
+
+    static void kontrol(String ad, boolean dogru) {
+        toplam++;
+        if (dogru) {
+            gecen++;
+            System.out.println("  GECTI  " + ad);
+        } else {
+            System.out.println("  KALDI  " + ad);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Gorev 1: asalMi");
+        kontrol("asalMi(17) true olmali", asalMi(17) == true);
+        kontrol("asalMi(91) false olmali", asalMi(91) == false);
+        kontrol("asalMi(1) false olmali", asalMi(1) == false);
+        kontrol("asalMi(2) true olmali", asalMi(2) == true);
+
+        System.out.println("Gorev 2: ebob");
+        kontrol("ebob(252, 105) 21 olmali", ebob(252, 105) == 21);
+        kontrol("ebob(1920, 1080) 120 olmali", ebob(1920, 1080) == 120);
+        kontrol("ebob(17, 5) 1 olmali", ebob(17, 5) == 1);
+
+        System.out.println("Gorev 3: ekok");
+        if (ebob(4, 6) == 0) {
+            System.out.println("  BEKLIYOR  once Gorev 2'yi bitirin, ekok onu cagiracak");
+            toplam = toplam + 3;
+        } else {
+            kontrol("ekok(4, 6) 12 olmali", ekok(4, 6) == 12);
+            kontrol("ekok(12, 18) 36 olmali", ekok(12, 18) == 36);
+            kontrol("ekok(7, 5) 35 olmali", ekok(7, 5) == 35);
+        }
+
+        System.out.println("Gorev 4: palindromMu");
+        kontrol("palindromMu(12321) true olmali", palindromMu(12321) == true);
+        kontrol("palindromMu(4725) false olmali", palindromMu(4725) == false);
+        kontrol("palindromMu(7) true olmali", palindromMu(7) == true);
+        kontrol("palindromMu(1200) false olmali", palindromMu(1200) == false);
+
+        System.out.println("Gorev 5: fizzBuzz");
+        kontrol("fizzBuzz(3) Fizz olmali", fizzBuzz(3).equals("Fizz"));
+        kontrol("fizzBuzz(5) Buzz olmali", fizzBuzz(5).equals("Buzz"));
+        kontrol("fizzBuzz(15) FizzBuzz olmali", fizzBuzz(15).equals("FizzBuzz"));
+        kontrol("fizzBuzz(7) 7 olmali", fizzBuzz(7).equals("7"));
+
+        System.out.println("Bonus: ikizAsalSayisi");
+        kontrol("ikizAsalSayisi(10) 2 olmali", ikizAsalSayisi(10) == 2);
+        kontrol("ikizAsalSayisi(100) 8 olmali", ikizAsalSayisi(100) == 8);
+
+        System.out.println();
+        System.out.println("Sonuc: " + gecen + "/" + toplam + " test gecti");
+    }
+}
+```
+
+</CodeTry>
+
+### Hiçbir şey yazmadan 4 test nasıl geçti?
+
+İskeleti ilk çalıştırdığınızda yirmi testten dördünün geçtiğini göreceksiniz ve bu ilk bakışta tuhaf gelebilir. Sebebi basit: boş `asalMi` her sayı için `false` döndürüyor ve bu cevap 91 ile 1 için tesadüfen doğru. Aynı şey `palindromMu` için de geçerli.
+
+Bundan çıkarılacak ders küçük ama kalıcıdır: **bir testin geçmesi, metodun doğru olduğunu kanıtlamaz**; yalnızca o girdide yanlış olmadığını gösterir. Bu yüzden her metot birden fazla girdiyle, hem "evet" hem "hayır" cevabı beklenen örneklerle sınanıyor. Geçen haftaların gizli testleri de aynı düşünceyle yazılmıştı.
+
+### Kontrol bölümünü okuyun
+
+Çizginin altındaki `kontrol` metoduna bakın. İki parametre alıyor: testin adı ve bir `boolean`. `boolean` doğruysa "GECTI", değilse "KALDI" yazıyor ve iki sayacı güncelliyor. `main` bu metodu yirmi kez çağırıyor; her çağrıda sizin metodunuzun döndürdüğü değeri beklenen değerle karşılaştırıp sonucu `kontrol`'e veriyor.
+
+Yani sizin metotlarınız ekrana tek bir karakter yazmıyor; yalnızca değer döndürüyor ve o değerle ne yapılacağına çağıran karar veriyor. Dersteki "hesap yapan metot sonucunu döndürür, ekrana yazmaz" kuralının canlı hali bu. Sektörde bu tür kontrol programlarına **birim testi** denir ve yazılımcılar yazdıkları her metot için bunlardan onlarcasını hazırlar.
+
+## Görev 1 · `asalMi` (4 test, 6 dk)
+
+Dersin 3. kapsülünün uygulaması. Metot bir tam sayı alıyor ve sayı asalsa `true`, değilse `false` döndürüyor. Döngüyü Lab 8'den biliyorsunuz: 2'den başlayıp `i * i <= n` olduğu sürece bölen arıyorsunuz.
+
+Bugün farklı olan iki şey var. Birincisi, bölen bulduğunuzda bir bayrağı `false` yapıp `break` demek yerine doğrudan `return false` yazabilirsiniz; `return` metodu o anda bitirdiği için döngü de kendiliğinden durur. İkincisi, sonucu ekrana yazdırmıyorsunuz. Köşe durumlarına dikkat edin: 1 asal değildir, 2 asaldır.
+
+## Görev 2 · `ebob` (3 test, 6 dk)
+
+Dersin 6. kapsülünün ilk yarısı. Metot iki tam sayı alıyor ve en büyük ortak bölenlerini döndürüyor. Gövde, geçen haftanın Euclid döngüsünün kendisi: `while (b != 0)` içinde kalanı hesapla, `a`'ya `b`'yi ve `b`'ye kalanı ver; döngü bitince cevap `a`'dadır ve onu `return` ile geri verirsiniz. Adım saymanıza bu kez gerek yok.
+
+## Görev 3 · `ekok` (3 test, 4 dk)
+
+Dersin 6. kapsülünün ikinci yarısı ve bu labın asıl fikri. Metot iki tam sayının en küçük ortak katını döndürüyor, ama içine **yeni bir döngü yazmıyorsunuz**. Bir önceki görevde yazdığınız `ebob` metodunu çağıracaksınız; gövdeniz tek satır olacak.
+
+Hatırlatma: iki sayının çarpımı, EBOB'ları ile EKOK'larının çarpımına eşittir. Önce bölüp sonra çarpın (`a / ebob(a, b) * b`), çünkü önce çarparsanız büyük sayılarda sonuç `int` sınırını aşabilir.
+
+Görev 2'yi bitirmeden bu görevin testleri çalışmaz; ekranda "BEKLIYOR" yazısını görürseniz sebebi budur. Bir metodun başka bir metoda güvenmesi tam olarak böyle bir şeydir: `ebob` yanlışsa `ekok` da yanlıştır.
+
+## Görev 4 · `palindromMu` (4 test, 6 dk)
+
+Geçen haftanın 8. kapsülündeki basamak döngüsü ve dersin sonunda LeetCode'a gönderdiğimiz metot. Sayının tersini `% 10` ve `/ 10` ile kurun, sonra asıl sayıyla karşılaştırıp sonucu döndürün. Son satırınız `return n == ters;` biçiminde olabilir; bir karşılaştırmanın sonucu zaten bir `boolean`'dır, onu `if` ile sarmanıza gerek yoktur.
+
+Döngü parametreyi tüketeceği için sayının bir kopyasıyla çalışmayı unutmayın; yoksa karşılaştıracağınız asıl sayı elinizde kalmaz.
+
+## Görev 5 · `fizzBuzz` (4 test, 8 dk)
+
+Dersin 4. kapsülünün uygulaması ve bu labın en öğretici görevi. Geçen hafta FizzBuzz'ı bir döngünün içinde, ekrana yazdırarak çözmüştünüz. Bugün metot **tek bir sayı** alıyor ve o sayı için söylenmesi gereken şeyi bir metin olarak **döndürüyor**: 3'ün katıysa `"Fizz"`, 5'in katıysa `"Buzz"`, ikisinin de katıysa `"FizzBuzz"`, hiçbiri değilse sayının kendisi.
+
+Dönüş tipi `String` olduğu için sayıyı da metin olarak döndürmeniz gerekiyor. Bir tam sayıyı metne çevirmenin en kısa yolu onu boş bir metinle toplamaktır: `"" + i`. Koşulların sırası geçen haftaki gibi: en özel koşul en üstte.
+
+Bu görevi bitirdiğinizde şunu fark edeceksiniz: döngü artık metodun içinde değil. 1'den 100'e FizzBuzz yazdırmak isteyen biri, `for` döngüsünü kendisi kurup her turda sizin metodunuzu çağırır. Hesabı yapan parça ile yazdıran parça birbirinden ayrıldı; iyi tasarlanmış programlar böyle ayrışır.
+
+## Bonus · `ikizAsalSayisi` (2 test, 6 dk)
+
+Aralarında 2 fark olan asal sayı çiftlerine ikiz asallar denir: 3 ile 5, 5 ile 7, 11 ile 13. Metot bir `n` alıyor ve 2'den `n`'e kadar kaç ikiz asal çifti bulunduğunu döndürüyor; `n = 100` için cevap 8.
+
+Gövdede bir döngü ve Görev 1'de yazdığınız `asalMi` metoduna iki çağrı yeterli: `asalMi(i) && asalMi(i + 2)`. Asal testini yeniden yazmıyorsunuz; adını söylüyorsunuz.
+
+## Ekranda kontrol: 30 saniye
+
+En alttaki satır `Sonuc: 18/20` ya da daha fazlasını gösterdiğinde lab sorumlu hocanızı çağırın. Hocanız önce sonuç satırına bakacak, sonra metotlarınızdan birini seçip şu sorulardan birini soracak:
+
+- Bu metodun imzasını okur musun; ne alıyor, ne döndürüyor?
+- Bu `return` çalıştığında döngünün kalan turlarına ne oluyor?
+- Bu metot ekrana bir şey yazıyor mu? Yazsaydı kontrol bölümü neden çalışmazdı?
+- `ekok`'un içinde neden döngü yok?
+
+Cevabınız otuz saniyeyi geçmesin. Hocanız adınızın karşısına sonucu ve anlatımınızı işleyecek; labın kaydı budur.
+
+## Bitiremediyseniz
+
+Görev 1, Görev 2 ve Görev 3'ün testlerinin geçmesi ve bir metodu anlatmış olmanız bu lab için yeterli. Kalan görevleri evde, kendiniz için tamamlayabilirsiniz; teslim edilecek bir şey yok, ama KT3'te aynı kalıbı portfolyonuzda kullanacağınız için bitirmeniz işinize yarar.
+
+## Bitirdiyseniz
+
+Yirmi testin yirmisi de geçtiyse iki yoldan birini seçin. Antrenman isteyenler dersin son kapsülündeki üç LeetCode sorusunu göndersin: [2235 · Add Two Integers](https://leetcode.com/problems/add-two-integers/), [9 · Palindrome Number](https://leetcode.com/problems/palindrome-number/) ve [258 · Add Digits](https://leetcode.com/problems/add-digits/); üçünün de gövdesi bugün yazdıklarınızın içinde. Portfolyosuna dönmek isteyenler KT2'yi tamamlasın: teslim **27 Kasım Cuma 23.59** ve menünüzdeki bir seçeneği deneme olarak metoda taşımak için bugün iyi bir gün.

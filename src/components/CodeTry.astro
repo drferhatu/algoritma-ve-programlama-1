@@ -12,10 +12,13 @@
  * başlık + "Kopyala" + "Java Playground'da dene ↗" şeridi, altta ipucu ekler.
  */
 import { JAVA_PLAYGROUND } from '@/lib/site';
-interface Props { title?: string; hint?: string; }
-const { title = 'Kodu deneyin', hint } = Astro.props;
+interface Props { title?: string; hint?: string; sinif?: boolean; }
+const { title = 'Kodu deneyin', hint, sinif = false } = Astro.props;
+// sinif: kutu tam bir `public class Main` içeriyor. Playground sınıfı tanımlar ama main'i kendiliğinden
+// çalıştırmaz; bu yüzden Playground düğmesi kodu, sonuna `Main.main(null);` eklenmiş halde panoya kopyalar.
+const PLAYGROUND_SUFFIX = 'Main.main(null);';
 ---
-<figure class="codetry" data-codetry>
+<figure class="codetry" data-codetry data-suffix={sinif ? PLAYGROUND_SUFFIX : undefined}>
   <figcaption class="codetry-head">
     <span class="flex items-center gap-2 text-sm font-bold text-ink">
       <span class="grid size-6 place-items-center rounded-md bg-accent-soft font-mono text-[11px] font-bold text-accent" aria-hidden="true">{'{ }'}</span>
@@ -26,10 +29,11 @@ const { title = 'Kodu deneyin', hint } = Astro.props;
         <svg class="ico-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg class="ico-done" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>
         <span data-copy-label class="sr-only">Kopyala</span>
       </button>
-      <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="codetry-btn">Java Playground'da dene ↗</a>
+      <a href={JAVA_PLAYGROUND} target="_blank" rel="noopener" class="codetry-btn" data-playground>{sinif ? "Playground için kopyala ve aç ↗" : "Java Playground'da dene ↗"}</a>
     </span>
   </figcaption>
   <div class="codetry-body"><slot /></div>
+  {sinif && <p class="border-t border-line bg-accent-soft/40 px-4 py-2.5 text-xs leading-relaxed text-ink-2"><span class="font-semibold text-ink">Playground'da çalıştırmak için:</span> sağ üstteki düğme kodu, sonuna <code>Main.main(null);</code> satırı eklenmiş halde kopyalar ve Playground'u açar; orada yapıştırıp Run'a basmanız yeter. Bu satır yalnızca Playground içindir; kendi bilgisayarınızda <code>Main.java</code> olarak kaydediyorsanız soldaki kopyala düğmesini kullanın.</p>}
   {hint && <p class="border-t border-line bg-paper-2/40 px-4 py-2.5 text-xs leading-relaxed text-ink-2"><span class="font-semibold text-ink">İpucu:</span> {hint}</p>}
 </figure>
 
@@ -39,6 +43,14 @@ const { title = 'Kodu deneyin', hint } = Astro.props;
     const label = box.querySelector<HTMLElement>('[data-copy-label]');
     const code = box.querySelector<HTMLElement>('.codetry-body pre');
     if (!btn || !code) return;
+    const suffix = box.dataset.suffix;
+    const pg = box.querySelector<HTMLAnchorElement>('[data-playground]');
+    if (suffix && pg && navigator.clipboard) {
+      pg.addEventListener('click', () => {
+        // Bağlantı yeni sekmede açılırken kod + son satır panoya yazılır (aynı tıklama içinde).
+        navigator.clipboard.writeText(code.innerText.replace(/\n$/, '') + '\n\n' + suffix).catch(() => {});
+      });
+    }
     if (!navigator.clipboard) { btn.hidden = true; return; }
     btn.addEventListener('click', async () => {
       try {

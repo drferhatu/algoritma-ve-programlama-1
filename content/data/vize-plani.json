@@ -1,5 +1,5 @@
 {
-  "_aciklama": "Vize çalışma planı (/vize-plani sayfası bu dosyayı okur). Sınav 24 Kasım 2026 Salı 17.00-18.00. 30 Ekim - 23 Kasım arası 25 gün; hafta içi tek blok (25 dk), hafta sonu iki blok. İlk tur 1-17. günler (30 Ekim - 15 Kasım), ikinci tur 18-25. günler (16-23 Kasım). Her blokta konu, yapılacaklar, kopyalanabilir bot istemi (dört parçalı: rol, görev, biçim, bağlam; her birinde doğrulama adımı), varsa ajan istemi ve 3 soruluk kendini sınama. 'kodlar' alanı isteğe bağlı: kağıtta izlenecek ya da hatası avlanacak kodlar. Tarih formatı YYYY-AA-GG. Hoca sınava benzer soru yayımlamaz; deneme sınavını öğrenci kendi üretir (16. ve 23. gün).",
+  "_aciklama": "Vize çalışma planı (/vize-plani sayfası bu dosyayı okur). Sınav 24 Kasım 2026 Salı 17.00-17.40. 30 Ekim - 23 Kasım arası 25 gün; hafta içi tek blok (25 dk), hafta sonu iki blok. İlk tur 1-17. günler (30 Ekim - 15 Kasım), ikinci tur 18-25. günler (16-23 Kasım). Her blokta konu, yapılacaklar, kopyalanabilir bot istemi (dört parçalı: rol, görev, biçim, bağlam; her birinde doğrulama adımı), varsa ajan istemi ve 3 soruluk kendini sınama. 'kodlar' alanı isteğe bağlı: kağıtta izlenecek ya da hatası avlanacak kodlar. Tarih formatı YYYY-AA-GG. Hoca sınava benzer soru yayımlamaz; deneme sınavını öğrenci kendi üretir (16. ve 23. gün).",
   "sinav": {
     "hafta": 10,
     "aralik": "24 Kasım 2026 Salı",
@@ -36,7 +36,7 @@
       }
     ],
     "tarih": "2026-11-24",
-    "saat": "17.00-18.00",
+    "saat": "17.00-17.40",
     "salonlar": [
       {
         "sube": "A şubesi",
@@ -994,7 +994,7 @@
       ],
       "tekrar": [
         "Son tur: yalnızca cep kartı ve beş temel kural.",
-        "Sınav: 24 Kasım Salı 17.00-18.00. A şubesi A304-306, B şubesi A306 ve A404-406."
+        "Sınav: 24 Kasım Salı 17.00-17.40. A şubesi A304-306, B şubesi A306 ve A404-406."
       ]
     }
   ],
@@ -1025,7 +1025,7 @@
     }
   ],
   "sinavGunu": [
-    "Ne zaman, nerede: 24 Kasım Salı 17.00-18.00. A şubesi A304-306, B şubesi A306 ve A404-406. On beş dakika önce kapıda olun; öğrenci kimliğiniz yanınızda olsun.",
+    "Ne zaman, nerede: 24 Kasım Salı 17.00-17.40. A şubesi A304-306, B şubesi A306 ve A404-406. On beş dakika önce kapıda olun; öğrenci kimliğiniz yanınızda olsun.",
     "Kağıt ve kalem: sınav kağıt üzerinde, telefon ve bilgisayar kapalı (kırmızı bölge). Silgili kalem ve müsvedde için boş bir yüz ayırın.",
     "Önce tahmin: kodlu her soruda çıktıyı yazmadan önce programı satır satır kafanızda çalıştırın; bu yirmi beş gündür Playground'da yaptığınız şeyin Run'sız hali.",
     "Kod izlemede tablo tutun: her değişken için bir sütun, her tur için bir satır; iç içe döngüde her (i, j) çifti bir satırdır ve döngü değişkeninin bittikten sonraki değerini de yazın.",
@@ -1052,7 +1052,7 @@
     },
     {
       "q": "Sınav haftasında dersler ve lablar var mı?",
-      "a": "Var. Bu dönem ara sınavlar derslerle birlikte yapılıyor; ayrı bir sınav haftası yok. 20 Kasım Cuma dersi (metotlar I), 18-19 Kasım'daki Lab 8 ve 25-26 Kasım'daki Lab 9 her zamanki saatinde. Sınavın kendisi 24 Kasım Salı 17.00-18.00 arasında; metotlar sınav kapsamında değil."
+      "a": "Var. Bu dönem ara sınavlar derslerle birlikte yapılıyor; ayrı bir sınav haftası yok. 20 Kasım Cuma dersi (metotlar I), 18-19 Kasım'daki Lab 8 ve 25-26 Kasım'daki Lab 9 her zamanki saatinde. Sınavın kendisi 24 Kasım Salı 17.00-17.40 arasında; metotlar sınav kapsamında değil."
     }
   ]
 }

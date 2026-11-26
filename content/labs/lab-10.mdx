@@ -22,13 +22,13 @@ deliverable: "Dosya teslimi yok. Lab saatinde ekranınızdaki sonuç satırı, k
 | A | 2 Aralık 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
 | B | 3 Aralık 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
 
-Bu lab [10. haftanın](/haftalar/hafta-10) yedi kapsülünü uyguluyor. Geçen hafta Lab 9'da döngülerinize ad vermiştiniz; bugün bir metot çağrıldığında perdenin arkasında olanları kendi elinizle izleyeceksiniz. Labın ilk görevi alışılmışın dışında: tek satır kod yazmayacak, dört küçük programı kağıtta izleyecek ve tahmininizin doğru olup olmadığını programa soracaksınız. Sonraki üç görevde dersin üç kalıbını uygulayacaksınız: döndür ve ata, aşırı yükleme ve artımlı geliştirme.
+Bu lab [10. haftanın](/haftalar/hafta-10) yedi kapsülünü uyguluyor. Geçen hafta Lab 9'da döngülerinize ad vermiştiniz; bugün bir metot çağrıldığında perdenin arkasında olanları kendi elinizle izleyeceksiniz. Labın ilk görevi alışılmışın dışında: Tek satır kod yazmayacak, dört küçük programı kağıtta izleyecek ve tahmininizin doğru olup olmadığını programa soracaksınız. Sonraki üç görevde dersin üç kalıbını uygulayacaksınız: döndür ve ata, aşırı yükleme ve artımlı geliştirme.
 
 > [!not] Düzen Lab 9'daki gibi: hiçbir yere dosya yüklemiyorsunuz
 > Aşağıdaki iskeleti kopyalayıp çalıştıracaksınız; program kendi kendini sınayacak ve en alt satırda kaç testin geçtiğini yazacak. İşiniz bittiğinde lab sorumlu hocanız sonucu **ekranınızda** ve yığın diyagramınızı **kağıdınızda** görecek, bir bölümü size anlattıracak ve yoklama listesine işleyecek. **Yanınızda kağıt ve kalem olsun;** bu labın ilk on dakikası kağıt üstünde geçiyor.
 
 > [!uyari] Yapay zeka: sarı bölge
-> Asistana kavram ve sözdizimi sorabilirsiniz: "pass by value ne demek?", "aşırı yüklemede Java hangi metodu seçer?", "switch içinde return yazılır mı?" serbest; ders sayfasındaki **Sor** şeritlerinin hepsi serbest. Ama izleme programlarını asistana izletmek ya da "aydakiGun metodunu yaz" demek görevi yaptırmaktır ve yasaktır. Bunun pratik bir karşılığı da var: lab sorumlu hocanız kağıdınızdaki yığın diyagramına bakıp "bu kutu hangi metodun?" diye soracak ve cevabı yalnızca diyagramı kendi çizen kişi verebilir.
+> Asistana kavram ve sözdizimi sorabilirsiniz: "pass by value ne demek?", "aşırı yüklemede Java hangi metodu seçer?", "switch içinde return yazılır mı?" serbest; ders sayfasındaki **Sor** şeritlerinin hepsi serbest. Ama izleme programlarını asistana izletmek ya da "aydakiGun metodunu yaz" demek görevi yaptırmaktır ve yasaktır. Bunun pratik bir karşılığı da var: Lab sorumlu hocanız kağıdınızdaki yığın diyagramına bakıp "bu kutu hangi metodun?" diye soracak ve cevabı yalnızca diyagramı kendi çizen kişi verebilir.
 
 ## Nasıl çalışacaksınız
 
@@ -46,7 +46,7 @@ Bu lab [10. haftanın](/haftalar/hafta-10) yedi kapsülünü uyguluyor. Geçen h
 
 Dosyanın üst kısmında dört görevin metotları, alt kısmında, çizginin altında, hazır kontrol bölümü duruyor. Kontrol bölümüne dokunmayacaksınız; tek istisna, bonusu yaparsanız en sondaki üç yorum satırını açmanız.
 
-<CodeTry title="Lab 10 iskeleti: Main.java" hint="İskeleti hiç değiştirmeden çalıştırırsanız en altta 'Sonuc: 3/24 test gecti' görürsünüz. Henüz tek satır yazmadınız ama üç test geçti; Lab 9'dan hatırlayın: bir testin geçmesi, metodun doğru olduğunu kanıtlamaz." sinif>
+<CodeTry title="Lab 10 iskeleti: Main.java" hint="İskeleti hiç değiştirmeden çalıştırırsanız en altta 'Sonuc: 3/24 test gecti' görürsünüz. Henüz tek satır yazmadınız ama üç test geçti; Lab 9'dan hatırlayın: Bir testin geçmesi, metodun doğru olduğunu kanıtlamaz." sinif>
 
 ```java
 public class Main {
@@ -266,7 +266,7 @@ Dört izlemenin her biri dersin bir fikrini yokluyor, bu yüzden sırayla gidin:
 - **A** için tek soru yeter: `arttir` metodu kimin `x`'ini değiştirdi?
 - **B**'de metot bu kez bir değer döndürüyor. `x` ile `y`'yi ayrı ayrı bulun, sonra toplayın.
 - **C** bu görevin asıl işi ve onun için **yığın diyagramı çizmenizi** istiyoruz: `main` yerine `izlemeC`, onun üstünde `f`, onun üstünde `g`. Üç kağıdın üçünde de `a` adında bir kutu olacak. Çağrıdaki argümanların sırasına dikkat edin: `f(b, a)` yazıyor, `f(a, b)` değil.
-- **D**'de hesap yok, seçim var: üç `sec` metodundan hangisi çalışır? Her çağrıda önce parantezin içindeki ifadenin tipini bulun.
+- **D**'de hesap yok, seçim var: Üç `sec` metodundan hangisi çalışır? Her çağrıda önce parantezin içindeki ifadenin tipini bulun.
 
 Çizdiğiniz diyagramı masanızda tutun; lab sorumlu hocanız onu görmek isteyecek. Tahmininiz tutmadıysa cevabı deneyerek aramayın; kağıda dönün ve hangi kutuyu yanlış güncellediğinizi bulun. Takıldığınız izlemeyi [Python Tutor'un Java sayfasında](https://pythontutor.com/java.html) adım adım çalıştırıp kendi diyagramınızla karşılaştırabilirsiniz; ama önce kağıt, sonra araç.
 
@@ -274,7 +274,7 @@ Dört izlemenin her biri dersin bir fikrini yokluyor, bu yüzden sırayla gidin:
 
 Dersin üçüncü kapsülünün uygulaması. Metot bir stok miktarı ve satılmak istenen adedi alıyor, satıştan sonraki **yeni stoku döndürüyor**. Adet stoktan büyükse satış yapılmaz ve metot stoku değiştirmeden geri verir.
 
-Dikkat etmeniz gereken şey metodun ne **yapmadığı**: ekrana bir şey yazmıyor ve `main`'deki `stok` değişkenini kendisi değiştirmiyor, çünkü değiştiremez; eline geçen yalnızca bir kopya. Kontrol bölümündeki dördüncü teste bakın: `stok = stokDus(stok, 4);` satırı üç kez yazılmış. İlk iki satış yapılıyor ve stok 10'dan 6'ya, sonra 2'ye iniyor; üçüncüsünde 4 adet istenirken stokta 2 kaldığı için satış reddediliyor. Yeni değeri `stok` kutusuna yazan, her seferinde çağıranın kendisi.
+Dikkat etmeniz gereken şey metodun ne **yapmadığı**: Ekrana bir şey yazmıyor ve `main`'deki `stok` değişkenini kendisi değiştirmiyor, çünkü değiştiremez; eline geçen yalnızca bir kopya. Kontrol bölümündeki dördüncü teste bakın: `stok = stokDus(stok, 4);` satırı üç kez yazılmış. İlk iki satış yapılıyor ve stok 10'dan 6'ya, sonra 2'ye iniyor; üçüncüsünde 4 adet istenirken stokta 2 kaldığı için satış reddediliyor. Yeni değeri `stok` kutusuna yazan, her seferinde çağıranın kendisi.
 
 Portfolyosunda stok, bakiye, kontenjan ya da kalan hak tutan herkes bu metodun bir benzerini KT3'te yazacak.
 
@@ -284,17 +284,17 @@ Dersin beşinci kapsülünün uygulaması. Aynı adı taşıyan üç metot var: 
 
 `ortalama(3, 4)` için beklenen cevap 3.5. Gövdeye `(a + b) / 2` yazarsanız test kalır, çünkü iki tam sayının bölümü yine tam sayıdır ve 3 çıkar; sonucun sonradan `double`'a dönüşmesi kaybolan yarımı geri getirmez. Bölenlerden birini ondalıklı yazmanız yeterli.
 
-Kontrol bölümünde ondalıklı sonuçların `==` ile değil, `yakin` adlı küçük bir yardımcı metotla karşılaştırıldığını göreceksiniz. Nedenini üçüncü haftadan biliyorsunuz: ondalıklı sayılar bilgisayarda tam saklanamadığı için `7 / 3.0` gibi bir sonucu eşitlikle sınamak güvenilir değildir; "aradaki fark yeterince küçük mü?" diye sorarız.
+Kontrol bölümünde ondalıklı sonuçların `==` ile değil, `yakin` adlı küçük bir yardımcı metotla karşılaştırıldığını göreceksiniz. Nedenini üçüncü haftadan biliyorsunuz: Ondalıklı sayılar bilgisayarda tam saklanamadığı için `7 / 3.0` gibi bir sonucu eşitlikle sınamak güvenilir değildir; "aradaki fark yeterince küçük mü?" diye sorarız.
 
 Üçü de bitince kendinize şunu sorun: `ortalama(2, 3.0)` çağrısı hangi sürümü çalıştırır? Cevabı dersteki `enBuyuk(4, 2.5)` örneğinde.
 
 ## Görev 4 · Tarih denetleyicisi: artımlı geliştirme (12 test, 15 dk)
 
-Dersin altıncı kapsülünün uygulaması ve labın en uzun görevi. Hedef, "31 Kasım 2026 diye bir tarih var mı?" sorusunu cevaplayan `tarihGecerliMi` metodu. Bu metodu doğrudan yazmaya kalkarsanız tek gövdede artık yıl kuralı, on iki ayın gün sayıları ve sınır denetimleri birbirine karışır. Bunun yerine işi üç küçük adıma böldük ve her adımın kendi testleri var. Kural basit: **bir adımın testleri geçmeden sonrakine başlamayın.**
+Dersin altıncı kapsülünün uygulaması ve labın en uzun görevi. Hedef, "31 Kasım 2026 diye bir tarih var mı?" sorusunu cevaplayan `tarihGecerliMi` metodu. Bu metodu doğrudan yazmaya kalkarsanız tek gövdede artık yıl kuralı, on iki ayın gün sayıları ve sınır denetimleri birbirine karışır. Bunun yerine işi üç küçük adıma böldük ve her adımın kendi testleri var. Kural basit: **Bir adımın testleri geçmeden sonrakine başlamayın.**
 
-**Adım 1 · `artikYilMi`.** Dördüncü haftada iç içe üç `if` ile, beşinci haftada tek satırla yazdığınız kural: yıl 4'e bölünüyor ve 100'e bölünmüyorsa, ya da 400'e bölünüyorsa artık yıldır. Bugün farklı olan tek şey, sonucu ekrana yazmak yerine `boolean` olarak döndürmeniz. Çalıştırın; dört testin dördü de geçmeli.
+**Adım 1 · `artikYilMi`.** Dördüncü haftada iç içe üç `if` ile, beşinci haftada tek satırla yazdığınız kural: Yıl 4'e bölünüyor ve 100'e bölünmüyorsa, ya da 400'e bölünüyorsa artık yıldır. Bugün farklı olan tek şey, sonucu ekrana yazmak yerine `boolean` olarak döndürmeniz. Çalıştırın; dört testin dördü de geçmeli.
 
-**Adım 2 · `aydakiGun`.** Metot bir ay numarası ve bir yıl alıyor, o ayın kaç gün çektiğini döndürüyor. Nisan, Haziran, Eylül ve Kasım 30; Şubat artık yıllarda 29, diğer yıllarda 28; kalan aylar 31 gün. Şubat için artık yıl kuralını **yeniden yazmayın**; bir önceki adımda yazdığınız metodu çağırın. Beşinci haftanın `switch`'i burada çok işinize yarar: aynı cevabı veren `case` etiketlerini alt alta dizebilir ve her dalda `break` yerine doğrudan `return` yazabilirsiniz.
+**Adım 2 · `aydakiGun`.** Metot bir ay numarası ve bir yıl alıyor, o ayın kaç gün çektiğini döndürüyor. Nisan, Haziran, Eylül ve Kasım 30; Şubat artık yıllarda 29, diğer yıllarda 28; kalan aylar 31 gün. Şubat için artık yıl kuralını **yeniden yazmayın**; bir önceki adımda yazdığınız metodu çağırın. Beşinci haftanın `switch`'i burada çok işinize yarar: Aynı cevabı veren `case` etiketlerini alt alta dizebilir ve her dalda `break` yerine doğrudan `return` yazabilirsiniz.
 
 **Adım 3 · `tarihGecerliMi`.** Ay 1 ile 12 arasında değilse tarih geçersizdir. Ay geçerliyse gün, 1 ile o ayın gün sayısı arasında olmalıdır; gün sayısını bir önceki adımdaki metottan öğrenirsiniz. Adım 2 bitmeden bu adımın testleri çalışmaz ve ekranda "BEKLIYOR" yazar.
 
@@ -304,7 +304,7 @@ Dersin altıncı kapsülünün uygulaması ve labın en uzun görevi. Hedef, "31
 
 Bu labda bir metodu baştan sona, imzasıyla birlikte, kendiniz yazacağınız tek yer burası. Çoğu zaman yılı yazmak istemeyiz: "27 Kasım geçerli bir tarih mi?" diye sorarız ve içinde bulunduğumuz yılı kastederiz. `tarihGecerliMi` metodunun yalnızca gün ve ay alan **ikinci bir sürümünü** yazın; yılı 2026 kabul etsin.
 
-Gövdesi tek satır olacak: üç parametreli sürümü çağırıp sonucunu döndürecek. Dersteki üç sayılı `enBuyuk`'un iki sayılı `enBuyuk`'u çağırmasıyla aynı fikir: asıl işi bir sürüm yapar, diğeri ona giden kısa yoldur. Metodu yazdıktan sonra `main`'in sonundaki üç yorum satırının başındaki `//` işaretlerini silin; toplam test sayınız 26'ya çıkacak.
+Gövdesi tek satır olacak: Üç parametreli sürümü çağırıp sonucunu döndürecek. Dersteki üç sayılı `enBuyuk`'un iki sayılı `enBuyuk`'u çağırmasıyla aynı fikir: Asıl işi bir sürüm yapar, diğeri ona giden kısa yoldur. Metodu yazdıktan sonra `main`'in sonundaki üç yorum satırının başındaki `//` işaretlerini silin; toplam test sayınız 26'ya çıkacak.
 
 ## Ekranda kontrol: 30 saniye
 

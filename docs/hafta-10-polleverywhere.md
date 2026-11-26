@@ -12,7 +12,7 @@ Tür: Multiple Choice · Tek seçim · Sonuç hemen açık (ısınma)
 - 1 milyon
 - 5 milyon
 - 30 milyondan fazla
-Not: Dördüncü şık doğru. Bu soru bilgi ölçmüyor, ölçeği hissettiriyor. Oylamayı bugünkü boyutu söylemeden **önce** aç; sonuç ekrandayken "otuz milyonu aşkın" de ve hemen ekle: "ama otuz milyon satır, otuz milyon satır olarak yazılmadı." Küçük sayıları seçenlere dön: "bir öğrenci projesi için bu tahmin çok makul; Linus da öyle düşünmüştü." Ardından Android'i, süper bilgisayarları ve `git push`'u say; portfolyoya bağla: KT1 tek bir `if` idi, bu gece dönen bir menü.
+Not: Dördüncü şık doğru. Bu soru bilgi ölçmüyor, ölçeği hissettiriyor. Oylamayı bugünkü boyutu söylemeden **önce** aç; sonuç ekrandayken "otuz milyonu aşkın" de ve hemen ekle: "Ama otuz milyon satır, otuz milyon satır olarak yazılmadı." Küçük sayıları seçenlere dön: "Bir öğrenci projesi için bu tahmin çok makul; Linus da öyle düşünmüştü." Ardından Android'i, süper bilgisayarları ve `git push`'u say; portfolyoya bağla: KT1 tek bir `if` idi, bu gece dönen bir menü.
 
 ## Bulmaca (takas kodu yansıtılıp iki dakikalık sessiz çalışma bittikten sonra, Run'dan önce, 6. dk)
 
@@ -60,7 +60,7 @@ Tür: Multiple Choice · Tek seçim · Doğru cevabı gösterme (önce oyla, son
 - 155
 - 255
 - Program derlenmez; toplam iki kez tanımlanmış
-Not: Birinci şık doğru: çıktı `Ortalama: 77.5` ve `main'deki toplam: 100`. "155" diyenler iki `toplam`'ı **tek kutu** sanıyor; rol canlandırmasındaki iki kağıdı yeniden havaya kaldır: "main'in kağıdına kim yazdı?" "255" diyenler de tek kutu görüyor, üstelik atamayı üstüne ekleme sanıyor; `int toplam = a + b;` satırının **yeni bir kutu açtığını** söyle. "Derlenmez" diyenler makul bir sezgiyle geliyor: aynı metodun içinde iki `toplam` gerçekten derlenmezdi. Bunu söyle ve tebrik et; sonra ayrımı koy: iki ayrı oda, iki ayrı Ayşe. Ardından `main`'e `System.out.println(a);` ekleyip gerçek derleme hatasını (`cannot find symbol`) göster: derleyici ad çakışmasına değil, **odada olmayan** ada itiraz ediyor.
+Not: Birinci şık doğru: Çıktı `Ortalama: 77.5` ve `main'deki toplam: 100`. "155" diyenler iki `toplam`'ı **tek kutu** sanıyor; rol canlandırmasındaki iki kağıdı yeniden havaya kaldır: "main'in kağıdına kim yazdı?" "255" diyenler de tek kutu görüyor, üstelik atamayı üstüne ekleme sanıyor; `int toplam = a + b;` satırının **yeni bir kutu açtığını** söyle. "Derlenmez" diyenler makul bir sezgiyle geliyor: Aynı metodun içinde iki `toplam` gerçekten derlenmezdi. Bunu söyle ve tebrik et; sonra ayrımı koy: iki ayrı oda, iki ayrı Ayşe. Ardından `main`'e `System.out.println(a);` ekleyip gerçek derleme hatasını (`cannot find symbol`) göster: Derleyici ad çakışmasına değil, **odada olmayan** ada itiraz ediyor.
 
 ## 5. kapsül, aşırı yükleme ("Üç enBuyuk" kutusunun ilk üç çağrısı çalıştırılıp `9`, `9`, `4.5` görüldükten sonra, dördüncü çağrıdan önce, 39. dk)
 
@@ -89,7 +89,7 @@ Tür: Multiple Choice · Tek seçim · Doğru cevabı gösterme (önce oyla, son
 - 4.0
 - 2.5
 - Derleme hatası
-Not: İkinci şık doğru. Tam uyan bir sürüm yok; Java 4'ü 4.0'a genişletip `double` sürümünü seçer ve cevap `double` olarak, `4.0` biçiminde döner. "4" diyenler büyük olanı doğru buluyor ama **hangi sürümün çalıştığını** kaçırıyor: "cevap doğru, tipi yanlış; ekrandaki `.0` size hangi metodun çalıştığını söylüyor." Bu grup büyükse mülakat kartını atlama. "2.5" diyenler Java'nın 2.5'i tam sayıya indirip `int` sürümünü çağıracağını ya da karşılaştırmanın ters çalışacağını düşünüyor; üçüncü haftayı hatırlat: Java kendiliğinden yalnızca **genişletir**, daraltmaz; bardaklar arası su boşaltma örneği. "Derleme hatası" diyenler "tam uyan imza yoksa çağrı geçersizdir" diye düşünüyor; iyi bir titizlik, ama geçen haftanın `bolum(10, 4)` çağrısında da `int` argümanlar `double` parametreye gitmişti. Ardından gerçek bir derleme hatası göster: `static double enBuyuk(int a, int b)` ekle ve "already defined" mesajını okut; dönüş tipi imzanın parçası değil.
+Not: İkinci şık doğru. Tam uyan bir sürüm yok; Java 4'ü 4.0'a genişletip `double` sürümünü seçer ve cevap `double` olarak, `4.0` biçiminde döner. "4" diyenler büyük olanı doğru buluyor ama **hangi sürümün çalıştığını** kaçırıyor: "Cevap doğru, tipi yanlış; ekrandaki `.0` size hangi metodun çalıştığını söylüyor." Bu grup büyükse mülakat kartını atlama. "2.5" diyenler Java'nın 2.5'i tam sayıya indirip `int` sürümünü çağıracağını ya da karşılaştırmanın ters çalışacağını düşünüyor; üçüncü haftayı hatırlat: Java kendiliğinden yalnızca **genişletir**, daraltmaz; bardaklar arası su boşaltma örneği. "Derleme hatası" diyenler "tam uyan imza yoksa çağrı geçersizdir" diye düşünüyor; iyi bir titizlik, ama geçen haftanın `bolum(10, 4)` çağrısında da `int` argümanlar `double` parametreye gitmişti. Ardından gerçek bir derleme hatası göster: `static double enBuyuk(int a, int b)` ekle ve "already defined" mesajını okut; dönüş tipi imzanın parçası değil.
 
 ## Kapanış (7. kapsül bittikten sonra, kapanış duyurularından önce, 56. dk)
 
@@ -103,11 +103,11 @@ Tür: Multiple Choice · Çoklu seçim (en fazla 2) · Sonuç hemen açık
 - 6 Artımlı geliştirme
 - 7 Menü seçeneğini metoda taşımak
 - Hiçbiri, hepsi net
-Not: En çok işaretlenen iki kapsülü yüksek sesle söyle. 2. ya da 3. kapsül yüksek çıkarsa beklenen bir şey: "Lab 10'un ilk görevi tam bu; dört programı kağıtta izleyeceksiniz, kağıt kalem getirin." Sonucu lab sorumlu hocasına ilet. 7. kapsül yüksek çıkarsa sakinleştir: "bu gece şart değil; KT3'e üç hafta var ve her hafta tek bir `case` taşıyacağız." 5. kapsül yüksek çıkarsa ve mülakat kartı zaman yüzünden eve kaldıysa, 11. haftanın açılışında dört çağrılı izlemeyi iki dakikada yap. 6. kapsül yüksek çıkarsa Lab 10'un Görev 4'ünü işaret et: üç metot, sırayla.
+Not: En çok işaretlenen iki kapsülü yüksek sesle söyle. 2. ya da 3. kapsül yüksek çıkarsa beklenen bir şey: "Lab 10'un ilk görevi tam bu; dört programı kağıtta izleyeceksiniz, kağıt kalem getirin." Sonucu lab sorumlu hocasına ilet. 7. kapsül yüksek çıkarsa sakinleştir: "Bu gece şart değil; KT3'e üç hafta var ve her hafta tek bir `case` taşıyacağız." 5. kapsül yüksek çıkarsa ve mülakat kartı zaman yüzünden eve kaldıysa, 11. haftanın açılışında dört çağrılı izlemeyi iki dakikada yap. 6. kapsül yüksek çıkarsa Lab 10'un Görev 4'ünü işaret et: üç metot, sırayla.
 
 **5b. ★ Açık uçlu: Bu gece KT2'yi göndermenin önündeki tek engel ne? Engel yoksa "hazırım" yazın.**
 Tür: Open-Ended (Text Wall) · Anonim
-Not: Bu duvar akşam atacağın mesajı belirliyor; 23.59'dan önce oku ve kümelere ayır. "Derlenmiyor / hata veriyor": kapanışta tek cümle söyle: "yığın izini ya da derleme hatasını bugün öğrendiğiniz gibi okuyun; ilk satır ne olduğunu, satır numarası nerede olduğunu söylüyor." "Menüden çıkamıyorum / sonsuz döngü": döngü koşulunu ve `0` gözcüsünü işaret et (yedinci haftanın menü döngüsü). "Girdi doğrulama ne demek / nerede olmalı": 7. kapsüldeki `adetOku`'nun içindeki `while` tam olarak o; metot hali şart değil, döngünün kendisi şart. "Push edemiyorum / depom yok": ders çıkışında yanına çağır ya da lab sorumlu hocasına yönlendir; bu akşam çözülmesi gereken tek küme bu. "Hiç başlamadım": yargılama; "bu gece çalışan en küçük menüyü gönderin: üç seçenek, `0` ile çıkış, bir doğrulama döngüsü. Linus'un ilk sürümü de pek bir işe yaramıyordu." "Hazırım" yüzdesini iki şube için ayrı kaydet; KT2 teslim sayısıyla karşılaştırmak için işe yarar.
+Not: Bu duvar akşam atacağın mesajı belirliyor; 23.59'dan önce oku ve kümelere ayır. "Derlenmiyor / hata veriyor": Kapanışta tek cümle söyle: "Yığın izini ya da derleme hatasını bugün öğrendiğiniz gibi okuyun; ilk satır ne olduğunu, satır numarası nerede olduğunu söylüyor." "Menüden çıkamıyorum / sonsuz döngü": Döngü koşulunu ve `0` gözcüsünü işaret et (yedinci haftanın menü döngüsü). "Girdi doğrulama ne demek / nerede olmalı": 7. kapsüldeki `adetOku`'nun içindeki `while` tam olarak o; metot hali şart değil, döngünün kendisi şart. "Push edemiyorum / depom yok": Ders çıkışında yanına çağır ya da lab sorumlu hocasına yönlendir; bu akşam çözülmesi gereken tek küme bu. "Hiç başlamadım": Yargılama; "bu gece çalışan en küçük menüyü gönderin: üç seçenek, `0` ile çıkış, bir doğrulama döngüsü. Linus'un ilk sürümü de pek bir işe yaramıyordu." "Hazırım" yüzdesini iki şube için ayrı kaydet; KT2 teslim sayısıyla karşılaştırmak için işe yarar.
 
 ---
 
@@ -120,4 +120,4 @@ Not: Bu duvar akşam atacağın mesajı belirliyor; 23.59'dan önce oku ve küme
 - 5a'da çoklu seçim açık ve "en fazla 2 seçim" sınırı konmuş olsun; 5b'de küfür filtresini aç.
 - 2. sorunun "7 3", 3. sorunun "155" ve 4. sorunun "4" ile "derleme hatası" yüzdelerini iki şube için ayrı kaydet; hepsini lab sorumlu hocasına ilet.
 - Geçen haftanın Poll 3 sonucunu ("6 7" yüzdesi) derse girmeden önce her iki şube için ayrı ayrı bir kağıda yaz; 2. soruyla karşılaştırırken kullanılacak.
-- İnternet yoksa: şıkları tahtaya yaz, el kaldırt, sayıları senaryo belgesinin kenarına not et; 5b'yi küçük kağıtlara yazdırıp çıkışta topla.
+- İnternet yoksa: Şıkları tahtaya yaz, el kaldırt, sayıları senaryo belgesinin kenarına not et; 5b'yi küçük kağıtlara yazdırıp çıkışta topla.

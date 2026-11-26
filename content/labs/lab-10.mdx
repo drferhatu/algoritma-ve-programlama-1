@@ -1,0 +1,326 @@
+---
+week: 10
+title: "Lab 10 · Perde Arkası: İzle, Döndür, Adım Adım Yaz"
+description: "Dört küçük programı kağıtta izleyip tahmininizi programa sınatıyor, döndür ve ata kalıbını ve aşırı yüklemeyi uyguluyor, sonra bir tarih denetleyicisini üç küçük adımda yazıyorsunuz. Tek dosyalık iskelet kendi kendini sınıyor; hiçbir yere dosya yüklenmiyor, kontrol lab saatinde ekranınızda yapılıyor."
+status: hazir
+objectives:
+  - "Metot çağrısı içeren kısa programları yığın diyagramı çizerek kağıtta izler ve dönen değeri bulur."
+  - "Bir metodun hesapladığı değeri 'döndür ve ata' kalıbıyla çağıranın değişkenine ulaştırır."
+  - "Aynı adı taşıyan, parametre listeleri farklı metotlar yazar; bir çağrının hangi sürümü çalıştıracağını söyler."
+  - "Bir problemi üç küçük metoda bölüp her adımı sınayarak, artımlı geliştirmeyle çözer."
+tools:
+  - "Java Playground ya da JDK 21"
+  - "Kağıt ve kalem"
+  - "Python Tutor (Java görselleştirici)"
+deliverable: "Dosya teslimi yok. Lab saatinde ekranınızdaki sonuç satırı, kağıdınızdaki yığın diyagramı ve bir bölümü 30 saniyede anlatmanız yeterli; lab sorumlu hocanız yoklama listesine işler."
+---
+
+## Ne zaman, nerede, kiminle
+
+| Şube | Tarih | Saat | Yürütücü |
+|---|---|---|---|
+| A | 2 Aralık 2026 Çarşamba | 13.15 | Arş. Gör. Ömer Miraç Kökçam |
+| B | 3 Aralık 2026 Perşembe | 15.15 | Arş. Gör. Ömer Miraç Kökçam |
+
+Bu lab [10. haftanın](/haftalar/hafta-10) yedi kapsülünü uyguluyor. Geçen hafta Lab 9'da döngülerinize ad vermiştiniz; bugün bir metot çağrıldığında perdenin arkasında olanları kendi elinizle izleyeceksiniz. Labın ilk görevi alışılmışın dışında: tek satır kod yazmayacak, dört küçük programı kağıtta izleyecek ve tahmininizin doğru olup olmadığını programa soracaksınız. Sonraki üç görevde dersin üç kalıbını uygulayacaksınız: döndür ve ata, aşırı yükleme ve artımlı geliştirme.
+
+> [!not] Düzen Lab 9'daki gibi: hiçbir yere dosya yüklemiyorsunuz
+> Aşağıdaki iskeleti kopyalayıp çalıştıracaksınız; program kendi kendini sınayacak ve en alt satırda kaç testin geçtiğini yazacak. İşiniz bittiğinde lab sorumlu hocanız sonucu **ekranınızda** ve yığın diyagramınızı **kağıdınızda** görecek, bir bölümü size anlattıracak ve yoklama listesine işleyecek. **Yanınızda kağıt ve kalem olsun;** bu labın ilk on dakikası kağıt üstünde geçiyor.
+
+> [!uyari] Yapay zeka: sarı bölge
+> Asistana kavram ve sözdizimi sorabilirsiniz: "pass by value ne demek?", "aşırı yüklemede Java hangi metodu seçer?", "switch içinde return yazılır mı?" serbest; ders sayfasındaki **Sor** şeritlerinin hepsi serbest. Ama izleme programlarını asistana izletmek ya da "aydakiGun metodunu yaz" demek görevi yaptırmaktır ve yasaktır. Bunun pratik bir karşılığı da var: lab sorumlu hocanız kağıdınızdaki yığın diyagramına bakıp "bu kutu hangi metodun?" diye soracak ve cevabı yalnızca diyagramı kendi çizen kişi verebilir.
+
+## Nasıl çalışacaksınız
+
+Üç ortamdan hangisi elinizin altındaysa onu kullanın; üçünde de aynı dosya çalışır.
+
+**Java Playground.** Aşağıdaki iskelet kutusunun sağ üstündeki **Playground için kopyala ve aç** düğmesine basın; açılan sayfada editördeki örnek kodu silip yapıştırın ve Run'a basın. Düğme, kodun sonuna Playground'un programı başlatması için gereken `Main.main(null);` satırını kendiliğinden ekler. Çalışırken kodunuzu ara sıra bir not dosyasına kopyalayın, çünkü sekme kapanırsa Playground yazdıklarınızı saklamaz.
+
+**Kendi bilgisayarınız ya da laboratuvar bilgisayarı.** İskeleti `Main.java` adıyla kaydedin, sonra terminalde `javac Main.java` ve ardından `java Main` yazın.
+
+**Codespaces.** Portfolyo deponuzun Codespace'ini kullanıyorsanız iskeleti orada, portfolyo dosyalarınıza karışmaması için `lab10` adında ayrı bir klasöre koyun.
+
+Çalışmanız bitince dosyayı kendiniz için saklayın. Görev 2 ve Görev 4'te yazacağınız metotlar, KT3'te portfolyonuza ekleyeceğiniz metotların küçük kardeşleri.
+
+## İskelet
+
+Dosyanın üst kısmında dört görevin metotları, alt kısmında, çizginin altında, hazır kontrol bölümü duruyor. Kontrol bölümüne dokunmayacaksınız; tek istisna, bonusu yaparsanız en sondaki üç yorum satırını açmanız.
+
+<CodeTry title="Lab 10 iskeleti: Main.java" hint="İskeleti hiç değiştirmeden çalıştırırsanız en altta 'Sonuc: 3/24 test gecti' görürsünüz. Henüz tek satır yazmadınız ama üç test geçti; Lab 9'dan hatırlayın: bir testin geçmesi, metodun doğru olduğunu kanıtlamaz." sinif>
+
+```java
+public class Main {
+
+    // ==================================================================
+    // GOREV 1: Kagitta izleyin. Asagidaki dort izleme metodunu CALISTIRMADAN
+    // kagit kalemle izleyin ve her tahmin metodunda -1 yerine cevabinizi yazin.
+    // ==================================================================
+
+    static void arttir(int x) {
+        x = x + 10;
+    }
+
+    static int izlemeA() {
+        int x = 5;
+        arttir(x);
+        return x;
+    }
+
+    static int tahminA() {
+        return -1;
+    }
+
+    static int arttirVeDondur(int x) {
+        x = x + 10;
+        return x;
+    }
+
+    static int izlemeB() {
+        int x = 5;
+        int y = arttirVeDondur(x);
+        return x + y;
+    }
+
+    static int tahminB() {
+        return -1;
+    }
+
+    static int f(int a, int b) {
+        a = a + b;
+        return g(a) + b;
+    }
+
+    static int g(int a) {
+        a = a * 2;
+        return a + 1;
+    }
+
+    static int izlemeC() {
+        int a = 2;
+        int b = 3;
+        int c = f(b, a);
+        return a + b + c;
+    }
+
+    static int tahminC() {
+        return -1;
+    }
+
+    static int sec(int x) {
+        return 1;
+    }
+
+    static int sec(double x) {
+        return 2;
+    }
+
+    static int sec(int x, int y) {
+        return 3;
+    }
+
+    static int izlemeD() {
+        return sec(7 / 2) * 100 + sec(7 / 2.0) * 10 + sec(7, 2);
+    }
+
+    static int tahminD() {
+        return -1;
+    }
+
+    // ==================================================================
+    // GOREV 2: Dondur ve ata. Stoktan adet kadar dusup YENI stoku dondurun.
+    // Adet stoktan buyukse satis yapilmaz: stoku degistirmeden dondurun.
+    // ==================================================================
+
+    static int stokDus(int stok, int adet) {
+        return 0;
+    }
+
+    // ==================================================================
+    // GOREV 3: Asiri yukleme. Uc ortalama metodu; ucu de double dondurur.
+    // ==================================================================
+
+    static double ortalama(int a, int b) {
+        return 0.0;
+    }
+
+    static double ortalama(int a, int b, int c) {
+        return 0.0;
+    }
+
+    static double ortalama(double a, double b) {
+        return 0.0;
+    }
+
+    // ==================================================================
+    // GOREV 4: Artimli gelistirme. Uc metodu SIRAYLA yazin; her birini
+    // bitirince calistirip testlerinin gectigini gorun, sonra digerine gecin.
+    // ==================================================================
+
+    // Adim 1: yil artik yil ise true dondurun.
+    static boolean artikYilMi(int yil) {
+        return false;
+    }
+
+    // Adim 2: verilen ayin kac gun cektigini dondurun. Subat icin artikYilMi'yi cagirin.
+    static int aydakiGun(int ay, int yil) {
+        return 0;
+    }
+
+    // Adim 3: boyle bir tarih varsa true dondurun. aydakiGun'u cagirin.
+    static boolean tarihGecerliMi(int gun, int ay, int yil) {
+        return false;
+    }
+
+    // BONUS: tarihGecerliMi'nin iki parametreli bir surumunu buraya KENDINIZ yazin.
+    // Yil verilmezse 2026 kabul edilsin; govdesi uc parametreli surumu cagiran tek satir olsun.
+    // Sonra main'in sonundaki uc BONUS satirinin basindaki // isaretlerini silin.
+
+    // ------------------------------------------------------------------
+    // Buradan asagisi kontrol bolumu. Okuyun ama degistirmeyin.
+    // ------------------------------------------------------------------
+
+    static int gecen = 0;
+    static int toplam = 0;
+
+    static void kontrol(String ad, boolean dogru) {
+        toplam++;
+        if (dogru) {
+            gecen++;
+            System.out.println("  GECTI  " + ad);
+        } else {
+            System.out.println("  KALDI  " + ad);
+        }
+    }
+
+    static boolean yakin(double a, double b) {
+        return Math.abs(a - b) < 0.0001;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Gorev 1: kagitta izleme");
+        kontrol("tahminA, izlemeA'nin dondurdugu degerle ayni olmali", tahminA() == izlemeA());
+        kontrol("tahminB, izlemeB'nin dondurdugu degerle ayni olmali", tahminB() == izlemeB());
+        kontrol("tahminC, izlemeC'nin dondurdugu degerle ayni olmali", tahminC() == izlemeC());
+        kontrol("tahminD, izlemeD'nin dondurdugu degerle ayni olmali", tahminD() == izlemeD());
+
+        System.out.println("Gorev 2: stokDus");
+        kontrol("stokDus(10, 3) 7 olmali", stokDus(10, 3) == 7);
+        kontrol("stokDus(5, 5) 0 olmali", stokDus(5, 5) == 0);
+        kontrol("stokDus(2, 5) 2 olmali (satis yok)", stokDus(2, 5) == 2);
+        int stok = 10;
+        stok = stokDus(stok, 4);
+        stok = stokDus(stok, 4);
+        stok = stokDus(stok, 4);
+        kontrol("10'luk stoktan uc kez 4 dusunce 2 kalmali", stok == 2);
+
+        System.out.println("Gorev 3: ortalama");
+        kontrol("ortalama(3, 4) 3.5 olmali", yakin(ortalama(3, 4), 3.5));
+        kontrol("ortalama(1, 2, 6) 3.0 olmali", yakin(ortalama(1, 2, 6), 3.0));
+        kontrol("ortalama(1, 2, 4) 2.3333 olmali", yakin(ortalama(1, 2, 4), 7 / 3.0));
+        kontrol("ortalama(2.5, 3.0) 2.75 olmali", yakin(ortalama(2.5, 3.0), 2.75));
+
+        System.out.println("Gorev 4, adim 1: artikYilMi");
+        kontrol("artikYilMi(2024) true olmali", artikYilMi(2024) == true);
+        kontrol("artikYilMi(2026) false olmali", artikYilMi(2026) == false);
+        kontrol("artikYilMi(1900) false olmali", artikYilMi(1900) == false);
+        kontrol("artikYilMi(2000) true olmali", artikYilMi(2000) == true);
+
+        System.out.println("Gorev 4, adim 2: aydakiGun");
+        kontrol("aydakiGun(1, 2026) 31 olmali", aydakiGun(1, 2026) == 31);
+        kontrol("aydakiGun(11, 2026) 30 olmali", aydakiGun(11, 2026) == 30);
+        kontrol("aydakiGun(2, 2026) 28 olmali", aydakiGun(2, 2026) == 28);
+        kontrol("aydakiGun(2, 2024) 29 olmali", aydakiGun(2, 2024) == 29);
+
+        System.out.println("Gorev 4, adim 3: tarihGecerliMi");
+        if (aydakiGun(1, 2026) == 0) {
+            System.out.println("  BEKLIYOR  once adim 2'yi bitirin, tarihGecerliMi onu cagiracak");
+            toplam = toplam + 4;
+        } else {
+            kontrol("tarihGecerliMi(27, 11, 2026) true olmali", tarihGecerliMi(27, 11, 2026) == true);
+            kontrol("tarihGecerliMi(31, 11, 2026) false olmali", tarihGecerliMi(31, 11, 2026) == false);
+            kontrol("tarihGecerliMi(29, 2, 2024) true olmali", tarihGecerliMi(29, 2, 2024) == true);
+            kontrol("tarihGecerliMi(0, 5, 2026) false olmali", tarihGecerliMi(0, 5, 2026) == false);
+        }
+
+        // BONUS testleri: kendi iki parametreli surumunuzu yazdiktan sonra acin.
+        // System.out.println("Bonus: tarihGecerliMi(gun, ay)");
+        // kontrol("tarihGecerliMi(27, 11) true olmali", tarihGecerliMi(27, 11) == true);
+        // kontrol("tarihGecerliMi(29, 2) false olmali", tarihGecerliMi(29, 2) == false);
+
+        System.out.println();
+        System.out.println("Sonuc: " + gecen + "/" + toplam + " test gecti");
+    }
+}
+```
+
+</CodeTry>
+
+## Görev 1 · Kağıtta izle, programa sor (4 test, 12 dk)
+
+Dersin ilk üç kapsülü ile beşinci kapsülünün uygulaması. İskeletin en üstünde `izlemeA`, `izlemeB`, `izlemeC` ve `izlemeD` adında dört küçük metot var. Her biri birkaç metot çağırıp bir tam sayı döndürüyor. Sizden istenen, bu dört metodun döndüreceği değeri **çalıştırmadan, kağıtta** bulmanız ve bulduğunuz sayıyı hemen altındaki `tahmin` metoduna, `-1`'in yerine yazmanız.
+
+Programı çalıştırdığınızda kontrol bölümü izleme metodunu gerçekten çalıştırır ve sonucu sizin tahmininizle karşılaştırır. Yani bu görevde program size cevabı söylemiyor; yalnızca tahmininizin tutup tutmadığını söylüyor. Dersin başından beri yaptığımız şeyin aynısı: önce tahmin, sonra Run.
+
+Dört izlemenin her biri dersin bir fikrini yokluyor, bu yüzden sırayla gidin:
+
+- **A** için tek soru yeter: `arttir` metodu kimin `x`'ini değiştirdi?
+- **B**'de metot bu kez bir değer döndürüyor. `x` ile `y`'yi ayrı ayrı bulun, sonra toplayın.
+- **C** bu görevin asıl işi ve onun için **yığın diyagramı çizmenizi** istiyoruz: `main` yerine `izlemeC`, onun üstünde `f`, onun üstünde `g`. Üç kağıdın üçünde de `a` adında bir kutu olacak. Çağrıdaki argümanların sırasına dikkat edin: `f(b, a)` yazıyor, `f(a, b)` değil.
+- **D**'de hesap yok, seçim var: üç `sec` metodundan hangisi çalışır? Her çağrıda önce parantezin içindeki ifadenin tipini bulun.
+
+Çizdiğiniz diyagramı masanızda tutun; lab sorumlu hocanız onu görmek isteyecek. Tahmininiz tutmadıysa cevabı deneyerek aramayın; kağıda dönün ve hangi kutuyu yanlış güncellediğinizi bulun. Takıldığınız izlemeyi [Python Tutor'un Java sayfasında](https://pythontutor.com/java.html) adım adım çalıştırıp kendi diyagramınızla karşılaştırabilirsiniz; ama önce kağıt, sonra araç.
+
+## Görev 2 · `stokDus`: döndür ve ata (4 test, 6 dk)
+
+Dersin üçüncü kapsülünün uygulaması. Metot bir stok miktarı ve satılmak istenen adedi alıyor, satıştan sonraki **yeni stoku döndürüyor**. Adet stoktan büyükse satış yapılmaz ve metot stoku değiştirmeden geri verir.
+
+Dikkat etmeniz gereken şey metodun ne **yapmadığı**: ekrana bir şey yazmıyor ve `main`'deki `stok` değişkenini kendisi değiştirmiyor, çünkü değiştiremez; eline geçen yalnızca bir kopya. Kontrol bölümündeki dördüncü teste bakın: `stok = stokDus(stok, 4);` satırı üç kez yazılmış. İlk iki satış yapılıyor ve stok 10'dan 6'ya, sonra 2'ye iniyor; üçüncüsünde 4 adet istenirken stokta 2 kaldığı için satış reddediliyor. Yeni değeri `stok` kutusuna yazan, her seferinde çağıranın kendisi.
+
+Portfolyosunda stok, bakiye, kontenjan ya da kalan hak tutan herkes bu metodun bir benzerini KT3'te yazacak.
+
+## Görev 3 · Üç `ortalama`: aşırı yükleme (4 test, 8 dk)
+
+Dersin beşinci kapsülünün uygulaması. Aynı adı taşıyan üç metot var: iki tam sayının, üç tam sayının ve iki ondalıklı sayının ortalaması. Üçü de `double` döndürüyor. Gövdeleri birer satır; ama o satırlardan ikisinde üçüncü haftadan tanıdığınız bir tuzak sizi bekliyor.
+
+`ortalama(3, 4)` için beklenen cevap 3.5. Gövdeye `(a + b) / 2` yazarsanız test kalır, çünkü iki tam sayının bölümü yine tam sayıdır ve 3 çıkar; sonucun sonradan `double`'a dönüşmesi kaybolan yarımı geri getirmez. Bölenlerden birini ondalıklı yazmanız yeterli.
+
+Kontrol bölümünde ondalıklı sonuçların `==` ile değil, `yakin` adlı küçük bir yardımcı metotla karşılaştırıldığını göreceksiniz. Nedenini üçüncü haftadan biliyorsunuz: ondalıklı sayılar bilgisayarda tam saklanamadığı için `7 / 3.0` gibi bir sonucu eşitlikle sınamak güvenilir değildir; "aradaki fark yeterince küçük mü?" diye sorarız.
+
+Üçü de bitince kendinize şunu sorun: `ortalama(2, 3.0)` çağrısı hangi sürümü çalıştırır? Cevabı dersteki `enBuyuk(4, 2.5)` örneğinde.
+
+## Görev 4 · Tarih denetleyicisi: artımlı geliştirme (12 test, 15 dk)
+
+Dersin altıncı kapsülünün uygulaması ve labın en uzun görevi. Hedef, "31 Kasım 2026 diye bir tarih var mı?" sorusunu cevaplayan `tarihGecerliMi` metodu. Bu metodu doğrudan yazmaya kalkarsanız tek gövdede artık yıl kuralı, on iki ayın gün sayıları ve sınır denetimleri birbirine karışır. Bunun yerine işi üç küçük adıma böldük ve her adımın kendi testleri var. Kural basit: **bir adımın testleri geçmeden sonrakine başlamayın.**
+
+**Adım 1 · `artikYilMi`.** Dördüncü haftada iç içe üç `if` ile, beşinci haftada tek satırla yazdığınız kural: yıl 4'e bölünüyor ve 100'e bölünmüyorsa, ya da 400'e bölünüyorsa artık yıldır. Bugün farklı olan tek şey, sonucu ekrana yazmak yerine `boolean` olarak döndürmeniz. Çalıştırın; dört testin dördü de geçmeli.
+
+**Adım 2 · `aydakiGun`.** Metot bir ay numarası ve bir yıl alıyor, o ayın kaç gün çektiğini döndürüyor. Nisan, Haziran, Eylül ve Kasım 30; Şubat artık yıllarda 29, diğer yıllarda 28; kalan aylar 31 gün. Şubat için artık yıl kuralını **yeniden yazmayın**; bir önceki adımda yazdığınız metodu çağırın. Beşinci haftanın `switch`'i burada çok işinize yarar: aynı cevabı veren `case` etiketlerini alt alta dizebilir ve her dalda `break` yerine doğrudan `return` yazabilirsiniz.
+
+**Adım 3 · `tarihGecerliMi`.** Ay 1 ile 12 arasında değilse tarih geçersizdir. Ay geçerliyse gün, 1 ile o ayın gün sayısı arasında olmalıdır; gün sayısını bir önceki adımdaki metottan öğrenirsiniz. Adım 2 bitmeden bu adımın testleri çalışmaz ve ekranda "BEKLIYOR" yazar.
+
+Üç adımı bitirdiğinizde elinizde üç katlı bir yapı olacak: `tarihGecerliMi`, `aydakiGun`'a; `aydakiGun` da `artikYilMi`'ye güveniyor. `tarihGecerliMi(29, 2, 2024)` çağrısı çalışırken en kalabalık anda yığında kaç kağıt olduğunu sayın; lab sorumlu hocanız sorabilir.
+
+## Bonus · Aynı ada ikinci bir imza (2 test, 5 dk)
+
+Bu labda bir metodu baştan sona, imzasıyla birlikte, kendiniz yazacağınız tek yer burası. Çoğu zaman yılı yazmak istemeyiz: "27 Kasım geçerli bir tarih mi?" diye sorarız ve içinde bulunduğumuz yılı kastederiz. `tarihGecerliMi` metodunun yalnızca gün ve ay alan **ikinci bir sürümünü** yazın; yılı 2026 kabul etsin.
+
+Gövdesi tek satır olacak: üç parametreli sürümü çağırıp sonucunu döndürecek. Dersteki üç sayılı `enBuyuk`'un iki sayılı `enBuyuk`'u çağırmasıyla aynı fikir: asıl işi bir sürüm yapar, diğeri ona giden kısa yoldur. Metodu yazdıktan sonra `main`'in sonundaki üç yorum satırının başındaki `//` işaretlerini silin; toplam test sayınız 26'ya çıkacak.
+
+## Ekranda kontrol: 30 saniye
+
+En alttaki satır `Sonuc: 20/24` ya da daha fazlasını gösterdiğinde lab sorumlu hocanızı çağırın. Hocanız önce sonuç satırına ve kağıdınızdaki yığın diyagramına bakacak, sonra şu sorulardan birini soracak:
+
+- `izlemeC` çalışırken en kalabalık anda yığında kaç kağıt vardı ve `a` kaç ayrı kağıtta yazıyordu?
+- `stokDus`'u çağıran satırda `stok =` yazmasaydın ne olurdu?
+- Üç `ortalama` metodundan hangisinin çalışacağına Java neye bakarak karar veriyor?
+- Görev 4'teki üç metodu hangi sırayla yazdın; neden o sırayla?
+
+Cevabınız otuz saniyeyi geçmesin. Hocanız adınızın karşısına sonucu ve anlatımınızı işleyecek; labın kaydı budur.
+
+## Bitiremediyseniz
+
+Görev 1, Görev 2 ve Görev 3'ün testlerinin geçmesi ve bir bölümü anlatmış olmanız bu lab için yeterli. Görev 4'ü evde, kendiniz için tamamlayın; teslim edilecek bir şey yok, ama üç metodu sırayla yazıp her adımda çalıştırmak, KT3'e giderken portfolyonuzda yapacağınız işin provasıdır.
+
+## Bitirdiyseniz
+
+Yirmi dört testin hepsi geçtiyse portfolyonuza dönün. KT2 geride kaldı ve sıradaki durak **KT3, 18 Aralık Cuma 23.59**; şartlarından biri menü seçeneklerinizin kendi metotlarına taşınmış olması. Bugün, menünüzdeki en kısa `case`'i seçin ve dersin yedinci kapsülündeki gibi bir metoda taşıyın: `main`'den hangi değişkenlere ihtiyaç duyduğunu bulun, onları parametre yapın, değiştirdiği değeri döndürüp atayın. Derleyin, çalıştırın, o seçeneği deneyin ve çalışıyorsa push edin. Her hafta bir `case` taşırsanız 18 Aralık'ta yapacak işiniz kalmaz.

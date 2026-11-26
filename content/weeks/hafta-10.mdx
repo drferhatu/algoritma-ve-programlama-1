@@ -1,0 +1,577 @@
+---
+week: 10
+title: "Metotlar II: Çağrının Perde Arkası"
+topic: "Kapsam ve yerel değişkenler, çağrı yığını ve yığın diyagramı, değer ile geçirme (pass by value), yığın izi, aşırı yükleme, artımlı geliştirme; KT2 teslimi"
+description: "Bir öğrencinin 'sadece bir hobi' diye duyurduğu programın hikayesiyle başlayan yedi kapsül: bir metot çağrıldığında bellekte ne olur, metodun içindeki değişkeni dışarıdan neden göremezsiniz, takas metodu neden çalışmaz, Java'nın hata mesajı nasıl okunur, aynı adı taşıyan metotlar nasıl ayırt edilir ve büyük bir program küçük adımlarla nasıl yazılır. KT2 teslimi bu gece 23.59."
+module: m3
+semester: 1
+exam: false
+status: hazir
+changeNote: "KT2 teslimi bugün, 27 Kasım Cuma 23.59. Şartlar değişmedi: gözcü değerle biten menü döngüsü ve girdi doğrulama döngüsü."
+milestone: "KT2"
+tags:
+  - "kapsam"
+  - "yerel değişken"
+  - "yığın diyagramı"
+  - "pass by value"
+  - "yığın izi"
+  - "aşırı yükleme"
+  - "artımlı geliştirme"
+  - "mülakat"
+  - "KT2"
+objectives:
+  - "Yerel değişkenin kapsamını açıklar; kapsam dışı bir değişkene erişildiğinde çıkan derleme hatasını tanır."
+  - "Bir metot çağrı zincirinin yığın diyagramını çizer ve her kağıttaki değişken değerlerini izler."
+  - "Java'da argümanların değer olarak geçtiğini bir örnekle gösterir; metodun sonucunu 'döndür ve ata' kalıbıyla çağırana ulaştırır."
+  - "Bir yığın izini (stack trace) okuyarak hatanın hangi metotta, hangi satırda ve hangi çağrı zinciriyle oluştuğunu söyler."
+  - "Aynı adı taşıyan aşırı yüklenmiş metotlar yazar ve bir çağrının hangi sürümü çalıştıracağını bulur."
+  - "Bir metodu artımlı geliştirmeyle, her adımda derleyip bilinen cevaplı bir girdiyle sınayarak yazar."
+  - "KT2: ana akışı gözcü değerle biten bir menü döngüsünde çalışan ve girdi doğrulama döngüsü içeren sürümü 27 Kasım Cuma 23.59'a kadar push eder."
+tools:
+  - "Java Playground"
+  - "Python Tutor (Java görselleştirici)"
+  - "Gemini (sohbet modu)"
+  - "JDK 21"
+resources:
+  - title: "Think Java 2, Bölüm 4: Methods and Testing"
+    url: "https://chrismayfield.github.io/ThinkJava2/ch04.html"
+    note: "4.5 yığın diyagramları ve 4.9 artımlı geliştirme; 2. ve 6. kapsülün kitap karşılığı."
+  - title: "Java Tutorials: Passing Information to a Method"
+    url: "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html"
+    note: "Argümanların değer olarak geçtiğini söyleyen resmî sayfa; 3. kapsülde bot cevabını burada doğrulayacaksınız."
+  - title: "Java Tutorials: Defining Methods (Overloading Methods)"
+    url: "https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html"
+    note: "Aşırı yüklemenin resmî tanımı; sayfanın son bölümü 5. kapsülün konusu."
+  - title: "Java API: PrintStream"
+    url: "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/PrintStream.html"
+    note: "println'in on ayrı sürümünü kendi gözünüzle sayabileceğiniz liste."
+  - title: "Python Tutor: Java görselleştirici"
+    url: "https://pythontutor.com/java.html"
+    note: "Kodu adım adım çalıştırır ve yığındaki kağıtları çizer; kağıtta çizdiğiniz yığın diyagramını bununla doğrularsınız."
+  - title: "Proje sayfası"
+    url: "https://drferhatu.github.io/algoritma-ve-programlama-1/proje"
+    note: "KT2 ve KT3 şartları; bu gece göndereceğiniz sürümün kontrol listesi."
+---
+
+## Derse Başlamadan Önce
+
+Ara sınav geride kaldı ve bugün yeniden kendi hızımıza dönüyoruz. Geçen hafta metotlara **dışarıdan** baktınız: bir işe ad verdiniz, ona parametre gönderdiniz ve ondan bir cevap aldınız. Bugün perdeyi aralayıp **içeriden** bakacağız. Bir metodu çağırdığınız anda bilgisayarın belleğinde ne oluyor? Metodun içinde tanımladığınız değişken, metot bitince nereye gidiyor? Geçen hafta izleme sorusunda `a` neden hâlâ 3 çıkmıştı? Bu soruların hepsinin cevabı tek bir resimde saklı ve o resmi bugün kağıtla, elinizle çizeceksiniz.
+
+Yanınızda birkaç boş kağıt ve bir kalem olsun; bugün iki kez kağıt üstünde çalışacağız. Tarayıcınızda [Java Playground](https://dev.java/playground/) açık dursun; kod kutularını geçen haftaki gibi sağ üstteki düğmeyle kopyalayacaksınız. Bir de küçük bir hatırlatma: **KT2 bu gece 23.59'da.** Dersin son kapsülü doğrudan portfolyonuzla ilgili ve akşam yapacağınız işi kolaylaştıracak.
+
+## Günün Hikayesi: Sadece Bir Hobi
+
+25 Ağustos 1991'de, Helsinki Üniversitesi'nde okuyan yirmi bir yaşındaki bir bilgisayar bilimi öğrencisi, internetteki bir tartışma grubuna kısa bir mesaj yazdı. Kendi bilgisayarı için bir işletim sistemi yazmaya başladığını söylüyor ve neredeyse özür diler gibi ekliyordu: bu yalnızca bir hobiydi, büyük ve profesyonel bir şey olmayacaktı. Öğrencinin adı Linus Torvalds'tı.
+
+Linus o yaz çok küçük bir şeyle başlamıştı: ekrana art arda harf yazan iki küçük program ve bu ikisinin arasında geçiş yapan bir parça kod. O çalışınca klavyeden okumayı ekledi. O çalışınca diske yazmayı ekledi. Her seferinde tek bir parça ekliyor, çalıştırıyor, bozulan bir şey varsa onu düzeltiyor ve ancak ondan sonra bir sonraki parçaya geçiyordu. Eylül ayında paylaştığı ilk sürüm on bin satır kadardı ve doğrusu pek bir işe yaramıyordu.
+
+Bugün o hobinin adı Linux. Çekirdeği otuz milyonu aşkın satır, cebinizdeki Android telefon onun üstünde çalışıyor ve dünyanın en hızlı beş yüz süper bilgisayarının tamamı onu kullanıyor. Portfolyonuzu deponuza gönderirken yazdığınız `git push` komutunun arkasındaki Git'i de 2005'te aynı kişi yazdı.
+
+Bu hikayeden bugün için tek bir şey alıyoruz: otuz milyon satır, otuz milyon satır olarak yazılmadı. **Çalışan küçük bir şeyin üstüne, her seferinde çalışan küçük bir parça eklenerek** yazıldı. Bu yöntemin adı artımlı geliştirme ve dersin altıncı kapsülünde onu kendi elinizle uygulayacaksınız. Aslında altı haftadır uyguluyorsunuz: portfolyonuz KT1'de tek bir `if` idi, bu gece KT2'de dönen bir menü olacak. Linus'un yazından farkı yalnızca ölçeği.
+
+## Haftanın Bulmacası
+
+<Puzzle title="Üçüncü bardak metoda taşınınca" kind="tahmin">
+
+Üçüncü haftada iki bardağın içeriğini üçüncü bir bardakla takas etmiştik ve o üç satır o günden beri çalışıyor. Bir arkadaşınız geçen haftaki dersten sonra heveslenmiş ve bu üç satıra bir ad vermiş: `takas`. Program derleniyor ve çalışıyor.
+
+```java
+public class Main {
+
+    static void takas(int a, int b) {
+        int gecici = a;
+        a = b;
+        b = gecici;
+        System.out.println("takas icinde: " + a + " " + b);
+    }
+
+    public static void main(String[] args) {
+        int x = 3;
+        int y = 7;
+        takas(x, y);
+        System.out.println("main icinde: " + x + " " + y);
+    }
+}
+```
+
+İki dakikanız var, kağıt kalemle. Program iki satır yazıyor; ikisini de yazın.
+
+<details>
+<summary>Cevap</summary>
+
+```
+takas icinde: 7 3
+main icinde: 3 7
+```
+
+Metodun içinde takas gerçekten oluyor: `a` 7, `b` 3 oluyor ve ilk satır bunu gösteriyor. Ama `main`'e döndüğünüzde `x` hâlâ 3, `y` hâlâ 7. Üç satır aynı üç satır, tek fark bir metodun içinde olmaları; yine de iş görmüyorlar.
+
+Nedenini şu an söylemiyoruz. Üçüncü kapsülde bu programın resmini çizeceğiz ve cevabı resmin üstünde parmağınızla göstereceksiniz.
+
+</details>
+
+</Puzzle>
+
+Geçen haftaki izleme sorusunu hatırlayın: metot kendi `x`'ini 6 yapmış, ama `main`'deki `a` 3 olarak kalmıştı. Bugünkü bulmaca o sorunun büyüğü ve ikisinin de arkasında aynı soru var: bir metoda bir değişken verdiğinizde, metodun eline geçen şey tam olarak nedir? Cevaba üç adımda varacağız: önce değişkenlerin nerede yaşadığına, sonra çağrı sırasında belleğin nasıl göründüğüne, sonra da metoda neyin gittiğine bakacağız.
+
+## Kapsüller
+
+<Kapsul n={1} title="Her metodun kendi odası var" fikir="Bir metodun içinde tanımlanan değişken yalnızca o metodun içinde yaşar. Başka bir metot onu göremez; aynı adı kullansa bile kendi ayrı kutusunu kullanır." sinifta="İki gönüllü tahtaya geliyor; biri main, biri ortalama. İkisine de üstünde toplam yazan birer kağıt veriyoruz; main kendi kağıdına 100 yazıyor, ortalama kendininkine 155. Sınıfa soruyoruz: main'in kağıdında şu an ne yazıyor? Sonra main'den, arkadaşının kağıdındaki sayıyı arkasını dönmeden okumasını istiyoruz." dene="Kutuyu çalıştırın. Sonra main'in sonuna System.out.println(a); satırını ekleyin ve derleme hatasını okuyun. Sonra ortalama metodunun içindeki toplam değişkeninin adını t yapın: çıktıda herhangi bir şey değişti mi?" istem="Aşağıdaki Java programında toplam adında iki değişken var. Hangisi hangi metoda ait, her biri ne zaman oluşuyor ve ne zaman yok oluyor? Üç cümleyle anlat, kodu değiştirme. Sonra bana sor: main'in içinden ortalama metodunun a parametresini yazdırmaya çalışırsam ne olur? [KOD]" dogrula="Derleme hatası olur: cannot find symbol. a, ortalama metodunun parametresidir ve main onu göremez. Playground'da kendi derleme hatanızla karşılaştırın; hata mesajındaki symbol satırı hangi değişkenin bulunamadığını söyler.">
+
+Bir metodun içinde tanımladığınız değişkene **yerel değişken** denir ve yerel değişken, tanımlandığı metodun odasında yaşar. Oda kapalıdır: içeridekiler dışarıdan görünmez, dışarıdakiler de içeriden. Bir değişkenin görülebildiği bu bölgeye programcılar **kapsam** der.
+
+<CodeTry title="İki ayrı toplam" hint="Çıktı: Ortalama: 77.5 ve main'deki toplam: 100. ortalama metodu kendi toplam kutusuna 155 yazdı ama main'in toplam kutusu olduğu gibi duruyor, çünkü bunlar adları aynı olan iki ayrı kutu." sinif>
+
+```java
+public class Main {
+
+    static double ortalama(int a, int b) {
+        int toplam = a + b;
+        return toplam / 2.0;
+    }
+
+    public static void main(String[] args) {
+        int toplam = 100;
+        double sonuc = ortalama(70, 85);
+        System.out.println("Ortalama: " + sonuc);
+        System.out.println("main'deki toplam: " + toplam);
+    }
+}
+```
+
+</CodeTry>
+
+Bu programda `toplam` adında iki değişken var ve birbirlerinden haberleri yok. Aynı apartmanda iki ayrı dairede yaşayan iki Ayşe gibidirler: adları aynıdır ama birinin kapısını çaldığınızda diğeri açmaz. `ortalama` kendi `toplam`'ına 155 yazar, hesabını yapar ve biter; `main`'in `toplam`'ı bütün bu süre boyunca 100 olarak kalır.
+
+Parametreler de yerel değişkendir. `ortalama` metodunun `a` ve `b` kutuları metot çağrıldığında oluşur, metot bittiğinde yok olur. `main`'in içinden `a` yazmaya kalkarsanız derleyici sizi şu mesajla durdurur: `cannot find symbol`. Derleyicinin söylediği şey çok yalın: "Bu odada `a` diye biri yok."
+
+Kapsam kuralı aslında yedinci haftadan beri karşınızdaydı. `for (int i = 0; ...)` döngüsündeki `i`, döngü bittikten sonra kullanılamıyordu; çünkü bir değişken, tanımlandığı süslü parantez çiftinin içinde yaşar. Metot da bir süslü parantez çiftidir; kural aynı kural.
+
+> [!neden] Bu kısıtlama neden iyi bir şey?
+> İlk bakışta bir engel gibi görünür: keşke her değişkeni her yerden görebilseydim. Ama tersini düşünün. Beş yüz metotluk bir programda her metot her değişkeni değiştirebilseydi, `toplam` yanlış çıktığında suçluyu beş yüz yerde aramanız gerekirdi. Kapsam sayesinde bir metodu okurken yalnızca o metodun parametrelerine ve kendi değişkenlerine bakarsınız; gerisi sizi ilgilendirmez. Geçen haftaki `left-pad` on bir satırdı ve onu anlamak için başka hiçbir dosyayı açmanız gerekmedi; bunu mümkün kılan şey kapsamdı.
+
+> [!not] Peki Lab 9'daki gecen ve toplam?
+> Lab 9 iskeletindeki `gecen` ve `toplam` sayaçlarını hem `kontrol` metodu hem `main` kullanıyordu. Onlar bir metodun içinde değil, metotların dışında, doğrudan sınıfın içinde tanımlanmıştı; böyle tanımlanan bir değişkeni sınıftaki bütün metotlar görür. Kullanışlıdır ama az önce anlattığımız korumayı da ortadan kaldırır. Bu dönem kuralımız şu: bir metot ihtiyacı olan bilgiyi **parametreyle alır**, ürettiği bilgiyi **return ile verir**.
+
+</Kapsul>
+
+<Kapsul n={2} title="Yığın diyagramı: her çağrıya bir kağıt" fikir="Her metot çağrısı için belleğe yeni bir kağıt konur ve değişkenler o kağıda yazılır. En üstteki kağıt çalışır; metot bitince kağıdı atılır ve altındaki kaldığı yerden devam eder." renk="teal" sinifta="Kürsüye üç boş kağıt koyuyoruz. Bir gönüllü programı satır satır okuyor; her çağrıda sınıf 'kağıt!' diyor ve yığının üstüne yeni bir kağıt konuyor, değişkenler o kağıda yazılıyor. Her return'de en üstteki kağıt buruşturulup atılıyor. En kalabalık anda duruyoruz: yığında kaç kağıt var ve a harfi kaç ayrı kağıtta yazıyor?" dene="Kutuyu önce Playground'da çalıştırın. Sonra aynı kodu Python Tutor'un Java sayfasına yapıştırıp Visualize Execution'a basın ve Next ile adım adım ilerleyin. ebob çalışırken sağ tarafta kaç kutu görüyorsunuz? ebob bittiği anda en üstteki kutuya ne oluyor?" istem="Aşağıdaki Java programı için yığın diyagramını metin olarak çiz: ebob metodunun ilk satırı çalışmak üzereyken yığında hangi metotlar var ve her birinin değişkenlerinin değeri ne? Yalnızca o anı göster, programın çıktısını söyleme. Sonra bana sor: ebob bittiğinde ekok'un a ve b değişkenlerinin değeri kaç olur? [KOD]" dogrula="12 ve 18; ebob kendi a ve b kopyalarını 6 ve 0 yaptı ama ekok'un kağıdına dokunmadı. Botun çizdiği diyagramı Python Tutor'daki resimle ve kendi kağıdınızla karşılaştırın; üçü aynı olmalı.">
+
+Geçen hafta çalışma akışını bir okla göstermiştik: `main` çağrıya gelince metoda gider, metot bitince geri döner. Bugün o okun bellekteki karşılığına bakıyoruz ve benzetmemiz masanın üstündeki bir **kağıt yığını**.
+
+Program başladığında masaya `main` için bir kağıt konur ve `main`'in değişkenleri o kağıda yazılır. `main` bir metot çağırdığında, onun kağıdının **üstüne** yeni bir kağıt konur; çağrılan metodun parametreleri ve yerel değişkenleri bu yeni kağıda yazılır. Kural şudur: **yalnızca en üstteki kağıt çalışır**, altındakiler bekler. Metot `return` dediğinde en üstteki kağıt buruşturulup atılır ve altındaki kağıt kaldığı yerden devam eder. Bu kağıt yığınına **çağrı yığını**, onun bir andaki resmine de **yığın diyagramı** denir.
+
+Geçen haftanın `ekok` ve `ebob` metotlarını bu gözle yeniden çalıştıralım:
+
+<CodeTry title="Üç kağıtlı program" hint="Çıktı EKOK: 36. main ekok'u, ekok da ebob'u çağırıyor; ebob çalışırken yığında üç kağıt var. Aşağıdaki diyagram tam o anı gösteriyor." sinif>
+
+```java
+public class Main {
+
+    static int ebob(int a, int b) {
+        while (b != 0) {
+            int kalan = a % b;
+            a = b;
+            b = kalan;
+        }
+        return a;
+    }
+
+    static int ekok(int a, int b) {
+        int ortak = ebob(a, b);
+        return a / ortak * b;
+    }
+
+    public static void main(String[] args) {
+        int x = 12;
+        int y = 18;
+        int sonuc = ekok(x, y);
+        System.out.println("EKOK: " + sonuc);
+    }
+}
+```
+
+</CodeTry>
+
+<Diagram name="h10-yigin" caption="ebob çalışmaya başladığı anda yığın. En üstteki kağıt çalışıyor, alttaki ikisi bekliyor. Soru işaretleri henüz değer almamış değişkenler: ekok, ebob'un cevabını; main de ekok'un cevabını bekliyor." dot width="420px" />
+
+Diyagrama dikkatle bakın, çünkü içinde birinci kapsülün kanıtı duruyor: `a` harfi iki ayrı kağıtta yazıyor. `ebob` döngüsünü çalıştırırken kendi kağıdındaki `a`'yı 6, `b`'yi 0 yapacak; `ekok`'un kağıdındaki `a` ve `b` ise 12 ve 18 olarak kalacak. `ebob` bittiğinde kağıdı atılır, döndürdüğü 6 değeri `ekok`'un kağıdındaki `ortak` kutusuna yazılır ve `ekok` kaldığı satırdan devam eder. Yerel değişkenlerin metot bitince neden yok olduğunu da artık biliyorsunuz: yazılı oldukları kağıt atıldı.
+
+Kağıtta çizdiğiniz diyagramı doğrulamak için güzel bir araç var: [Python Tutor'un Java sayfası](https://pythontutor.com/java.html). Adına aldanmayın, Java da çalıştırıyor. Kodunuzu yapıştırıp adım adım ilerlediğinizde yığındaki kağıtları sizin yerinize çizer; siz önce kağıtta çizer, sonra onunla karşılaştırırsınız.
+
+<Mulakat soru="Aşağıdaki program ekrana ne yazar? Cevabı vermeden önce yığın diyagramını çizin." kod={"static int f(int x) {\n    int y = x + 1;\n    x = y * 2;\n    return x;\n}\n\npublic static void main(String[] args) {\n    int x = 4;\n    int y = f(x);\n    System.out.println(x + \" \" + y);\n}"} kaynak="Kapsam ve yığın üstüne klasik izleme sorusu" ipucu="İki kağıt çizin. İkisinde de x ve y adında kutular olacak; hangi satır hangi kağıttaki kutuyu değiştiriyor?">
+
+Program `4 10` yazar.
+
+`main`'in kağıdında `x` 4'tür. `f(x)` çağrılınca yığına yeni bir kağıt konur ve 4 değeri bu kağıttaki `x` kutusuna kopyalanır. `f` kendi kağıdında `y`'yi 5, sonra `x`'i 10 yapar ve 10 döndürür. Kağıdı atılır; dönen 10, `main`'in kağıdındaki `y` kutusuna yazılır. `main`'in `x`'ine bütün bu süre boyunca kimse dokunmamıştır.
+
+Bu soruda adayları yanıltan şey adlardır: iki metotta da `x` ve `y` var ve göz, bunları aynı kutular sanmaya çok yatkındır. Mülakatta kağıda iki kutu çizip "bunlar adları aynı olan ayrı değişkenler" diyen aday, cevabı söylemeden önce soruyu geçmiş sayılır.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={3} title="Kopya gider, asıl kalır" fikir="Bir metoda değişkeni değil, değişkenin o andaki değerinin bir kopyasını verirsiniz. Metot kopyayla ne yaparsa yapsın, sizin değişkeniniz değişmez." renk="rose" sinifta="Bulmacaya dönüyoruz. Herkes kendi kağıdına takas programının yığın diyagramını çiziyor: iki kağıt, beş kutu. Sonra tek soru soruyoruz: takas metodunun değiştirdiği kutuları parmağınızla gösterin; x ve y bunların arasında mı? Ardından sınıfa meydan okuyoruz: bu metodu çalışır hale getirebilen var mı?" dene="Kutuyu çalıştırın. Sonra cay = zamliFiyat(cay); satırındaki cay = kısmını silin ve yeniden çalıştırın: metot yine çalışıyor ve yine 25 hesaplıyor, peki o 25 nereye gitti?" istem="Java'da bir metoda int bir değişken gönderdiğimde metodun eline ne geçer? Fotokopi benzetmesiyle üç cümlede anlat. Sonra bana sor: Java'da iki int değişkenin değerini takas eden bir metot yazılabilir mi?" dogrula="Yazılamaz; metot yalnızca kopyaları takas eder. Bot 'yazılabilir' derse ya da dizilerden söz ederse, ondan iki int parametreli sürümü yazmasını isteyin ve Playground'da çalıştırın: main'deki değerler değişmeyecek. Resmî kaynak Oracle'ın Passing Information to a Method sayfası.">
+
+Bulmacanın resmini çizme zamanı. `takas(x, y)` çağrıldığında yığına yeni bir kağıt konur ve bu kağıtta `a` ile `b` adında iki yeni kutu açılır. Sonra asıl olay gerçekleşir: `x`'in içindeki 3, `a` kutusuna **kopyalanır**; `y`'nin içindeki 7, `b` kutusuna kopyalanır. Metoda giden şey `x` ve `y` kutularının kendisi değil, o anda içlerinde yazan sayılardır.
+
+<Diagram name="h10-takas" caption="takas metodu bitmeden hemen önce yığın. Metot kendi kağıdındaki a ve b kutularını gerçekten takas etti; main'in kağıdındaki x ve y ise ilk günkü gibi duruyor." dot width="380px" />
+
+Resim her şeyi anlatıyor. `takas` üç satırını kusursuz çalıştırdı ve kendi kağıdındaki iki kutuyu takas etti. Sonra metot bitti, kağıdı atıldı ve yaptığı takas da kağıtla birlikte çöpe gitti. `main`'in kağıdına ise hiç kimse dokunmadı.
+
+Bunu bir fotokopi gibi düşünün. Arkadaşınıza ders notunuzun fotokopisini verdiniz; o, fotokopinin üstünü çizdi, kenarına notlar aldı, belki yırtıp attı. Sizin defterinizde tek bir çizgi bile değişmedi. Java'da bir metoda argüman vermek, ona fotokopi vermektir ve bu davranışın adı **değer ile geçirme**, İngilizcesiyle **pass by value**.
+
+O halde bir metot, hesapladığı şeyi çağırana nasıl ulaştırır? Geçen haftadan bildiğiniz yolla: `return` ile. Çağıran da dönen değeri alıp kendi değişkenine kendi eliyle yazar.
+
+<CodeTry title="Döndür ve ata" hint="Çıktı: zamYap sonrasi: 15 ve zamliFiyat sonrasi: 25. zamYap kopyaya zam yaptı ve kopya metotla birlikte yok oldu. zamliFiyat yeni fiyatı geri verdi; onu cay kutusuna yazan ise main'in kendisi oldu." sinif>
+
+```java
+public class Main {
+
+    static void zamYap(int fiyat) {
+        fiyat = fiyat + 10;
+    }
+
+    static int zamliFiyat(int fiyat) {
+        return fiyat + 10;
+    }
+
+    public static void main(String[] args) {
+        int cay = 15;
+
+        zamYap(cay);
+        System.out.println("zamYap sonrasi: " + cay);
+
+        cay = zamliFiyat(cay);
+        System.out.println("zamliFiyat sonrasi: " + cay);
+    }
+}
+```
+
+</CodeTry>
+
+`cay = zamliFiyat(cay);` satırını bir kalıp olarak aklınıza yazın, çünkü portfolyonuzda onlarca kez kullanacaksınız: **döndür ve ata.** Metot yeni değeri hesaplayıp verir, çağıran onu kendi değişkenine yazar. Bir metodun `main`'deki bir değişkeni değiştirmesinin bu dönem bildiğimiz tek dürüst yolu budur.
+
+Peki ya `takas`? İki sayıyı birden değiştirmesi gerekiyor ama bir metot yalnızca tek bir değer döndürebilir. Bu yüzden iki `int` değişkeni takas eden bir metot Java'da yazılamaz; üç satırı `main`'in içinde bırakırsınız. Gelecek hafta diziler geldiğinde bu hikayeye bir bölüm daha eklenecek ve bir metodun bir dizinin içini nasıl değiştirebildiğini göreceksiniz; kural yine aynı kalacak, yalnızca kopyalanan şey değişecek.
+
+<Mulakat soru="Java pass by value mudur, pass by reference mı? İki int değişkenin değerini takas eden bir metot yazabilir misiniz?" kaynak="Java mülakatlarının en sık sorulan temel sorularından biri" ipucu="Bulmacanın cevabını biliyorsunuz. Mülakatçı sizden yalnızca 'çalışmaz' demenizi değil, nedenini bir resimle anlatmanızı bekliyor.">
+
+Java her zaman pass by value'dur: metoda argümanın kendisi değil, değerinin bir kopyası gider. Bu yüzden iki `int` parametre alan bir `takas` metodu çağıranın değişkenlerini değiştiremez; yalnızca kendi kopyalarını takas eder.
+
+İyi bir cevap burada durmaz ve kağıda iki kutu çizer: çağıranın kağıdı ve metodun kağıdı. "Değerler şuradan şuraya kopyalandı, metot bu kağıtta çalıştı, bu kağıt atıldı" diye gösterir. Mülakatçı çoğu zaman bir takip sorusu sorar: "Peki bir metot hesapladığı değeri çağırana nasıl ulaştırır?" Cevabı bugün öğrendiniz: `return` ile döndürür, çağıran atar.
+
+Java'nın tasarımcıları bu kararı bilerek vermiştir ve dili anlattıkları kitapta açıkça yazarlar: Java'da parametre geçirmenin tek bir biçimi vardır, o da değer ile geçirmedir. C++ ve C# gibi dillerde bir metoda değişkenin kendisini vermenin yolu vardır; Java bu kapıyı, dili sade tutmak için hiç açmamıştır.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={4} title="Yığın izi: Java'nın sizin için çizdiği diyagram" fikir="Program çöktüğünde Java, o andaki yığını ekrana yazar. Kırmızı yazı bir azar değil, bir haritadır: hata hangi metotta, hangi satırda ve oraya hangi yoldan gelindi." renk="amber" sinifta="Yansıya yalnızca kırmızı hata mesajını koyuyoruz, kodu göstermiyoruz. Soru: bu programda en az kaç metot var, hangisi hangisini çağırmış ve hata hangi satırda? Bir gönüllü mesajı aşağıdan yukarı yüksek sesle okuyor; sonra kodu açıp haklı olup olmadığına bakıyoruz." dene="Kutuyu çalıştırın ve hata mesajını aşağıdan yukarı okuyun. Sonra ortalama(240, 0) çağrısını silmeden programı kurtarın: bolum metoduna, adet sıfırsa 0 döndüren bir if ekleyin. Bitti yazısını gördünüz mü?" istem="Java programım çöktü ve aşağıdaki hata mesajını verdi. Kodumu düzeltme ve çözümü söyleme. Bana yalnızca şunu söyle: bu mesaja göre önce hangi dosyanın hangi satırına bakmalıyım ve program o satıra hangi metotlardan geçerek gelmiş? [HATA MESAJI]" dogrula="Botun söylediği satır numarasını kendi kodunuzda açın; hata mesajının en üstteki at satırıyla aynı olmalı. Bot size mesajda yazmayan bir satır numarası söylüyorsa uyduruyordur: yığın izinde ne yazıyorsa odur.">
+
+Dönem boyunca ekranınızda kırmızı yazılar gördünüz ve büyük olasılıkla çoğunu okumadan kapattınız. Bugünden sonra okuyacaksınız, çünkü o yazının ne olduğunu artık biliyorsunuz: Java, programın çöktüğü andaki **yığın diyagramını** ekrana yazıyor. Buna **yığın izi**, İngilizcesiyle **stack trace** denir.
+
+<CodeTry title="Bilerek çökertiyoruz" hint="İlk çağrı 80 yazar. İkinci çağrıda adet sıfır olduğu için tam sayı bölmesi çöker ve program orada biter; Bitti satırı hiç yazılmaz. Playground hata mesajını biraz farklı bir biçimde gösterebilir; aşağıdaki çıktı, programı kendi bilgisayarınızda java Main ile çalıştırdığınızda göreceğiniz halidir." sinif>
+
+```java
+public class Main {
+
+    static int bolum(int toplam, int adet) {
+        return toplam / adet;
+    }
+
+    static int ortalama(int toplam, int adet) {
+        int sonuc = bolum(toplam, adet);
+        return sonuc;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(ortalama(240, 3));
+        System.out.println(ortalama(240, 0));
+        System.out.println("Bitti");
+    }
+}
+```
+
+</CodeTry>
+
+Program önce `80` yazar, sonra şu mesajı verip durur:
+
+```
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Main.bolum(Main.java:4)
+	at Main.ortalama(Main.java:8)
+	at Main.main(Main.java:14)
+```
+
+Bu dört satırı iki yönde okuyabilirsiniz ve ikisi de bilgi verir. İlk satır **ne olduğunu** söyler: bir aritmetik hata, sıfıra bölme. Altındaki üç `at` satırı ise çöküş anında yığında duran üç kağıttır ve tıpkı bizim diyagramımızdaki gibi dizilmiştir: en üstte o sırada çalışan metot, en altta `main`.
+
+**Yukarıdan aşağı** okursanız hatanın nerede patladığını bulursunuz: `bolum` metodu, 4. satır. **Aşağıdan yukarı** okursanız oraya nasıl gelindiğinin hikayesini bulursunuz: `main` 14. satırda `ortalama`'yı çağırdı, `ortalama` 8. satırda `bolum`'ü çağırdı, `bolum` 4. satırda çöktü. Dikkat edin, hatanın patladığı yer ile hatanın **sebebi** aynı yer değil: bölme 4. satırda yapılıyor ama sıfırı gönderen 14. satır. Yığın izi size ikisini birden verir; iyi bir yazılımcı hatanın izini aşağıya doğru, sebebe kadar sürer.
+
+**Sahada: bir sitenin adı.** Bir metot kendi kendini durmadan çağırırsa ne olur? Her çağrı yığına bir kağıt daha koyar, hiçbir kağıt atılmaz ve bir süre sonra masada yer kalmaz. Java o anda programı `StackOverflowError` diyerek durdurur; yığın taştı demektir. Aşağıdaki metodu `main`'den bir kez çağırırsanız bin satırdan uzun bir yığın izi görürsünüz ve her satırında aynı metodun adı yazar:
+
+```java
+static void sonsuz() {
+    sonsuz();
+}
+```
+
+2008'de Jeff Atwood ve Joel Spolsky, yazılımcıların birbirine soru sorabileceği bir site kurdular ve adını Atwood'un okurlarının oylamasına bıraktılar. Kazanan ad, her programcının en az bir kez gördüğü bu hatanın adıydı: Stack Overflow. Yıllar boyunca dünyanın dört bir yanındaki yazılımcılar, ekranlarındaki yığın izini kopyalayıp o sitenin arama kutusuna yapıştırdı. Bugün aynı şeyi bir asistana yapıştırarak yapıyorsunuz; yapıştırdığınız şey ise hâlâ aynı: yığın izi.
+
+</Kapsul>
+
+<Kapsul n={5} title="Aynı ad, farklı parametreler: aşırı yükleme" fikir="Parametre listeleri farklı olduğu sürece birden fazla metoda aynı adı verebilirsiniz. Hangisinin çalışacağına Java, çağrıda verdiğiniz argümanlara bakarak karar verir." renk="violet" sinifta="Tahtaya art arda üç çağrı yazıyoruz: println(5), println(2.5) ve println('A'). Soru: bunlar aynı metot mu? Tahminleri aldıktan sonra Oracle'ın PrintStream sayfasını açıp println satırlarını sınıfça sayıyoruz. Ardından mülakat kartındaki dört çağrı için herkes kağıda dört satır yazıyor." dene="Kutuyu çalıştırın ve dört çağrının her biri için hangi sürümün çalıştığını söyleyin. Sonra dördüncü bir sürüm ekleyin: yalnızca dönüş tipi farklı olsun, yani static double enBuyuk(int a, int b). Derleyicinin itirazını okuyun." istem="Java'da aşırı yükleme (overloading) nedir? İki cümleyle anlat. Sonra bana aynı adı taşıyan üç metot imzası göster ama birini BİLEREK geçersiz yap; hangisinin neden derlenmeyeceğini söyleme, onu ben bulacağım." dogrula="Geçersiz olan, başka bir sürümle parametre listesi aynı olup yalnızca dönüş tipi ya da parametre adları farklı olandır. Üç imzayı boş gövdelerle Playground'a yazın; derleyici 'already defined' diyerek hangisinin fazla olduğunu size söyler.">
+
+Geçen hafta üç sayının en büyüğünü bulan metoda `enBuyuk3` adını vermek zorunda kalmıştık, çünkü `enBuyuk` adı iki sayılı sürümde kullanılmıştı. Aslında zorunda değildik. Java, **parametre listeleri farklı olduğu sürece** birden fazla metodun aynı adı taşımasına izin verir ve buna **aşırı yükleme** (overloading) denir.
+
+<CodeTry title="Üç enBuyuk" hint="Çıktı: 9, 9, 4.5 ve 4.0. Son çağrıya dikkat: bir int ve bir double verdiniz. Tam uyan bir sürüm yok; Java 4'ü 4.0'a genişletip double sürümünü seçti ve cevap bu yüzden 4.0 olarak, ondalıklı döndü." sinif>
+
+```java
+public class Main {
+
+    static int enBuyuk(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    static int enBuyuk(int a, int b, int c) {
+        return enBuyuk(enBuyuk(a, b), c);
+    }
+
+    static double enBuyuk(double a, double b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(enBuyuk(4, 9));
+        System.out.println(enBuyuk(4, 9, 7));
+        System.out.println(enBuyuk(4.5, 2.5));
+        System.out.println(enBuyuk(4, 2.5));
+    }
+}
+```
+
+</CodeTry>
+
+Java hangi `enBuyuk`'un çağrıldığını nereden biliyor? Geçen haftanın kavramından: **imzadan.** İmza, metodun adı ile parametrelerinin sayısı, tipi ve sırasıydı. Üç metodun adı aynı ama imzaları farklı: biri iki `int` alıyor, biri üç `int`, biri iki `double`. Derleyici her çağrıda argümanlara bakar ve onlara uyan imzayı seçer.
+
+Buradan iki kural çıkıyor. Birincisi, **dönüş tipi imzanın parçası değildir.** `int enBuyuk(int a, int b)` varken bir de `double enBuyuk(int a, int b)` yazamazsınız; çünkü `enBuyuk(4, 9)` çağrısına bakan derleyici, hangisini kastettiğinizi argümanlardan anlayamaz. İkincisi, parametrelerin **adları** da imzaya dahil değildir; `enBuyuk(int x, int y)` yukarıdaki ilk metodun aynısıdır ve derleyici onu ikinci kez tanımladığınızı söyler.
+
+Kutudaki ikinci metoda da bir bakın: üç sayılı `enBuyuk`, iki sayılı `enBuyuk`'u çağırıyor. Aşırı yüklemenin en yaygın kullanımı budur: asıl işi bir sürüm yapar, diğerleri onu çağıran kısa yollardır.
+
+> [!nerede] Sahada: on haftadır aşırı yüklenmiş bir metot çağırıyorsunuz
+> `System.out.println(5)`, `System.out.println(2.5)` ve `System.out.println("Merhaba")` üç ayrı metottur. Java'nın `println`'i on ayrı sürüm olarak yazılmıştır: `int` için, `double` için, `char` için, `boolean` için, `String` için ve diğerleri. Siz hepsine aynı adla seslenirsiniz, Java doğru olanı seçer. `Math.abs` ve `Math.max` da dörder sürümdür. Aşırı yükleme olmasaydı ilk hafta `printlnInt`, `printlnDouble`, `printlnString` adlarını ezberlemeniz gerekecekti.
+
+<Mulakat soru="Aşağıdaki program ekrana ne yazar? Dört satırı da yazın." kod={"static void yaz(int x) {\n    System.out.println(\"int \" + x);\n}\n\nstatic void yaz(double x) {\n    System.out.println(\"double \" + x);\n}\n\nstatic void yaz(char x) {\n    System.out.println(\"char \" + x);\n}\n\npublic static void main(String[] args) {\n    yaz(7 / 2);\n    yaz(7 / 2.0);\n    yaz('7');\n    yaz(7);\n}"} kaynak="Tipler ve aşırı yüklemeyi birlikte yoklayan izleme sorusu" ipucu="Her çağrıda önce parantezin içindeki ifadenin TİPİNİ bulun; değeri ondan sonra gelir. Üçüncü haftanın pizza bölüşmesini hatırlayın.">
+
+```
+int 3
+double 3.5
+char 7
+int 7
+```
+
+Hangi sürümün çalışacağına argümanın değeri değil **tipi** karar verir. `7 / 2` iki tam sayının bölümüdür ve sonucu yine tam sayıdır: 3; `int` sürümü çalışır. `7 / 2.0` ifadesinde taraflardan biri ondalıklı olduğu için sonuç `double`'dır: 3.5. Tek tırnak içindeki `'7'` bir sayı değil bir karakterdir ve `char` sürümüne gider. Son çağrıdaki çıplak `7` ise `int`'tir.
+
+Bu soru aslında iki soruyu tek kağıda sığdırır: tipleri biliyor musunuz ve aşırı yüklemenin tipe baktığını biliyor musunuz? Üçüncü ile dördüncü satırın ekranda neredeyse aynı göründüğüne dikkat edin; `'7'` ile `7` arasındaki fark ekranda kaybolur ama derleyicinin gözünden kaçmaz.
+
+</Mulakat>
+
+</Kapsul>
+
+<Kapsul n={6} title="Artımlı geliştirme: önce iskele, sonra bina" fikir="Bir metodu tek seferde yazıp sonra hata aramazsınız. Küçük bir parça yazar, derler, cevabını bildiğiniz bir girdiyle sınar ve ancak ondan sonra bir sonraki parçayı eklersiniz." renk="emerald" sinifta="Projeksiyonda mesafe metodunu sıfırdan, dört adımda yazıyoruz. Her adımdan önce sınıfa soruyoruz: Run'a basınca ne göreceğiz? Tahmin tutarsa devam ediyoruz. Üçüncü adımda bilerek bir hata yapıyoruz ve sınıftan onu bulmasını istiyoruz: hatayı aramanız gereken satır sayısı kaç?" dene="Dört adımı Playground'da sırayla kendiniz yazın; her adımda Run'a basın ve bir sonraki adıma ancak beklediğiniz çıktıyı gördükten sonra geçin. Bitince ikinci bir sınama ekleyin: mesafe(0, 0, 1, 1) kaç olmalı? Önce kağıtta hesaplayın." istem="Java antrenörü gibi davran. İki nokta arasındaki mesafeyi hesaplayan mesafe metodunu artımlı geliştirmeyle yazmak istiyorum. Kodun tamamını YAZMA. Bana yalnızca birinci adımı söyle: ne yazmalıyım ve çalıştırınca ne görmeliyim? Ben 'oldu' demeden sonraki adıma geçme." dogrula="Her adımda botun 'göreceksin' dediği çıktıyı kendi ekranınızdaki çıktıyla karşılaştırın. Son sınama: (1, 2) ile (4, 6) arası 5.0 çıkmalı, çünkü kenarları 3 ve 4 olan dik üçgenin hipotenüsü 5'tir. Cevabı önceden bilinen girdi, en güvenilir doğrulayıcıdır.">
+
+Yeni başlayanların çoğu bir metodu baştan sona yazar, sonra Run'a basar ve karşısına çıkan beş hatanın hangisinin nereden geldiğini bulmaya çalışır. Deneyimli yazılımcılar tersini yapar: az yazar, hemen çalıştırır. Bu alışkanlığın adı **artımlı geliştirme** ve mantığı çok basit: son çalıştırdığınızdan bu yana yalnızca iki satır eklediyseniz, yeni çıkan hata o iki satırdadır.
+
+Örneğimiz, kampüs haritasındaki iki nokta arasındaki kuş uçuşu mesafe. Lisedeki formülü hatırlıyorsunuz: yatay farkın karesi ile dikey farkın karesini topla, karekökünü al. Sınamak için cevabını **önceden bildiğimiz** bir girdi seçiyoruz: (1, 2) ile (4, 6) noktaları. Yatay fark 3, dikey fark 4; kenarları 3 ve 4 olan dik üçgenin hipotenüsü 5'tir. Demek ki metot doğruysa 5.0 döndürmeli.
+
+**Adım 1: iskele.** Önce yalnızca imzayı yazıyor ve gövdeye yanlış ama derlenen bir cevap koyuyoruz. Amaç henüz doğru cevap değil; amaç, metodun çağrılabildiğini görmek.
+
+```java
+static double mesafe(double x1, double y1, double x2, double y2) {
+    return 0.0;
+}
+```
+
+`main`'e `System.out.println(mesafe(1, 2, 4, 6));` yazıp çalıştırıyoruz ve `0.0` görüyoruz. Yanlış cevap, ama program derleniyor ve metot çağrılıyor. Lab 9'daki iskeletin size ilk gün verdiği şey tam olarak buydu.
+
+**Adım 2: farklar.** Yalnızca iki satır ekliyoruz ve ara değerleri geçici olarak ekrana yazdırıyoruz.
+
+```java
+static double mesafe(double x1, double y1, double x2, double y2) {
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+    System.out.println("dx = " + dx);
+    System.out.println("dy = " + dy);
+    return 0.0;
+}
+```
+
+Ekranda `dx = 3.0` ve `dy = 4.0` görmeliyiz. Gördüysek bu iki satır doğrudur ve bir daha onlardan şüphelenmemize gerek kalmaz.
+
+**Adım 3: kareler toplamı.** Bir satır daha ekleyip onu da yazdırıyoruz: `double kareToplam = dx * dx + dy * dy;` Beklediğimiz değer 9 artı 16, yani `25.0`.
+
+**Adım 4: karekök ve temizlik.** Son satırı yazıyor ve geçici `println`'leri siliyoruz.
+
+<CodeTry title="mesafe: bitmiş hali" hint="Çıktı 5.0 ve 1.4142135623730951. Geçici println satırları iskeleydi; bina bitince iskele sökülür. Geçen haftanın kuralı hâlâ geçerli: hesap yapan metot sonucunu döndürür, ekrana yazmaz." sinif>
+
+```java
+public class Main {
+
+    static double mesafe(double x1, double y1, double x2, double y2) {
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        double kareToplam = dx * dx + dy * dy;
+        return Math.sqrt(kareToplam);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(mesafe(1, 2, 4, 6));
+        System.out.println(mesafe(0, 0, 1, 1));
+    }
+}
+```
+
+</CodeTry>
+
+Dört adımın hiçbirinde iki satırdan fazla yeni kod yazmadınız ve hiçbir adımda "hata nerede?" diye aramanız gerekmedi. Deneyim kazandıkça adımlarınız büyüyecek; ama bir şey ters gittiğinde yapacağınız ilk iş hep aynı olacak: adımı küçültmek.
+
+**Sahada: ilk gün altı kişi.** 1 Ekim 2013'te Amerika Birleşik Devletleri, vatandaşlarının sağlık sigortası satın alacağı yeni sitesini açtı: HealthCare.gov. Siteyi onlarca yüklenici firma yıllar boyunca parça parça yazmıştı; ancak bütün parçaların bir arada sınanmasına açılıştan yalnızca birkaç hafta önce başlanabilmişti. İlk gün siteye milyonlarca kişi girdi. Gün bittiğinde kaydını tamamlayabilen kişi sayısı **altıydı.** Siteyi kullanılır hale getirmek küçük bir kurtarma ekibinin haftalarını aldı ve ekibin yöntemi size tanıdık gelecek: sorunları tek tek ele al, her düzeltmeden sonra çalıştır ve ölç, ancak ondan sonra bir sonrakine geç.
+
+Linus küçük başlayıp her adımda çalışan bir şeyi büyüttü ve otuz milyon satıra ulaştı. HealthCare.gov her şeyi ayrı ayrı yazıp en sonda birleştirdi ve ilk gününde altı kişiye hizmet verebildi. İkisinin arasındaki fark yazılımcıların zekası değildi; yöntemdi.
+
+> [!neden] Yapay zeka çağında artımlı geliştirme neden daha da önemli?
+> Bir asistana "bana stok takip programı yaz" dediğinizde iki yüz satır kodu birkaç saniyede önünüze koyar. Bu, HealthCare.gov'un yaptığının ta kendisidir: her şey bir anda gelir ve hiçbiri sınanmamıştır. O iki yüz satır çalışmazsa hatayı iki yüz satırın içinde ararsınız; üstelik kodu siz yazmadığınız için nereye bakacağınızı da bilemezsiniz. Asistanla iyi çalışan yazılımcı ondan tek seferde bina istemez; önce iskeleyi ister, çalıştırır, sonra bir metot ister, onu cevabını bildiği bir girdiyle sınar, sonra bir sonrakini ister. Hız asistandan gelir; adımların küçüklüğü ve her adımın sınanması ise sizden.
+
+</Kapsul>
+
+<Kapsul n={7} title="Portfolyonuz bu gece bir adım daha büyüyor" fikir="Menünüzdeki bir seçeneği metoda taşıdığınızda bugünün üç fikri birden karşınıza çıkar: metot main'in değişkenlerini göremez, ona parametreyle verirsiniz ve yeni değeri döndürüp atarsınız." renk="accent" sinifta="Örnek kırtasiye uygulamasının menüsünü yansıtıyoruz ve case 1'in altındaki satırları sınıfça bir metoda taşıyoruz. İlk denemede bilerek parametresiz yazıyoruz ve derleme hatasını birlikte okuyoruz: cannot find symbol. Soru: metot neyi göremiyor ve ona bunu nasıl veririz?" dene="Bu akşam KT2'yi göndermeden önce kendi Uygulama.java dosyanızda tek bir seçeneği, en kısa olanını, bir metoda taşıyın. Derleyin, programı çalıştırıp o seçeneği deneyin, sonra 0 ile çıkın. Çalışıyorsa push edin; çalışmıyorsa değişikliği geri alın ve çalışan halini gönderin." istem="Aşağıda portfolyo uygulamamın menü döngüsü var. Kodu DEĞİŞTİRME ve metot yazma. Yalnızca şunu listele: her case'in altındaki satırlar main'in hangi değişkenlerini okuyor ve hangilerini değiştiriyor? Okunanları parametre, değiştirilenleri dönüş değeri adayı olarak işaretle. [KOD]" dogrula="Botun listesini kendi kodunuzla satır satır karşılaştırın. Sınama basit: bir değişkeni listeden çıkarıp metodu yazmayı deneyin; derleyici 'cannot find symbol' diyorsa o değişken gerçekten gerekliydi.">
+
+Bugünün bütün kapsülleri bu akşam tek bir yerde buluşuyor: portfolyonuzda. Geçen hafta söz vermiştik: menü seçeneklerini metotlara taşımak KT3'ün şartı olacak. Bu gece göndereceğiniz KT2 için şart değil; ama nasıl yapıldığını bugün görürseniz, 18 Aralık'a kadar önünüzdeki iş yarı yarıya azalır.
+
+Bir `case`'in altındaki satırları kesip bir metoda yapıştırdığınızda ilk karşılaşacağınız şey, birinci kapsülün derleme hatasıdır. O satırlar `main`'in `toplam` ve `klavye` değişkenlerini kullanıyordu; metot ise kendi odasındadır ve onları göremez. Çözüm de bugünün konusu: ihtiyacı olanı **parametreyle verirsiniz**, değiştirdiğini **döndürüp atarsınız**.
+
+```java
+import java.util.Scanner;
+
+public class Uygulama {
+
+    static void menuYaz() {
+        System.out.println("1) Sepete defter ekle (45 TL)");
+        System.out.println("2) Sepeti goster");
+        System.out.println("0) Cikis");
+        System.out.print("Seciminiz: ");
+    }
+
+    static int adetOku(Scanner klavye) {
+        System.out.print("Adet (1-20): ");
+        int adet = klavye.nextInt();
+        while (adet < 1 || adet > 20) {
+            System.out.print("Gecersiz. Adet (1-20): ");
+            adet = klavye.nextInt();
+        }
+        return adet;
+    }
+
+    static int sepeteEkle(Scanner klavye, int toplam) {
+        int adet = adetOku(klavye);
+        return toplam + adet * 45;
+    }
+
+    public static void main(String[] args) {
+        Scanner klavye = new Scanner(System.in);
+        int toplam = 0;
+        int secim;
+        do {
+            menuYaz();
+            secim = klavye.nextInt();
+            switch (secim) {
+                case 1:
+                    toplam = sepeteEkle(klavye, toplam);
+                    break;
+                case 2:
+                    System.out.println("Sepet toplami: " + toplam + " TL");
+                    break;
+                case 0:
+                    System.out.println("Gule gule");
+                    break;
+                default:
+                    System.out.println("Gecersiz secim");
+            }
+        } while (secim != 0);
+    }
+}
+```
+
+Bu programı klavyeden girdi aldığı için kendi bilgisayarınızda ya da Codespaces'te çalıştırın. Sırasıyla `1`, `25`, `3`, `2` ve `0` girerseniz program 25'i reddeder, 3 adedi kabul eder ve `Sepet toplami: 135 TL` yazar.
+
+Şimdi bugün öğrendiklerinizi bu kodun üstünde tek tek gösterelim. `sepeteEkle` metodu `main`'in `toplam`'ını göremediği için onu parametre olarak alıyor; aldığı şey bir kopya. Kopyanın üstüne ekleme yapıp yeni toplamı döndürüyor ve `case 1`'deki satır onu `main`'in kutusuna yazıyor: `toplam = sepeteEkle(klavye, toplam);` Üçüncü kapsülün kalıbı, döndür ve ata. `adetOku` ise KT2'nin şartı olan girdi doğrulama döngüsünün ad almış hali: içinde bir `while` var, geçerli bir sayı gelene kadar soruyor ve onu döndürüyor. Program çalışırken en kalabalık anda yığında üç kağıt oluyor: `main`, `sepeteEkle` ve `adetOku`.
+
+`main`'e bir daha bakın. Menü döngüsü hâlâ orada, ama artık bir içindekiler sayfası gibi okunuyor: menüyü yaz, seçimi oku, sepete ekle. Ayrıntılar kendi adlarını taşıyan metotların içinde. Geçen hafta "bir metodun gövdesi bir ekrandan uzunsa içinde ad verilmeyi bekleyen başka bir metot saklıdır" demiştik; portfolyonuzun `main`'i büyük olasılıkla bu cümlenin en güzel örneği.
+
+</Kapsul>
+
+## KT2: Bu Gece 23.59
+
+> [!uyari] Portfolyo kilometre taşı
+> **KT2, 27 Kasım Cuma 23.59.** O saatte deponuzda ne varsa KT2 sürümünüz odur. Beklenen iki şey var: uygulamanızın ana akışı `0` gözcüsüyle biten bir menü döngüsünde çalışıyor ve en az bir yerde, yanlış girdiyi doğru girdi gelene kadar yeniden soran bir girdi doğrulama döngüsü bulunuyor. Metotlar KT2'nin şartı değil. Ayrıntı: [Proje](/proje).
+
+Göndermeden önce üç dakikalık bir son kontrol yapın. Kendi bilgisayarınızda ya da Codespaces'te `javac Uygulama.java` yazın ve hatasız derlendiğini görün. Programı çalıştırıp yalnızca `0` girin; menü bir kez görünmeli ve program hatasız bitmeli. Sonra bir kez de bilerek yanlış bir değer girin, örneğin adet sorulduğunda `-5`; programınız çökmemeli, sizi azarlamadan yeniden sormalı. Bu üç adım geçiyorsa `git push` deyin ve deponuzun sayfasında son commit'in saatine bakın.
+
+Yedinci kapsüldeki metoda taşıma denemesini yaptıysanız ve program çalışıyorsa onu da gönderin; çalışmıyorsa değişikliği geri alın ve çalışan sürümü gönderin. Linus'un kuralı sizin için de geçerli: depoya giren her sürüm, çalışan bir sürümdür.
+
+## Temel Kavramlar
+
+- **Yerel değişken**: Bir metodun içinde tanımlanan değişken. Metot çağrılınca oluşur, metot bitince yok olur; parametreler de yerel değişkendir.
+- **Kapsam (scope)**: Bir değişkenin görülebildiği kod bölgesi. Yerel bir değişkenin kapsamı, tanımlandığı süslü parantez çiftinin içidir.
+- **Çağrı yığını (call stack)**: O anda çalışmakta ve beklemekte olan metot çağrılarının üst üste dizildiği bellek bölgesi. Her çağrı için bir kağıt; en üstteki çalışır.
+- **Yığın diyagramı**: Çağrı yığınının bir andaki resmi: hangi metotlar yığında ve her birinin değişkenlerinde hangi değerler var.
+- **Değer ile geçirme (pass by value)**: Metoda argümanın kendisi değil, değerinin bir kopyası gider. Metodun parametresini değiştirmesi çağıranın değişkenini değiştirmez.
+- **Döndür ve ata**: Bir metodun hesapladığı değeri çağırana ulaştırma kalıbı: `x = metot(x);`
+- **Yığın izi (stack trace)**: Program çöktüğünde Java'nın ekrana yazdığı yığın. En üst satır hatanın oluştuğu metodu ve satırı, alt satırlar oraya gelen çağrı zincirini gösterir.
+- **StackOverflowError**: Yığına, atılmadan çok fazla kağıt konduğunda (örneğin kendini durmadan çağıran bir metotta) oluşan hata.
+- **Aşırı yükleme (overloading)**: Parametre listeleri farklı olan birden fazla metoda aynı adı vermek. Hangisinin çalışacağını argümanların sayısı ve tipi belirler; dönüş tipi belirlemez.
+- **Artımlı geliştirme**: Programı küçük adımlarla yazmak; her adımda derlemek ve cevabı bilinen bir girdiyle sınamak.
+- **İskele (stub)**: Henüz doğru cevabı vermeyen ama derlenen ve çağrılabilen geçici metot gövdesi, örneğin `return 0.0;`
+
+## Sahadan Örnekler
+
+- **Hata raporlarının dili yığın izidir.** Telefonunuzdaki bir uygulama çöktüğünde ve "geliştiriciye rapor gönder" dediğinizde giden şeyin en önemli kısmı bir yığın izidir. Geliştirici sizi tanımaz, ne yaptığınızı bilmez; elinde yalnızca hangi metodun hangi satırda çöktüğünü ve oraya hangi çağrılarla gelindiğini gösteren o liste vardır ve çoğu zaman o liste yeter.
+- **Büyük ekipler artımlı çalışır.** Bugün büyük yazılım şirketlerinde bir yazılımcının yazdığı değişiklik çoğu zaman küçük parçalar halinde ana koda eklenir ve her parça otomatik sınamalardan geçer. Aylarca ayrı yazılıp en sonda birleştirilen kodun nelere yol açtığını HealthCare.gov bütün sektöre göstermiştir.
+- **Kütüphaneler aşırı yüklemeyle konuşur.** Java'nın kendi kütüphanesinde aynı adı taşıyan metot aileleri her yerdedir: `println`, `Math.max`, `Math.abs`. Bir kütüphane tasarımcısı için aşırı yükleme, kullanıcıya "tipini sen düşünme, ben hallederim" demenin yoludur.
+
+## Portfolyo
+
+Bu gece KT2'yi gönderiyorsunuz; kontrol adımları yukarıdaki kutuda. Önünüzdeki durak **KT3, 18 Aralık Cuma 23.59** ve şartları bugünden belli: kodunuz metotlara bölünmüş olacak, menü seçenekleriniz kendi metotlarına taşınacak, girdi doğrulayan bir metodunuz ve bir dizi alıp tek değer döndüren bir metodunuz bulunacak. İlk üçünü bugünkü dersten sonra yazabilirsiniz; dizileri gelecek hafta öğreniyoruz.
+
+KT3'e giden yolu artımlı yürüyün. Her hafta tek bir `case`'i metoda taşıyın, derleyin, çalıştırın, push edin. Üç hafta sonra `main`'iniz yedinci kapsüldeki gibi bir içindekiler sayfasına dönmüş olur ve bunu yaparken programınız tek bir gün bile bozuk kalmaz. Ayırt edici kuralınız da bu süreçte kendi metodunu kazanacak; adını şimdiden düşünün, çünkü iyi bir ad işin yarısıdır.
+
+Yapay zeka portfolyoda yeşil bölgede; asistanla birlikte çalışabilirsiniz. Ondan bir metot istediğinizde bugünün üç sorusunu sorun: bu metot hangi değişkenlerime ihtiyaç duyuyor, neyi döndürüyor ve onu cevabını bildiğim hangi girdiyle sınayacağım?
+
+## Laboratuvara Hazırlık
+
+Lab 10, A şubesi **2 Aralık Çarşamba 13.15**, B şubesi **3 Aralık Perşembe 15.15**, yürütücüsü Arş. Gör. Ömer Miraç Kökçam. Düzen Lab 9'daki gibi: hiçbir yere dosya yüklemiyorsunuz, sayfadaki tek dosyalık iskelet kendi kendini sınıyor ve lab sorumlu hocanız sonucu ekranınızda görüp bir bölümü size anlattırıyor.
+
+Bu labın bir yeniliği var: ilk görevde kod yazmayacaksınız. Dört küçük programı **kağıtta izleyecek**, tahmininizi iskelete yazacak ve program, tahmininizi gerçek sonuçla kendisi karşılaştıracak. Yanınızda kağıt kalem olsun. Sonraki görevlerde döndür ve ata kalıbını, aşırı yüklemeyi ve artımlı geliştirmeyi uygulayacaksınız.
+
+Lab'a gelirken bugünkü yedi kapsülün kod kutularını birer kez çalıştırmış ve en az bir yığın diyagramını kendi elinizle çizmiş olmanız yeterli. Ayrıntı ve iskelet: [Lab 10](/laboratuvar/lab-10).
+
+## Tartışma Soruları
+
+1. Linus Torvalds ilk mesajında projesinin büyük ve profesyonel bir şey olmayacağını yazmıştı. Sizce bu alçakgönüllü başlangıç, projenin büyümesine engel mi oldu, yoksa yardım mı etti? Kendi portfolyonuzun KT1 sürümünü düşünün: küçük başlamış olmak size ne kazandırdı?
+2. Kapsam kuralı olmasaydı, yani her metot her değişkeni görebilseydi, yedinci kapsüldeki `sepeteEkle` metodunu yazmak daha kolay olurdu. Peki bin satırlık bir programda bir hatayı bulmak nasıl olurdu? Kolaylık ile güvenlik arasındaki bu takası siz nasıl yapardınız?
+3. Bir arkadaşınız "takas metodu yazılamıyorsa Java eksik bir dil" diyor. Java'nın tasarımcıları bu kapıyı bilerek kapalı tutmuş. Bir dilde bir özelliğin **olmaması** ne zaman bir üstünlük sayılabilir?
+4. Yığın izindeki en üst satır hatanın patladığı yeri gösterir; ama dördüncü kapsülde gördüğünüz gibi sebep çoğu zaman daha aşağıdadır. Sıfırı gönderen `main` mi hatalıdır, sıfırı denetlemeden bölen `bolum` mü? Sorumluluğu hangisine verirdiniz ve neden?
+5. Bir asistandan iki yüz satırlık bir programı tek seferde istemek ile aynı programı yirmi küçük adımda istemek arasında, harcadığınız toplam süre açısından sizce hangisi kazanır? Cevabınız, programın ilk denemede çalışıp çalışmamasına göre değişir mi?
+
+## Haftanın Özeti
+
+Dersi, yirmi bir yaşındaki bir öğrencinin "sadece bir hobi" diye duyurduğu programın hikayesiyle açtık ve otuz milyon satırın, her seferinde çalışan küçük bir parça eklenerek yazıldığını gördük. Sonra bir bulmacayla karşılaştınız: üçüncü haftadan beri çalışan takas, bir metodun içine girince çalışmıyordu. Nedenini üç adımda bulduk. Önce her metodun kendi odası olduğunu ve yerel değişkenlerin o odanın dışından görünmediğini öğrendiniz. Sonra her metot çağrısı için yığına bir kağıt konduğunu, en üstteki kağıdın çalıştığını ve metot bitince kağıdın atıldığını kağıtla, elinizle canlandırdınız. Üçüncü adımda bulmacanın resmini çizdiniz ve cevabı resmin üstünde gösterdiniz: metoda değişken değil, değerinin kopyası gider; metot bir şey hesapladıysa onu döndürür, çağıran atar.
+
+Ardından ekrandaki kırmızı yazının aslında Java'nın sizin için çizdiği bir yığın diyagramı olduğunu gördünüz ve onu iki yönde okumayı öğrendiniz. On haftadır çağırdığınız `println`'in on ayrı metot olduğunu, aynı adı taşıyan metotları Java'nın argümanların tipine bakarak ayırdığını keşfettiniz. `mesafe` metodunu dört küçük adımda, her adımı sınayarak yazdınız ve aynı yöntemi izlemeyen bir sitenin ilk gününde yalnızca altı kişiye hizmet verebildiğini dinlediniz. Son kapsülde bütün bunları portfolyonuzun menüsünde bir araya getirdiniz.
+
+Bu gece KT2'yi gönderiyorsunuz; uygulamanız bir adım daha büyüyor. Gelecek hafta tek bir kutuya tek bir değer koymanın yetmediği yere geliyoruz: yüz öğrencinin notunu tutmak için yüz değişken tanımlamak zorunda mısınız? Cevap dizilerde; Cuma günü görüşürüz.

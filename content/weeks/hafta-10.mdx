@@ -215,6 +215,8 @@ Bu soruda adayları yanıltan şey adlardır: İki metotta da `x` ve `y` var ve 
 
 Bulmacanın resmini çizme zamanı. `takas(x, y)` çağrıldığında yığına yeni bir kağıt konur ve bu kağıtta `a` ile `b` adında iki yeni kutu açılır. Sonra asıl olay gerçekleşir: `x`'in içindeki 3, `a` kutusuna **kopyalanır**; `y`'nin içindeki 7, `b` kutusuna kopyalanır. Metoda giden şey `x` ve `y` kutularının kendisi değil, o anda içlerinde yazan sayılardır.
 
+<Video id="mjD9CHkD0bk" title="Kopya gider, asıl kalır" sure="1:50" kapak="videos/h10-kopya-gider-asil-kalir.jpg" sessiz caption="Takas metodunun yığın diyagramını adım adım canlandıran kısa anlatım. Önce izleyin, sonra aşağıdaki resme bakın." />
+
 <Diagram name="h10-takas" caption="takas metodu bitmeden hemen önce yığın. Metot kendi kağıdındaki a ve b kutularını gerçekten takas etti; main'in kağıdındaki x ve y ise ilk günkü gibi duruyor." dot width="380px" />
 
 Resim her şeyi anlatıyor. `takas` üç satırını kusursuz çalıştırdı ve kendi kağıdındaki iki kutuyu takas etti. Sonra metot bitti, kağıdı atıldı ve yaptığı takas da kağıtla birlikte çöpe gitti. `main`'in kağıdına ise hiç kimse dokunmadı.

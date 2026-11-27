@@ -167,6 +167,20 @@ body {
 .codetry-btn[data-copied] .ico-done { display: inline; }
 .codetry-btn[data-copied] { color: #15803d; border-color: #86efac; background: #f0fdf4; }
 
+/* Video: tıklayınca yüklenen YouTube gömmesi (src/components/Video.astro) */
+.video { @apply my-8 overflow-hidden rounded-2xl border border-line bg-white shadow-soft; }
+.video-frame { @apply relative aspect-video w-full bg-brand; }
+.video-frame iframe { @apply absolute inset-0 size-full border-0; }
+.video-play { @apply absolute inset-0 block size-full cursor-pointer border-0 bg-transparent p-0; }
+.video-play img { @apply size-full object-cover; }
+.video-btn { @apply absolute left-1/2 top-1/2 grid size-[72px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent pl-1 text-white shadow-soft transition-transform; }
+.video-play:hover .video-btn, .video-play:focus-visible .video-btn { transform: translate(-50%, -50%) scale(1.08); }
+.video-sure { @apply absolute bottom-3 right-3 rounded-md bg-ink/85 px-2 py-0.5 font-mono text-xs font-semibold text-white; }
+.video-cap { @apply flex flex-wrap items-center justify-between gap-2 border-t border-line bg-paper-2/60 px-4 py-2.5 text-sm text-ink-2; }
+.video-etiket { @apply rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent; }
+.video-not { @apply !m-0 border-t border-line bg-paper-2/40 px-4 py-2.5 text-xs leading-relaxed text-ink-2; }
+html[data-yansi="on"] .video { border-width: 2px; border-color: #000; }
+
 /* Diagram: Graphviz diyagramı (inline SVG) */
 .diagram { @apply my-8 text-center; }
 .diagram-svg { @apply mx-auto rounded-xl bg-paper px-4 py-3; }

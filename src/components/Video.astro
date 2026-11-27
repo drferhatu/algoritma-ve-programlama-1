@@ -1,0 +1,84 @@
+---
+/**
+ * YouTube videosu (tıklayınca yüklenen gömme).
+ *
+ * Sayfa açıldığında YouTube'a hiçbir istek gitmez: yalnızca kapak görseli ve oynat düğmesi görünür.
+ * Öğrenci düğmeye basınca oynatıcı youtube-nocookie.com üzerinden yüklenir ve video başlar.
+ * Böylece sayfa yavaşlamaz, tıklanmadıkça çerez yazılmaz.
+ *
+ * MDX'te kullanım (import gerekmez; hafta/lab sayfaları bileşeni otomatik verir):
+ *   <Video id="dQw4w9WgXcQ" title="Kopya gider, asıl kalır" sure="1:50"
+ *          kapak="videos/h10-kopya-gider-asil-kalir.jpg" sessiz
+ *          caption="Takas metodunun yığın diyagramı, adım adım." />
+ *
+ * Props:
+ *   id       YouTube video kimliği (11 karakter; youtu.be/<id> adresindeki parça)
+ *   title    videonun adı (kapakta ve erişilebilirlik etiketinde)
+ *   sure     süre metni, ör. "1:50" (isteğe bağlı)
+ *   kapak    public/ altındaki kapak görselinin yolu (isteğe bağlı; yoksa YouTube'un kapağı)
+ *   baslangic  videonun başlayacağı saniye (isteğe bağlı)
+ *   sessiz   true ise "Sesi yok; yazıları okuyarak izleyin" notu
+ *   caption  şekil altyazısı (isteğe bağlı)
+ *
+ * id boşsa: geliştirme sunucusunda sarı uyarı kutusu çıkar, yayında hiçbir şey görünmez.
+ */
+import { href } from '@/lib/site';
+
+interface Props {
+  id?: string; title: string; sure?: string; kapak?: string; baslangic?: number; sessiz?: boolean; caption?: string;
+}
+const { id = '', title, sure, kapak, baslangic, sessiz = false, caption } = Astro.props;
+
+const gecerli = /^[A-Za-z0-9_-]{11}$/.test(id);
+if (id && !gecerli) console.warn(`[Video] Geçersiz YouTube kimliği: "${id}"`);
+
+const params = new URLSearchParams({ autoplay: '1', rel: '0', playsinline: '1' });
+if (baslangic) params.set('start', String(Math.floor(baslangic)));
+const embed = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+const izle = `https://www.youtube.com/watch?v=${id}${baslangic ? `&t=${Math.floor(baslangic)}s` : ''}`;
+const poster = kapak ? href('/' + kapak.replace(/^\//, '')) : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+{gecerli ? (
+  <figure class="video not-prose" data-video={embed}>
+    <div class="video-frame">
+      <button type="button" class="video-play" aria-label={`Videoyu oynat: ${title}`}>
+        <img src={poster} alt="" loading="lazy" decoding="async" width="1280" height="720" />
+        <span class="video-btn" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>
+        </span>
+        {sure && <span class="video-sure">{sure}</span>}
+      </button>
+    </div>
+    <figcaption class="video-cap">
+      <span class="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span class="font-semibold text-ink">{title}</span>
+        {sessiz && <span class="video-etiket">Sesi yok; yazıları okuyarak izleyin</span>}
+      </span>
+      <a href={izle} target="_blank" rel="noopener" class="codetry-btn">YouTube'da aç ↗</a>
+    </figcaption>
+    {caption && <p class="video-not">{caption}</p>}
+  </figure>
+) : import.meta.env.DEV ? (
+  <div class="diagram-missing" role="status">
+    <strong>Video kimliği eksik ya da hatalı:</strong> <code>{id || '(boş)'}</code> · {title}
+    <span class="block text-xs mt-1">Yayında bu kutu görünmez.</span>
+  </div>
+) : null}
+
+<script>
+  document.querySelectorAll<HTMLElement>('figure.video[data-video]').forEach((fig) => {
+    const btn = fig.querySelector<HTMLButtonElement>('.video-play');
+    const frame = fig.querySelector<HTMLElement>('.video-frame');
+    if (!btn || !frame) return;
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = fig.dataset.video!;
+      iframe.title = btn.getAttribute('aria-label')?.replace(/^Videoyu oynat: /, '') ?? 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.replaceChildren(iframe);
+      iframe.focus();
+    }, { once: true });
+  });
+</script>

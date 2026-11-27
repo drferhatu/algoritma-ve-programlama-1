@@ -322,6 +322,27 @@ def check_diagrams():
     print(f"✓ {len(dots)} diyagram kaynağı, {refs} <Diagram> referansı")
 
 
+def check_videos():
+    refs = 0
+    for d in (WEEKS_DIR, LABS_DIR, GUIDES_DIR):
+        for p in md_files(d):
+            text = p.read_text(encoding="utf-8")
+            for m in re.finditer(r"<Video\b[^>]*?>", text, re.S):
+                refs += 1
+                tag = m.group(0)
+                vid = re.search(r"\bid=[\"']([^\"']*)[\"']", tag)
+                if not vid or not re.fullmatch(r"[A-Za-z0-9_-]{11}", vid.group(1)):
+                    errors.append(f"{p.name}: <Video> için geçerli bir YouTube kimliği (11 karakter) yok")
+                if not re.search(r"\btitle=", tag):
+                    errors.append(f"{p.name}: <Video> bileşeninde title eksik")
+                kapak = re.search(r"\bkapak=[\"']([^\"']+)[\"']", tag)
+                if kapak and not (ROOT / "public" / kapak.group(1).lstrip("/")).exists():
+                    errors.append(f"{p.name}: <Video> kapak görseli yok: public/{kapak.group(1).lstrip('/')}")
+            if p.suffix == ".md" and "<Video" in text:
+                errors.append(f"{p.name}: <Video> bileşeni yalnızca .mdx dosyalarında çalışır; dosyayı .mdx yapın")
+    print(f"✓ {refs} <Video> referansı")
+
+
 class LinkParser(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -381,6 +402,7 @@ def main():
     check_schedule()
     check_notebooks()
     check_diagrams()
+    check_videos()
     check_dist()
     if warnings:
         print("\n! UYARILAR:")
